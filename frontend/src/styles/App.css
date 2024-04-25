@@ -1,0 +1,91 @@
+@import url(//fonts.googleapis.com/earlyaccess/nats.css);
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "NATS", sans-serif;
+  font-size: xx-large;
+}
+
+.navbar {
+  background: none;
+  height: 75px;
+  display: flex;
+  /* z-index:1; 
+  position: relative; */
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.menu-bars {
+  margin-left: 1rem;
+  font-size: 2rem;
+  background: none;
+  color: #b06b6b;
+}
+
+.nav-menu {
+  background-color: #882817;
+  width: 400px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  transition: 850ms;
+}
+
+.nav-menu.active {
+  left: 0;
+  background-color: #882817;
+  transition: 450ms;
+  z-index: 2;
+  /* position: relative; */
+}
+
+.nav-text {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 0px 8px 16px;
+  list-style: none;
+  height: 60px;
+}
+
+.nav-text a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 20px;
+  width: 95%;
+  height: 100%;
+  display:inline;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: 5px;
+}
+
+.nav-text a:hover {
+  background-color: #b06b6b;
+  color: #fff;
+}
+
+.nav-menu-items {
+  width: 100%;
+  text-align: center;
+}
+
+.navbar-toggle {
+  background-color: #882817;
+  color: #ffffff;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+span {
+  margin-left: 16px;
+}

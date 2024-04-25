@@ -1,0 +1,13 @@
+body {
+    /*overflow: hidden; /* Hide scrollbars */
+    background-color: #FFF;
+}
+
+.home-div {
+    height: 100vh;
+}
+
+.home {
+    max-width:100%;
+    max-height:100%;
+}

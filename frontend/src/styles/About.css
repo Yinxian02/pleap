@@ -1,0 +1,110 @@
+/* .about-red-div-1 {
+    height: 95vh; 
+    background-color: #882817;
+    width: 100%;
+    position: relative; 
+    padding: 50px;
+    padding-left: 100px;
+    display: flex;
+}
+
+.polaroid {
+    width: 40%;
+    display: fixed;
+    height: 70vh; 
+    background: #fff;
+    padding: 0.5rem;
+    -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, .3);  
+    -moz-box-shadow: 0 4px 6px rgba(0, 0, 0, .3); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, .3);
+    /* max-height: 80%;  
+ } */
+
+/* .polaroid img {
+    width: 100%; 
+    height: 100%;
+    object-fit: cover;
+} */  
+
+/* .about-red-text-div {
+    width: 60%; 
+}
+
+.about-red-text-div h1{
+    /* position: absolute; */
+    /* font-size: 3rem;
+    text-align: center;
+    /* line-height: 3em; */
+    /* color: #FFF;
+    padding-left: 5%;
+    letter-spacing: 0.2em;
+} */
+
+
+.about-red-div {
+    height: 100vh; 
+    background-color: #882817;
+    width: 100%;
+    position: relative; 
+    /* padding: 50px; */
+    /* padding-left: 100px; */
+    /* display: flex; */
+}
+
+.about-text-div {
+    margin-left: 5%;
+}
+.about-red-div p {
+    background-color: #FFF;
+    opacity: 0.8;
+    text-align: justify;
+    font-size: 1.5rem;
+    padding-left: 5%;
+    padding-right: 5%;
+    position: absolute;
+    display: inline;
+    width: 100%; 
+    top: 50%;
+    left: 50%;  
+    transform: translate(-50%, -50%);
+}
+
+.about-red-div img {
+    /* height: 100vh; */
+    width: 100%; 
+}
+
+
+
+
+/* .about-red-text-div p {
+    height: 95vh; 
+    padding-left: 5%;
+    font-size: 1.5rem;
+    color:#FFF;
+    line-height: 1.5cm;
+    text-align: justify;
+}
+
+.image-container {
+    height: 90vh; 
+    background-color: #FFF;
+    width: 100%;
+    padding: 50px;
+    padding-left: 100px;
+    display: flex;
+} */
+
+/* .title-div{
+    width: 100%;
+    height: 10vh;
+    background-color: #882817;
+    display: flex;
+    /* justify-content: center; */
+    /* text-align: center; */
+    /* align-items: center; */
+    /* color: #FFF; */
+    /* font-size: larger; */
+/* } */  
+
+
