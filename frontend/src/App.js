@@ -16,6 +16,7 @@ import Missing from './pages/Missing';
 import ExercisesList from './components/exercises-list.component'
 import CreateExercise from './components/create-exercise.component'
 import EditExercise from './components/edit-exercise.component'
+import ProfileQuiz from './components/profile-quiz.component'
 
 const ROLES = {
   'User': 2001,
@@ -39,7 +40,9 @@ function App() {
             
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
                 {/* <Route path='/' index element={<Home/>}/> */}
-              <Route path='profile' element={<Profile/>}/>
+              <Route path='profile' element={<Profile/>}>
+                <Route path='profile-quiz' element={<ProfileQuiz/>}/>   
+              </Route>
               <Route path='classes' element={<Classes/>}>
                 <Route path='exercises-list' element={<ExercisesList/>}/> 
                 <Route path='create-exercise' element={<CreateExercise/>}/> 
