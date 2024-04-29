@@ -5,11 +5,11 @@ import Login from './pages/Login'
 /* for testing only */
 import Signup from './pages/Signup'
 
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Home from './pages/Home'
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
+// import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Classes from './pages/Classes'
-import Admin from './pages/Admin'
+// import Admin from './pages/Admin'
 import RequireAuth from './components/RequireAuth';
 import Missing from './pages/Missing';
 
@@ -30,14 +30,17 @@ function App() {
       <Router>
         <Navbar/>
           <Routes>
-            <Route path='/' index element={<Home/>}/>
-            <Route path='/profile' element={<Profile/>}/>
-            <Route path='/classes' element={<Classes/>}/>
             <Route path='/login' element={<Login/>}/>
             <Route path='/signup' element={<Signup/>}/>
+
+            <Route path="/" element={<RequireAuth allowedRoles={[ROLES.User]} redirectTo="/classes" fallback={<Navigate to="/login" />} />}>
+              <Route index element={<Navigate to="/classes" />} />
+            </Route>
             
-            <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-              <Route path='admin' element={<Admin/>}>
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+                {/* <Route path='/' index element={<Home/>}/> */}
+              <Route path='profile' element={<Profile/>}/>
+              <Route path='classes' element={<Classes/>}>
                 <Route path='exercises-list' element={<ExercisesList/>}/> 
                 <Route path='create-exercise' element={<CreateExercise/>}/> 
                 <Route path= 'edit-exercise/:id' element={<EditExercise/>} />

@@ -66,7 +66,7 @@ const Login = () => {
     }
 
     return (
-
+        <div className="container">
         <section>
             <p ref={errRef} className={error ? "errmsg" : "offscreen"} aria-live="assertive">{error}</p>
             <h1>Sign In</h1>
@@ -80,7 +80,9 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                     required
+                    className="transparent-input"
                 />
+                <br/>
 
                 <label htmlFor="password">Password:</label>
                 <input
@@ -89,17 +91,19 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
                     required
+                    className="transparent-input"
                 />
-                <button>Sign In</button>
+                <br/>
+                <button>Login</button>
             </form>
             <p>
-                Register to be a builder<br />
+                <br/>   
                 <span className="line">
-                    <Link to="/signup">Sign Up</Link>
+                    <Link to="/signup">Register to be a builder</Link>
                 </span>
             </p>
         </section>
-
+    </div>
     )
 }
 

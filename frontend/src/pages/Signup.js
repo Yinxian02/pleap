@@ -1,20 +1,41 @@
 import { useRef, useState, useEffect } from "react";
-// import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { TiTick } from "react-icons/ti"; 
+import { RxCross2 } from "react-icons/rx";
 import axios from '../api/axios';
-import { Link } from "react-router-dom";
+import '../styles/SignUp.css'
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
+function withRouter(Component) {
+  function ComponentWithRouterProp(props) {
+    let location = useLocation();
+    let navigate = useNavigate();
+    let params = useParams();
+    return (
+      <Component
+        {...props}
+        router={{ location, navigate, params }}
+      />
+    );
+  }
+
+  return ComponentWithRouterProp;
+}
+
 
 const EMAIL_REGEX = /^[A-Za-z0-9_!#$%&'*+=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = '/signup';
 
 const Signup = () => {
-    const userRef = useRef();
+    const emailRef = useRef();
+    const nameRef = useRef(); 
     const errRef = useRef();
 
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
-    const [userFocus, setUserFocus] = useState(false);
+    const [emailFocus, setEmailFocus] = useState(false);
+
+    const [name, setName] = useState('');
 
     const [password, setPassword] = useState('');
     const [validPassword, setValidPassword] = useState(false);
@@ -28,10 +49,6 @@ const Signup = () => {
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        userRef.current.focus();
-    }, [])
-
-    useEffect(() => {
         setValidEmail(PASSWORD_REGEX.test(email));
     }, [email])
 
@@ -43,44 +60,45 @@ const Signup = () => {
     useEffect(() => {
         setError('');
     }, [email, password, matchPassword])
-
+      
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // if button enabled with JS hack
-        const v1 = EMAIL_REGEX.test(email);
-        const v2 = PASSWORD_REGEX.test(password);
-        if (!v1 || !v2) {
-            setError("Invalid Entry");
+        const validEmail = EMAIL_REGEX.test(email);
+        const validPassword = PASSWORD_REGEX.test(password);
+        if (!validEmail) {
+            setError("Invalid Email");
+            return;
+        } else if (!validPassword) {
+            setError("Invalid Password");
             return;
         }
         try {
-            console.log(JSON.stringify({ email, password }))
+            console.log(JSON.stringify({ email, name, password }))
             const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ email, password }),
+                JSON.stringify({ email, name, password }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     mode: 'cors',
                     withCredentials: true,
                 }
             );
-            console.log('hi')
-            // TODO: remove console.logs before deployment
-            console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response))
-            setSuccess(true);
-            //clear state and controlled inputs
+            console.log(response);
+            // console.log(JSON.stringify(response?.data));
+            setSuccess(true)
             setEmail('');
             setPassword('');
             setMatchPassword('');
+
         } catch (err) {
             if (!err?.response) {
                 setError('No Server Response');
             } else if (err.response?.status === 409) {
-                setError('Username Taken');
+                console.log('email taken');
+                setError('Email Taken');
             } else {
                 setError('Registration Failed')
             }
-            errRef.current.focus();
+            // errRef.current.focus();
         }
     }
 
@@ -90,44 +108,58 @@ const Signup = () => {
                 <section>
                     <h1>Success!</h1>
                     <p>
-                        <a href="#">Sign In</a>
+                        <a href="/login">Sign In</a>
                     </p>
                 </section>
             ) : (
+                <div className="container">
                 <section>
-                    <p ref={errRef} className={error ? "errmsg" : "offscreen"} aria-live="assertive">{error}</p>
                     <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="username">
+                        <label htmlFor="email">
                             Email:
-                            {/* <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} /> */}
+                            <TiTick className={validEmail ? "valid" : "hide"} />
+                            {/* <RxCross2 className={validEmail || !email ? "hide" : "invalid"} /> */}
                         </label>
                         <input
                             type="text"
-                            id="username"
-                            ref={userRef}
+                            id="email"
+                            ref={emailRef}
                             autoComplete="off"
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
                             required
                             aria-invalid={validEmail ? "false" : "true"}
-                            aria-describedby="uidnote"
-                            onFocus={() => setUserFocus(true)}
-                            onBlur={() => setUserFocus(false)}
+                            aria-describedby="emailnote"
+                            onFocus={() => setEmailFocus(true)}
+                            onBlur={() => setEmailFocus(false)}
+                            className="transparent-input"
                         />
-                        <p id="uidnote" className={userFocus && email && !validEmail ? "instructions" : "offscreen"}>
-                            {/* <FontAwesomeIcon icon={faInfoCircle} /> */}
-                            4 to 24 characters.<br />
-                            Must begin with a letter.<br />
-                            Letters, numbers, underscores, hyphens allowed.
+                        <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+                            Example: abc21@ic.ac.uk
                         </p>
+                        <br/>
+
+                        <label htmlFor="name">
+                            Name:
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            ref={nameRef}
+                            autoComplete="off"
+                            onChange={(e) => setName(e.target.value)}
+                            value={name}
+                            required
+                            className="transparent-input"
+                        />
+                        <br/>
 
 
                         <label htmlFor="password">
                             Password:
-                            {/* <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} /> */}
+                            <TiTick className={validPassword ? "valid" : "hide"} />
+                            <RxCross2 className={validPassword || !password ? "hide" : "invalid"} />
                         </label>
                         <input
                             type="password"
@@ -139,19 +171,21 @@ const Signup = () => {
                             aria-describedby="pwdnote"
                             onFocus={() => setPasswordFocus(true)}
                             onBlur={() => setPasswordFocus(false)}
+                            className="transparent-input"
                         />
                         <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
-                            {/* <FontAwesomeIcon icon={faInfoCircle} /> */}
                             8 to 24 characters.<br />
                             Must include uppercase and lowercase letters, a number and a special character.<br />
                             Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
                         </p>
 
+                        <br/>
+
 
                         <label htmlFor="confirm_pwd">
                             Confirm Password:
-                            {/* <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} /> */}
+                            <TiTick className={validMatch && matchPassword ? "valid" : "hide"} />
+                            <RxCross2 className={(validMatch && matchPassword)|| !matchPassword ? "hide" : "invalid"} />
                         </label>
                         <input
                             type="password"
@@ -163,26 +197,29 @@ const Signup = () => {
                             aria-describedby="confirmnote"
                             onFocus={() => setMatchFocus(true)}
                             onBlur={() => setMatchFocus(false)}
+                            className="transparent-input"
                         />
                         <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                            {/* <FontAwesomeIcon icon={faInfoCircle} /> */}
                             Must match the first password input field.
                         </p>
 
-                        {/* <button disabled={!validEmail || !validPassword || !validMatch ? true : false}>Sign Up</button> */}
+                        <br/>
                         <button>Sign Up</button>
-
+                        {/* <button disabled={!validEmail || !validPassword || !validMatch ? true : false}>Sign Up</button> */}
                     </form>
+
+                    <br />
+                    <p ref={errRef} className={error ? "errmsg" : "offscreen"} aria-live="assertive">{error}</p>
                     <p>
-                        Already registered?<br />
                         <span className="line">
-                            <Link to="/login">Log In</Link>
+                            <a href="/login">Already registered?</a>
                         </span>
                     </p>
                 </section>
+                </div>
             )}
         </>
     )
 }
 
-export default Signup
+export default withRouter(Signup);

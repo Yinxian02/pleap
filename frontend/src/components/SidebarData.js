@@ -1,18 +1,11 @@
-// import React from "react";
-
 export const SidebarData = [
   {
-    title: "HOME",
-    path: "/",
-    cName: "nav-text",
-  },
-  {
-    title: "PROFILE",
+    title: "Profile",
     path: "/profile",
     cName: "nav-text",
   },
   {
-    title: "CLASSES",
+    title: "Classes",
     path: "/classes",
     cName: "nav-text",
   },
