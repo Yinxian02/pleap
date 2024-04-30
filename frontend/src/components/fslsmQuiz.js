@@ -16,10 +16,33 @@ export const fslsmQuiz = {
             ], 
         }, 
         {
-
-        }
+            question: "I would rather be considered", 
+            dimension: Dimension.SensingIntuitive, 
+            choices: [
+                { text: "realistic.", value: true }, // +1
+                { text: "innovative.", value: false } // -1
+            ], 
+        }, 
+        {
+            question: "When I think about what I did yesterday, I am most likely to get", 
+            dimension: Dimension.VisualVerbal, 
+            choices: [
+                { text: "a picture.", value: true }, // +1
+                { text: "words.", value: false } // -1
+            ], 
+        }, 
+        {
+            question: "I tend to", 
+            dimension: Dimension.SequentialGlobal, 
+            choices: [
+                { text: "understand details of a subject but may be fuzzy about its overall structure.", value: true }, // +1
+                { text: "understand the overall structure but may be fuzzy about details.", value: false } // -1
+            ], 
+        }, 
     ]
 };
+
+
 
 export const resultInitialState = {
     activeReflexive: 0,

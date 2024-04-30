@@ -66,8 +66,7 @@ const ProfileQuiz = () => {
             calculatePreferenceScore(prev, currentDimension, answer)
         );
 
-
-        if (currentQuestionNum !== fslsmQuiz.questions.length + 1) { 
+        if (currentQuestionNum !== fslsmQuiz.questions.length - 1) { 
             setCurrentQuestionNum((prev) => prev + 1); 
         } else {
             setCurrentQuestionNum(0); 
