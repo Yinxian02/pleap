@@ -1,26 +1,49 @@
-import React from 'react'
+import React, { Component } from 'react'
 import '../styles/Profile.css'
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom"
+import axios from 'axios';
 
-function Profile() {
-    const Navigation = () => {
-      return (
-        <nav>
-          <NavLink to='profile-quiz'>Figure out your preference!</NavLink>  
-        </nav>
-      );
-    };
+import AuthContext from "../context/AuthContext";
 
-    return (
-      <>
-        <Navigation/>
-        <main>
-          <Outlet/>
-        </main>
-      </>
-    );
+const User = props => (
+  <tr>
+    <td>{props.profile.name}</td>
+    <td>{props.profile.email}</td>
+    <td>{props.profile.preferences}</td>
+  </tr>
+)
+
+export default class Profile extends Component {
+  static contextType = AuthContext;
+
+  constructor(props) {
+    super(props);
+    this.state = {profile: []};
+  }
+
+  componentDidMount() {
+      axios.get('http://localhost:5001/user/', {
+        headers: {
+          Authorization: 'Bearer ' + this.context.auth.accessToken,
+      } 
+      })
+      .then(response => {
+        this.setState({ exercises: response.data })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
 }
 
-export default Profile;
 
-
+  render() {
+    return (
+      <div>
+        <h3>Profile</h3>
+        <nav> 
+          <NavLink to='profile-quiz'>Figure out your preference!</NavLink>  
+        </nav>
+      </div>
+    )
+  }
+}
