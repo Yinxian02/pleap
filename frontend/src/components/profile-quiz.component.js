@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState ,useContext } from "react";
 import { Dimension, fslsmQuiz , resultInitialState } from "./fslsmQuiz"; 
+import { useParams } from 'react-router-dom';
 import "../styles/ProfileQuiz.css";
+import AuthContext from '../context/AuthContext';
+import axios from 'axios';
 
 function calculatePreferenceScore(prev, dimension, answer) {
     if (dimension === Dimension.ActiveReflexive) {
@@ -44,6 +47,16 @@ function calculatePreferenceScore(prev, dimension, answer) {
 }; 
 
 const ProfileQuiz = () => {
+    // const { auth } = useContext(AuthContext);
+    // const { id } = useParams();
+    // console.log(auth); 
+
+    // const [user, setUser] = useState({
+    //     email: '',
+    //     user: '',
+    //     learningPreferences: '',
+    //   });
+    
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
     const [currentDimension, setDimension] = useState(null); 
     const [answerIndex, setAnswerIndex] = useState(null); 
@@ -60,9 +73,10 @@ const ProfileQuiz = () => {
     }; 
 
 
-    const onClickNext = () => {
+    const onClickNext = async () => {
         setAnswerIndex(null); 
         setResult((prev) => 
+            
             calculatePreferenceScore(prev, currentDimension, answer)
         );
 
@@ -71,6 +85,7 @@ const ProfileQuiz = () => {
         } else {
             setCurrentQuestionNum(0); 
             setShowResult(true); 
+            console.log(result); 
         }
     }; 
 
@@ -104,9 +119,13 @@ const ProfileQuiz = () => {
                 <h3> Result </h3> 
                 <p> 
                     Active Reflexive: <span>{result.activeReflexive}</span>
+                    <br/>
                     Sensing Reflexive: <span>{result.sensingIntuitive}</span>
+                    <br/>
                     Visual Verbal: <span>{result.visualVerbal}</span>
+                    <br/>
                     Sequential Global: <span>{result.sequentialGlobal}</span>
+                    <br/>
 
                 </p>
                 

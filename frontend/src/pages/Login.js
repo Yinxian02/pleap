@@ -44,8 +44,10 @@ const Login = () => {
             console.log(JSON.stringify(response?.data));
             const accessToken = response?.data?.accessToken;
             const roles = response?.data?.roles;
+            const id = response?.data?.id; 
             console.log(roles)
-            setAuth({ email, password, roles, accessToken });
+            console.log(id)
+            setAuth({ email, password, id, roles, accessToken });
             setEmail('');
             setPassword('');
 

@@ -17,9 +17,6 @@ connectDB();
 
 var bodyparser = require("body-parser");
 
-
-
-
 app.use(logger);
 app.use(cors(corsOptions));
 
@@ -40,7 +37,7 @@ app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
 app.use(requireAuth);
-// app.use('/users', require('./routes/api/users'));
+app.use('/users', require('./routes/api/users'));
 app.use('/exercises', require('./routes/api/exercises'));
 
 app.all('*', (req, res) => {
