@@ -94,7 +94,7 @@ const ProfileQuiz = () => {
             </ul>
         
         <div className="footer">
-            <button onClick={onClickNext} disabled={answerIndex === null}>
+            <button onClick={onClickNext} className="nextButton" disabled={answerIndex === null}>
                 {currentQuestionNum === fslsmQuiz.questions.length - 1 ? "Finish" : "Next"}
             </button>
         </div>

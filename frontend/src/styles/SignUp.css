@@ -3,18 +3,14 @@
     justify-content: center; /* Horizontally center the content */
     align-items: center; /* Vertically center the content */
     height: 90vh; /* Full height of the viewport */
-  }
-  
-.section {
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 5px;
+    /* background-color: var(--inputContainerColor); */
 }
   
+
 .instructions {
     font-size: 0.75rem;
     border-radius: 0.5rem;
-    background: #000;
+    background: var(--hoverColor);
     color: #fff;
     padding: 0.25rem;
     position: relative;
@@ -24,12 +20,6 @@
 .instructions > svg {
     margin-right: 0.25rem;
 }
-
-/* .transparent-input {
-    background-color:  rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    width: 300px
-} */
 
 .offscreen {
     position: absolute;
