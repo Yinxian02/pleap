@@ -9,7 +9,7 @@ router.route('/').get(verifyRoles(ROLES_LIST.Admin), async (req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
   });
 
-router.route('/:id').get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor),(req, res) => {
+router.route('/:id').get(verifyRoles(ROLES_LIST.User),(req, res) => {
   User.findById(req.params.id)
     .then(user => res.json(user))
     .catch(err => res.status(400).json('Error: ' + err));

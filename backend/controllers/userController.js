@@ -1,6 +1,5 @@
 const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
-// const validator = require('validator')
 const jwt = require('jsonwebtoken');
 require('dotenv'). config()
 
@@ -44,8 +43,6 @@ const loginUser = async (req, res) => {
       // Saving refreshToken with current user
       user.refreshToken = refreshToken;
       const result = await user.save();
-      // console.log(result);
-      // console.log(roles);
 
       // Creates Secure Cookie with refresh token
       res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });

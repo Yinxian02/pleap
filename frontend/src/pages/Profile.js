@@ -20,6 +20,12 @@ function Profile() {
     global: 0
   });
 
+  const preferenceList = Object.keys(preferences).map((key, index) => (
+    <div key={index}>
+      {key}: {preferences[key].toString()}
+    </div>
+  ));
+
   useEffect(() => {
     axios
       .get(`http://localhost:5001/users/${id}`, {
@@ -31,7 +37,7 @@ function Profile() {
       )
       .then((response) => {
         const data = response.data;
-        setName(data.name);
+        setName(data.userName);
         setPreferences({
           active: data.learningPreferences.active, 
           reflexive: data.learningPreferences.reflexive, 
@@ -47,7 +53,7 @@ function Profile() {
         console.log(error);
       });
 
-  }, [id]);
+  }, [id, auth.accessToken]);
 
   return (
     <>
@@ -55,7 +61,7 @@ function Profile() {
         <div className="profile-container">
             <span>Email: {email}</span>
             <span>Name: {name} </span>
-            <span>Learning Preferences: {preferences}</span>
+            <span>Learning Preferences: {preferenceList}</span>
         </div>
         <span className="line">
             <Link to="/profile-quiz">Register to be a builder</Link>
