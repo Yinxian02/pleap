@@ -3,7 +3,6 @@ import { Dimension, fslsmQuiz , resultInitialState } from "./fslsmQuiz";
 import "../styles/ProfileQuiz.css";
 import AuthContext from '../context/AuthContext';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 function calculatePreferenceScore(prev, dimension, answer) {
     if (dimension === Dimension.ActiveReflexive) {
@@ -71,11 +70,8 @@ function normaliseFinalPreferences(preferences) {
 }
 
 const ProfileQuiz = () => {
-    // const navigate = useNavigate();
     const { auth } = useContext(AuthContext);
     const id = auth.id; 
-
-    // const [preferences, updatePreferences] = useState({learningPreferences: {}});
     
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
     const [currentDimension, setDimension] = useState(null); 
@@ -131,9 +127,9 @@ const ProfileQuiz = () => {
                 });
         }
 
-    }, [result, showResult]);
+    }, [id, auth.accessToken, result, showResult]);
 
-    return <div className="quiz-container">
+    return <div className="profile-container">
         {!showResult ? (
 
         <>

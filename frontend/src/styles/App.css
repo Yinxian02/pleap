@@ -134,3 +134,21 @@ button:hover {
   border: 1px solid var(--txtColorLight);
   color: var(--txtColorLight);
 }
+
+.profile-container {
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+  width: 500px;
+  background-color: var(--inputColor);
+  border-radius: 4px;
+  padding: 60px 60px;
+  box-sizing: border-box; 
+  display: grid;
+  margin: 0 auto; 
+  box-shadow: 0 4px 4px var(--hoverShadowColor); 
+}
+
+.button-link {
+  text-decoration: none;
+  color: inherit
+}

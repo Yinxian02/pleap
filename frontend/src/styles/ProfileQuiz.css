@@ -1,7 +1,7 @@
-.quiz-container {
+/* .quiz-container {
     justify-content: center; /* Horizontally center */
-    align-items: center; /* Vertically center */
-    width: 500px;
+    /* align-items: center; /* Vertically center */
+    /* width: 500px;
     background-color: var(--inputColor);
     border-radius: 4px;
     padding: 60px 60px;
@@ -9,7 +9,7 @@
     display: grid;
     margin: 0 auto; 
     box-shadow: 0 4px 4px var(--hoverShadowColor); 
-}
+} */
 
 .quiz-progress {
     /* font-size: 32px; */
@@ -42,3 +42,5 @@ li {
     display: flex;
     justify-content: flex-end;
 }
+
+

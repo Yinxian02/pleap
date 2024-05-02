@@ -59,13 +59,22 @@ function Profile() {
     <>
       <main>
         <div className="profile-container">
-            <span>Email: {email}</span>
-            <span>Name: {name} </span>
+            <span>Email:</span>
+            <span>{email}</span>
+            <br/>
+            <span>Name:</span>
+            <span>{name}</span>
+            <br/>
             <span>Learning Preferences: {preferenceList}</span>
+            <span className="button-link">
+              <Link to="/profile-quiz">
+                <button>
+                Figure out your learning preferences.
+                </button> 
+              </Link> 
+            </span> 
         </div>
-        <span className="line">
-            <Link to="/profile-quiz">Register to be a builder</Link>
-        </span>
+
       </main>
     </>
   );
