@@ -21,7 +21,7 @@ function Profile() {
   });
 
   const preferenceList = Object.keys(preferences).map((key, index) => (
-    <div key={index}>
+    <div class='progress-line' key={index}>
       {key}: {preferences[key].toString()}
     </div>
   ));
@@ -66,6 +66,7 @@ function Profile() {
             <span>{name}</span>
             <br/>
             <span>Learning Preferences: {preferenceList}</span>
+
             <span className="button-link">
               <Link to="/profile-quiz">
                 <button>
@@ -74,7 +75,6 @@ function Profile() {
               </Link> 
             </span> 
         </div>
-
       </main>
     </>
   );

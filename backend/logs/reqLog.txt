@@ -960,3 +960,11 @@
 20240502	11:16:25	fd1f8c67-4ee9-4beb-a12e-302c04fd36ae	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
 20240502	11:16:41	eaf0e8fd-2cfe-44d3-8b13-6c7d0c445f0c	OPTIONS	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
 20240502	11:16:41	be878fdf-4f1c-4204-99f9-856cafcb6efd	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240502	11:20:14	0c263692-ca63-4d95-a828-b4296734e15d	OPTIONS	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240502	11:20:14	d772f61c-4aca-4f5e-9dfa-884fe94b2cc6	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240502	17:10:33	4f5408e8-3993-489b-83f6-5fda64f4808d	OPTIONS	http://localhost:3000	/auth
+20240502	17:10:33	009952e0-b09f-4a17-9114-a03946379ca0	POST	http://localhost:3000	/auth
+20240502	17:10:36	b65c5349-3e4e-4684-b357-f591b8c8b529	OPTIONS	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240502	17:10:36	98909ec3-4a67-4411-b6b7-5093efdd5607	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240502	17:11:07	f78dedc8-344f-4421-bd30-2dfef634b604	OPTIONS	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240502	17:11:07	7076abe7-f9a7-4aaf-aeaa-6f588d6d470c	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
