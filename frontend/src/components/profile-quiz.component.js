@@ -1,9 +1,9 @@
-import { useState ,useContext } from "react";
-import { Dimension, fslsmQuiz , resultInitialState } from "./fslsmQuiz"; 
-import { useParams } from 'react-router-dom';
+import { useState ,useContext, useEffect } from "react";
+import { Dimension, fslsmQuiz , resultInitialState } from "./fslsmQuiz";
 import "../styles/ProfileQuiz.css";
 import AuthContext from '../context/AuthContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function calculatePreferenceScore(prev, dimension, answer) {
     if (dimension === Dimension.ActiveReflexive) {
@@ -46,16 +46,36 @@ function calculatePreferenceScore(prev, dimension, answer) {
     ; 
 }; 
 
-const ProfileQuiz = () => {
-    // const { auth } = useContext(AuthContext);
-    // const { id } = useParams();
-    // console.log(auth); 
+function normaliseFinalPreferences(preferences) {
+    for (const key in preferences) {
+        // if (preferences.hasOwnProperty(key)) {
+        const originalValue = preferences[key];
+        const normalisedValue = (originalValue + 11) / 22;
+        preferences[key] = normalisedValue;
+        // }
+    }
 
-    // const [user, setUser] = useState({
-    //     email: '',
-    //     user: '',
-    //     learningPreferences: '',
-    //   });
+    const normalisedPreferences = {
+        active: preferences.activeReflexive,
+        reflexive: 1.0 - preferences.activeReflexive,
+        sensing: preferences.sensingIntuitive,
+        intuitive: 1.0 - preferences.sensingIntuitive,
+        visual: preferences.visualVerbal,
+        verbal: 1.0 - preferences.visualVerbal,
+        sequential: preferences.sequentialGlobal,
+        global: 1.0 - preferences.sequentialGlobal 
+    };
+
+    console.log(normalisedPreferences);
+    return normalisedPreferences; 
+}
+
+const ProfileQuiz = () => {
+    // const navigate = useNavigate();
+    const { auth } = useContext(AuthContext);
+    const id = auth.id; 
+
+    // const [preferences, updatePreferences] = useState({learningPreferences: {}});
     
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
     const [currentDimension, setDimension] = useState(null); 
@@ -76,18 +96,42 @@ const ProfileQuiz = () => {
     const onClickNext = async () => {
         setAnswerIndex(null); 
         setResult((prev) => 
-            
             calculatePreferenceScore(prev, currentDimension, answer)
         );
 
         if (currentQuestionNum !== fslsmQuiz.questions.length - 1) { 
             setCurrentQuestionNum((prev) => prev + 1); 
         } else {
-            setCurrentQuestionNum(0); 
             setShowResult(true); 
-            console.log(result); 
+        };
+
+        
+    }
+    // }; 
+    useEffect(() => {
+        if (showResult) {
+            const preferences = normaliseFinalPreferences(result); 
+            console.log('preferences:' , preferences);
+            axios
+                .post(
+                    `http://localhost:5001/users/update/${id}`, 
+                    preferences,
+                    {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + auth.accessToken,
+                    },
+                    })
+                .then((res) => {
+                    console.log(res.data)
+                    // navigate('/profile', { replace: true });
+                }).catch((error) => {
+                    // Handle errors here
+                    console.error(error);
+                });
         }
-    }; 
+
+    }, [result, showResult]);
 
     return <div className="quiz-container">
         {!showResult ? (

@@ -15,9 +15,10 @@ router.route('/:id').get(verifyRoles(ROLES_LIST.User),(req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/setPreference/:id').post(verifyRoles(ROLES_LIST.User),(req, res) => {
+router.route('/update/:id').post(verifyRoles(ROLES_LIST.User),(req, res) => {
   User.findById(req.params.id)
     .then(user => {
+    console.log('req body:', req.body)
     user.learningPreferences.active = req.body.active;
     user.learningPreferences.reflexive = req.body.reflexive; 
     user.learningPreferences.sensing = req.body.sensing;
@@ -26,7 +27,7 @@ router.route('/setPreference/:id').post(verifyRoles(ROLES_LIST.User),(req, res) 
     user.learningPreferences.verbal = req.body.verbal;
     user.learningPreferences.sequential = req.body.sequential;
     user.learningPreferences.global = req.body.global; 
-
+    console.log(user); 
     user.save()
     .then(() => res.json('User learning preference updated!'))
     .catch(err => res.status(400).json('Error: ' + err));

@@ -3,3 +3,8 @@
 20230923	13:41:27	d7934857-fdb8-4620-9217-fa08cc738fbd	Error: Not allowed by CORS
 20230923	13:43:32	073590c0-bb60-4bd9-b145-36d5126e9b8d	Error: Not allowed by CORS
 20230923	13:49:03	821c5034-1f0c-421b-826b-46d8a042048a	Error: Not allowed by CORS
+20240501	13:23:02	4e46ae21-5c40-410a-91d7-1ad96cf0cdc0	Error: ENOENT: no such file or directory, stat '/Users/yinxianliang/Desktop/ai-enabled-pleap-a-personalised-learning-platform/backend/views/404.html'
+20240501	13:26:42	b2b93bee-c373-41bc-b8d3-25a7bc9f1426	Error: ENOENT: no such file or directory, stat '/Users/yinxianliang/Desktop/ai-enabled-pleap-a-personalised-learning-platform/backend/views/404.html'
+20240501	18:19:42	a36b06a3-38f3-48bd-a109-f4092fd4937a	Error: ENOENT: no such file or directory, stat '/Users/yinxianliang/Desktop/ai-enabled-pleap-a-personalised-learning-platform/backend/views/404.html'
+20240502	10:30:24	4b918a9d-a21e-4704-91cf-aa31216d88ab	SyntaxError: Unexpected token n in JSON at position 0
+20240502	10:31:56	9ade9c36-86cb-40eb-b9d5-2e3caad0a6ac	SyntaxError: Unexpected token n in JSON at position 0
