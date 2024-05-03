@@ -2,6 +2,7 @@ import { useState ,useContext, useEffect } from "react";
 import { Dimension, fslsmQuiz , resultInitialState } from "./fslsmQuiz";
 import "../styles/ProfileQuiz.css";
 import AuthContext from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function calculatePreferenceScore(prev, dimension, answer) {
@@ -156,7 +157,7 @@ const ProfileQuiz = () => {
         </>
         ) : (
             <div className="result">
-                <h3> Result </h3> 
+                {/* <h3> Result </h3> 
                 <p> 
                     Active Reflexive: <span>{result.activeReflexive}</span>
                     <br/>
@@ -167,7 +168,14 @@ const ProfileQuiz = () => {
                     Sequential Global: <span>{result.sequentialGlobal}</span>
                     <br/>
 
-                </p>
+                </p> */}
+                <span className="button-link">
+                    <Link to="/profile">
+                        <button>
+                        See results.
+                        </button> 
+                    </Link> 
+                </span> 
                 
             </div>) 
         }

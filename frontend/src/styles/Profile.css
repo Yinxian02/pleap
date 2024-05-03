@@ -3,15 +3,40 @@
     margin-bottom: 20px;
 }
 
+.percentages {
+    display: flex;
+    justify-content: space-between;
+}
+
+.percentages span {
+    font-size: 12px; /* Adjust the font size as needed */
+}
+
+.progress-line-container{
+    display: flex; 
+}
+
 .progress-line {
-    border-radius: 5px; /* Rounded corners */
+    /* border-radius: 5px; Rounded corners */
     position: relative;
     /* top: 0; */
     /* transform: translateX(-50%); */
-    background-color: red; /* Indicator color */
+    /* background-color: red; Indicator color */
     width: 100%; /* Indicator width */
     height: 10px; /* Same height as the bar */
   }
+
+.red {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: rgb(225, 144, 144);
+}
+
+.green {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: rgb(172, 216, 106);
+}
 
 .button-link {
     text-decoration: none;
