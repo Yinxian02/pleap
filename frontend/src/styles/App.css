@@ -101,9 +101,9 @@ body {
   align-items: center;
 }
 
-span {
+/* span {
   margin-left: 16px;
-}
+} */
 
 .transparent-input {
   background-color:  var(--inputColor);

@@ -2,6 +2,7 @@ import { useState ,useContext, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
+import "../styles/Profile.css";
 
 function Profile() {
   const { auth } = useContext(AuthContext);
@@ -19,12 +20,6 @@ function Profile() {
     sequential: 0, 
     global: 0
   });
-
-  const preferenceList = Object.keys(preferences).map((key, index) => (
-    <div class='progress-line' key={index}>
-      {key}: {preferences[key].toString()}
-    </div>
-  ));
 
   useEffect(() => {
     axios
@@ -48,6 +43,7 @@ function Profile() {
           sequential: data.learningPreferences.sequential, 
           global: data.learningPreferences.global
         })
+        console.log(preferences);
       })
       .catch((error) => {
         console.log(error);
@@ -65,7 +61,15 @@ function Profile() {
             <span>Name:</span>
             <span>{name}</span>
             <br/>
-            <span>Learning Preferences: {preferenceList}</span>
+            <span>Learning Preferences:</span>
+            <br/>
+
+            <div class="bar">
+              <span>Active / Reflexive:</span>
+              <div className="progress-line activeReflexive" style={{ left: `${preferences.active * 100}%` }}>
+                {preferences.active}  
+              </div>
+            </div>
 
             <span className="button-link">
               <Link to="/profile-quiz">

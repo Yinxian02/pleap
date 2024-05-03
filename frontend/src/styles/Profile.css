@@ -1,3 +1,18 @@
+.bar {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.progress-line {
+    border-radius: 5px; /* Rounded corners */
+    position: relative;
+    /* top: 0; */
+    /* transform: translateX(-50%); */
+    background-color: red; /* Indicator color */
+    width: 100%; /* Indicator width */
+    height: 10px; /* Same height as the bar */
+  }
+
 .button-link {
     text-decoration: none;
     color: inherit
