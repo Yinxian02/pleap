@@ -9,38 +9,38 @@ function calculatePreferenceScore(prev, dimension, answer) {
     if (dimension === Dimension.ActiveReflexive) {
         return answer ? {
             ...prev,
-            activeReflexive: prev.activeReflexive + 1, 
+            activeReflexive: prev.activeReflexive - 1, 
         }
         : {
             ...prev,
-            activeReflexive: prev.activeReflexive - 1,  
+            activeReflexive: prev.activeReflexive + 1,  
         };
     } else if (dimension === Dimension.SensingIntuitive) {
         return answer ? {
             ...prev,
-            sensingIntuitive: prev.sensingIntuitive + 1, 
+            sensingIntuitive: prev.sensingIntuitive - 1, 
         }
         : {
             ...prev,
-            sensingIntuitive: prev.sensingIntuitive - 1,  
+            sensingIntuitive: prev.sensingIntuitive + 1,  
         };
     } else if (dimension === Dimension.VisualVerbal) {
         return answer ? {
             ...prev,
-            visualVerbal: prev.visualVerbal + 1, 
+            visualVerbal: prev.visualVerbal - 1, 
         }
         : {
             ...prev,
-            visualVerbal: prev.visualVerbal - 1,  
+            visualVerbal: prev.visualVerbal + 1,  
         };
     } else if (dimension === Dimension.SequentialGlobal) {
         return answer ? {
             ...prev,
-            sequentialGlobal: prev.sequentialGlobal + 1, 
+            sequentialGlobal: prev.sequentialGlobal - 1, 
         }
         : {
             ...prev,
-            sequentialGlobal: prev.sequentialGlobal - 1,  
+            sequentialGlobal: prev.sequentialGlobal + 1,  
         };
     }
     ; 

@@ -5,10 +5,8 @@ function Classes() {
   const Navigation = () => {
     return (
       <nav>
-
         <NavLink to='exercises-list'>List of Exercises</NavLink>
         <NavLink to='create-exercise'>Create Exercise</NavLink>  
-
       </nav>
     );
   };

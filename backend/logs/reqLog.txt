@@ -1168,3 +1168,13 @@
 20240503	20:11:13	3279501d-0a38-427e-86dc-e5a87988b7fc	POST	http://localhost:3000	/users/update/662fdcb6bfe0c3e26c50f910
 20240503	20:11:16	84790024-a267-4eee-bbde-8f06483261de	OPTIONS	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
 20240503	20:11:16	720dc602-0430-4d4d-b933-63faa5803366	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240503	20:11:39	adebe581-a4dd-4aeb-be72-2c99aecae045	OPTIONS	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240503	20:11:39	94763736-5d30-4eb5-81c1-c1359e8ba843	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240505	20:45:59	be512009-babc-4600-a117-9035528c97f1	OPTIONS	http://localhost:3000	/auth
+20240505	20:45:59	1e9cc688-3c54-408f-9455-3f16b06b21b9	POST	http://localhost:3000	/auth
+20240505	20:46:02	e9b1b4c7-c2a8-4ca4-ae4c-fdf1cf6b020f	OPTIONS	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240505	20:46:02	4764d897-3976-4d5c-ae24-9ef245a86cf8	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240505	20:46:11	0848e814-5a8c-4de2-9d55-71874dd0c9bd	OPTIONS	http://localhost:3000	/users/update/662fdcb6bfe0c3e26c50f910
+20240505	20:46:11	8feb82e4-4471-467f-8966-9a0edc2bbb6d	POST	http://localhost:3000	/users/update/662fdcb6bfe0c3e26c50f910
+20240505	20:46:12	9d87246f-b3ee-4924-8f50-a2c6ac39cf8c	OPTIONS	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240505	20:46:12	222b6a04-2019-4a74-a09a-18b141441311	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
