@@ -11,7 +11,7 @@ export const SidebarData = [
   },
   {
     title: "My Classes",
-    path: "/classes/classes-list",
+    path: "/lessons/classes-list",
     cName: "nav-text"
   },
 ];

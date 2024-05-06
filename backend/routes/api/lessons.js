@@ -46,7 +46,7 @@ router.route('/:id').get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor),(req, 
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').delete(verifyRoles(ROLES_LIST.Admin),(req, res) => {
+router.route('/:id').delete(verifyRoles(ROLES_LIST.User),(req, res) => {
   Lesson.findByIdAndDelete(req.params.id)
     .then(() => res.json('Lesson deleted.'))
     .catch(err => res.status(400).json('Error: ' + err));

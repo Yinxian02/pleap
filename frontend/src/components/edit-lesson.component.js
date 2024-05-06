@@ -11,34 +11,34 @@ function EditLesson() {
   const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
 
-  const validateYT = (value) => {
+  // const validateYT = (value) => {
     
-    if (validator.isURL(value)) {
-      setYTErrorMessage('')
-    } else {
-      setYTErrorMessage('Invalid URL')
-    }
-  }
+  //   if (validator.isURL(value)) {
+  //     setYTErrorMessage('')
+  //   } else {
+  //     setYTErrorMessage('Invalid URL')
+  //   }
+  // }
 
   const { id } = useParams();
 
-  const [ytErrorMessage, setYTErrorMessage] = useState('')
-  const [exercise, setExercise] = useState({
+  // const [ytErrorMessage, setYTErrorMessage] = useState('')
+  const [lesson, setLesson] = useState({
     title: '',
-    creator: '',
-    age: '',
-    number: 0,
-    durationHours: 0,
-    durationMins: 0,
-    materials: [],
-    instructions: [],
-    youtube:'',
-    picture: '',
+    // creator: '',
+    // age: '',
+    // number: 0,
+    // durationHours: 0,
+    // durationMins: 0,
+    // materials: [],
+    // instructions: [],
+    // youtube:'',
+    // picture: '',
   });
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5001/exercises/${id}`, {
+      .get(`http://localhost:5001/lessons/${id}`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + auth.accessToken,
@@ -47,17 +47,17 @@ function EditLesson() {
       )
       .then((response) => {
         const data = response.data;
-        setExercise({
+        setLesson({
           title: data.title,
-          creator: data.creator,
-          age: data.age,
-          number: data.number,
-          durationHours: data.durationHours,
-          durationMins: data.durationMins,
-          materials: data.materials,
-          instructions: data.instructions,
-          youtube: data.youtube,
-          picture: data.picture,
+          // creator: data.creator,
+          // age: data.age,
+          // number: data.number,
+          // durationHours: data.durationHours,
+          // durationMins: data.durationMins,
+          // materials: data.materials,
+          // instructions: data.instructions,
+          // youtube: data.youtube,
+          // picture: data.picture,
         });
       })
       .catch((error) => {
@@ -69,94 +69,94 @@ function EditLesson() {
 
 
   const onChangeTitle = (e) => {
-    setExercise({...exercise, 
+    setLesson({...lesson, 
       title: e.target.value
     })
   };
 
-  const onChangeCreator = (e) => {
-    setExercise({...exercise, 
-      creator: e.target.value
-    })
-  }
+  // const onChangeCreator = (e) => {
+  //   setExercise({...exercise, 
+  //     creator: e.target.value
+  //   })
+  // }
 
-  const onChangeAge = (e) => {
-    setExercise({...exercise, 
-      age: e.target.value
-    })
-  }
+  // const onChangeAge = (e) => {
+  //   setExercise({...exercise, 
+  //     age: e.target.value
+  //   })
+  // }
 
-  const onChangeNumber = (e) => {
-    setExercise({...exercise, 
-      number: e.target.value
-    })
-  }
+  // const onChangeNumber = (e) => {
+  //   setExercise({...exercise, 
+  //     number: e.target.value
+  //   })
+  // }
 
-  const onChangeDurationHours = (e) => {
-    setExercise({...exercise, 
-      durationHours: e.target.value
-    })  
-  }
+  // const onChangeDurationHours = (e) => {
+  //   setExercise({...exercise, 
+  //     durationHours: e.target.value
+  //   })  
+  // }
 
-  const onChangeDurationMins = (e) => {
-    setExercise({...exercise, 
-      durationMins: e.target.value
-    })
-  }
+  // const onChangeDurationMins = (e) => {
+  //   setExercise({...exercise, 
+  //     durationMins: e.target.value
+  //   })
+  // }
 
-  const onChangeMaterials = (e) => {
-    setExercise({...exercise, 
-      materials: e.target.value
-    })
-  }
+  // const onChangeMaterials = (e) => {
+  //   setExercise({...exercise, 
+  //     materials: e.target.value
+  //   })
+  // }
 
-  const onChangeInstructions = (e) => {
-    setExercise({...exercise,
-      instructions: e.target.value
-    })
-  }
+  // const onChangeInstructions = (e) => {
+  //   setExercise({...exercise,
+  //     instructions: e.target.value
+  //   })
+  // }
 
-  const onChangeYoutube = (e) => {
-    validateYT(e.target.value); 
-    setExercise({...exercise,
-      youtube: e.target.value
-    })
-  }
+  // const onChangeYoutube = (e) => {
+  //   validateYT(e.target.value); 
+  //   setExercise({...exercise,
+  //     youtube: e.target.value
+  //   })
+  // }
 
-  const onChangePicture = (e) => {
-    var fileReader = new FileReader();
-    fileReader.readAsDataURL(e.target.files[0]);
-    fileReader.onload = () => {
-      console.log(fileReader.result)
-      setExercise({ ...exercise, picture: fileReader.result });
-    };
-    fileReader.onerror = (error) => {
-      console.log(error)
-    }
-  };
+  // const onChangePicture = (e) => {
+  //   var fileReader = new FileReader();
+  //   fileReader.readAsDataURL(e.target.files[0]);
+  //   fileReader.onload = () => {
+  //     console.log(fileReader.result)
+  //     setExercise({ ...exercise, picture: fileReader.result });
+  //   };
+  //   fileReader.onerror = (error) => {
+  //     console.log(error)
+  //   }
+  // };
  
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     const updatedExercise = {
-      title: exercise.title,
-      creator: exercise.creator,
-      age: exercise.age,
-      number: exercise.number,
-      durationHours: exercise.durationHours,
-      durationMins: exercise.durationMins,
-      materials: exercise.materials,
-      instructions: exercise.instructions,
-      youtube: exercise.youtube,
-      picture: exercise.picture,
+      title: lesson.title,
+      // creator: exercise.creator,
+      // age: exercise.age,
+      // number: exercise.number,
+      // durationHours: exercise.durationHours,
+      // durationMins: exercise.durationMins,
+      // materials: exercise.materials,
+      // instructions: exercise.instructions,
+      // youtube: exercise.youtube,
+      // picture: exercise.picture,
     };
 
     console.log(updatedExercise);
 
     axios
       .post(
-        `http://localhost:5001/exercises/update/${id}`, 
+        `http://localhost:5001/lessons/update/${id}`, 
         updatedExercise,
         {
           headers: {
@@ -166,7 +166,7 @@ function EditLesson() {
         })
       .then((res) => {
         console.log(res.data)
-        navigate('/admin/exercises-list', { replace: true });
+        // navigate('/lessons-list', { replace: true });
       }).catch((error) => {
         // Handle errors here
         console.error(error);
@@ -176,18 +176,18 @@ function EditLesson() {
 
   return (
     <div>
-      <h3>Edit Exercise Log</h3>
+      {/* <h3>Edit Exercise Log</h3> */}
       <form onSubmit={onSubmit}>
       <div className="form-group"> 
           <label>Title: </label>
           <input type="text"
               required
               className="form-control"
-              value={exercise.title}
+              value={lesson.title}
               onChange={onChangeTitle}
               />
         </div>
-        <div className="form-group"> 
+        {/* <div className="form-group"> 
           <label>Creator: </label>
           <input type="text"
               required
@@ -277,7 +277,7 @@ function EditLesson() {
               // value={exercise.picture}
               onChange={onChangePicture}
               />
-        </div>
+        </div> */}
 
         <div className="form-group">
           <input

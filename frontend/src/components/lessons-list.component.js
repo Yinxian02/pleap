@@ -17,7 +17,8 @@ const Lesson = props => (
     <td>{props.exercise.youtube}</td> */}
     {/* <td><img width="100" src={props.exercise.picture} alt="error"/></td> */}
     <td>
-      <Link to={"lessons/edit-lesson/"+props.lesson._id}>edit</Link> | <a href="#" onClick={() => { props.deleteLesson(props.lesson._id) }}>delete</a>
+      <Link to={"/lessons/edit-lesson/"+props.lesson._id}>edit</Link> | 
+      <a href="#" onClick={() => { props.deleteLesson(props.lesson._id) }}>delete</a>
     </td>
   </tr>
 )
