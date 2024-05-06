@@ -131,7 +131,7 @@ function Profile() {
             <span className="button-link">
               <Link to="/profile-quiz">
                 <button>
-                Find out your learning style.
+                Retake learning preferences test
                 </button> 
               </Link> 
             </span> 
