@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const lessonSchema = new Schema({
   title: {type: String, required: true },
+  lessonObjectives: [{type: String, required: false}],
   // creator: {type: String, required: true},
   // age: {type: String, required: true},
   // number: {type: Number, required: true },

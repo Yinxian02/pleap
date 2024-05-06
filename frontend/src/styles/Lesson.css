@@ -39,6 +39,7 @@
 
 .lesson-row {
     position: relative;
+    margin-bottom: 10; 
 }
 
 .objectives-row { 
@@ -64,4 +65,15 @@
     background: none;
     border: none;
     cursor: pointer;
+}
+
+.save-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+
+.save-btn {
+    margin-left: 10;
 }

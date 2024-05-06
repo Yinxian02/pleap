@@ -12,6 +12,7 @@ router.route('/').get(verifyRoles(ROLES_LIST.User), async (req, res) => {
 router.route('/add').post(verifyRoles(ROLES_LIST.User),(req, res) => {
   console.log("adding lesson route")
   const title = req.body.lesson.title;
+  const lessonObjectives = req.body.lesson.lessonObjectives;
   // const creator = req.body.lesson.creator;
   // const age = req.body.lesson.age;
   // const number = req.body.lesson.number;
@@ -24,6 +25,7 @@ router.route('/add').post(verifyRoles(ROLES_LIST.User),(req, res) => {
 
   const newLesson = new Lesson({
     title,
+    lessonObjectives
     // creator,
     // age,
     // number,
@@ -56,6 +58,7 @@ router.route('/update/:id').post(verifyRoles(ROLES_LIST.Admin),(req, res) => {
   Lesson.findById(req.params.id)
     .then(lesson => {
       lesson.title = req.body.title;
+      lesson.lessonObjectives = req.body.lessonObjectives;
       // lesson.creator = req.body.creator;
       // lesson.age = req.body.age;
       // lesson.number = req.body.number;
