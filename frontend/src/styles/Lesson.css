@@ -36,3 +36,32 @@
 .input-field { 
     width: 100%;
 }
+
+.lesson-row {
+    position: relative;
+}
+
+.objectives-row { 
+    display: flex;
+    justify-content: space-between;
+}
+
+.objectives-label {
+    display: flex;
+}
+
+.add-btn {
+    margin-top: 0; 
+    margin-left: 10;
+}
+
+.remove-btn {
+    all: initial;
+    position: absolute;
+    top: 50%;
+    right: 5px; /* Adjust this value as needed */
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}

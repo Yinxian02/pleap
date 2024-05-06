@@ -1528,3 +1528,11 @@
 20240506	18:21:00	77c0de37-2893-4cc3-b243-fc64a8a96352	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
 20240506	18:21:03	8177a028-ec19-41cb-b6f4-770120c5518f	OPTIONS	http://localhost:3000	/lessons/
 20240506	18:21:03	f3edd5d7-0540-473d-99fe-fc2d4b4738fe	GET	http://localhost:3000	/lessons/
+20240506	19:31:44	c8eb1fef-9828-4577-927e-492c6a4d3d55	OPTIONS	http://localhost:3000	/lessons/
+20240506	19:31:44	4c2b3995-8075-48d8-a3e7-e0ea203b4cba	GET	http://localhost:3000	/lessons/
+20240506	19:36:07	d62b2695-da75-4c75-950c-351dcadad812	OPTIONS	http://localhost:3000	/lessons/
+20240506	19:36:07	d637e3b1-8988-44b6-9f0c-477a1041e92a	GET	http://localhost:3000	/lessons/
+20240506	19:36:38	d478ebb7-165b-4283-b7be-8246a7e5ee46	OPTIONS	http://localhost:3000	/lessons/
+20240506	19:36:38	a70dc4c4-3e6b-4d56-be1c-2a3c7472df94	GET	http://localhost:3000	/lessons/
+20240506	19:45:40	12c6a297-e4d2-4da5-afc3-aac3256a31d8	GET	http://localhost:3000	/lessons/
+20240506	19:45:40	07dc1f90-d522-4199-8705-06511b24188e	OPTIONS	http://localhost:3000	/lessons/
