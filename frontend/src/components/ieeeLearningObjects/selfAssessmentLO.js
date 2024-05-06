@@ -10,9 +10,4 @@ selfAssessmentLO.educational.interactivityType = "expositive";
 selfAssessmentLO.educational.learningResourceType = "self assessment"; 
 selfAssessmentLO.educational.interactivityLevel = "low"; 
 
-selfAssessmentLO.learningPreferencesValues.activeReflexive = 1;
-selfAssessmentLO.learningPreferencesValues.sensingIntuitive = 0;
-selfAssessmentLO.learningPreferencesValues.visualVerbal = 0;
-selfAssessmentLO.learningPreferencesValues.sequentialGlobal = 0;
-
 export { selfAssessmentLO };

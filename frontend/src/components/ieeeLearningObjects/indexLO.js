@@ -8,11 +8,6 @@ indexLO.technical.format = "html";
 indexLO.technical.location = indexLO.technical.location + "/index";
 indexLO.educational.interactivityType = "expositive";  
 indexLO.educational.learningResourceType = "index"; 
-indexLO.educational.interactivityLevel = "medium";  
-
-indexLO.learningPreferencesValues.activeReflexive = 1;
-indexLO.learningPreferencesValues.sensingIntuitive = 0;
-indexLO.learningPreferencesValues.visualVerbal = 0;
-indexLO.learningPreferencesValues.sequentialGlobal = 1;
+indexLO.educational.interactivityLevel = "medium"; 
 
 export { indexLO };

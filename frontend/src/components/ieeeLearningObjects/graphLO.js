@@ -10,9 +10,4 @@ graphLO.educational.interactivityType = "expositive";
 graphLO.educational.learningResourceType = "graph"; 
 graphLO.educational.interactivityLevel = "low";  
 
-graphLO.learningPreferencesValues.activeReflexive = 1;
-graphLO.learningPreferencesValues.sensingIntuitive = 0;
-graphLO.learningPreferencesValues.visualVerbal = 0;
-graphLO.learningPreferencesValues.sequentialGlobal = 0;
-
 export { graphLO };

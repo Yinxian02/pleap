@@ -10,9 +10,4 @@ exerciseLO.educational.interactivityType = "active"; // exercise - find solution
 exerciseLO.educational.learningResourceType = "exercise"; 
 exerciseLO.educational.interactivityLevel = "low"; // written set of instructions that solicit activity
 
-exerciseLO.learningPreferencesValues.activeReflexive = 0;
-exerciseLO.learningPreferencesValues.sensingIntuitive = 0;
-exerciseLO.learningPreferencesValues.visualVerbal = 0;
-exerciseLO.learningPreferencesValues.sequentialGlobal = 0;
-
 export { exerciseLO };

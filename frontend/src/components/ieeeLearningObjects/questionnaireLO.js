@@ -10,9 +10,4 @@ questionnaireLO.educational.interactivityType = "active";
 questionnaireLO.educational.learningResourceType = "questionnaire"; 
 questionnaireLO.educational.interactivityLevel = "high"; 
 
-questionnaireLO.learningPreferencesValues.activeReflexive = 0;
-questionnaireLO.learningPreferencesValues.sensingIntuitive = 1;
-questionnaireLO.learningPreferencesValues.visualVerbal = 0;
-questionnaireLO.learningPreferencesValues.sequentialGlobal = 0;
-
 export { questionnaireLO };

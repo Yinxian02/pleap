@@ -10,9 +10,4 @@ narrativeTextLO.educational.interactivityType = "expositive";
 narrativeTextLO.educational.learningResourceType = "narrative text"; 
 narrativeTextLO.educational.interactivityLevel = "low"; 
 
-narrativeTextLO.learningPreferencesValues.activeReflexive = 1;
-narrativeTextLO.learningPreferencesValues.sensingIntuitive = 1;
-narrativeTextLO.learningPreferencesValues.visualVerbal = 1;
-narrativeTextLO.learningPreferencesValues.sequentialGlobal = 0;
-
 export { narrativeTextLO };

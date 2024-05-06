@@ -24,11 +24,5 @@ export const learningObject = {
         interactivityLevel: "", 
         context: "higher education",
         difficulty: "",
-    }, 
-    learningPreferencesValues: {
-        activeReflexive: 0,
-        sensingIntuitive: 0,
-        visualVerbal: 0,
-        sequentialGlobal: 0
     }
 };

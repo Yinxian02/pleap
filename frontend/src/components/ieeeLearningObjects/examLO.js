@@ -10,9 +10,4 @@ examLO.educational.interactivityType = "active";
 examLO.educational.learningResourceType = "exam"; 
 examLO.educational.interactivityLevel = "low"; 
 
-examLO.learningPreferencesValues.activeReflexive = 0;
-examLO.learningPreferencesValues.sensingIntuitive = 1;
-examLO.learningPreferencesValues.visualVerbal = 0;
-examLO.learningPreferencesValues.sequentialGlobal = 0;
-
 export { examLO };

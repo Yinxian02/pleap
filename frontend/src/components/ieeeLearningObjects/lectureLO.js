@@ -10,9 +10,4 @@ lectureLO.educational.interactivityType = "expositive";
 lectureLO.educational.learningResourceType = "lecture"; 
 lectureLO.educational.interactivityLevel = "low"; 
 
-lectureLO.learningPreferencesValues.activeReflexive = 1;
-lectureLO.learningPreferencesValues.sensingIntuitive = 1;
-lectureLO.learningPreferencesValues.visualVerbal = 1;
-lectureLO.learningPreferencesValues.sequentialGlobal = 0;
-
 export { lectureLO };

@@ -10,9 +10,4 @@ figureLO.educational.interactivityType = "expositive";
 figureLO.educational.learningResourceType = "figure"; 
 figureLO.educational.interactivityLevel = "low";  
 
-figureLO.learningPreferencesValues.activeReflexive = 1;
-figureLO.learningPreferencesValues.sensingIntuitive = 0;
-figureLO.learningPreferencesValues.visualVerbal = 0;
-figureLO.learningPreferencesValues.sequentialGlobal = 0;
-
 export { figureLO };

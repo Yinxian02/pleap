@@ -10,9 +10,4 @@ experimentLO.educational.interactivityType = "active";
 experimentLO.educational.learningResourceType = "experiment"; 
 experimentLO.educational.interactivityLevel = "low"; 
 
-experimentLO.learningPreferencesValues.activeReflexive = 0;
-experimentLO.learningPreferencesValues.sensingIntuitive = 0;
-experimentLO.learningPreferencesValues.visualVerbal = 0;
-experimentLO.learningPreferencesValues.sequentialGlobal = 0;
-
 export { experimentLO };

@@ -10,9 +10,4 @@ tableLO.educational.interactivityType = "expositive";
 tableLO.educational.learningResourceType = "table"; 
 tableLO.educational.interactivityLevel = "low"; 
 
-tableLO.learningPreferencesValues.activeReflexive = 1;
-tableLO.learningPreferencesValues.sensingIntuitive = 0;
-tableLO.learningPreferencesValues.visualVerbal = 0;
-tableLO.learningPreferencesValues.sequentialGlobal = 0;
-
 export { tableLO };

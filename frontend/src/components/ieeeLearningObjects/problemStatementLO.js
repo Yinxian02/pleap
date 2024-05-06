@@ -10,9 +10,4 @@ problemStatementLO.educational.interactivityType = "expositive";
 problemStatementLO.educational.learningResourceType = "problem statement"; 
 problemStatementLO.educational.interactivityLevel = "low"; 
 
-problemStatementLO.learningPreferencesValues.activeReflexive = 0;
-problemStatementLO.learningPreferencesValues.sensingIntuitive = 1;
-problemStatementLO.learningPreferencesValues.visualVerbal = 0;
-problemStatementLO.learningPreferencesValues.sequentialGlobal = 0;
-
 export { problemStatementLO };
