@@ -3,111 +3,112 @@ import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import validator from 'validator'
+import "../styles/Lesson.css";
 
-export default function CreateExercise() {
+export default function CreateLesson() {
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const { auth } = useContext(AuthContext);
 
-  const validateYT = (value) => {
+  // const validateYT = (value) => {
     
-    if (validator.isURL(value)) {
-      setYTErrorMessage('')
-    } else {
-      setYTErrorMessage('Invalid URL')
-    }
-  }
+  //   if (validator.isURL(value)) {
+  //     setYTErrorMessage('')
+  //   } else {
+  //     setYTErrorMessage('Invalid URL')
+  //   }
+  // }
 
-  const [ytErrorMessage, setYTErrorMessage] = useState('')
-  const [exercise, setExercise] = useState({
+  // const [ytErrorMessage, setYTErrorMessage] = useState('')
+  const [lesson, setLesson] = useState({
     title: '',
-    creator: '',
-    age: '',
-    number: 0,
-    durationHours: 0,
-    durationMins: 0,
-    materials: '',
-    instructions: '',
-    youtube: '',
-    picture: '',
+    // creator: '',
+    // age: '',
+    // number: 0,
+    // durationHours: 0,
+    // durationMins: 0,
+    // materials: '',
+    // instructions: '',
+    // youtube: '',
+    // picture: '',
   });
 
   const onChangeTitle = (e) => {
-      setExercise({...exercise, 
+      setLesson({...lesson, 
         title: e.target.value
       })
     }
       
-  const onChangeCreator = (e) =>{
-      setExercise({...exercise, 
-        creator: e.target.value
-      })
-  }
+  // const onChangeCreator = (e) =>{
+  //     setExercise({...exercise, 
+  //       creator: e.target.value
+  //     })
+  // }
       
-  const onChangeAge = (e) =>{
-    setExercise({...exercise, 
-      age: e.target.value
-    })
-  }
+  // const onChangeAge = (e) =>{
+  //   setExercise({...exercise, 
+  //     age: e.target.value
+  //   })
+  // }
     
-  const onChangeNumber = (e) =>{
-    setExercise({...exercise, 
-      number: e.target.value
-    })
-  }
+  // const onChangeNumber = (e) =>{
+  //   setExercise({...exercise, 
+  //     number: e.target.value
+  //   })
+  // }
     
-  const onChangeDurationHours = (e) =>{
-    setExercise({...exercise,
-      durationHours: e.target.value
-    })
-  }
+  // const onChangeDurationHours = (e) =>{
+  //   setExercise({...exercise,
+  //     durationHours: e.target.value
+  //   })
+  // }
     
-  const onChangeDurationMins = (e) =>{
-    setExercise({...exercise,
-      durationMins: e.target.value
-    })
-  }
+  // const onChangeDurationMins = (e) =>{
+  //   setExercise({...exercise,
+  //     durationMins: e.target.value
+  //   })
+  // }
     
-  const onChangeMaterials = (e) =>{
-    setExercise({...exercise,
-      materials: e.target.value
-    })
-  }
+  // const onChangeMaterials = (e) =>{
+  //   setExercise({...exercise,
+  //     materials: e.target.value
+  //   })
+  // }
     
-  const onChangeInstructions = (e) =>{
-    setExercise({...exercise,
-      instructions: e.target.value
-    })
-  }
+  // const onChangeInstructions = (e) =>{
+  //   setExercise({...exercise,
+  //     instructions: e.target.value
+  //   })
+  // }
     
-  const onChangeYoutube = (e) =>{
-    validateYT(e.target.value); 
-    setExercise({...exercise,
-      youtube: e.target.value
-    })
-  }
+  // const onChangeYoutube = (e) =>{
+  //   validateYT(e.target.value); 
+  //   setExercise({...exercise,
+  //     youtube: e.target.value
+  //   })
+  // }
     
-  const onChangePicture = (e) =>{
-        var fileReader = new FileReader();
-        fileReader.readAsDataURL(e.target.files[0]);
-        fileReader.onload = () => {
-          console.log(fileReader.result)
-          setExercise({...exercise,
-            picture: fileReader.result,
-          })
-        };
-        fileReader.onerror = (error) => {
-          console.log(error)
-        }
-      }
+  // const onChangePicture = (e) =>{
+  //       var fileReader = new FileReader();
+  //       fileReader.readAsDataURL(e.target.files[0]);
+  //       fileReader.onload = () => {
+  //         console.log(fileReader.result)
+  //         setExercise({...exercise,
+  //           picture: fileReader.result,
+  //         })
+  //       };
+  //       fileReader.onerror = (error) => {
+  //         console.log(error)
+  //       }
+  //     }
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     axios
       .post(
-        'http://localhost:5001/exercises/add',
-        JSON.stringify({ exercise }),
+        'http://localhost:5001/lessons/add',
+        JSON.stringify({ lesson }),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -119,7 +120,7 @@ export default function CreateExercise() {
         console.log(res.data);
 
         // Redirect to the "/admin" route after a successful submission
-        navigate('/admin/exercises-list', { replace: true });
+        navigate('/lessons/lessons-list', { replace: true });
       })
       .catch((error) => {
         // Handle errors here
@@ -129,19 +130,19 @@ export default function CreateExercise() {
 
 
   return (
-    <div>
-      <h3>Create New Exercise Log</h3>
+    <div className="create-lesson-container">
+      {/* <h3>Create New Exercise Log</h3> */}
       <form onSubmit={onSubmit}>
          <div className="form-group"> 
           <label>Title: </label>
           <input type="text"
               required
               className="form-control"
-              value={exercise.title}
+              value={lesson.title}
               onChange={onChangeTitle}
               />
         </div>
-        <div className="form-group"> 
+        {/* <div className="form-group"> 
           <label>Creator: </label>
           <input type="text"
               required
@@ -231,12 +232,12 @@ export default function CreateExercise() {
               // value={this.state.picture}
               onChange={onChangePicture}
               />
-        </div>
+        </div> */}
 
 
 
         <div className="form-group">
-          <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
+          <input type="submit" value="Create Lesson" className="btn btn-primary" />
         </div>
       </form>
     </div>

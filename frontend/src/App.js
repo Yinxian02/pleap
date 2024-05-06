@@ -7,13 +7,13 @@ import Signup from './pages/Signup'
 
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import Profile from './pages/Profile'
-import Classes from './pages/Classes'
+import Lessons from './pages/Lessons'
 import RequireAuth from './components/RequireAuth';
 import Missing from './pages/Missing';
 
-import ExercisesList from './components/exercises-list.component'
-import CreateExercise from './components/create-exercise.component'
-import EditExercise from './components/edit-exercise.component'
+import LessonsList from './components/lessons-list.component'
+import CreateLesson from './components/create-lesson.component'
+import EditLesson from './components/edit-lesson.component'
 import ProfileQuiz from './components/profile-quiz.component'
 
 const ROLES = {
@@ -39,10 +39,10 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path='profile' element={<Profile/>}/>
               <Route path='profile-quiz' element={<ProfileQuiz/>}/>
-              <Route path='classes' element={<Classes/>}>
-                <Route path='exercises-list' element={<ExercisesList/>}/> 
-                <Route path='create-exercise' element={<CreateExercise/>}/> 
-                <Route path= 'edit-exercise/:id' element={<EditExercise/>} />
+              <Route path='lessons' element={<Lessons/>}>
+                <Route path='lessons-list' element={<LessonsList/>}/> 
+                <Route path='create-lesson' element={<CreateLesson/>}/> 
+                <Route path= 'edit-lesson/:id' element={<EditLesson/>} />
               </Route>
             </Route>
 

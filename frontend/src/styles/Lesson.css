@@ -1,0 +1,30 @@
+.lessons-nav {
+    height: 50px;
+    background-color: var(--hoverColor);
+    padding-left: 50px; 
+    padding-right: 50px; 
+    padding-top: 10px;
+}
+
+.lessons-nav-item {
+    padding-right: 50px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.lessons-nav-item:hover {
+    font-weight: bold;
+}
+
+.lessons-nav-item.active{
+    text-decoration: underline;
+}
+
+.create-lesson-container {
+    width: 100%; 
+    padding: 20vh; 
+    padding-top: 10vh; 
+    display: flex;
+    flex-direction: column; 
+}
+  

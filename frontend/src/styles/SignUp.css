@@ -3,9 +3,13 @@
     justify-content: center; /* Horizontally center the content */
     align-items: center; /* Vertically center the content */
     height: 90vh; /* Full height of the viewport */
-    /* background-color: var(--inputContainerColor); */
 }
   
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 
 .instructions {
     font-size: 0.75rem;

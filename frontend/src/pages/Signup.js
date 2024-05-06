@@ -179,8 +179,7 @@ const Signup = () => {
                             Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
                         </p>
 
-                        <br/>
-
+                        <br/> 
 
                         <label htmlFor="confirm_pwd">
                             Confirm Password:
@@ -203,7 +202,7 @@ const Signup = () => {
                             Must match the first password input field.
                         </p>
 
-                        <br/>
+                        <br/><br/>
                         <button>Sign Up</button>
                         {/* <button disabled={!validEmail || !validPassword || !validMatch ? true : false}>Sign Up</button> */}
                     </form>

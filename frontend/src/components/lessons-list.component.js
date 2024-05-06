@@ -4,51 +4,51 @@ import axios from 'axios';
 
 import AuthContext from "../context/AuthContext";
 
-const Exercise = props => (
+const Lesson = props => (
   <tr>
-    <td>{props.exercise.title}</td>
-    <td>{props.exercise.creator}</td>
+    <td>{props.lesson.title}</td>
+    {/* <td>{props.exercise.creator}</td>
     <td>{props.exercise.age}</td>
     <td>{props.exercise.number}</td>
     <td>{props.exercise.durationHours}</td>
     <td>{props.exercise.durationMins}</td>
     <td>{props.exercise.materials}</td>
     <td>{props.exercise.instructions}</td>
-    <td>{props.exercise.youtube}</td>
-    <td><img width="100" src={props.exercise.picture} alt="error"/></td>
+    <td>{props.exercise.youtube}</td> */}
+    {/* <td><img width="100" src={props.exercise.picture} alt="error"/></td> */}
     <td>
-      <Link to={"/admin/edit-exercise/"+props.exercise._id}>edit</Link> | <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
+      <Link to={"lessons/edit-lesson/"+props.lesson._id}>edit</Link> | <a href="#" onClick={() => { props.deleteLesson(props.lesson._id) }}>delete</a>
     </td>
   </tr>
 )
 
-export default class ExercisesList extends Component {
+export default class LessonsList extends Component {
   static contextType = AuthContext;
 
   constructor(props) {
     super(props);
 
-    this.deleteExercise = this.deleteExercise.bind(this)
+    this.deleteLesson = this.deleteLesson.bind(this)
 
-    this.state = {exercises: []};
+    this.state = {lessons: []};
   }
 
   componentDidMount() {
-      axios.get('http://localhost:5001/exercises/', {
+      axios.get('http://localhost:5001/lessons/', {
         headers: {
           Authorization: 'Bearer ' + this.context.auth.accessToken,
       } 
       })
       .then(response => {
-        this.setState({ exercises: response.data })
+        this.setState({ lessons: response.data })
       })
       .catch((error) => {
         console.log(error);
       })
 }
 
-  deleteExercise(id) {
-    axios.delete('http://localhost:5001/exercises/'+id, {
+  deleteLesson(id) {
+    axios.delete('http://localhost:5001/lessons/'+id, {
         headers: {
           Authorization: 'Bearer ' + this.context.auth.accessToken,
       } 
@@ -56,25 +56,25 @@ export default class ExercisesList extends Component {
       .then(response => { console.log(response.data)});
 
     this.setState({
-      exercises: this.state.exercises.filter(el => el._id !== id)
+      lessons: this.state.lessons.filter(el => el._id !== id)
     })
   }
 
-  exerciseList() {
-    return this.state.exercises.map(currentexercise => {
-      return <Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id}/>;
+  lessonsList() {
+    return this.state.lessons.map(currentlesson => {
+      return <Lesson lesson={currentlesson} deleteLesson={this.deleteLesson} key={currentlesson._id}/>;
     })
   }
 
   render() {
     return (
       <div>
-        <h3>Logged Exercises</h3>
+        {/* <h3>Logged Exercises</h3> */}
         <table className="table">
           <thead className="thead-light">
             <tr>
               <th>Title</th>
-              <th>Creator</th>
+              {/* <th>Creator</th>
               <th>Age</th>
               <th>Number</th>
               <th>Duration (Hours)</th>
@@ -82,11 +82,11 @@ export default class ExercisesList extends Component {
               <th>Materials</th>
               <th>Instructions</th>
               <th>Youtube</th>
-              <th>Picture</th>
+              <th>Picture</th> */}
             </tr>
           </thead>
           <tbody>
-            { this.exerciseList() }
+            { this.lessonsList() }
           </tbody>
         </table>
       </div>

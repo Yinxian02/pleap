@@ -7,7 +7,7 @@
   --componentColorDark: #171717; 
   --hoverColor: rgba(255, 255, 255, 0.1);
   --hoverShadowColor: rgba(0, 0, 0, 0.2); 
-  --inputColor: rgba(255, 255, 255, 0.2);
+  --inputColor: rgba(255, 255, 255, 0.283);
   --buttonColor: #C0C0C2; 
 }
 
@@ -108,9 +108,12 @@ body {
 .transparent-input {
   background-color:  var(--inputColor);
   border-radius: 5px;
-  width: 300px
+  width: 300px;
+  padding: 5px; 
+  align-items: right;
   /* Add any other styling for the input field */
 }
+
 
 button {
   background-color: var(--buttonColor);

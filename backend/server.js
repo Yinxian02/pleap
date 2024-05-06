@@ -38,7 +38,7 @@ app.use('/logout', require('./routes/logout'));
 
 app.use(requireAuth);
 app.use('/users', require('./routes/api/users'));
-app.use('/exercises', require('./routes/api/exercises'));
+app.use('/lessons', require('./routes/api/lessons'));
 
 app.all('*', (req, res) => {
   res.status(404);

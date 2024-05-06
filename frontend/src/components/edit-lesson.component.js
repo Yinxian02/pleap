@@ -7,7 +7,7 @@ import AuthContext from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import validator from 'validator'
 
-function EditExercise() {
+function EditLesson() {
   const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
 
@@ -291,4 +291,4 @@ function EditExercise() {
   );
 }
 
-export default EditExercise;
+export default EditLesson;
