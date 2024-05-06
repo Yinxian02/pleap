@@ -29,3 +29,10 @@
     flex-direction: column; 
 }
   
+.input-label {
+    font-weight: bold;
+}
+
+.input-field { 
+    width: 100%;
+}

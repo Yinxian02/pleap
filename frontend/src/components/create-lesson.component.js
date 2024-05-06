@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import validator from 'validator'
+// import validator from 'validator'
 import "../styles/Lesson.css";
 
 export default function CreateLesson() {
@@ -20,67 +20,37 @@ export default function CreateLesson() {
   // }
 
   // const [ytErrorMessage, setYTErrorMessage] = useState('')
+
+  const [title, setTitle] = useState('');
+  const [lessonObjectivesList, setLessonObjectives] = useState([{lessonObjective: ""}])
   const [lesson, setLesson] = useState({
-    title: '',
-    // creator: '',
-    // age: '',
-    // number: 0,
-    // durationHours: 0,
-    // durationMins: 0,
-    // materials: '',
-    // instructions: '',
-    // youtube: '',
-    // picture: '',
-  });
+        title: useState(''),
+        author: '',
+        lessonObjectives: useState([{}])
+  })
 
   const onChangeTitle = (e) => {
-      setLesson({...lesson, 
-        title: e.target.value
-      })
+      setTitle(e.target.value)
     }
-      
-  // const onChangeCreator = (e) =>{
-  //     setExercise({...exercise, 
-  //       creator: e.target.value
-  //     })
-  // }
-      
-  // const onChangeAge = (e) =>{
-  //   setExercise({...exercise, 
-  //     age: e.target.value
-  //   })
-  // }
-    
-  // const onChangeNumber = (e) =>{
-  //   setExercise({...exercise, 
-  //     number: e.target.value
-  //   })
-  // }
-    
-  // const onChangeDurationHours = (e) =>{
-  //   setExercise({...exercise,
-  //     durationHours: e.target.value
-  //   })
-  // }
-    
-  // const onChangeDurationMins = (e) =>{
-  //   setExercise({...exercise,
-  //     durationMins: e.target.value
-  //   })
-  // }
-    
-  // const onChangeMaterials = (e) =>{
-  //   setExercise({...exercise,
-  //     materials: e.target.value
-  //   })
-  // }
-    
-  // const onChangeInstructions = (e) =>{
-  //   setExercise({...exercise,
-  //     instructions: e.target.value
-  //   })
-  // }
-    
+  
+  const onChangeLessonObjectives = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...lessonObjectivesList];
+    list[index][name] = value;
+    setLessonObjectives(list);
+  }; 
+
+  const addLessonObjective = () => {
+    setLessonObjectives([...lessonObjectivesList, { lessonObjective: "" }]);
+  };
+
+  const deleteLessonObjective = (index) => {
+    const list = [...lessonObjectivesList];
+    list.splice(index, 1);
+    setLessonObjectives(list);
+  };
+
+
   // const onChangeYoutube = (e) =>{
   //   validateYT(e.target.value); 
   //   setExercise({...exercise,
@@ -105,6 +75,8 @@ export default function CreateLesson() {
   const onSubmit = (e) => {
     e.preventDefault();
 
+
+
     axios
       .post(
         'http://localhost:5001/lessons/add',
@@ -118,7 +90,6 @@ export default function CreateLesson() {
       )
       .then((res) => {
         console.log(res.data);
-
         // Redirect to the "/admin" route after a successful submission
         navigate('/lessons/lessons-list', { replace: true });
       })
@@ -134,82 +105,61 @@ export default function CreateLesson() {
       {/* <h3>Create New Exercise Log</h3> */}
       <form onSubmit={onSubmit}>
          <div className="form-group"> 
-          <label>Title: </label>
+          <label className="input-label">Lesson Title: </label>
+          <br/>
           <input type="text"
               required
-              className="form-control"
-              value={lesson.title}
+              className="input-field  transparent-input"
+              value={title}
               onChange={onChangeTitle}
               />
         </div>
-        {/* <div className="form-group"> 
-          <label>Creator: </label>
-          <input type="text"
-              required
-              className="form-control"
-              value={exercise.creator}
-              onChange={onChangeCreator}
-              />
-        </div>
+
+        <br/>
+
         <div className="form-group"> 
-          <label>Age: </label>
-          <input type="text"
-              required
-              className="form-control"
-              value={exercise.age}
-              onChange={onChangeAge}
-              />
-        </div>
-        <div className="form-group">
-          <label>Number of students: </label>
-          <input 
-              type="text" 
-              className="form-control"
-              value={exercise.number}
-              onChange={onChangeNumber}
-              />
-        </div>
-        <div className="form-group">
-          <label>Hours: </label>
-          <input 
-              type="text" 
-              className="form-control"
-              value={exercise.durationHours}
-              onChange={onChangeDurationHours}
-              />
-        </div>
-        <div className="form-group">
-          <label>Minutes: </label>
-          <input 
-              type="text" 
-              className="form-control"
-              value={exercise.durationMins}
-              onChange={onChangeDurationMins}
-              />
+          <label className="input-label">Author: </label>
+          <p className="input-field  transparent-input detail">{auth.email}</p>
         </div>
 
-        <div className="form-group">
-          <label>Materials: </label>
-          <input 
-              type="text" 
-              className="form-control"
-              value={exercise.materials}
-              onChange={onChangeMaterials}
-              />
-        </div>
+        <br/>
 
-        <div className="form-group">
-          <label>Instructions: </label>
-          <input 
-              type="text" 
-              className="form-control"
-              value={exercise.instructions}
-              onChange={onChangeInstructions}
-              />
+        <div className="form-group"> 
+          <label className="input-label">Lesson Objectives: </label>
+          {lessonObjectivesList.map((singleLessonObjective, index) => (
+            <div key={index} className="objectives">
+              <div className="first-division">
+                {lessonObjectivesList.length - 1 === index && lessonObjectivesList.length < 4 && (
+                  <button type="button" onClick={addLessonObjective} className="add-btn"> 
+                    Add Lesson Objective 
+                  </button>
+                )}
+                <input
+                  name="service"
+                  type="text"
+                  id="service"
+                  value={singleLessonObjective.lessonObjective}
+                  onChange={(e) => onChangeLessonObjectives(e, index)}
+                  required
+                />
+              </div>
+              <div className="second-division">
+                {lessonObjectivesList.length !== 1 && (
+                  <button
+                    type="button"
+                    onClick={() => deleteLessonObjective(index)}
+                    className="remove-btn"
+                  >
+                    <span>Remove</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
-
         
-        <div className="form-group">
+  
+        {/* /* <div className="form-group">
           <label>Youtube: </label>
           <input 
               type="text" 
@@ -232,13 +182,10 @@ export default function CreateLesson() {
               // value={this.state.picture}
               onChange={onChangePicture}
               />
-        </div> */}
+        </div> */ }
 
 
-
-        <div className="form-group">
-          <input type="submit" value="Create Lesson" className="btn btn-primary" />
-        </div>
+        <button>Create Lesson</button>
       </form>
     </div>
   );

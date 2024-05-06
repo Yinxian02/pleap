@@ -8,10 +8,6 @@ const Lesson = props => (
   <tr>
     <td>{props.lesson.title}</td>
     {/* <td>{props.exercise.creator}</td>
-    <td>{props.exercise.age}</td>
-    <td>{props.exercise.number}</td>
-    <td>{props.exercise.durationHours}</td>
-    <td>{props.exercise.durationMins}</td>
     <td>{props.exercise.materials}</td>
     <td>{props.exercise.instructions}</td>
     <td>{props.exercise.youtube}</td> */}
@@ -74,7 +70,7 @@ export default class LessonsList extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>Title</th>
+              <th>Lesson Title</th>
               {/* <th>Creator</th>
               <th>Age</th>
               <th>Number</th>
