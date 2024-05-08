@@ -10,6 +10,7 @@ router.route('/').get(verifyRoles(ROLES_LIST.User), async (req, res) => {
 });
 
 router.route('/add').post(verifyRoles(ROLES_LIST.User),(req, res) => {
+  console.log(req.body)
   console.log("adding lesson route")
   const title = req.body.lesson.title;
   const lessonObjectives = req.body.lesson.lessonObjectives;

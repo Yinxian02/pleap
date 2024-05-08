@@ -11,3 +11,5 @@
 20240506	15:50:33	a3f49979-fc0c-4ef7-860e-89966ffcb809	Error: ENOENT: no such file or directory, stat '/Users/yinxianliang/Desktop/ai-enabled-pleap-a-personalised-learning-platform/backend/views/404.html'
 20240506	15:50:46	16b88f6b-d249-4cde-8497-488e0a50ab56	Error: ENOENT: no such file or directory, stat '/Users/yinxianliang/Desktop/ai-enabled-pleap-a-personalised-learning-platform/backend/views/404.html'
 20240506	15:51:58	57bf037f-5798-46d6-b858-f85f7c285de7	Error: ENOENT: no such file or directory, stat '/Users/yinxianliang/Desktop/ai-enabled-pleap-a-personalised-learning-platform/backend/views/404.html'
+20240508	12:10:40	fb27b07a-b631-4e48-a4da-6b0c67f74fc2	SyntaxError: Unexpected token " in JSON at position 0
+20240508	12:41:05	8714198c-75c7-4ddd-8c1a-a6d8d3073647	SyntaxError: Unexpected token " in JSON at position 0

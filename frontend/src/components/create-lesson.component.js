@@ -24,27 +24,21 @@ export default function CreateLesson() {
   // const [ytErrorMessage, setYTErrorMessage] = useState('')
 
   const [title, setTitle] = useState('');
-  const [lessonObjectivesList, setLessonObjectives] = useState([{lessonObjective: ""}])
-
-  const [lesson, setLesson] = useState({
-        title: useState(''),
-        author: '',
-        lessonObjectives: useState([{}])
-  })
+  const [lessonObjectivesList, setLessonObjectives] = useState([])
 
   const onChangeTitle = (e) => {
       setTitle(e.target.value)
     }
   
   const onChangeLessonObjectives = (e, index) => {
-    const { name, value } = e.target;
+    // const { name, value } = ;
     const list = [...lessonObjectivesList];
-    list[index][name] = value;
+    list[index] = e.target.value;
     setLessonObjectives(list);
   }; 
 
   const addLessonObjective = () => {
-    setLessonObjectives([...lessonObjectivesList, { lessonObjective: "" }]);
+    setLessonObjectives([...lessonObjectivesList, ""]);
   };
 
   const deleteLessonObjective = (index) => {
@@ -77,24 +71,28 @@ export default function CreateLesson() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-
+    // console.log(lessonObjectivesList)
+    // setLesson(title, lessonObjectivesList)
+    const lesson = {title: title, lessonObjectives: lessonObjectivesList}
+    console.log({lesson})
 
     axios
       .post(
         'http://localhost:5001/lessons/add',
-        JSON.stringify({ lesson }),
+        JSON.stringify({lesson}),
         {
           headers: {
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + auth.accessToken,
+            mode: 'cors',
+            withCredentials: true,
           },
         }
       )
       .then((res) => {
         console.log(res.data);
         // Redirect to the "/admin" route after a successful submission
-        navigate('/lessons/lessons-list', { replace: true });
+        // navigate('/lessons/lessons-list', { replace: true });
       })
       .catch((error) => {
         // Handle errors here
@@ -147,7 +145,6 @@ export default function CreateLesson() {
                 onChange={(e) => onChangeLessonObjectives(e, index)}
                 className="input-field transparent-input"
               />
-              {/* {lessonObjectivesList.length !== 1 && ( */}
                 <button
                   type="button"
                   onClick={() => deleteLessonObjective(index)}
@@ -155,11 +152,7 @@ export default function CreateLesson() {
                 >
                   <AiIcons.AiOutlineClose />
                 </button>
-              {/* )} */}
             </div>
-            {/* {lessonObjectivesList.length - 1 === index && lessonObjectivesList.length < 4 && (
-              
-            )} */}
           </div>
         ))}
 
