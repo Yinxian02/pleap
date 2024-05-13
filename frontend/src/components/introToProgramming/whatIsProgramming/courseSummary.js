@@ -6,7 +6,7 @@ courseSummaryLO.general.title = "Introduction to the Course";
 courseSummaryLO.general.structure = "atomic";
 courseSummaryLO.general.aggregationLevel = 1;
 
-courseSummaryLO.technical.format = "text";
+courseSummaryLO.technical.format = "text/plain";
 
 courseSummaryLO.educational.interactivityType = "expositive"
 courseSummaryLO.educational.learningResourceType = "problem statement"

@@ -9,7 +9,7 @@ const lessonSchema = new Schema({
   author: String,
   topics: [{
     title: { type: String, required: true },
-    learningObjects: [LearningObject.schema] // Accessing the schema property of the LearningObject model
+    _learningObjects: [{ type: Schema.Types.ObjectId, ref: "LearningObject"}]
     }]
   }, {
   timestamps: true,

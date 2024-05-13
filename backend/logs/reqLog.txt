@@ -1734,3 +1734,5 @@
 20240513	15:48:43	0d1959b2-b2a0-4d53-8cbf-872e6d738df2	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
 20240513	15:51:48	e0934963-54cb-49f1-93d2-c6f8f46b2dbd	OPTIONS	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
 20240513	15:51:48	af2aaf98-3e9a-4da8-b969-ea156abceddf	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240513	20:47:26	f4a0144d-62f3-4d9b-90fc-74f99bdecfd7	OPTIONS	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910
+20240513	20:47:26	9539162e-6bb8-4fdf-a9fc-d5b95668c711	GET	http://localhost:3000	/users/662fdcb6bfe0c3e26c50f910

@@ -1,9 +1,0 @@
-Title: Let's dive in! Designing a guessing game
-
-Let's dive straight into designing a game... because life is too short to waste!
-
-[https://youtu.be/Rl19zAOMGjs]
-
-Summary:
-Always try to understand the problem first before you start!
-We will now try to design an algorithm for the guessing game.
