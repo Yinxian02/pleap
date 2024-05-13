@@ -16,7 +16,7 @@ export const learningObject = {
     technical: {
         format: "", // video/mpeg, application/x-toolbook, text/html
         size: 0, // in bytes
-        location: "https://courses/",// url
+        location: "",// url
     },
     educational: {
         interactivityType: "", // active, expositive, mixed
@@ -24,5 +24,10 @@ export const learningObject = {
         interactivityLevel: "", 
         context: "higher education",
         difficulty: "",
+    },
+    content: {
+        text: "",
+        link: "",
+        image: ""
     }
 };

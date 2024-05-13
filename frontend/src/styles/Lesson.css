@@ -1,4 +1,5 @@
-.lessons-nav {
+
+/* .lessons-nav {
     height: 50px;
     background-color: var(--hoverColor);
     padding-left: 50px; 
@@ -60,7 +61,7 @@
     all: initial;
     position: absolute;
     top: 50%;
-    right: 5px; /* Adjust this value as needed */
+    right: 5px;  
     transform: translateY(-50%);
     background: none;
     border: none;
@@ -76,4 +77,17 @@
 
 .save-btn {
     margin-left: 10;
+} */
+
+.lesson-div{
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    width: 800px;
+    background-color: var(--inputColor);
+    border-radius: 4px;
+    padding: 60px 60px;
+    box-sizing: border-box; 
+    display: grid;
+    margin: 0 auto; 
+    box-shadow: 0 4px 4px var(--hoverShadowColor); 
 }

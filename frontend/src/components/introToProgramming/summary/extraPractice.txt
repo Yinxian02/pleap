@@ -1,0 +1,17 @@
+Title: Practise! Practise! Practise!
+
+We have reached the end of our first lesson.
+
+Hope you have learnt something new!
+
+Now, the key to getting better at programming is to practise, practise, and practise!
+
+Our subsequent lessons will shift towards getting you to write programs to solve interesting problems and challenges. So it will be a lot about you doing and applying rather than just listening to me talk.
+
+Your final lab test (for MSc AI students) will also be geared towards applying your problem solving skills. Hopefully you would have practised enough by then to the point where solving programming problems becomes second nature!
+
+You are also always welcome to come up with your own problems to solve. Remember - don’t just jump into coding. Think and solve the problem by developing your algorithms on paper first. If you take home only one thing from this module, it’s that!
+
+Here is a final optional challenge as an extra practice (if you have time). Convert your hot/cold/correct version of the guessing game that you developed earlier into Python code! This should be a minor modification of the one I showed. You are always welcome to use the widget below.
+
+It has been a long lesson. Take a nice long break before moving on to the next lesson! See you then!

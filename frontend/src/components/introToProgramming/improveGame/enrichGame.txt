@@ -1,0 +1,7 @@
+We will now update our guessing game so that users can make more than one guess!
+
+[https://youtu.be/aWB-IxRjmOQ]
+
+Summary:
+I have introduced you to the third main programming building block - “repetition”.
+We looked specifically at a while statement.

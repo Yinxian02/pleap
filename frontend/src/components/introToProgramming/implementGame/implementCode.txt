@@ -1,0 +1,7 @@
+Title: Implement it yourself!
+
+Now try to implement the guessing game yourself (without looking at my code).
+
+You can just use the widget below for now if you do not yet have Python installed on your computer. Lesson 2 will guide you to installing Python on your computer.
+
+Of course, feel free to run your code on your own computer if you already have Python installed.

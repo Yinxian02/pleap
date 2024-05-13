@@ -1,24 +1,18 @@
 import React from 'react';
-import { NavLink, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../styles/Lesson.css";
 
 function Lessons() {
 
-  const Navigation = () => {
-    return (
-      <nav className="lessons-nav">
-        <NavLink className="lessons-nav-item" to='lessons-list'>My Lessons</NavLink>
-        <NavLink className="lessons-nav-item" to='create-lesson'>Create Lesson</NavLink>  
-      </nav>
-    );
-  };
-
   return (
     <>
-      <Navigation/>
 
       <main>
-        <Outlet/>
+        <div className="lesson-div">
+          <Link to="/lesson">
+            <p>hi</p>
+          </Link>
+        </div>
       </main>
 
       

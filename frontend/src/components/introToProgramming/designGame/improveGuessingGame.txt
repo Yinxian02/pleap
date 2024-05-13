@@ -1,0 +1,8 @@
+Title: Improving the guessing game
+
+We will now attempt to make the guessing game more user friendly.
+[https://youtu.be/5sXO3FKS_vg]
+
+Summary:
+1. I have introduced you to a “two-way selection” block (an if-else statement)
+2. Blocks can be nested inside another (composition).

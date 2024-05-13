@@ -12,9 +12,10 @@ import RequireAuth from './components/RequireAuth';
 import Missing from './pages/Missing';
 
 import LessonsList from './components/lessons-list.component'
-import CreateLesson from './components/create-lesson.component'
-import EditLesson from './components/edit-lesson.component'
+// import CreateLesson from './components/create-lesson.component'
+// import EditLesson from './components/edit-lesson.component'
 import ProfileQuiz from './components/profile-quiz.component'
+
 
 const ROLES = {
   'User': 2001,
@@ -41,8 +42,8 @@ function App() {
               <Route path='profile-quiz' element={<ProfileQuiz/>}/>
               <Route path='lessons' element={<Lessons/>}>
                 <Route path='lessons-list' element={<LessonsList/>}/> 
-                <Route path='create-lesson' element={<CreateLesson/>}/> 
-                <Route path= 'edit-lesson/:id' element={<EditLesson/>} />
+                {/* <Route path='create-lesson' element={<CreateLesson/>}/> 
+                <Route path= 'edit-lesson/:id' element={<EditLesson/>} /> */}
               </Route>
             </Route>
 
