@@ -1,4 +1,18 @@
-Title: Challenge! Make the guessing game even more informative
+import { learningObject } from "../../learningObject";
+
+const challengeGameTextLO = {...learningObject}
+
+challengeGameTextLO.general.title = "Improving the guessing game";
+challengeGameTextLO.general.structure = "atomic";
+challengeGameTextLO.general.aggregationLevel = 1;
+
+challengeGameTextLO.technical.format = "text";
+
+challengeGameTextLO.educational.interactivityType = "active"
+challengeGameTextLO.educational.learningResourceType = "exercise"
+challengeGameTextLO.educational.interactivityLevel = "low"
+
+challengeGameTextLO.content.text = `Make the guessing game even more informative
 
 To become a good programmer, what you need to do is to practise, practise and practise!
 
@@ -15,4 +29,6 @@ After that, try making it even more informative with five degrees of correctness
 
 Try designing your program for these before moving on!
 
-And remember, think about the problem before actually writing your pseudocode!
+And remember, think about the problem before actually writing your pseudocode!`
+
+export { challengeGameTextLO };

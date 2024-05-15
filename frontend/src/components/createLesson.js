@@ -21,36 +21,37 @@ import { flowSummarySlideLO } from './introToProgramming/whatIsProgramming/flowS
 import { compilerInterpreterSlideLO } from './introToProgramming/whatIsProgramming/compilerInterpreterSlide';
 import { assemblerTranslatorSlideLO } from './introToProgramming/whatIsProgramming/assemblerTranslatorSlide';
 
-const lesson = 
-    {
+const lesson = [
+    { 
         title: "What is programming",
         learningObjects: [
             courseSummaryLO, 
 
-            whatIsProgrammingTextLO,
-            // whatIsProgrammingMentiLO,
-            // whatIsProgrammingAnsLO, 
+        //     whatIsProgrammingTextLO,
+        //     whatIsProgrammingMentiLO,
+        //     whatIsProgrammingAnsLO, 
 
-            // whatIsAProgramTextLO,
-            // whatIsAProgramMentiLO,
-            // whatIsAProgramAnsLO,
+        //     whatIsAProgramTextLO,
+        //     whatIsAProgramMentiLO,
+        //     whatIsAProgramAnsLO,
 
-            // instructingComputerTextLO,
-            // instructingComputerLectureLO,
+        //     instructingComputerTextLO,
+        //     instructingComputerLectureLO,
 
-            // programmingSlideLO,
-            // programmingNotCodingSlideLO,
-            // flowSummarySlideLO,
-            // compilerInterpreterSlideLO,
-            // assemblerTranslatorSlideLO
+        //     programmingSlideLO,
+        //     programmingNotCodingSlideLO,
+        //     flowSummarySlideLO,
+        //     compilerInterpreterSlideLO,
+        //     assemblerTranslatorSlideLO
+        ]
+    }, 
+    {
+        title: "Design a guessing game",
+        learningObjects: [
+            
         ]
     }
-    // {
-    //     title: "Design a guessing game",
-    //     learningObjects: [
-    //         {}
-    //     ]
-    // }
+  ]
 
 
 export default function CreateLearningObjects() {

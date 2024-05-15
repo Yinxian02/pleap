@@ -8,6 +8,7 @@ import Signup from './pages/Signup'
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import Profile from './pages/Profile'
 import Lessons from './pages/Lessons'
+import CreateLesson from './pages/CreateLesson'
 import RequireAuth from './components/RequireAuth';
 import Missing from './pages/Missing';
 
@@ -42,9 +43,9 @@ function App() {
               <Route path='profile-quiz' element={<ProfileQuiz/>}/>
               <Route path='lessons' element={<Lessons/>}>
                 <Route path='lessons-list' element={<LessonsList/>}/> 
-                {/* <Route path='create-lesson' element={<CreateLesson/>}/> 
-                <Route path= 'edit-lesson/:id' element={<EditLesson/>} /> */}
+                {/* <Route path= 'edit-lesson/:id' element={<EditLesson/>} /> */}  
               </Route>
+              <Route path='create-lesson' element={<CreateLesson/>}/> 
             </Route>
 
             <Route path="*" element={<Missing />} />
