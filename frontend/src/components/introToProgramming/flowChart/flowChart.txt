@@ -1,4 +1,0 @@
-Title: Designing the flow chart
-
-Here is another tool called flowcharts, which may be helpful for designing algorithms.
-https://youtu.be/aDGhvziC_oI

@@ -1,9 +1,0 @@
-Title: From algorithms to code
-
-And the time has come. It is finally time to convert all your hard work into code! More specifically Python code.
-
-[https://youtu.be/XJZkm3_I-ZA]
-
-Summary:
-We have converted pseudocode into Python code with minimal effort.
-We discussed some Python specific syntax.
