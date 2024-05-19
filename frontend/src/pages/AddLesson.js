@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "../styles/Lesson.css";
+import { Link } from 'react-router-dom';
 
 import LearningObjectsComponent from '../components/createLesson';
 
@@ -45,6 +46,9 @@ const learningObjects = [
 const AddLesson = () => (
   <div>
     {/* <LearningObjectsComponent learningObjects={learningObjects} /> */}
+    <Link to="/lessons">
+      <p>go to lessons</p>
+    </Link>
   </div>
 );
 

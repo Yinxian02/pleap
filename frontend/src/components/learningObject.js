@@ -8,7 +8,7 @@ export class LearningObject {
         this.interactivityLevel = interactivityLevel;
         if (this.format === "text/plain"){
             this.text = content;
-        } else if (this.format === "text/html"){
+        } else {
             this.link = content; 
         }
     }

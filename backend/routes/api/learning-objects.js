@@ -43,4 +43,19 @@ router.route('/:id').get(verifyRoles(ROLES_LIST.User),(req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/batch').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+  const { ids } = req.body;
+
+  if (!Array.isArray(ids) || !ids.length) {
+    return res.status(400).json({ error: 'Invalid or missing "ids" array' });
+  }
+
+  try {
+    const learningObjects = await LearningObject.find({ _id: { $in: ids } });
+    res.json(learningObjects);
+  } catch (err) {
+    res.status(400).json({ error: 'Error fetching learning objects: ' + err });
+  }
+});
+
 module.exports = router;

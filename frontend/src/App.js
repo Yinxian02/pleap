@@ -31,7 +31,7 @@ function App() {
             <Route path='/login' element={<Login/>}/>
             <Route path='/signup' element={<Signup/>}/>
 
-            <Route path="/" element={<RequireAuth allowedRoles={[ROLES.User]} redirectTo="/classes" fallback={<Navigate to="/login" />} />}>
+            <Route path="/" element={<RequireAuth allowedRoles={[ROLES.User]} redirectTo="/lessons" fallback={<Navigate to="/login" />} />}>
               <Route index element={<Navigate to="/classes" />} />
             </Route>
             
