@@ -7,26 +7,43 @@ const whatIsProgrammingText = "Let\’s start our lesson with some big questions
 const whatIsProgrammingTextLO = new LearningObject("What is programming", "text/plain", "expositive", "narrative text", "low", whatIsProgrammingText).getJSON();
 
 const whatIsProgrammingMentiLink = "https://www.menti.com/6e9zuhcrwn";
-const whatIsProgrammingMentiLO = new LearningObject("What is programming", "text", "active", "questionnaire", "medium", whatIsProgrammingMentiLink).getJSON();
+const whatIsProgrammingMentiLO = new LearningObject("What is programming", "text/html", "active", "questionnaire", "medium", whatIsProgrammingMentiLink).getJSON();
 
 const whatIsProgrammingAnsLink = "https://www.mentimeter.com/app/presentation/a0ca9d10e49d00b3a7489ec5276f5db2/1df15990258d"
-const whatIsProgrammingAnsLO = new LearningObject("What is programming", "text", "expositive", "self assessment", "low", whatIsProgrammingAnsLink).getJSON();
+const whatIsProgrammingAnsLO = new LearningObject("What is programming", "text/html", "expositive", "self assessment", "low", whatIsProgrammingAnsLink).getJSON();
 
 const whatIsAProgramText = "Having seen the different responses to programming from your coursemates and seniors, here is another question. What is a computer program? (We will use the American spelling instead of programme as it is more widespread)."
 const whatIsAProgramTextLO = new LearningObject("What is a program", "text/plain", "expositive", "narrative text", "low", whatIsAProgramText).getJSON();
 
 const whatIsAProgramMentiLink = "https://www.menti.com/hcke489zx7";
-const whatIsAProgramMentiLO = new LearningObject("What is a program", "text", "active", "questionnaire", "medium", whatIsAProgramMentiLink).getJSON();
+const whatIsAProgramMentiLO = new LearningObject("What is a program", "text/html", "active", "questionnaire", "medium", whatIsAProgramMentiLink).getJSON();
 
 const whatIsAProgramAnsLink = "https://www.mentimeter.com/app/presentation/30a22cd3cbfed9cd713d4916cf7a816b/3c693b9a5dad"
-const whatIsAProgramAnsLO = new LearningObject("What is a program", "text", "expositive", "self assessment", "low", whatIsAProgramAnsLink).getJSON();
+const whatIsAProgramAnsLO = new LearningObject("What is a program", "text/html", "expositive", "self assessment", "low", whatIsAProgramAnsLink).getJSON();
 
 const instructingComputerText = "Programming &ne; coding <br> Programming &superset; of coding <br><br> Programming involves: <br> 1. Understanding and formulating the problem <br> 2. Designing an algorithm to solve the problem <br> 3. Implementing the algorithm <br><br> Machine code is what the computer understands, but us writing machine code will be tedious. <br><br> High-level languages have been developed to help make programming easier. <br><br> Translators convert high-level languages to low-level code: <br> 1. Compilers pre-translate codes into a set of low-level instructions, which is then executed. <br> 2. Interpreters translate and execute code line by line, on the fly. <br><br> Programming languages need to be unambiguous. <br><br> Spend more time thinking about the problem and developing a clear algorithm before coding.";
 const instructingComputerTextLO = new LearningObject("It's all about instructing the computer!", "text/plain", "expositive", "narrative text", "low", instructingComputerText).getJSON();
 
 const instructingComputerLectureLink = "https://youtu.be/pBGfpi9T4pk"
-const instructingComputerLectureLO = new LearningObject("It's all about instructing the computer!", "text", "expositive", "lecture", "low", instructingComputerLectureLink).getJSON();
+const instructingComputerLectureLO = new LearningObject("It's all about instructing the computer!", "video/vnd.youtube.yt", "expositive", "lecture", "low", instructingComputerLectureLink).getJSON();
 
+const algoFlowChartImg = "https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png"
+const algoFlowChartLO = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low", algoFlowChartImg).getJSON();
+
+const assemblerTranslatorImg = "https://storage.googleapis.com/pleap/whatIsProgramming/assemblerTranslator.png"
+const assemblerTranslatorLO = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low", assemblerTranslatorImg).getJSON();
+
+const byteCodeImg = "https://storage.googleapis.com/pleap/whatIsProgramming/byteCode.png"
+const byteCodeLO = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low", byteCodeImg).getJSON();
+
+const compilerInterpreterImg = "https://storage.googleapis.com/pleap/whatIsProgramming/compilerInterpreter.png"
+const compilerInterpreterLO = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low", compilerInterpreterImg).getJSON();
+
+const programmingNotCodingImg = "https://storage.googleapis.com/pleap/whatIsProgramming/programmingNotCoding.png"
+const programmingNotCodingLO = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low", programmingNotCodingImg).getJSON();
+
+const programmingSupersetImg = "https://storage.googleapis.com/pleap/whatIsProgramming/programmingSuperset.png"
+const programmingSupersetLO = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low", programmingSupersetImg).getJSON();
 
 export { courseSummaryLO, 
         whatIsProgrammingTextLO, 
@@ -36,4 +53,10 @@ export { courseSummaryLO,
         whatIsAProgramMentiLO, 
         whatIsAProgramAnsLO,
         instructingComputerTextLO,
-        instructingComputerLectureLO }; 
+        instructingComputerLectureLO,
+        algoFlowChartLO,
+        assemblerTranslatorLO,
+        byteCodeLO,
+        compilerInterpreterLO,
+        programmingNotCodingLO,
+        programmingSupersetLO }; 

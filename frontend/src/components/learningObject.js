@@ -4,10 +4,12 @@ export class LearningObject {
         this.format = format;
         this.interactivityType = interactivityType;
         this.learningResourceType = learningResourceType;
+        
         this.interactivityLevel = interactivityLevel;
-        this.content = ""
         if (this.format === "text/plain"){
-            this.text = content
+            this.text = content;
+        } else if (this.format === "text/html"){
+            this.link = content; 
         }
     }
 
@@ -41,8 +43,7 @@ export class LearningObject {
         },
         content: {
             text: this.text,
-            link: this.link,
-            image: this.image
+            link: this.link
         }
     };
     }

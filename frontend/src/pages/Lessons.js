@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Lessons = () => (
   <div>
     <Link to="/create-lesson">
-      <p>hi</p>
+      <p>add lessons to database</p>
     </Link>
   </div>
 );

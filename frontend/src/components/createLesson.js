@@ -8,8 +8,7 @@ const LearningObjectsComponent = ({ learningObjects }) => {
     author: "Josiah Wang",
     _learningObjects: []
   });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+
   const { auth } = useContext(AuthContext);
 
   const createLearningObjects = async (learningObjects) => {
@@ -30,7 +29,6 @@ const LearningObjectsComponent = ({ learningObjects }) => {
       return res.data.ids;
     } catch (error) {
       console.error('Error adding learning objects:', error);
-      throw error; // Re-throw the error to handle it outside the function if needed
     }
   };
 
@@ -48,8 +46,7 @@ const LearningObjectsComponent = ({ learningObjects }) => {
           },
         }
       );
-
-      console.log(res.data);
+      console.log('Lesson:', res.data);
     } catch (error) {
       console.error('Error adding lesson:', error);
     }
@@ -66,14 +63,12 @@ const LearningObjectsComponent = ({ learningObjects }) => {
         await addLesson(updatedLesson);
         setLesson(updatedLesson); 
       } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
+        console.log(error); 
+      } 
     };
 
     fetchAndAddLearningObjects();
-  }, [learningObjects]); // This will run the effect when learningObjects changes
+  }, [learningObjects]);  
 
   return (
     <div>

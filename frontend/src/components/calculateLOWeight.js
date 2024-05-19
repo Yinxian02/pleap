@@ -1,6 +1,5 @@
 // algorithm from "A Felder and Silverman Model"
 export function calculateLOWeight(learningObjectScore, learningPreferences) {
-
     const weight = 0;
 
     // Calculate pairwise differences and sum them up

@@ -32,8 +32,7 @@ const learningObjectSchema = new Schema({
     },
     content: {
         text: String,
-        link: String,
-        image: String
+        link: String
     }
 }, {
     timestamps: true,

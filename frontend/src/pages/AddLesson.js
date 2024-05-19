@@ -11,7 +11,13 @@ import { courseSummaryLO,
   whatIsAProgramMentiLO, 
   whatIsAProgramAnsLO,
   instructingComputerTextLO,
-  instructingComputerLectureLO } from "../components/introToProgramming/whatIsProgramming"
+  instructingComputerLectureLO, 
+  algoFlowChartLO,
+  assemblerTranslatorLO,
+  byteCodeLO,
+  compilerInterpreterLO,
+  programmingNotCodingLO,
+  programmingSupersetLO } from "../components/introToProgramming/whatIsProgramming"
 
 const learningObjects = [
     courseSummaryLO, 
@@ -26,12 +32,19 @@ const learningObjects = [
 
     instructingComputerTextLO,
     instructingComputerLectureLO,
+
+    algoFlowChartLO,
+    assemblerTranslatorLO,
+    byteCodeLO,
+    compilerInterpreterLO,
+    programmingNotCodingLO,
+    programmingSupersetLO
 ]
 
 
 const AddLesson = () => (
   <div>
-    <LearningObjectsComponent learningObjects={learningObjects} />
+    {/* <LearningObjectsComponent learningObjects={learningObjects} /> */}
   </div>
 );
 
