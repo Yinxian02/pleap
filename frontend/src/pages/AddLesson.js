@@ -20,7 +20,7 @@ import { courseSummaryLO,
   programmingNotCodingLO,
   programmingSupersetLO } from "../components/introToProgramming/whatIsProgramming"
 
-const learningObjects = [
+const whatIsProgrammingLOs = [
     courseSummaryLO, 
 
     whatIsProgrammingTextLO,
@@ -45,7 +45,7 @@ const learningObjects = [
 
 const AddLesson = () => (
   <div>
-    {/* <LearningObjectsComponent learningObjects={learningObjects} /> */}
+    {/* <LearningObjectsComponent learningObjects={whatIsProgrammingLOs} /> */}
     <Link to="/lessons">
       <p>go to lessons</p>
     </Link>

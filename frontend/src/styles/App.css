@@ -1,14 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-  --bgColorDark: #212121; 
+  --bgColorDark: #ffffff; 
   --txtColorLight: #ECECEC;  
-  --txtColorDark: #212121; 
-  --componentColorDark: #171717; 
-  --hoverColor: rgba(255, 255, 255, 0.1);
+  --txtColorDark: #2e2e2e; 
+  --txtColorMedium: #6b6b6b;
+  --componentColorDark: rgb(247,247,247); 
+  --hoverColor: rgba(233, 233, 233, 0.1);
   --hoverShadowColor: rgba(0, 0, 0, 0.2); 
-  --inputColor: rgba(255, 255, 255, 0.283);
-  --buttonColor: #C0C0C2; 
+  --inputColor: rgba(255, 251, 251, 0.283);
+  --buttonColor: #f0f0f0; 
 }
 
 * {
@@ -21,7 +22,7 @@
 
 body {
   background-color: var(--bgColorDark); /* Set your desired background color here */
-  color: var(--txtColorLight); 
+  color: var(--txtColorDark); 
 }
 
 .navbar {
@@ -36,7 +37,7 @@ body {
   margin-left: 1rem;
   font-size: 2rem;
   background: none;
-  color: var(--txtColorLight);
+  color: var(--txtColorDark);
 }
 
 .nav-menu {
@@ -70,7 +71,7 @@ body {
 
 .nav-text a {
   text-decoration: none;
-  color: var(--txtColorLight);
+  color: var(--txtColorMedium);
   font-size: 20px;
   font-weight: 500;
   width: 95%;
@@ -82,8 +83,8 @@ body {
 }
 
 .nav-text a:hover {
-  background-color: var(--hoverColor);
-  color: var(--txtColorLight);
+  background-color: #e6e6e6;
+  color: var(--txtColorDark);
 }
 
 .nav-menu-items {
@@ -108,6 +109,7 @@ body {
 .transparent-input {
   background-color:  var(--inputColor);
   border-radius: 5px;
+  border-color: #f0f0f0;
   width: 300px;
   padding: 5px; 
   align-items: right;
@@ -116,8 +118,8 @@ body {
 
 
 button {
-  background-color: var(--buttonColor);
-  color: var(--txtColorDark); 
+  background-color: var(--hoverColor);
+  color: var(--txtColorMedium); 
   border-radius: 5px;
   font-weight: 500;
   padding: 5px 42px; 
@@ -133,9 +135,9 @@ button:disabled {
 }
 
 button:hover {
-  background-color: var(--hoverColor);
+  background-color: var(--buttonColor);
   border: 1px solid var(--txtColorLight);
-  color: var(--txtColorLight);
+  color: var(--txtColorDark);
 }
 
 .profile-container {
@@ -157,5 +159,5 @@ button:hover {
 }
 
 .detail {
-  color: #ffffff9e;
+  color: #4444449e;
 }
