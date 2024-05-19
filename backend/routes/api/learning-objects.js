@@ -9,14 +9,20 @@ router.route('/').get(verifyRoles(ROLES_LIST.User), async (req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/addBatch').post(verifyRoles(ROLES_LIST.User), (req, res) => {
+router.route('/addBatch').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
   console.log(req.body.learningObjects);
   console.log("adding learning objects");
   const learningObjects = req.body.learningObjects; 
 
-  LearningObject.insertMany(learningObjects)  
-    .then(() => res.json('LearningObjects added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
+  try {
+    const insertedLearningObjects = await LearningObject.insertMany(learningObjects);
+    const learningObjectIds = insertedLearningObjects.map(lo => lo._id.toString());
+    
+    console.log(learningObjectIds)
+    res.json({ message: 'LearningObjects added!', ids: learningObjectIds });
+  } catch (err) {
+    res.status(400).json({ error: 'Error: ' + err });
+  }
 });
 
 router.route('/add').post(verifyRoles(ROLES_LIST.User),(req, res) => {

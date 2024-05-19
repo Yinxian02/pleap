@@ -5,12 +5,8 @@ const Schema = mongoose.Schema;
 
 const lessonSchema = new Schema({
   title: {type: String, required: true },
-  description: String,
   author: String,
-  topics: [{
-    title: { type: String, required: true },
-    _learningObjects: [{ type: Schema.Types.ObjectId, ref: "LearningObject"}]
-    }]
+  _learningObjects: [{ type: Schema.Types.ObjectId, ref: "LearningObject"}]
   }, {
   timestamps: true,
 });

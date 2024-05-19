@@ -6,7 +6,7 @@ export const SidebarData = [
   },
   {
     title: "Lessons",
-    path: "/lessons/lessons-list",
+    path: "/lessons",
     cName: "nav-text",
   },
 ];

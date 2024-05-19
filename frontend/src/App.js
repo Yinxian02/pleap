@@ -5,16 +5,13 @@ import Login from './pages/Login'
 /* for testing only */
 import Signup from './pages/Signup'
 
-import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Profile from './pages/Profile'
 import Lessons from './pages/Lessons'
-import CreateLesson from './pages/CreateLesson'
+import AddLesson from './pages/AddLesson'
 import RequireAuth from './components/RequireAuth';
 import Missing from './pages/Missing';
 
-import LessonsList from './components/lessons-list.component'
-// import CreateLesson from './components/create-lesson.component'
-// import EditLesson from './components/edit-lesson.component'
 import ProfileQuiz from './components/profile-quiz.component'
 
 
@@ -41,11 +38,8 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path='profile' element={<Profile/>}/>
               <Route path='profile-quiz' element={<ProfileQuiz/>}/>
-              <Route path='lessons' element={<Lessons/>}>
-                <Route path='lessons-list' element={<LessonsList/>}/> 
-                {/* <Route path= 'edit-lesson/:id' element={<EditLesson/>} /> */}  
-              </Route>
-              <Route path='create-lesson' element={<CreateLesson/>}/> 
+              <Route path='lessons' element={<Lessons/>}/>
+              <Route path='create-lesson' element={<AddLesson/>}/> 
             </Route>
 
             <Route path="*" element={<Missing />} />

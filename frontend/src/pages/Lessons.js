@@ -1,24 +1,13 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 import "../styles/Lesson.css";
+import { Link } from 'react-router-dom';
 
-function Lessons() {
-
-  return (
-    <>
-
-      <main>
-        <div className="lesson-div">
-
-          <Link to="/create-lesson">
-            <p>hi</p>
-          </Link>
-        </div>
-      </main>
-
-      
-    </>
-  );
-}
+const Lessons = () => (
+  <div>
+    <Link to="/create-lesson">
+      <p>hi</p>
+    </Link>
+  </div>
+);
 
 export default Lessons;
