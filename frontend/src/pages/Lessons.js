@@ -9,46 +9,46 @@ class Lesson extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      learningObjects: [],
-    };
+    // this.state = {
+    //   learningObjects: [],
+    // };
   }
 
-  componentDidMount() {
-    this.fetchLearningObjects(this.props.lesson._learningObjects);
-  }
+  // componentDidMount() {
+  //   this.fetchLearningObjects(this.props.lesson._learningObjects);
+  // }
 
-  async fetchLearningObjects(ids) {
-    try {
-      const res = await axios.post(
-        'http://localhost:5001/learning-objects/batch',
-        { ids },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.context.auth.accessToken,
-            mode: 'cors',
-            withCredentials: true,
-          },
-        }
-      );
-      // console.log(res.data);
-      this.setState({ learningObjects: res.data });
-    } catch (error) {
-      console.error('Error fetching learning objects:', error);
-    }
-  }
+  // async fetchLearningObjects(ids) {
+  //   try {
+  //     const res = await axios.post(
+  //       'http://localhost:5001/learning-objects/batch',
+  //       { ids },
+  //       {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Authorization: 'Bearer ' + this.context.auth.accessToken,
+  //           mode: 'cors',
+  //           withCredentials: true,
+  //         },
+  //       }
+  //     );
+  //     // console.log(res.data);
+  //     this.setState({ learningObjects: res.data });
+  //   } catch (error) {
+  //     console.error('Error fetching learning objects:', error);
+  //   }
+  // }
 
   render() {
     const { title, author } = this.props.lesson;
-    const { learningObjects } = this.state;
-    console.log(learningObjects)
+    // const { learningObjects } = this.state;
+    // console.log(learningObjects)
 
     return (
       <tr>
         <td>{title}</td>
         <td>{author}</td>
-        <td>
+        {/* <td>
           <ul>
             {learningObjects.map(lo => (
               <li key={lo._id}>
@@ -58,8 +58,12 @@ class Lesson extends Component {
               </li>
             ))}
           </ul>
+        </td> */}
+        <td>
+          <Link to={"/lesson/"+this.props.lesson._id}>lesson</Link>
         </td>
-      </tr>
+
+          </tr>
     );
   }
 }
@@ -109,7 +113,7 @@ export default class Lessons extends Component {
             <tr>
               <th>Title</th>
               <th>Author</th>
-              <th>Learning Objects</th>
+              {/* <th>Learning Objects</th> */}
             </tr>
           </thead>
           <tbody>{this.lessonsList()}</tbody>

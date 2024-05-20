@@ -8,6 +8,7 @@ import Signup from './pages/Signup'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Profile from './pages/Profile'
 import Lessons from './pages/Lessons'
+import LessonWrapper from './pages/Lesson'
 import AddLesson from './pages/AddLesson'
 import RequireAuth from './components/RequireAuth';
 import Missing from './pages/Missing';
@@ -39,6 +40,7 @@ function App() {
               <Route path='profile' element={<Profile/>}/>
               <Route path='profile-quiz' element={<ProfileQuiz/>}/>
               <Route path='lessons' element={<Lessons/>}/>
+              <Route path='lesson/:id' element={<LessonWrapper/>}/>
               <Route path='create-lesson' element={<AddLesson/>}/> 
             </Route>
 

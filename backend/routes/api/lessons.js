@@ -21,7 +21,7 @@ router.route('/add').post(verifyRoles(ROLES_LIST.User),(req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor),(req, res) => {
+router.route('/:id').get(verifyRoles(ROLES_LIST.User),(req, res) => {
   Lesson.findById(req.params.id)
     .then(lesson => res.json(lesson))
     .catch(err => res.status(400).json('Error: ' + err));

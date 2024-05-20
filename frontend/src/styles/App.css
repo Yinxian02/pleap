@@ -37,7 +37,7 @@ body {
   margin-left: 1rem;
   font-size: 2rem;
   background: none;
-  color: var(--txtColorDark);
+  color: var(--txtColorMedium);
 }
 
 .nav-menu {

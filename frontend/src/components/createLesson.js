@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
   
-const LearningObjectsComponent = ({ learningObjects }) => {
+const LearningObjectsComponent = ({ title, author, learningObjects }) => {
   const [lesson, setLesson] = useState({
-    title: "Intro to programming",
-    author: "Josiah Wang",
+    title: title,
+    author: author,
     _learningObjects: []
   });
 

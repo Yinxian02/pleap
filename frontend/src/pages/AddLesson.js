@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import "../styles/Lesson.css";
 import { Link } from 'react-router-dom';
 
@@ -19,6 +19,19 @@ import { courseSummaryLO,
   compilerInterpreterLO,
   programmingNotCodingLO,
   programmingSupersetLO } from "../components/introToProgramming/whatIsProgramming"
+
+import { introTextLO,
+  introLectureLO,
+  designAlgoTextLO,
+  designAlgoLectureLO,
+  designAlgoPseudocodeLO,
+  simpleStatementImgLO,
+  selectionImgLO,
+  improveGameTextLO,
+  improveGameLectureLO,
+  improveGamePseudocodeLO,
+  ifElseImgLO,
+  challengeGameExerciseLO } from "../components/introToProgramming/designGame";  
 
 const whatIsProgrammingLOs = [
     courseSummaryLO, 
@@ -42,10 +55,26 @@ const whatIsProgrammingLOs = [
     programmingSupersetLO
 ]
 
+const designGameLOs = [
+    introTextLO,
+    introLectureLO,
+    designAlgoTextLO,
+    designAlgoLectureLO,
+    designAlgoPseudocodeLO,
+    simpleStatementImgLO,
+    selectionImgLO,
+    improveGameTextLO,
+    improveGameLectureLO,
+    improveGamePseudocodeLO,
+    ifElseImgLO,
+    challengeGameExerciseLO
+]
+
 
 const AddLesson = () => (
   <div>
-    {/* <LearningObjectsComponent learningObjects={whatIsProgrammingLOs} /> */}
+    <LearningObjectsComponent title="Intro to programming" author="Josiah Wang" learningObjects={whatIsProgrammingLOs} />
+    <LearningObjectsComponent title="Design a guessing game" author="Josiah Wang" learningObjects={designGameLOs} />
     <Link to="/lessons">
       <p>go to lessons</p>
     </Link>
