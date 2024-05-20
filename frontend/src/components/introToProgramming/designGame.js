@@ -12,7 +12,10 @@ const designAlgoTextLO = new LearningObject("Designing an algorithm for the gues
 const designAlgoLecture = "https://youtu.be/eeRkO18_Pj8"; 
 const designAlgoLectureLO = new LearningObject("Designing an algorithm for the guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low", designAlgoLecture).getJSON(); 
 
-const designAlgoPseudocode = "let secretNumber = 42 \ let userGuess = read input \ if userGuess = secretNumber \ print 'correct'";
+const designAlgoPseudocode = `let secretNumber = 42 
+                let userGuess = read input 
+                if userGuess = secretNumber print 'correct'`;
+
 const designAlgoPseudocodeLO = new LearningObject("Designing an algorithm for the guessing game", "text/plain", "expositive", "narrative text", "low", designAlgoPseudocode).getJSON(); 
 
 const simpleStatementImg = "https://storage.googleapis.com/pleap/designGuessingGame/simpleStatement.png";
@@ -27,7 +30,16 @@ const improveGameTextLO = new LearningObject("Improving the guessing game", "tex
 const improveGameLecture = "https://youtu.be/5sXO3FKS_vg"; 
 const improveGameLectureLO = new LearningObject("Improving the guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low", improveGameLecture).getJSON(); 
 
-const improveGamePseudocode = "let secretNumber = 42 \ let userGuess = read input \ if userGuess = secretNumber \ print 'correct'\ else \ if userGuess < secretNumber \ print 'too low' \ else \ print 'too high'";
+const improveGamePseudocode = `let secretNumber = 42 
+                             let userGuess = read input 
+                             if userGuess = secretNumber 
+                                 print 'correct'
+                                 else 
+                                   if userGuess < secretNumber 
+                                   print 'too low' 
+                                else 
+                                    print 'too high'`;
+                                    
 const improveGamePseudocodeLO = new LearningObject("Improving the guessing game", "text/plain", "expositive", "narrative text", "low", improveGamePseudocode).getJSON(); 
 
 const ifElseImg = "https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png";

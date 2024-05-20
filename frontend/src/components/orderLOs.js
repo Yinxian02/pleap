@@ -1,5 +1,5 @@
 // algorithm from "A Felder and Silverman Model"
-export function calculateLOScore(learningObject) {
+function calculateLOScore(learningObject) {
     const LOScore = {f1: 0, f2: 0, f3: 0, f4: 0};
     const LRT = {g1: 0, g2: 0, g3: 0, g4: 0};
     const IT = {h1: 0};
@@ -66,28 +66,49 @@ export function calculateLOScore(learningObject) {
 
     if (learningObject.technical.format  === "video") {
         F.i3 = 0; 
-    } else if (FMT === "expositive") {
+    } else if (learningObject.technical.format === "text") {
         F.i3 = 1;
     } else {
         F.i3 = -1; 
     }
 
-    if (interactivityType.h1 == -1) {
-        LOScore.f1 = learningResourceType.g1; 
+    if (IT.h1 === -1) {
+        LOScore.f1 = LRT.g1; 
     } else {
-        LOScore.f1 = learningResourceType.h1; 
+        LOScore.f1 = IT.h1; 
     }
 
-    LOScore.f2 = learningResourceType.g2; 
+    LOScore.f2 = LRT.g2; 
 
-    if (interactivityType.i3 == -1) {
-        LOScore.f3 = learningResourceType.g3; 
+    if (F.i3 === -1) {
+        LOScore.f3 = LRT.g3; 
     } else {
-        LOScore.f3 = learningResourceType.i3; 
+        LOScore.f3 = F.i3; 
     }
 
-    LOScore.f4 = learningResourceType.g4; 
+    LOScore.f4 = LRT.g4; 
 
-    console.log("learning object score:", LOScore);
+    // console.log("learning object score:", LOScore);
     return LOScore; 
+}
+
+// algorithm from "A Felder and Silverman Model"
+function calculateLOWeight(learningObjectScore, learningPreferences) {
+    // console.log('learning object score:', learningObjectScore);
+    // console.log('learning object preferences:', learningPreferences)
+    var weight = 0;
+
+    // Calculate pairwise differences and sum them up
+    for (const key in learningObjectScore) {
+        weight += Math.abs(learningObjectScore[key] - learningPreferences[key]);
+    }
+
+    // console.log("learning object weight:", weight);
+    return weight; 
+}
+
+export function orderLearningObjects(learningObjects, userPreferences) {
+    const loScores = learningObjects.map(lo => calculateLOScore(lo)); 
+    const loWeights = loScores.map(score => calculateLOWeight(score, userPreferences))
+    console.log(loWeights);
 }

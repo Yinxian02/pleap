@@ -157,18 +157,6 @@ const ProfileQuiz = () => {
         </>
         ) : (
             <div className="result">
-                {/* <h3> Result </h3> 
-                <p> 
-                    Active Reflexive: <span>{result.activeReflexive}</span>
-                    <br/>
-                    Sensing Reflexive: <span>{result.sensingIntuitive}</span>
-                    <br/>
-                    Visual Verbal: <span>{result.visualVerbal}</span>
-                    <br/>
-                    Sequential Global: <span>{result.sequentialGlobal}</span>
-                    <br/>
-
-                </p> */}
                 <span className="button-link">
                     <Link to="/profile">
                         <button>

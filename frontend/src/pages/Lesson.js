@@ -3,6 +3,7 @@ import "../styles/Lesson.css";
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
 import { useParams } from 'react-router-dom';
+import { orderLearningObjects } from '../components/orderLOs';
 
 class LessonFetch extends Component {
   static contextType = AuthContext;
@@ -39,9 +40,19 @@ class LessonFetch extends Component {
   }
 
   render() {
+    console.log("User ID: ", this.context.auth.id); 
+
     const { title, author } = this.props.lesson;
     const { learningObjects } = this.state;
     console.log(learningObjects);
+
+    console.log("User preferences: ", this.context.auth.preferences)
+    const learningDimensionPreferences = { f1: this.context.auth.preferences.active,
+                                          f2: this.context.auth.preferences.sensing, 
+                                          f3: this.context.auth.preferences.visual, 
+                                          f4: this.context.auth.preferences.sequential }
+  
+    orderLearningObjects(learningObjects, learningDimensionPreferences);
 
     return (
       <tr>
@@ -68,11 +79,24 @@ class Lesson extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { lesson: {} };
+    this.state = { 
+      lesson: {},
+      preferences: {
+        active: 0,
+        reflexive: 0,
+        sensing: 0,
+        intuitive: 0,
+        visual: 0,
+        verbal: 0,
+        sequential: 0,
+        global: 0,
+      },
+     };
   }
 
   componentDidMount() {
-    const { id } = this.props; // Get the lesson ID from props
+    const { id } = this.props;  
+    // this.fetchUserPreferences(); 
 
     axios
       .get(`http://localhost:5001/lessons/${id}`, {
