@@ -52,7 +52,7 @@ class LessonFetch extends Component {
                                           f3: this.context.auth.preferences.visual, 
                                           f4: this.context.auth.preferences.sequential }
   
-    orderLearningObjects(learningObjects, learningDimensionPreferences);
+    const sortedLOs = orderLearningObjects(learningObjects, learningDimensionPreferences);
 
     return (
       <tr>
@@ -60,7 +60,7 @@ class LessonFetch extends Component {
         <td>{author}</td>
         <td>
           <ul>
-            {learningObjects.map(lo => (
+            {sortedLOs.map(lo => (
               <li key={lo._id}>
                 <h4>{lo.title}</h4>
                 <p>{lo.content?.text}</p>

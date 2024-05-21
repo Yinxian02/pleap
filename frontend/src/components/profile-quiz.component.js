@@ -2,6 +2,7 @@ import { useState ,useContext, useEffect } from "react";
 import { Dimension, fslsmQuiz , resultInitialState } from "./fslsmQuiz";
 import "../styles/ProfileQuiz.css";
 import AuthContext from '../context/AuthContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -72,6 +73,8 @@ function normaliseFinalPreferences(preferences) {
 
 const ProfileQuiz = () => {
     const { auth } = useContext(AuthContext);
+    const { setAuth } = useAuthContext();
+
     const id = auth.id; 
     
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
@@ -109,6 +112,7 @@ const ProfileQuiz = () => {
         if (showResult) {
             const preferences = normaliseFinalPreferences(result); 
             console.log('preferences:' , preferences);
+            auth.preferences = preferences;
             axios
                 .post(
                     `http://localhost:5001/users/update/${id}`, 
@@ -121,6 +125,7 @@ const ProfileQuiz = () => {
                     })
                 .then((res) => {
                     console.log(res.data)
+                    setAuth(auth)
                     // navigate('/profile', { replace: true });
                 }).catch((error) => {
                     // Handle errors here

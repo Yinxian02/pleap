@@ -94,8 +94,6 @@ function calculateLOScore(learningObject) {
 
 // algorithm from "A Felder and Silverman Model"
 function calculateLOWeight(learningObjectScore, learningPreferences) {
-    // console.log('learning object score:', learningObjectScore);
-    // console.log('learning object preferences:', learningPreferences)
     var weight = 0;
 
     // Calculate pairwise differences and sum them up
@@ -110,5 +108,14 @@ function calculateLOWeight(learningObjectScore, learningPreferences) {
 export function orderLearningObjects(learningObjects, userPreferences) {
     const loScores = learningObjects.map(lo => calculateLOScore(lo)); 
     const loWeights = loScores.map(score => calculateLOWeight(score, userPreferences))
-    console.log(loWeights);
+
+    const weightedObjects = learningObjects.map((lo, index) => ({
+        object: lo,
+        weight: loWeights[index],
+        }));
+        
+    weightedObjects.sort((a, b) => a.weight - b.weight);
+    console.log(weightedObjects)
+    
+    return weightedObjects.map(pair => pair.object);
 }

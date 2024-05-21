@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import {useAuthContext} from '../hooks/useAuthContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { Link, useNavigate, useLocation} from 'react-router-dom';
 
 import axios from '../api/axios';
@@ -40,8 +40,8 @@ const Login = () => {
 
                 }
             );
-            console.log(JSON.stringify(response));
-            console.log(JSON.stringify(response?.data));
+            // console.log(JSON.stringify(response));
+            // console.log(JSON.stringify(response?.data));
             const accessToken = response?.data?.accessToken;
             const roles = response?.data?.roles;
             const id = response?.data?.id; 
