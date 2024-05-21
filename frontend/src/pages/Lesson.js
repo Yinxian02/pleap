@@ -55,9 +55,10 @@ class LessonFetch extends Component {
     const sortedLOs = orderLearningObjects(learningObjects, learningDimensionPreferences);
 
     return (
+      <div>
+      <h2 className="lesson-title">{title}</h2>
+      <h3 className="lesson-author">{author}</h3>
       <tr>
-        <td>{title}</td>
-        <td>{author}</td>
         <td>
           <ul>
             {sortedLOs.map(lo => (
@@ -70,6 +71,7 @@ class LessonFetch extends Component {
           </ul>
         </td>
       </tr>
+      </div>
     );
   }
 }
@@ -121,15 +123,7 @@ class Lesson extends Component {
   render() {
     return (
       <div>
-        <h3>Lesson</h3>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Learning Objects</th>
-            </tr>
-          </thead>
+        <table className="learning-objects-div">
           <tbody>{this.lessonDisplay()}</tbody>
         </table>
       </div>
