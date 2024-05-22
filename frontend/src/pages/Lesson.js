@@ -4,6 +4,7 @@ import axios from 'axios';
 import AuthContext from "../context/AuthContext";
 import { useParams } from 'react-router-dom';
 import { orderLearningObjects } from '../components/orderLOs';
+import { displayLO } from '../components/displayLO';
 
 class LessonFetch extends Component {
   static contextType = AuthContext;
@@ -63,10 +64,9 @@ class LessonFetch extends Component {
           <ul>
             {sortedLOs.map(lo => (
               <li key={lo._id}>
-                <h4>{lo.title}</h4>
-                <p>{lo.content?.text}</p>
-                <p>{lo.content?.link}</p>
+                <p>{displayLO(lo)}</p>
               </li>
+              
             ))}
           </ul>
         </td>
@@ -117,7 +117,9 @@ class Lesson extends Component {
   }
 
   lessonDisplay() {
-    return <LessonFetch lesson={this.state.lesson} key={this.state.lesson._id} />;
+    if (this.state.lesson !== null){
+      return <LessonFetch lesson={this.state.lesson} key={this.state.lesson._id} />;
+    }
   }
 
   render() {

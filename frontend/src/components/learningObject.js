@@ -1,16 +1,19 @@
 export class LearningObject {
-    constructor(title, format, interactivityType, learningResourceType, interactivityLevel, content){
+    constructor(title, format, interactivityType, learningResourceType, interactivityLevel){
         this.title = title;
         this.format = format;
+
         this.interactivityType = interactivityType;
         this.learningResourceType = learningResourceType;
-        
         this.interactivityLevel = interactivityLevel;
-        if (this.format === "text/plain"){
-            this.text = content;
-        } else {
-            this.link = content; 
-        }
+    }
+
+    setText(text){
+        this.text = text; 
+    }
+
+    setLink(link){
+        this.link = link; 
     }
 
     getJSON(){

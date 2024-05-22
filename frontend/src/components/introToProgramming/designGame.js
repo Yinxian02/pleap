@@ -1,35 +1,56 @@
 import { LearningObject } from "../learningObject";
 
+const introTextObj = new LearningObject("Designing a guessing game", "text/plain", "expositive", "narrative text", "low");
 const introText = "We will now dive in straight into designing a very simple guessing game. Summary: Always try to understand the problem first before you start! Guessing game outputs 'correct' if user number matches a secret number defined";
-const introTextLO = new LearningObject("Designing a guessing game", "text/plain", "expositive", "narrative text", "low", introText).getJSON(); 
+introTextObj.setText(introText);
+const introTextLO = introTextObj.getJSON(); 
 
+const introLectureObj = new LearningObject("Designing a guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low");
 const introLecture = "https://youtu.be/Rl19zAOMGjs"; 
-const introLectureLO = new LearningObject("Designing a guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low", introLecture).getJSON(); 
+introLectureObj.setText("youtube");
+introLectureObj.setLink(introLecture); 
+const introLectureLO = introLectureObj.getJSON(); 
 
-const designAlgoText = "Summary: You design your algorithm (on paper!) after understanding the problem. I have introduced two “basic building blocks” of programming in this video: Simple statement Selection"
-const designAlgoTextLO = new LearningObject("Designing an algorithm for the guessing game", "text/plain", "expositive", "narrative text", "low", designAlgoText).getJSON(); 
+const designAlgoTextObj = new LearningObject("Designing an algorithm for the guessing game", "text/plain", "expositive", "narrative text", "low");
+const designAlgoText = "Summary: You design your algorithm (on paper!) after understanding the problem. I have introduced two “basic building blocks” of programming in this video: Simple statement Selection";
+designAlgoTextObj.setText(designAlgoText); 
+const designAlgoTextLO = designAlgoTextObj.getJSON(); 
 
+const designAlgoLectureObj = new LearningObject("Designing an algorithm for the guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low");
 const designAlgoLecture = "https://youtu.be/eeRkO18_Pj8"; 
-const designAlgoLectureLO = new LearningObject("Designing an algorithm for the guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low", designAlgoLecture).getJSON(); 
+designAlgoLectureObj.setText("youtube");
+designAlgoLectureObj.setLink(designAlgoLecture); 
+const designAlgoLectureLO = designAlgoLectureObj.getJSON(); 
 
+const designAlgoPseudocodeObj = new LearningObject("Designing an algorithm for the guessing game", "text/plain", "expositive", "narrative text", "low");
 const designAlgoPseudocode = `let secretNumber = 42 
                 let userGuess = read input 
                 if userGuess = secretNumber print 'correct'`;
+designAlgoPseudocodeObj.setText(designAlgoPseudocode);
+const designAlgoPseudocodeLO = designAlgoPseudocodeObj.getJSON(); 
 
-const designAlgoPseudocodeLO = new LearningObject("Designing an algorithm for the guessing game", "text/plain", "expositive", "narrative text", "low", designAlgoPseudocode).getJSON(); 
-
+const simpleStatementImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
 const simpleStatementImg = "https://storage.googleapis.com/pleap/designGuessingGame/simpleStatement.png";
-const simpleStatementImgLO = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low", simpleStatementImg).getJSON(); 
+simpleStatementImgObj.setLink(simpleStatementImg);
+const simpleStatementImgLO = simpleStatementImgObj.getJSON(); 
 
+const selectionImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
 const selectionImg = "https://storage.googleapis.com/pleap/designGuessingGame/selection.png";
-const selectionImgLO = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low", selectionImg).getJSON(); 
+selectionImgObj.setLink(selectionImg); 
+const selectionImgLO = selectionImgObj.getJSON(); 
 
+const improveGameTextObj = new LearningObject("Improving the guessing game", "text/plain", "expositive", "narrative text", "low");
 const improveGameText = "We will now attempt to make the guessing game more user friendly. Summary: I have introduced you to a “two-way selection” block (an if-else statement) Blocks can be nested inside another (composition).";
-const improveGameTextLO = new LearningObject("Improving the guessing game", "text/plain", "expositive", "narrative text", "low", improveGameText).getJSON(); 
+improveGameTextObj.setText(improveGameText);
+const improveGameTextLO = improveGameTextObj.getJSON(); 
 
+const improveGameLectureObj = new LearningObject("Improving the guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low");
 const improveGameLecture = "https://youtu.be/5sXO3FKS_vg"; 
-const improveGameLectureLO = new LearningObject("Improving the guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low", improveGameLecture).getJSON(); 
+improveGameLectureObj.setText("youtube");
+improveGameLectureObj.setLink(improveGameLecture); 
+const improveGameLectureLO = improveGameLectureObj.getJSON(); 
 
+const improveGamePseudocodeObj = new LearningObject("Improving the guessing game", "text/plain", "expositive", "narrative text", "low");
 const improveGamePseudocode = `let secretNumber = 42 
                              let userGuess = read input 
                              if userGuess = secretNumber 
@@ -39,12 +60,15 @@ const improveGamePseudocode = `let secretNumber = 42
                                    print 'too low' 
                                 else 
                                     print 'too high'`;
-                                    
-const improveGamePseudocodeLO = new LearningObject("Improving the guessing game", "text/plain", "expositive", "narrative text", "low", improveGamePseudocode).getJSON(); 
+improveGamePseudocodeObj.setText(improveGamePseudocode);                                    
+const improveGamePseudocodeLO = improveGamePseudocodeObj.getJSON(); 
 
+const ifElseImgObj = new LearningObject("Improving the guessing game","image/png", "expositive", "slide", "low");
 const ifElseImg = "https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png";
-const ifElseImgLO = new LearningObject("Improving the guessing game","image/png", "expositive", "slide", "low", ifElseImg).getJSON(); 
+ifElseImgObj.setLink(ifElseImg);
+const ifElseImgLO = ifElseImgObj.getJSON(); 
 
+const challengeGameExerciseObj = new LearningObject("Challenge! Make the guessing game even more informative", "text/plain", "active", "exercise", "low");
 const challengeGameExercise = 
     `To become a good programmer, what you need to do is to practise, practise and practise!
 
@@ -62,8 +86,8 @@ const challengeGameExercise =
     Try designing your program for these before moving on!
 
     And remember, think about the problem before actually writing your pseudocode!`
-const challengeGameExerciseLO = new LearningObject("Challenge! Make the guessing game even more informative", "text/plain", "active", "exercise", "low", challengeGameExercise).getJSON(); 
-
+challengeGameExerciseObj.setText(challengeGameExercise); 
+const challengeGameExerciseLO = challengeGameExerciseObj.getJSON(); 
 
 
 export { introTextLO,
