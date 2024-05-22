@@ -8,6 +8,7 @@
   --componentColorDark: rgb(247,247,247); 
   --hoverColor: rgba(233, 233, 233, 0.1);
   --hoverShadowColor: rgba(0, 0, 0, 0.2); 
+  --sidebarHoverColor: #e6e6e6; 
   --inputColor: rgba(255, 251, 251, 0.283);
   --buttonColor: #f0f0f0; 
 }
@@ -83,7 +84,7 @@ body {
 }
 
 .nav-text a:hover {
-  background-color: #e6e6e6;
+  background-color: var(--sidebarHoverColor);
   color: var(--txtColorDark);
 }
 

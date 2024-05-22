@@ -71,7 +71,7 @@ function Profile() {
                 <span>{(preferences.reflexive * 100).toFixed(0)}%</span>
               </div>
               <div className="progress-line-container">
-                  <div className="progress-line red" 
+                  <div className="progress-line red}"
                         style={{ width: `${preferences.active * 100}%` }}>
                   </div>
                   <div className="progress-line green" 

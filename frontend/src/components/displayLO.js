@@ -23,7 +23,7 @@ export function displayLO(learningObject) {
             return (
                 <div style={{ textAlign: 'center' }}>
                   <img
-                  src={URL}
+                  src={ URL }
                   alt="Slide"
                   style={{ width: '600px', maxWidth: '100%', height: 'auto' }}
                   />
@@ -36,11 +36,11 @@ export function displayLO(learningObject) {
             <div style={{ textAlign: 'center', width: '100%', height: '100%' }}>
                 <iframe 
                     allowfullscreen="true" 
-                    allowtransparency="true" 
+                    // allowtransparency="true" 
                     frameborder="0" 
                     height="300" 
                     sandbox="allow-scripts allow-same-origin allow-presentation" 
-                    src={URL} 
+                    src={ URL } 
                     width="600"></iframe>
             </div>
         )

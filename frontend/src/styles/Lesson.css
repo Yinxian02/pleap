@@ -1,12 +1,13 @@
 .lesson-div{
-    justify-content: center; /* Horizontally center */
-    align-items: center; /* Vertically center */
+    justify-content: space-between; /* Horizontally center */
+    align-items: center;  
     width: 800px;
     background-color: var(--inputColor);
     border-radius: 4px;
     padding: 60px 60px;
     box-sizing: border-box; 
-    display: grid;
+    display: flex;
+    flex-direction: row;
     margin: 0 auto; 
     box-shadow: 0 4px 4px var(--hoverShadowColor); 
 }

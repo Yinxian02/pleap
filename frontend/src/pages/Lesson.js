@@ -43,7 +43,7 @@ class LessonFetch extends Component {
   render() {
     console.log("User ID: ", this.context.auth.id); 
 
-    const { title, author } = this.props.lesson;
+    const { title, author, description } = this.props.lesson;
     const { learningObjects } = this.state;
     console.log(learningObjects);
 
@@ -59,6 +59,7 @@ class LessonFetch extends Component {
       <div>
       <h2 className="lesson-title">{title}</h2>
       <h3 className="lesson-author">{author}</h3>
+      <p>{description}</p>
       <tr>
         <td>
           <ul>

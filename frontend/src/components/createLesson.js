@@ -2,10 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
   
-const LearningObjectsComponent = ({ title, author, learningObjects }) => {
+const LearningObjectsComponent = ({ title, author, description, thumbnail, learningObjects }) => {
   const [lesson, setLesson] = useState({
     title: title,
     author: author,
+    description: description, 
+    thumbnail: thumbnail, 
     _learningObjects: []
   });
 
@@ -74,6 +76,8 @@ const LearningObjectsComponent = ({ title, author, learningObjects }) => {
     <div>
       <h2>{lesson.title}</h2>
       <p>Author: {lesson.author}</p>
+      <p>{lesson.description}</p>
+      <p>{lesson.thumbnail}</p>
       <div>
         <h3>Topics</h3>
         <ul>

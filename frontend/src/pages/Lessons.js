@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "../styles/Lesson.css";
+import "../styles/Lessons.css";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
@@ -8,17 +8,25 @@ class Lesson extends Component {
   static contextType = AuthContext;
 
   render() {
-    const { title, author } = this.props.lesson;
+    const { title, author, description, thumbnail, _id } = this.props.lesson;
 
     return (
-      <tr>
-        <td>{title}</td>
-        <td>{author}</td>
-        <td>
-          <Link to={"/lesson/"+this.props.lesson._id}>lesson</Link>
-        </td>
-
-          </tr>
+      <div className="lesson-div-container">
+        <Link className="lesson-div" to={"/lesson/" + _id}>
+          <div>
+            <img
+              src={ thumbnail }
+              alt="Slide"
+              style={{ width: '300px', maxWidth: '100%', height: 'auto' }}
+            />
+          </div>
+          <div>
+            <h2 className='lesson-title'>{title}</h2>
+            <h3 className='lesson-author'>{author}</h3>
+            <p>{description}</p>
+          </div>
+        </Link>
+      </div>
     );
   }
 }
@@ -57,21 +65,14 @@ export default class Lessons extends Component {
   render() {
     return (
       <div>
+        {/* <Link to="/create-lesson">
+          <p>add lessons to database</p>
+        </Link> */}
         <div>
-          <Link to="/create-lesson">
-            <p>Add lessons to database</p>
-          </Link>
+            <div className="lessons-list">
+              {this.lessonsList()}
+            </div>
         </div>
-        <h3>Lessons</h3>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-            </tr>
-          </thead>
-          <tbody>{this.lessonsList()}</tbody>
-        </table>
       </div>
     );
   }
