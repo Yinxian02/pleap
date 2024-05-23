@@ -11,8 +11,8 @@ class Lesson extends Component {
     const { title, author, description, thumbnail, _id } = this.props.lesson;
 
     return (
-      <div className="lesson-div-container">
-        <Link className="lesson-div" to={"/lesson/" + _id}>
+      // <div className="lesson-div-container">
+        <Link className="lesson-link-div" to={"/lesson/" + _id}>
           <div>
             <img
               src={ thumbnail }
@@ -26,7 +26,7 @@ class Lesson extends Component {
             <p>{description}</p>
           </div>
         </Link>
-      </div>
+      // </div>
     );
   }
 }
@@ -65,9 +65,9 @@ export default class Lessons extends Component {
   render() {
     return (
       <div>
-        {/* <Link to="/create-lesson">
+        <Link to="/create-lesson">
           <p>add lessons to database</p>
-        </Link> */}
+        </Link>
         <div>
             <div className="lessons-list">
               {this.lessonsList()}

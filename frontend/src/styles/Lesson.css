@@ -1,14 +1,20 @@
-.lesson-div{
+.lesson-description {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; 
+}
+
+.learning-object-div {
     justify-content: space-between; /* Horizontally center */
     align-items: center;  
-    width: 800px;
-    background-color: var(--inputColor);
+    width: 70%;
+    background-color: var(--componentColorDark);
     border-radius: 4px;
     padding: 60px 60px;
     box-sizing: border-box; 
     display: flex;
     flex-direction: row;
-    margin: 0 auto; 
+    margin: 5em auto; 
     box-shadow: 0 4px 4px var(--hoverShadowColor); 
 }
 

@@ -1,3 +1,5 @@
+// import DOMPurify from 'dompurify';
+
 export function displayLO(learningObject) {
     const LRT = learningObject.educational.learningResourceType; 
     
@@ -19,38 +21,39 @@ export function displayLO(learningObject) {
                 ></iframe>
             </div>
           );
-        } else if (LRT === "slide") {
-            return (
-                <div style={{ textAlign: 'center' }}>
-                  <img
-                  src={ URL }
-                  alt="Slide"
-                  style={{ width: '600px', maxWidth: '100%', height: 'auto' }}
-                  />
-                </div>
-            );
-        }
+    } else if (LRT === "slide") {
+        return (
+            <div style={{ textAlign: 'center' }}>
+                <img
+                src={ URL }
+                alt="Slide"
+                style={{ width: '600px', maxWidth: '100%', height: 'auto' }}
+                />
+            </div>
+        );
+    }
     
     if (learningObject.content.text === "mentimeter") {
         return (
             <div style={{ textAlign: 'center', width: '100%', height: '100%' }}>
                 <iframe 
                     allowfullscreen="true" 
-                    // allowtransparency="true" 
                     frameborder="0" 
                     height="300" 
-                    sandbox="allow-scripts allow-same-origin allow-presentation" 
                     src={ URL } 
-                    width="600"></iframe>
+                    width="900"></iframe>
             </div>
         )
     }
+
+    // const sanitizedText = DOMPurify.sanitize(learningObject.content.text);
     
     if (learningObject.technical.format === "text/plain"){
         return (
-            <div>
-                {learningObject.content.text}
-            </div>
+            <div dangerouslySetInnerHTML={{ __html: learningObject.content.text }} />
+            // <div>
+            //     {learningObject.content.text}
+            // </div>
         );
     }
 }

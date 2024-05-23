@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
+import { lectureToMP3 } from './lectureToMP3';
   
 const LearningObjectsComponent = ({ title, author, description, thumbnail, learningObjects }) => {
   const [lesson, setLesson] = useState({
@@ -15,6 +16,7 @@ const LearningObjectsComponent = ({ title, author, description, thumbnail, learn
 
   const createLearningObjects = async (learningObjects) => {
     try {
+
       const res = await axios.post('http://localhost:5001/learning-objects/addBatch', 
         { learningObjects },
         {
@@ -34,6 +36,7 @@ const LearningObjectsComponent = ({ title, author, description, thumbnail, learn
     }
   };
 
+
   const addLesson = async (lesson) => {
     try {
       const res = await axios.post(
@@ -49,12 +52,29 @@ const LearningObjectsComponent = ({ title, author, description, thumbnail, learn
         }
       );
       console.log('Lesson:', res.data);
+
+
     } catch (error) {
       console.error('Error adding lesson:', error);
     }
   };
 
   useEffect(() => {
+
+    const convertLectureVideos = async () => {
+      for (let learningObject of learningObjects) {
+        console.log(learningObject)
+        try {
+          if (learningObject.educational.learningResourceType === "lecture") {
+            const mp3Url = await lectureToMP3(learningObject.content.link);
+            console.log(mp3Url)
+          }
+        } catch (error) {
+          console.error('Error converting lecture:', error);
+        }
+      }
+    }
+
     const fetchAndAddLearningObjects = async () => {
       try {
         const ids = await createLearningObjects(learningObjects);
@@ -69,7 +89,9 @@ const LearningObjectsComponent = ({ title, author, description, thumbnail, learn
       } 
     };
 
+    convertLectureVideos();
     fetchAndAddLearningObjects();
+
   }, [learningObjects]);  
 
   return (

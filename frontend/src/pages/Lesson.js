@@ -41,13 +41,13 @@ class LessonFetch extends Component {
   }
 
   render() {
-    console.log("User ID: ", this.context.auth.id); 
+    // console.log("User ID: ", this.context.auth.id); 
 
     const { title, author, description } = this.props.lesson;
     const { learningObjects } = this.state;
-    console.log(learningObjects);
+    // console.log(learningObjects);
 
-    console.log("User preferences: ", this.context.auth.preferences)
+    // console.log("User preferences: ", this.context.auth.preferences)
     const learningDimensionPreferences = { f1: this.context.auth.preferences.active,
                                           f2: this.context.auth.preferences.sensing, 
                                           f3: this.context.auth.preferences.visual, 
@@ -57,21 +57,16 @@ class LessonFetch extends Component {
 
     return (
       <div>
-      <h2 className="lesson-title">{title}</h2>
-      <h3 className="lesson-author">{author}</h3>
-      <p>{description}</p>
-      <tr>
-        <td>
-          <ul>
-            {sortedLOs.map(lo => (
-              <li key={lo._id}>
-                <p>{displayLO(lo)}</p>
-              </li>
-              
-            ))}
-          </ul>
-        </td>
-      </tr>
+        <h2 className="lesson-title">{title}</h2>
+        <h3 className="lesson-author">{author}</h3>
+        <p className="lesson-description">{description}</p>
+        <br/>
+
+        <div>
+          {sortedLOs.map(lo => (
+              <p className='learning-object-div'>{displayLO(lo)}</p>
+          ))}
+        </div>
       </div>
     );
   }
@@ -126,9 +121,7 @@ class Lesson extends Component {
   render() {
     return (
       <div>
-        <table className="learning-objects-div">
-          <tbody>{this.lessonDisplay()}</tbody>
-        </table>
+        {this.lessonDisplay()}
       </div>
     );
   }
