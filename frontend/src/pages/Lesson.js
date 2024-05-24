@@ -63,8 +63,8 @@ class LessonFetch extends Component {
         <br/>
 
         <div>
-          {sortedLOs.map(lo => (
-              <p className='learning-object-div'>{displayLO(lo)}</p>
+        {sortedLOs.map((lo, index) => (
+            <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
           ))}
         </div>
       </div>

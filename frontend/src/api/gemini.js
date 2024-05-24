@@ -1,25 +1,23 @@
 const {
-    FunctionDeclarationSchemaType,
-    HarmBlockThreshold,
-    HarmCategory,
+    // FunctionDeclarationSchemaType,
+    // HarmBlockThreshold,
+    // HarmCategory,
     VertexAI
-  } = require('@google-cloud/vertexai');
+} = require('@google-cloud/vertexai');
   
-  const project = 'pleap24';
-  const location = 'us-central1';
-  const textModel =  'gemini-1.0-pro';
+const project = 'pleap24';
+const location = 'us-central1';
+const textModel =  'gemini-1.0-pro';
 //   const visionModel = 'gemini-1.0-pro-vision';
+
+const vertexAI = new VertexAI({project: project, location: location});
   
-  const vertexAI = new VertexAI({project: project, location: location});
-  
-  // Instantiate Gemini models
-  const generativeModel = vertexAI.getGenerativeModel({
-      model: textModel,
-      // The following parameters are optional
-      // They can also be passed to individual content generation requests
-      safetySettings: [{category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE}],
-      generationConfig: {maxOutputTokens: 256},
-    });
+// Instantiate Gemini models
+const generativeModel = vertexAI.getGenerativeModel({
+    model: textModel,
+    // safetySettings: [{category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE}],
+    generationConfig: {maxOutputTokens: 256},
+  });
   
 //   const generativeVisionModel = vertexAI.getGenerativeModel({
 //       model: visionModel,
@@ -29,13 +27,23 @@ const {
 //       model: textModel,
 //   });
   
-  async function generateContent() {
-    const request = {
-      contents: [{role: 'user', parts: [{text: 'How are you doing today?'}]}],
-    };
+async function generateText(prompt) {
+  const request = {
+    contents: [{role: 'user', parts: [{text: prompt}]}],
+  };
+
+  try {
     const result = await generativeModel.generateContent(request);
     const response = result.response;
-    console.log('Response: ', JSON.stringify(response));
-  };
-  
-  generateContent();
+
+    const textContent = response.candidates[0].content.parts[0].text;
+    // console.log('Response: ', JSON.stringify(textContent));
+    return textContent;
+
+  } catch (error) {
+    console.error('Error generating content:', error);
+    // throw error;
+  }
+};
+
+module.exports = generateText;

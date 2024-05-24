@@ -27,7 +27,7 @@ export function displayLO(learningObject) {
                 <img
                 src={ URL }
                 alt="Slide"
-                style={{ width: '600px', maxWidth: '100%', height: 'auto' }}
+                style={{ width: '100%', maxWidth: '100%', height: 'auto' }}
                 />
             </div>
         );
@@ -41,7 +41,7 @@ export function displayLO(learningObject) {
                     frameborder="0" 
                     height="300" 
                     src={ URL } 
-                    width="900"></iframe>
+                    width="100%"></iframe>
             </div>
         )
     }
