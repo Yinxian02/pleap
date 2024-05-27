@@ -1,3 +1,5 @@
 .env
 node_modules
 logs
+routes/api/audio/
+pleap24-2283bc0de862.json

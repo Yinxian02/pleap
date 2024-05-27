@@ -1,13 +1,23 @@
 import { Component } from 'react';
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
-// import { createMCQ } from "./createMCQ";
-// import { sendRequest, writeResponseLocally } from "../api/utils/google-foundation-models";
-
 class GenerateAIContent extends Component{
     static contextType = AuthContext;
     
-    async createMCQ(lessonText) {
+    getAllLessonText(learningObjects) {
+        var allText = "";
+        for (let i = 0; i < learningObjects.length; i++) {
+            if (learningObjects[i].content.text !== null){
+                allText += learningObjects[i].content.text;
+            }
+        }
+        // console.log(allText); 
+        return allText; 
+    }; 
+
+    async createMCQ(learningObjects) {
+      const lessonText = this.getAllLessonText(learningObjects);
+
       try {
           const prompt = `You are a computer science teacher teaching [topic]. 
           You have the following lesson content. 
@@ -15,7 +25,8 @@ class GenerateAIContent extends Component{
           that test understanding, and provide correct answers \n\n
           Lesson Content:\n${lessonText}`;
 
-          const response = await axios.post('http://localhost:5001/vertex-ai/generate', {
+          console.log(prompt);
+          const response = await axios.post('http://localhost:5001/vertex-ai/generateText', {
               instances: [{ content: prompt}],
               parameters: { temperature: 0.2, maxOutputTokens: 1024 },
               apiEndpoint: 'us-central1-aiplatform.googleapis.com',
@@ -35,17 +46,35 @@ class GenerateAIContent extends Component{
           console.error('Error:', error);
       }
   }
-    getAllLessonText(learningObjects) {
-        var allText = "";
-        for (let i = 0; i < learningObjects.length; i++) {
-            if (learningObjects[i].content.text !== null){
-                allText += learningObjects[i].content.text;
+
+    async createAudio(learningObjects){
+      for (let i = 0; i < learningObjects.length; i++) {
+        if (learningObjects[i].technical.format === "text/plain"){ 
+          try {
+            const title = learningObjects[i].general.title; 
+            console.log(title); 
+
+            const text = learningObjects[i].content.text; 
+            console.log(text); 
+
+            const res = await axios.post(
+              'http://localhost:5001/vertex-ai/textToSpeech',
+              { title, text }, 
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: 'Bearer ' + this.context.auth.accessToken,
+                  mode: 'cors',
+                  withCredentials: true,
+                },
             }
+          );
+          console.log(res.data); 
+        } catch (error) {
+          console.error('Error generating audio:', error);
         }
-        console.log(allText); 
-        this.createMCQ(allText);
-        
-    }; 
+      }
+    } }
 
     async fetchLearningObjects(ids) {
         try {
@@ -62,7 +91,8 @@ class GenerateAIContent extends Component{
             }
           );
         //   console.log(res.data);
-          this.getAllLessonText(res.data);
+          // this.createMCQ(res.data);
+          this.createAudio(res.data); 
 
         } catch (error) {
           console.error('Error fetching learning objects:', error);

@@ -1,16 +1,14 @@
 const router = require('express').Router();
 const { GoogleAuth } = require('google-auth-library');
-// const fetch = require('node-fetch');
 const fs = require('fs');
 const ROLES_LIST = require('../../config/rolesList');
 const verifyRoles = require('../../middleware/verifyRoles');
+const textToSpeech = require('@google-cloud/text-to-speech');
+const util = require('util');
+const path = require('path');
 
-router.route('/generate').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+router.route('/generateText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
     const { instances, parameters, apiEndpoint, projectId, modelId } = req.body;
-
-    if (!instances || !parameters || !apiEndpoint || !projectId || !modelId) {
-        return res.status(400).send({ error: 'Missing required fields' });
-    }
 
     const auth = new GoogleAuth({
         keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
@@ -45,18 +43,52 @@ router.route('/generate').post(verifyRoles(ROLES_LIST.User), async (req, res) =>
         const result = await response.json();
         console.log(result);
         
-        // Write response to file (optional)
-        // const outputDir = path.join(__dirname, "../../examples_output");
-        // if (!fs.existsSync(outputDir)){
-        //     fs.mkdirSync(outputDir);
-        // }
-        // fs.writeFileSync(path.join(outputDir, `${modelId}.json`), JSON.stringify(result));
-        
         res.status(200).send(result);
     } catch (error) {
         console.error('Error generating AI content:', error);
         res.status(500).send({ error: error.message });
     }
 }); 
+
+router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+    const text = req.body.text;
+    console.log(text); 
+
+    const title = req.body.title;
+    console.log(title); 
+
+    const client = new textToSpeech.TextToSpeechClient();
+
+    async function generateAudio(text, title) {
+        const request = {
+            input: { text: text },
+            voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+            audioConfig: { audioEncoding: 'MP3' },
+        };
+
+        const [response] = await client.synthesizeSpeech(request);
+
+        const audioDir = path.join(__dirname, 'audio');
+        if (!fs.existsSync(audioDir)) {
+            fs.mkdirSync(audioDir);
+        }
+        
+        const sanitizedTitle = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        const filename = path.join(audioDir, `${sanitizedTitle}.mp3`);
+
+        const writeFile = util.promisify(fs.writeFile);
+        await writeFile(filename, response.audioContent, 'binary');
+        console.log(`Audio content written to file: ${filename}`);
+        return filename; 
+    }
+
+    try {
+        const filename = await generateAudio(text, title);
+        res.status(200).json({ message: 'Audio generated successfully.' , filename: filename });
+    } catch (error) {
+        console.error('Error generating audio:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+});
 
 module.exports = router;
