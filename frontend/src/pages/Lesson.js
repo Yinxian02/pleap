@@ -130,7 +130,7 @@ class Lesson extends Component {
 // Functional wrapper component to use hooks
 const LessonWrapper = (props) => {
   const { id } = useParams();
-  console.log(id)
+  // console.log(id)
   return <Lesson {...props} id={id} />;
 };
 

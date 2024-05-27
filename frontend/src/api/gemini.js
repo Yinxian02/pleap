@@ -16,7 +16,7 @@ const vertexAI = new VertexAI({project: project, location: location});
 const generativeModel = vertexAI.getGenerativeModel({
     model: textModel,
     // safetySettings: [{category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE}],
-    generationConfig: {maxOutputTokens: 256},
+    generationConfig: {maxOutputTokens: 2148},
   });
   
 //   const generativeVisionModel = vertexAI.getGenerativeModel({
@@ -29,7 +29,7 @@ const generativeModel = vertexAI.getGenerativeModel({
   
 async function generateText(prompt) {
   const request = {
-    contents: [{role: 'user', parts: [{text: prompt}]}],
+    contents: [{ role: 'user', parts: [{text: prompt}]}],
   };
 
   try {

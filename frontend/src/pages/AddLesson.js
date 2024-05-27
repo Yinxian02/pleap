@@ -3,6 +3,8 @@ import "../styles/Lesson.css";
 import { Link } from 'react-router-dom';
 
 import LearningObjectsComponent from '../components/createLesson';
+import GenerateAIContent from '../components/generateAIContent'
+// import createMCQ from '../components/createMCQ';
 
 import { courseSummaryLO, 
   whatIsProgrammingTextLO, 
@@ -73,7 +75,7 @@ const designGameLOs = [
 
 const AddLesson = () => (
   <div>
-    <LearningObjectsComponent 
+    {/* <LearningObjectsComponent 
         title="Intro to programming" 
         author="Josiah Wang" 
         description="Really... what exactly is programming?"
@@ -85,8 +87,10 @@ const AddLesson = () => (
         author="Josiah Wang" 
         description="Let's dive straight into designing a game... because life is too short to waste!"
         thumbnail="https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png"
-        learningObjects={designGameLOs} />
+        learningObjects={designGameLOs} /> */}
     
+    <GenerateAIContent/>
+
     <Link to="/lessons">
       <p>go to lessons</p>
     </Link>

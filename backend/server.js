@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const credentials = require('./middleware/credentials');
 const requireAuth = require("./middleware/requireAuth")
 const connectDB = require('./config/dbConn');
+
 const port = process.env.PORT || 5001;
 
 connectDB();
@@ -40,6 +41,7 @@ app.use(requireAuth);
 app.use('/users', require('./routes/api/users'));
 app.use('/lessons', require('./routes/api/lessons'));
 app.use('/learning-objects', require('./routes/api/learning-objects'));
+app.use('/vertex-ai', require('./routes/api/vertex-ai'));
 
 app.all('*', (req, res) => {
   res.status(404);

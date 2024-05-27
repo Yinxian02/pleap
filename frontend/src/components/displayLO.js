@@ -13,6 +13,7 @@ export function displayLO(learningObject) {
             <div style={{ textAlign: 'center' }}>
               <iframe
                 width="560"
+                maxWidth="100%"
                 height="315"
                 src={embedUrl}
                 title="YouTube video player"
