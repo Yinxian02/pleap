@@ -1,11 +1,18 @@
 const router = require('express').Router();
 const { GoogleAuth } = require('google-auth-library');
 const fs = require('fs');
-const ROLES_LIST = require('../../config/rolesList');
-const verifyRoles = require('../../middleware/verifyRoles');
-const textToSpeech = require('@google-cloud/text-to-speech');
 const util = require('util');
 const path = require('path');
+
+const ROLES_LIST = require('../../config/rolesList');
+const verifyRoles = require('../../middleware/verifyRoles');
+
+const textToSpeech = require('@google-cloud/text-to-speech');
+const ffmpeg = require('fluent-ffmpeg');
+const { Storage } = require('@google-cloud/storage');
+const speech = require('@google-cloud/speech');
+
+const storage = new Storage();
 
 router.route('/generateText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
     const { instances, parameters, apiEndpoint, projectId, modelId } = req.body;
@@ -78,18 +85,59 @@ router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res
 
         const writeFile = util.promisify(fs.writeFile);
         await writeFile(filename, response.audioContent, 'binary');
-        
+
         console.log(`Audio content written to file: ${filename}`);
         return filename; 
     }
 
     try {
         const filename = await generateAudio(text, title);
-        res.status(200).json({ message: 'Audio generated successfully.' , filename: filename });
+        res.status(200).json({ message: 'Audio generated successfully.'});
     } catch (error) {
         console.error('Error generating audio:', error);
         res.status(500).json({ error: 'Internal server error.' });
     }
+});
+
+router.route('/speechToText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+    console.log(req.body);
+
+    // const client = new speech.SpeechClient();
+
+    // async function generateTranscript() {
+    //     // The path to the remote LINEAR16 file
+    //     const gcsUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.raw';
+      
+    //     // The audio file's encoding, sample rate in hertz, and BCP-47 language code
+    //     const audio = {
+    //       uri: gcsUri,
+    //     };
+    //     const config = {
+    //       encoding: 'LINEAR16',
+    //       sampleRateHertz: 16000,
+    //       languageCode: 'en-US',
+    //     };
+    //     const request = {
+    //       audio: audio,
+    //       config: config,
+    //     };
+      
+    //     // Detects speech in the audio file
+    //     const [response] = await client.recognize(request);
+    //     const transcription = response.results
+    //       .map(result => result.alternatives[0].transcript)
+    //       .join('\n');
+    //     console.log(`Transcription: ${transcription}`);
+    //     return transcription; 
+    // }
+
+    // try {
+    //     const transcript = await generateTranscript();
+    //     res.status(200).json({ transcript: transcript});
+    // } catch (error) {
+    //     console.error('Error generating transcript:', error);
+    //     res.status(500).json({ error: 'Internal server error.' });
+    // }
 });
 
 module.exports = router;

@@ -26,7 +26,7 @@ whatIsProgrammingAnsObj.setLink(whatIsProgrammingAnsLink);
 const whatIsProgrammingAnsLO = whatIsProgrammingAnsObj.getJSON();
 
 const whatIsAProgramTextObj = new LearningObject("What is a program", "text/plain", "expositive", "narrative text", "low");
-const whatIsAProgramText = "Having seen the different responses to programming from your coursemates and seniors, here is another question. What is a computer program? (We will use the American spelling instead of programme as it is more widespread)."
+const whatIsAProgramText = "Having seen the different responses to programming from your coursemates and seniors, here is another question."
 whatIsAProgramTextObj.setText(whatIsAProgramText);
 const whatIsAProgramTextLO = whatIsAProgramTextObj.getJSON();
 

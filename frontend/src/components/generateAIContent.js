@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
+
 class GenerateAIContent extends Component{
     static contextType = AuthContext;
     
@@ -45,16 +46,14 @@ class GenerateAIContent extends Component{
       } catch (error) {
           console.error('Error:', error);
       }
-  }
+    }
 
-    async createAudio(learningObjects){
-      for (let i = 0; i < learningObjects.length; i++) {
-        if (learningObjects[i].technical.format === "text/plain"){ 
-          try {
-            const title = learningObjects[i].general.title; 
+    async createAudio(learningObject){
+      try {
+            const title = learningObject.general.title; 
             console.log(title); 
 
-            const text = learningObjects[i].content.text; 
+            const text = learningObject.content.text; 
             console.log(text); 
 
             const res = await axios.post(
@@ -73,8 +72,29 @@ class GenerateAIContent extends Component{
         } catch (error) {
           console.error('Error generating audio:', error);
         }
+    }
+
+    async createTranscript(learningObject){
+      try {
+        const link = learningObject.content.link; 
+
+        const res = await axios.post(
+          'http://localhost:5001/vertex-ai/speechToText',
+          { link }, 
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + this.context.auth.accessToken,
+              mode: 'cors',
+              withCredentials: true,
+            },
+          }
+        );
+          console.log(res.data); 
+        } catch (error) {
+          console.error('Error generating transcript:', error);
+        }
       }
-    } }
 
     async fetchLearningObjects(ids) {
         try {
@@ -91,8 +111,16 @@ class GenerateAIContent extends Component{
             }
           );
         //   console.log(res.data);
-          // this.createMCQ(res.data);
-          this.createAudio(res.data); 
+          const learningObjects = res.data; 
+          // this.createMCQ(learningObjects);
+
+          for (let i = 0; i < learningObjects.length; i++) {
+            if (learningObjects[i].technical.format === "text/plain"){ 
+              // this.createAudio(learningObjects[i]); 
+            } else if (learningObjects[i].technical.format === "video/vnd.youtube.yt") {
+              this.createTranscript(learningObjects[i]); 
+            }
+        } 
 
         } catch (error) {
           console.error('Error fetching learning objects:', error);
@@ -109,8 +137,7 @@ class GenerateAIContent extends Component{
             },
           })
           .then(res => {
-            console.log(res.data);
-            // this.setState({ lesson: res.data });
+            // console.log(res.data);
             for (let i = 0; i < res.data.length; i++) {
                 this.fetchLearningObjects(res.data[i]._learningObjects);
             }
