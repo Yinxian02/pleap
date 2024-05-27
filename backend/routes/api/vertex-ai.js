@@ -78,6 +78,7 @@ router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res
 
         const writeFile = util.promisify(fs.writeFile);
         await writeFile(filename, response.audioContent, 'binary');
+        
         console.log(`Audio content written to file: ${filename}`);
         return filename; 
     }
