@@ -2,6 +2,12 @@ import { Component } from 'react';
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
 
+function getYoutubeId(url) {
+    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+}
+
 class GenerateAIContent extends Component{
     static contextType = AuthContext;
     
@@ -74,13 +80,18 @@ class GenerateAIContent extends Component{
         }
     }
 
+
     async createTranscript(learningObject){
       try {
+        const title = learningObject.general.title; 
         const link = learningObject.content.link; 
+
+        const videoId = getYoutubeId(link);
+        console.log(videoId); 
 
         const res = await axios.post(
           'http://localhost:5001/vertex-ai/speechToText',
-          { link }, 
+          { title, videoId }, 
           {
             headers: {
               'Content-Type': 'application/json',
@@ -119,6 +130,7 @@ class GenerateAIContent extends Component{
               // this.createAudio(learningObjects[i]); 
             } else if (learningObjects[i].technical.format === "video/vnd.youtube.yt") {
               this.createTranscript(learningObjects[i]); 
+              break; // comment after
             }
         } 
 
@@ -137,7 +149,6 @@ class GenerateAIContent extends Component{
             },
           })
           .then(res => {
-            // console.log(res.data);
             for (let i = 0; i < res.data.length; i++) {
                 this.fetchLearningObjects(res.data[i]._learningObjects);
             }

@@ -8,11 +8,7 @@ const ROLES_LIST = require('../../config/rolesList');
 const verifyRoles = require('../../middleware/verifyRoles');
 
 const textToSpeech = require('@google-cloud/text-to-speech');
-const ffmpeg = require('fluent-ffmpeg');
-const { Storage } = require('@google-cloud/storage');
-const speech = require('@google-cloud/speech');
-
-const storage = new Storage();
+const { makeTranscript } = require('../makeTranscript');
 
 router.route('/generateText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
     const { instances, parameters, apiEndpoint, projectId, modelId } = req.body;
@@ -100,7 +96,8 @@ router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res
 });
 
 router.route('/speechToText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body.link);
+    makeTranscript(req.body.title, req.body.videoId); 
 
     // const client = new speech.SpeechClient();
 
