@@ -46,7 +46,8 @@ export class LearningObject {
         },
         content: {
             text: this.text,
-            link: this.link
+            link: this.link,
+            audio: this.audio
         }
     };
     }

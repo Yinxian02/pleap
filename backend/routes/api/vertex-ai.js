@@ -8,8 +8,11 @@ const ROLES_LIST = require('../../config/rolesList');
 const verifyRoles = require('../../middleware/verifyRoles');
 
 const textToSpeech = require('@google-cloud/text-to-speech');
-const { makeTranscript } = require('../makeTranscript');
-const { makeDescription } = require('../makeDescription');
+
+const uploadToGCS = require('../uploadToGCS');
+const { generateTranscript } = require('../generateTranscript');
+const { generateDescription } = require('../generateDescription');
+
 
 router.route('/generateText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
     const textPrompt = req.body.textPrompt;
@@ -67,6 +70,7 @@ router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res
 
     const title = req.body.title;
     console.log(title); 
+    const sanitizedTitle = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
 
     const client = new textToSpeech.TextToSpeechClient();
 
@@ -95,8 +99,15 @@ router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res
     }
 
     try {
-        const filename = await generateAudio(text, title);
-        res.status(200).json({ message: 'Audio generated successfully.'});
+        const filename = await generateAudio(text, sanitizedTitle);
+        const bucketName = 'pleap';
+        const subfolder = 'generated-audio';
+        const gcsUri = `https://storage.googleapis.com/${bucketName}/${subfolder}/${sanitizedTitle}.mp3`;
+        
+        await uploadToGCS(filename, bucketName, subfolder, `${sanitizedTitle}.mp3`);
+        console.log(gcsUri);
+
+        res.status(200).json({ message: 'Audio generated successfully.', audio: gcsUri});
     } catch (error) {
         console.error('Error generating audio:', error);
         res.status(500).json({ error: 'Internal server error.' });
@@ -105,7 +116,7 @@ router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res
 
 router.route('/speechToText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
     try {
-        const transcript = await makeTranscript(req.body.title, req.body.videoId); 
+        const transcript = await generateTranscript(req.body.title, req.body.videoId); 
         res.status(200).send(transcript);
     } catch (error) {
         res.status(500).send({ error: error.message });
@@ -114,7 +125,7 @@ router.route('/speechToText').post(verifyRoles(ROLES_LIST.User), async (req, res
 
 router.route('/imageToText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
     try {
-        const description = await makeDescription(req.body.imageUrl); 
+        const description = await generateDescription(req.body.imageUrl, req.body.lecturePrompt); 
         res.status(200).send(description);
     } catch (error) {
         res.status(500).send({ error: error.message });

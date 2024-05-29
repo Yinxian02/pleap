@@ -6,13 +6,13 @@ async function getBase64(url) {
     return Buffer.from(image.data).toString('base64');
 }
 
-async function makeDescription(image) {
+async function generateDescription(image, text) {
     const imageBase64 = await getBase64(image);
 
     const vertexAI = new VertexAI(
-                            {   project: 'pleap24', 
-                                location: 'us-central1' 
-                            });
+                      {   project: 'pleap24', 
+                          location: 'us-central1' 
+                      });
 
   const generativeVisionModel = vertexAI.getGenerativeModel({
     model: 'gemini-1.0-pro-vision-001',
@@ -30,7 +30,7 @@ async function makeDescription(image) {
             },
           },
           {
-            text: 'lecture slide',
+            text: text,
           },
         ],
       },
@@ -39,9 +39,8 @@ async function makeDescription(image) {
 
   const response = await generativeVisionModel.generateContent(request);
   const aggregatedResponse = await response.response;
-  const fullTextResponse =
-    aggregatedResponse.candidates[0].content.parts[0].text;
+  const fullTextResponse = aggregatedResponse.candidates[0].content.parts[0].text;
   console.log(fullTextResponse);
 }
 
-module.exports = { makeDescription };
+module.exports = { generateDescription };

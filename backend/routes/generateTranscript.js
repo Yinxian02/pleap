@@ -6,12 +6,7 @@ const readline = require('readline');
 const ytdl = require('ytdl-core');
 
 const speech = require('@google-cloud/speech');
-const { Storage } = require('@google-cloud/storage');
-
-const storage = new Storage({
-    projectId: 'pleap24',
-    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-})
+const uploadToGCS = require('./uploadToGCS');
 
 const client = new speech.SpeechClient();
 
@@ -47,23 +42,6 @@ async function convertMP3ToWAV(mp3Path, wavPath) {
     });
 }
 
-async function uploadToGCS(localPath, bucketName, subfolder, filename) {
-    const bucket = storage.bucket(bucketName);
-    
-    const exists = await bucket.exists();
-    if (!exists[0]) {
-        await storage.createBucket(bucketName);
-        console.log(`Bucket '${bucketName}' created.`);
-    }
-    
-    const destination = subfolder ? `${subfolder}/${filename}` : filename;
-    await bucket.upload(localPath, {
-        destination: destination,
-    });
-
-    console.log(`${localPath} uploaded to ${bucketName}/${destination}`);
-}
-
 async function transcribeAudio(gcsUri) {
     const audio = { 
         uri: gcsUri 
@@ -92,7 +70,7 @@ async function transcribeAudio(gcsUri) {
 }; 
 
 
-async function makeTranscript(title, youtubeID) {
+async function generateTranscript(title, youtubeID) {
 
     const sanitizedTitle = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
     const wavPath = `${__dirname}/audioWAV/${sanitizedTitle}.wav`; 
@@ -111,4 +89,4 @@ async function makeTranscript(title, youtubeID) {
     }
 }
 
-module.exports = { makeTranscript }; 
+module.exports = { generateTranscript }; 

@@ -18,7 +18,6 @@ class GenerateAIContent extends Component{
                 allText += learningObjects[i].content.text;
             }
         }
-        // console.log(allText); 
         return allText; 
     }; 
 
@@ -37,49 +36,77 @@ class GenerateAIContent extends Component{
             }
         });
         console.log('Generated content:', response.data.predictions[0].content);
+        return response.data.predictions[0].content;
       } catch (error) {
           console.error('Error:', error);
       }
     }
 
-    async createMCQ(learningObjects) {
-      const lessonText = this.getAllLessonText(learningObjects);
-
-      const prompt = `You are a computer science teacher teaching [topic]. 
+    async createMCQ(lessonText) {
+      const mcqPrompt = `You are a computer science lecturer. 
       You have the following lesson content. 
       Create a list of 10 multiple choice questions based on the lesson content, 
-      that test understanding, and provide correct answers \n\n
+      that test understanding, and provide the correct answers to each question. \n\n
       Lesson Content:\n${lessonText}`;
       
-      this.generateTextResponse(prompt); 
+      const mcqGeneratedResponse = await this.generateTextResponse(mcqPrompt); 
+
+      const jsonPrompt = `Format these in the format of json array
+      questions = [ { question : "" , choices : [ { text: "", value: 1 (if correct) 0 (if wrong)]}, ... ] 
+      MCQs: \n\n ${mcqGeneratedResponse}`
+
+      const jsonGeneratedResponse = await this.generateTextResponse(jsonPrompt);
+
+      console.log(jsonGeneratedResponse);
+      return jsonGeneratedResponse;
+    }
+
+    async createExercise(lessonText) {
+      const exercisePrompt = `You are a computer science lecturer. 
+      You have the following lesson content. 
+      Design a end-of-unit exercise based on the lesson content, 
+      that test understanding, and provide correct answers \n\n
+
+      Lesson Content:\n${lessonText}`;
+      
+      const exerciseGeneratedResponse = await this.generateTextResponse(exercisePrompt); 
+
+      const jsonPrompt = `Format these in the format of json array
+      questions = [ { question : "" , answer : ""} , ... ]
+      Exercise: \n\n ${exerciseGeneratedResponse}`
+
+      const jsonGeneratedResponse = await this.generateTextResponse(jsonPrompt);
+    
+      console.log(jsonGeneratedResponse);
+      return jsonGeneratedResponse;
     }
 
     async createAudio(learningObject){
       try {
-            const title = learningObject.general.title; 
-            console.log(title); 
+        const title = learningObject.general.title; 
+        console.log(title); 
 
-            const text = learningObject.content.text; 
-            console.log(text); 
+        const text = learningObject.content.text; 
+        console.log(text); 
 
-            const res = await axios.post(
-              'http://localhost:5001/vertex-ai/textToSpeech',
-              { title, text }, 
-              {
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: 'Bearer ' + this.context.auth.accessToken,
-                  mode: 'cors',
-                  withCredentials: true,
-                },
-            }
-          );
-          console.log(res.data); 
-        } catch (error) {
-          console.error('Error generating audio:', error);
+        const res = await axios.post(
+          'http://localhost:5001/vertex-ai/textToSpeech',
+          { title, text }, 
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + this.context.auth.accessToken,
+              mode: 'cors',
+              withCredentials: true,
+            },
         }
+      );
+      console.log(res.data.audio); 
+      return res.data.audio;
+    } catch (error) {
+      console.error('Error generating audio:', error);
     }
-
+    }
 
     async createTranscript(learningObject){
       try {
@@ -119,9 +146,12 @@ class GenerateAIContent extends Component{
         const imageUrl = learningObject.content.link; 
         console.log(imageUrl); 
 
+        const lecturePrompt = 
+          `Write alternative lecture notes based on the image: ${imageUrl}`;
+
         const res = await axios.post(
           'http://localhost:5001/vertex-ai/imageToText',
-          { title, imageUrl }, 
+          { imageUrl, lecturePrompt }, 
           {
             headers: {
               'Content-Type': 'application/json',
@@ -153,10 +183,12 @@ class GenerateAIContent extends Component{
         );
       //   console.log(res.data);
         const learningObjects = res.data; 
-        // this.createMCQ(learningObjects);
+        const lessonText = this.getAllLessonText(learningObjects);
+        // this.createMCQ(lessonText);
+        // this.createExercise(lessonText);
 
         for (let i = 0; i < learningObjects.length; i++) {
-          console.log(learningObjects[i].educational.learningResourceType);
+          // console.log(learningObjects[i].educational.learningResourceType);
           if (learningObjects[i].educational.learningResourceType === "narrative text" || learningObjects[i].educational.learningResourceType === "problem statement") {
             // this.createAudio(learningObjects[i]); 
             // break;  // comment after
@@ -164,7 +196,6 @@ class GenerateAIContent extends Component{
             // this.createTranscript(learningObjects[i]); 
             // break; // comment after
           } else if (learningObjects[i].educational.learningResourceType === "slide") {
-            console.log("slide");
             // this.createDescription(learningObjects[i]);
             // break; // comment after
           }
@@ -174,7 +205,6 @@ class GenerateAIContent extends Component{
         console.error('Error fetching learning objects:', error);
       }
     }
-
 
     componentDidMount() {
         axios
