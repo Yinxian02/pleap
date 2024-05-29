@@ -96,45 +96,12 @@ router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res
 });
 
 router.route('/speechToText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
-    // console.log(req.body.link);
-    makeTranscript(req.body.title, req.body.videoId); 
-
-    // const client = new speech.SpeechClient();
-
-    // async function generateTranscript() {
-    //     // The path to the remote LINEAR16 file
-    //     const gcsUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.raw';
-      
-    //     // The audio file's encoding, sample rate in hertz, and BCP-47 language code
-    //     const audio = {
-    //       uri: gcsUri,
-    //     };
-    //     const config = {
-    //       encoding: 'LINEAR16',
-    //       sampleRateHertz: 16000,
-    //       languageCode: 'en-US',
-    //     };
-    //     const request = {
-    //       audio: audio,
-    //       config: config,
-    //     };
-      
-    //     // Detects speech in the audio file
-    //     const [response] = await client.recognize(request);
-    //     const transcription = response.results
-    //       .map(result => result.alternatives[0].transcript)
-    //       .join('\n');
-    //     console.log(`Transcription: ${transcription}`);
-    //     return transcription; 
-    // }
-
-    // try {
-    //     const transcript = await generateTranscript();
-    //     res.status(200).json({ transcript: transcript});
-    // } catch (error) {
-    //     console.error('Error generating transcript:', error);
-    //     res.status(500).json({ error: 'Internal server error.' });
-    // }
+    try {
+        const transcript = await makeTranscript(req.body.title, req.body.videoId); 
+        res.status(200).send(transcript);
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
 });
 
 module.exports = router;

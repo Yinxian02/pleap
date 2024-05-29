@@ -22,36 +22,39 @@ class GenerateAIContent extends Component{
         return allText; 
     }; 
 
-    async createMCQ(learningObjects) {
-      const lessonText = this.getAllLessonText(learningObjects);
-
+    async generateTextResponse(textPrompt) {
+      console.log(textPrompt);
       try {
-          const prompt = `You are a computer science teacher teaching [topic]. 
-          You have the following lesson content. 
-          Create a list of 10 multiple choice questions based on the lesson content, 
-          that test understanding, and provide correct answers \n\n
-          Lesson Content:\n${lessonText}`;
-
-          console.log(prompt);
-          const response = await axios.post('http://localhost:5001/vertex-ai/generateText', {
-              instances: [{ content: prompt}],
-              parameters: { temperature: 0.2, maxOutputTokens: 1024 },
-              apiEndpoint: 'us-central1-aiplatform.googleapis.com',
-              projectId: 'pleap24',
-              modelId: 'text-bison@001'
-          }, {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + this.context.auth.accessToken,
-              mode: 'cors',
-              withCredentials: true,
-          }
-          });
-
-          console.log('Generated content:', response.data);
+        const response = await axios.post('http://localhost:5001/vertex-ai/generateText', {
+                instances: [{ content: textPrompt}],
+                parameters: { temperature: 0.2, maxOutputTokens: 1024 },
+                apiEndpoint: 'us-central1-aiplatform.googleapis.com',
+                projectId: 'pleap24',
+                modelId: 'text-bison@001'
+            }, {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + this.context.auth.accessToken,
+                mode: 'cors',
+                withCredentials: true,
+            }
+        });
+        console.log('Generated content:', response.data);
       } catch (error) {
           console.error('Error:', error);
       }
+    }
+
+    async createMCQ(learningObjects) {
+      const lessonText = this.getAllLessonText(learningObjects);
+
+      const prompt = `You are a computer science teacher teaching [topic]. 
+      You have the following lesson content. 
+      Create a list of 10 multiple choice questions based on the lesson content, 
+      that test understanding, and provide correct answers \n\n
+      Lesson Content:\n${lessonText}`;
+      
+      this.generateTextResponse(prompt); 
     }
 
     async createAudio(learningObject){
@@ -102,6 +105,10 @@ class GenerateAIContent extends Component{
           }
         );
           console.log(res.data); 
+          const transcriptPrompt = 
+              `Rewrite the following transcript to make sense, in the format of lecture notes:
+              // ${res.data}`
+          this.generateTextResponse(transcriptPrompt); 
         } catch (error) {
           console.error('Error generating transcript:', error);
         }
