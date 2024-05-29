@@ -25,13 +25,10 @@ class GenerateAIContent extends Component{
     async generateTextResponse(textPrompt) {
       console.log(textPrompt);
       try {
-        const response = await axios.post('http://localhost:5001/vertex-ai/generateText', {
-                instances: [{ content: textPrompt}],
-                parameters: { temperature: 0.2, maxOutputTokens: 1024 },
-                apiEndpoint: 'us-central1-aiplatform.googleapis.com',
-                projectId: 'pleap24',
-                modelId: 'text-bison@001'
-            }, {
+        const response = await axios.post(
+          'http://localhost:5001/vertex-ai/generateText', 
+          { textPrompt: textPrompt},         
+          {
               headers: {
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + this.context.auth.accessToken,
@@ -39,7 +36,7 @@ class GenerateAIContent extends Component{
                 withCredentials: true,
             }
         });
-        console.log('Generated content:', response.data);
+        console.log('Generated content:', response.data.predictions[0].content);
       } catch (error) {
           console.error('Error:', error);
       }
@@ -114,37 +111,69 @@ class GenerateAIContent extends Component{
         }
       }
 
-    async fetchLearningObjects(ids) {
-        try {
-          const res = await axios.post(
-            'http://localhost:5001/learning-objects/batch',
-            { ids },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + this.context.auth.accessToken,
-                mode: 'cors',
-                withCredentials: true,
-              },
-            }
-          );
-        //   console.log(res.data);
-          const learningObjects = res.data; 
-          // this.createMCQ(learningObjects);
+    async createDescription(learningObject){  
+      try {
+        const title = learningObject.general.title; 
+        console.log(title); 
 
-          for (let i = 0; i < learningObjects.length; i++) {
-            if (learningObjects[i].technical.format === "text/plain"){ 
-              // this.createAudio(learningObjects[i]); 
-            } else if (learningObjects[i].technical.format === "video/vnd.youtube.yt") {
-              this.createTranscript(learningObjects[i]); 
-              break; // comment after
-            }
-        } 
+        const imageUrl = learningObject.content.link; 
+        console.log(imageUrl); 
 
-        } catch (error) {
-          console.error('Error fetching learning objects:', error);
+        const res = await axios.post(
+          'http://localhost:5001/vertex-ai/imageToText',
+          { title, imageUrl }, 
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + this.context.auth.accessToken,
+              mode: 'cors',
+              withCredentials: true,
+            },
         }
+      );
+      console.log(res.data); 
+    } catch (error) {
+      console.error('Error generating image:', error);
+    }
+    }
+
+    async fetchLearningObjects(ids) {
+      try {
+        const res = await axios.post(
+          'http://localhost:5001/learning-objects/batch',
+          { ids },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + this.context.auth.accessToken,
+              mode: 'cors',
+              withCredentials: true,
+            },
+          }
+        );
+      //   console.log(res.data);
+        const learningObjects = res.data; 
+        // this.createMCQ(learningObjects);
+
+        for (let i = 0; i < learningObjects.length; i++) {
+          console.log(learningObjects[i].educational.learningResourceType);
+          if (learningObjects[i].educational.learningResourceType === "narrative text" || learningObjects[i].educational.learningResourceType === "problem statement") {
+            // this.createAudio(learningObjects[i]); 
+            // break;  // comment after
+          } else if (learningObjects[i].educational.learningResourceType === "lecture") {
+            // this.createTranscript(learningObjects[i]); 
+            // break; // comment after
+          } else if (learningObjects[i].educational.learningResourceType === "slide") {
+            console.log("slide");
+            // this.createDescription(learningObjects[i]);
+            // break; // comment after
+          }
+      } 
+
+      } catch (error) {
+        console.error('Error fetching learning objects:', error);
       }
+    }
 
 
     componentDidMount() {

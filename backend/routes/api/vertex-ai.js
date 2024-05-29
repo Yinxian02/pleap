@@ -9,9 +9,10 @@ const verifyRoles = require('../../middleware/verifyRoles');
 
 const textToSpeech = require('@google-cloud/text-to-speech');
 const { makeTranscript } = require('../makeTranscript');
+const { makeDescription } = require('../makeDescription');
 
 router.route('/generateText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
-    const { instances, parameters, apiEndpoint, projectId, modelId } = req.body;
+    const textPrompt = req.body.textPrompt;
 
     const auth = new GoogleAuth({
         keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
@@ -22,6 +23,13 @@ router.route('/generateText').post(verifyRoles(ROLES_LIST.User), async (req, res
         const client = await auth.getClient();
         // console.log(client)
         const accessToken = (await client.getAccessToken()).token;
+        
+        const instances = [{ content: textPrompt }];
+        const parameters = { temperature: 0.2, maxOutputTokens: 1024 };
+        const apiEndpoint = 'us-central1-aiplatform.googleapis.com';
+        const projectId = 'pleap24';
+        const modelId = 'text-bison@001'; 
+
         const data = { instances, parameters };
         console.log(data);
         
@@ -99,6 +107,15 @@ router.route('/speechToText').post(verifyRoles(ROLES_LIST.User), async (req, res
     try {
         const transcript = await makeTranscript(req.body.title, req.body.videoId); 
         res.status(200).send(transcript);
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
+router.route('/imageToText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+    try {
+        const description = await makeDescription(req.body.imageUrl); 
+        res.status(200).send(description);
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
