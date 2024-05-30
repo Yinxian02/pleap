@@ -41,6 +41,7 @@ async function generateDescription(image, text) {
   const aggregatedResponse = await response.response;
   const fullTextResponse = aggregatedResponse.candidates[0].content.parts[0].text;
   console.log(fullTextResponse);
+  return fullTextResponse;
 }
 
 module.exports = { generateDescription };

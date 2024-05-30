@@ -89,10 +89,10 @@ const AddLesson = () => (
         thumbnail="https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png"
         learningObjects={designGameLOs} /> */}
     
-    <GenerateAIContent/>
+    {/* <GenerateAIContent/> */}
 
-    <Link to="/lessons">
-      <p>go to lessons</p>
+    <Link to="/generate-ai-content">
+      <button>generate AI content</button>
     </Link>
   </div>
 );

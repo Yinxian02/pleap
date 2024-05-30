@@ -12,6 +12,7 @@ import LessonWrapper from './pages/Lesson'
 import AddLesson from './pages/AddLesson'
 import RequireAuth from './components/RequireAuth';
 import Missing from './pages/Missing';
+import GenerateAIContent from './components/generateAIContent';
 
 import ProfileQuiz from './components/profile-quiz.component'
 
@@ -42,9 +43,10 @@ function App() {
               <Route path='lessons' element={<Lessons/>}/>
               <Route path='lesson/:id' element={<LessonWrapper/>}/>
               <Route path='create-lesson' element={<AddLesson/>}/> 
+              <Route path='generate-ai-content' element={<GenerateAIContent/>}/>
             </Route>
 
-            <Route path="*" element={<Missing />} />
+            <Route path="*" element={<Missing/>} />
           </Routes>      
       </Router>
     </>

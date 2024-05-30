@@ -24,7 +24,6 @@ router.route('/generateText').post(verifyRoles(ROLES_LIST.User), async (req, res
 
     try {
         const client = await auth.getClient();
-        // console.log(client)
         const accessToken = (await client.getAccessToken()).token;
         
         const instances = [{ content: textPrompt }];

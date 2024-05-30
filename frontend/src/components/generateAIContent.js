@@ -18,8 +18,21 @@ class GenerateAIContent extends Component{
                 allText += learningObjects[i].content.text;
             }
         }
-        return allText; 
-    }; 
+      return allText; 
+    }
+
+    parseResponse(text) {
+      const startIndex = text.indexOf('[');
+      const endIndex = text.lastIndexOf(']');
+      const jsonArray = text.substring(startIndex, endIndex + 1);
+  
+      try {
+        return JSON.parse(jsonArray);
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+        return null;
+      }
+    }
 
     async generateTextResponse(textPrompt) {
       console.log(textPrompt);
@@ -35,7 +48,7 @@ class GenerateAIContent extends Component{
                 withCredentials: true,
             }
         });
-        console.log('Generated content:', response.data.predictions[0].content);
+        // console.log('Generated content:', response.data.predictions[0].content);
         return response.data.predictions[0].content;
       } catch (error) {
           console.error('Error:', error);
@@ -44,41 +57,37 @@ class GenerateAIContent extends Component{
 
     async createMCQ(lessonText) {
       const mcqPrompt = `You are a computer science lecturer. 
-      You have the following lesson content. 
-      Create a list of 10 multiple choice questions based on the lesson content, 
-      that test understanding, and provide the correct answers to each question. \n\n
-      Lesson Content:\n${lessonText}`;
+      Create a list of 5 one-sentence multiple choice questions 
+      based on the lesson content, 
+      that test student understanding. \n\n
+      
+      Lesson Content:\n${lessonText}
+      
+      Format the response as a parsable json array for the MCQs as follows: 
+      [ { "question" : "..." , 
+          "choices" : [ { 
+            "text": "...", 
+            "value": 1 (if correct) 0 (if wrong)]}, 
+            ... ] } ... ]`;
       
       const mcqGeneratedResponse = await this.generateTextResponse(mcqPrompt); 
-
-      const jsonPrompt = `Format these in the format of json array
-      questions = [ { question : "" , choices : [ { text: "", value: 1 (if correct) 0 (if wrong)]}, ... ] 
-      MCQs: \n\n ${mcqGeneratedResponse}`
-
-      const jsonGeneratedResponse = await this.generateTextResponse(jsonPrompt);
-
-      console.log(jsonGeneratedResponse);
-      return jsonGeneratedResponse;
+      return this.parseResponse(mcqGeneratedResponse);
     }
 
     async createExercise(lessonText) {
       const exercisePrompt = `You are a computer science lecturer. 
-      You have the following lesson content. 
       Design a end-of-unit exercise based on the lesson content, 
       that test understanding, and provide correct answers \n\n
 
-      Lesson Content:\n${lessonText}`;
+      Lesson Content:\n${lessonText}
+      
+      Format the response as a parsable json array 
+       [ { "question" : "..." , "answer" : "..."} , ... ] `;
       
       const exerciseGeneratedResponse = await this.generateTextResponse(exercisePrompt); 
-
-      const jsonPrompt = `Format these in the format of json array
-      questions = [ { question : "" , answer : ""} , ... ]
-      Exercise: \n\n ${exerciseGeneratedResponse}`
-
-      const jsonGeneratedResponse = await this.generateTextResponse(jsonPrompt);
-    
-      console.log(jsonGeneratedResponse);
-      return jsonGeneratedResponse;
+      const jsonData = exerciseGeneratedResponse.replace(/```json|```/g, '').trim();
+      console.log(jsonData); 
+      return JSON.parse(jsonData);
     }
 
     async createAudio(learningObject){
@@ -101,7 +110,7 @@ class GenerateAIContent extends Component{
             },
         }
       );
-      console.log(res.data.audio); 
+      // console.log(res.data.audio); 
       return res.data.audio;
     } catch (error) {
       console.error('Error generating audio:', error);
@@ -114,7 +123,7 @@ class GenerateAIContent extends Component{
         const link = learningObject.content.link; 
 
         const videoId = getYoutubeId(link);
-        console.log(videoId); 
+        // console.log(videoId); 
 
         const res = await axios.post(
           'http://localhost:5001/vertex-ai/speechToText',
@@ -128,11 +137,12 @@ class GenerateAIContent extends Component{
             },
           }
         );
-          console.log(res.data); 
+          // console.log(res.data); 
           const transcriptPrompt = 
               `Rewrite the following transcript to make sense, in the format of lecture notes:
               // ${res.data}`
-          this.generateTextResponse(transcriptPrompt); 
+          const transcript = await this.generateTextResponse(transcriptPrompt); 
+          return transcript;
         } catch (error) {
           console.error('Error generating transcript:', error);
         }
@@ -140,11 +150,8 @@ class GenerateAIContent extends Component{
 
     async createDescription(learningObject){  
       try {
-        const title = learningObject.general.title; 
-        console.log(title); 
-
         const imageUrl = learningObject.content.link; 
-        console.log(imageUrl); 
+        // console.log(imageUrl); 
 
         const lecturePrompt = 
           `Write alternative lecture notes based on the image: ${imageUrl}`;
@@ -161,13 +168,14 @@ class GenerateAIContent extends Component{
             },
         }
       );
-      console.log(res.data); 
+      // console.log(res.data); 
+      return res.data;
     } catch (error) {
       console.error('Error generating image:', error);
     }
     }
 
-    async fetchLearningObjects(ids) {
+    async fetchLessonLearningObjects(ids) {
       try {
         const res = await axios.post(
           'http://localhost:5001/learning-objects/batch',
@@ -184,19 +192,25 @@ class GenerateAIContent extends Component{
       //   console.log(res.data);
         const learningObjects = res.data; 
         const lessonText = this.getAllLessonText(learningObjects);
-        // this.createMCQ(lessonText);
-        // this.createExercise(lessonText);
+
+        // const mcq = await this.createMCQ(lessonText);
+        // console.log(mcq);
+
+        // const exercise = this.createExercise(lessonText);
 
         for (let i = 0; i < learningObjects.length; i++) {
           // console.log(learningObjects[i].educational.learningResourceType);
           if (learningObjects[i].educational.learningResourceType === "narrative text" || learningObjects[i].educational.learningResourceType === "problem statement") {
-            // this.createAudio(learningObjects[i]); 
-            // break;  // comment after
+              // const audio = await this.createAudio(learningObjects[i]); 
+              // console.log(audio);
+              // break;  // comment after
           } else if (learningObjects[i].educational.learningResourceType === "lecture") {
-            // this.createTranscript(learningObjects[i]); 
+            // const transcript = await this.createTranscript(learningObjects[i]); 
+            // console.log(transcript);
             // break; // comment after
           } else if (learningObjects[i].educational.learningResourceType === "slide") {
-            // this.createDescription(learningObjects[i]);
+            // const description = await this.createDescription(learningObjects[i]);
+            // console.log(description);
             // break; // comment after
           }
       } 
@@ -207,21 +221,21 @@ class GenerateAIContent extends Component{
     }
 
     componentDidMount() {
-        axios
-          .get(`http://localhost:5001/lessons/`, {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + this.context.auth.accessToken,
-            },
-          })
-          .then(res => {
-            for (let i = 0; i < res.data.length; i++) {
-                this.fetchLearningObjects(res.data[i]._learningObjects);
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          });
+      axios
+        .get(`http://localhost:5001/lessons/`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.context.auth.accessToken,
+          },
+        })
+        .then(res => {
+          for (let i = 0; i < res.data.length; i++) {
+              this.fetchLessonLearningObjects(res.data[i]._learningObjects);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
 
     render(){
