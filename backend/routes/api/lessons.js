@@ -27,4 +27,20 @@ router.route('/:id').get(verifyRoles(ROLES_LIST.User),(req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/addLearningObjects/:id').post(verifyRoles(ROLES_LIST.User),(req, res) => {
+  Lesson.findById(req.params.id)
+    .then(lesson => {
+        if (!lesson) {
+            return res.status(404).json({ error: 'Lesson not found' });
+        }
+        lesson._learningObjects.push(...req.body.learningObjectsIDs);
+        
+        lesson.save();
+    })
+    .then(() => 
+      res.json('Learning objects references added to the lesson'))
+    .catch(err => 
+      res.status(400).json({ error: 'Error adding learning objects to the lesson: ' + err }));
+});
+
 module.exports = router;

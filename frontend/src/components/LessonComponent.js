@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 
-const LearningObjectsComponent = ({ title, author, description, thumbnail, learningObjects }) => {
+const LessonComponent = ({ title, author, description, thumbnail, learningObjects }) => {
   const [lesson, setLesson] = useState({
     title: title,
     author: author,
@@ -95,4 +95,4 @@ const LearningObjectsComponent = ({ title, author, description, thumbnail, learn
   );
 };
 
-export default LearningObjectsComponent;
+export default LessonComponent;

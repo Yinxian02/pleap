@@ -76,7 +76,7 @@ class GenerateAIContent extends Component{
 
     async createExercise(lessonText) {
       const exercisePrompt = `You are a computer science lecturer. 
-      Design a end-of-unit exercise based on the lesson content, 
+      Design a end-of-unit reflection quiz based on the lesson content, 
       that test understanding, and provide correct answers \n\n
 
       Lesson Content:\n${lessonText}
@@ -85,9 +85,7 @@ class GenerateAIContent extends Component{
        [ { "question" : "..." , "answer" : "..."} , ... ] `;
       
       const exerciseGeneratedResponse = await this.generateTextResponse(exercisePrompt); 
-      const jsonData = exerciseGeneratedResponse.replace(/```json|```/g, '').trim();
-      console.log(jsonData); 
-      return JSON.parse(jsonData);
+      return this.parseResponse(exerciseGeneratedResponse);
     }
 
     async createAudio(learningObject){
@@ -123,7 +121,6 @@ class GenerateAIContent extends Component{
         const link = learningObject.content.link; 
 
         const videoId = getYoutubeId(link);
-        // console.log(videoId); 
 
         const res = await axios.post(
           'http://localhost:5001/vertex-ai/speechToText',
@@ -175,7 +172,34 @@ class GenerateAIContent extends Component{
     }
     }
 
-    async fetchLessonLearningObjects(ids) {
+    async createLearningObjects(learningObjects) {
+      const lessonText = this.getAllLessonText(learningObjects);
+
+        // const mcq = await this.createMCQ(lessonText);
+        // console.log(mcq);
+
+        // const exercise = this.createExercise(lessonText);
+        // console.log(exercise);
+
+      for (let i = 0; i < learningObjects.length; i++) {
+        // console.log(learningObjects[i].educational.learningResourceType);
+        if (learningObjects[i].educational.learningResourceType === "narrative text" || learningObjects[i].educational.learningResourceType === "problem statement") {
+            // const audio = await this.createAudio(learningObjects[i]); 
+            // console.log(audio);
+            // break;  // comment after
+        } else if (learningObjects[i].educational.learningResourceType === "lecture") {
+          // const transcript = await this.createTranscript(learningObjects[i]); 
+          // console.log(transcript);
+          // break; // comment after
+        } else if (learningObjects[i].educational.learningResourceType === "slide") {
+          // const description = await this.createDescription(learningObjects[i]);
+          // console.log(description);
+          // break; // comment after
+        }
+      } 
+    }
+
+    async fetchLessonLearningObjects(lessonID, ids) {
       try {
         const res = await axios.post(
           'http://localhost:5001/learning-objects/batch',
@@ -189,32 +213,9 @@ class GenerateAIContent extends Component{
             },
           }
         );
-      //   console.log(res.data);
+        //   console.log(res.data);
         const learningObjects = res.data; 
-        const lessonText = this.getAllLessonText(learningObjects);
-
-        // const mcq = await this.createMCQ(lessonText);
-        // console.log(mcq);
-
-        // const exercise = this.createExercise(lessonText);
-
-        for (let i = 0; i < learningObjects.length; i++) {
-          // console.log(learningObjects[i].educational.learningResourceType);
-          if (learningObjects[i].educational.learningResourceType === "narrative text" || learningObjects[i].educational.learningResourceType === "problem statement") {
-              // const audio = await this.createAudio(learningObjects[i]); 
-              // console.log(audio);
-              // break;  // comment after
-          } else if (learningObjects[i].educational.learningResourceType === "lecture") {
-            // const transcript = await this.createTranscript(learningObjects[i]); 
-            // console.log(transcript);
-            // break; // comment after
-          } else if (learningObjects[i].educational.learningResourceType === "slide") {
-            // const description = await this.createDescription(learningObjects[i]);
-            // console.log(description);
-            // break; // comment after
-          }
-      } 
-
+        this.createLearningObjects(learningObjects);
       } catch (error) {
         console.error('Error fetching learning objects:', error);
       }
@@ -229,8 +230,9 @@ class GenerateAIContent extends Component{
           },
         })
         .then(res => {
-          for (let i = 0; i < res.data.length; i++) {
-              this.fetchLessonLearningObjects(res.data[i]._learningObjects);
+          const lessons = res.data;
+          for (let i = 0; i < lessons.length; i++) {
+              this.fetchLessonLearningObjects(lessons[i]._id, lessons[i]._learningObjects);
           }
         })
         .catch(error => {
