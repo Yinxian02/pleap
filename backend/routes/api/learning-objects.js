@@ -58,4 +58,22 @@ router.route('/batch').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
   }
 });
 
+router.route('/addAudio/:id').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+  const { id } = req.params;
+  const { audio } = req.body;
+
+  LearningObject.findById(id)
+    .then(lo => {
+      if (!lo) {
+        return res.status(404).json({ error: 'Learning object not found' });
+      }
+      lo.content.audio = audio;
+      lo.save();
+    })
+    .then(() => 
+      res.json('Audio added to the learning object'))
+    .catch(err => 
+      res.status(400).json({ error: 'Error adding audio to the learning object: ' + err }));
+});
+
 module.exports = router;
