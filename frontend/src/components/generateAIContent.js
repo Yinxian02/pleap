@@ -298,7 +298,7 @@ class GenerateAIContent extends Component{
         // this.createChallenge
       ];
 
-      const createAndAddLearningObject = async (generationFunction, ...args) => {
+      const createAndAddToLOList = async (generationFunction, ...args) => {
         const createdObject = await generationFunction.apply(this, args);
         if (createdObject !== undefined) {
           newLearningObjects.push(createdObject);
@@ -306,7 +306,7 @@ class GenerateAIContent extends Component{
       };
 
       for (const generationFunction of generationFunctions) {
-        await createAndAddLearningObject(generationFunction, lessonText);
+        await createAndAddToLOList(generationFunction, lessonText);
       }
 
       for (const learningObject of learningObjects) {
@@ -327,12 +327,14 @@ class GenerateAIContent extends Component{
         }
     
         if (creationFunction) {
-          await createAndAddLearningObject(creationFunction, learningObject);
+          await createAndAddToLOList(creationFunction, learningObject);
         }
       }
+
+      return newLearningObjects;
     }
 
-    async fetchLessonLearningObjects(lessonID, ids) {
+    async fetchAndGenerateLearningObjects(lessonID, ids) {
       try {
         const res = await axios.post(
           'http://localhost:5001/learning-objects/batch',
@@ -348,10 +350,32 @@ class GenerateAIContent extends Component{
         );
         //   console.log(res.data);
         const learningObjects = res.data; 
-        this.createLearningObjects(learningObjects);
-
+        return await this.createLearningObjects(learningObjects);
       } catch (error) {
         console.error('Error fetching learning objects:', error);
+      }
+    }
+
+    async uploadGeneratedContent(lessonID, ids) {
+      const learningObjects = await this.fetchAndGenerateLearningObjects(lessonID, ids);
+      console.log(learningObjects);
+
+      try {
+        const res = await axios.post(
+          'http://localhost:5001/learning-objects/addBatch',
+          { learningObjects },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + this.context.auth.accessToken,
+              mode: 'cors',
+              withCredentials: true,
+            },
+          }
+        );
+        console.log(res.data);
+      } catch (error) {
+        console.error('Error adding learning objects:', error);
       }
     }
 
@@ -366,7 +390,7 @@ class GenerateAIContent extends Component{
         .then(res => {
           const lessons = res.data;
           for (let i = 0; i < lessons.length; i++) {
-              this.fetchLessonLearningObjects(lessons[i]._id, lessons[i]._learningObjects);
+              this.uploadGeneratedContent(lessons[i]._id, lessons[i]._learningObjects);
           }
         })
         .catch(error => {
