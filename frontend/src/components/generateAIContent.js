@@ -287,12 +287,14 @@ class GenerateAIContent extends Component{
     }
 
     async createLearningObjects(learningObjects) {
+      // console.log(learningObjects);
       const newLearningObjects = [];
 
       const lessonText = this.getAllLessonText(learningObjects);
+      // console.log(lessonText);
 
       const generationFunctions = [
-        // this.createMCQ,
+        this.createMCQ,
         // this.createQuiz,
         // this.createGlossary,
         // this.createChallenge
@@ -311,19 +313,21 @@ class GenerateAIContent extends Component{
 
       for (const learningObject of learningObjects) {
         let creationFunction = null;
-    
-        switch (learningObject.educational.learningResourceType) {
-          case "narrative text":
-            // await this.uploadGeneratedAudio(learningObject);
-            // break;
-          case "lecture":
-            // creationFunction = this.createTranscript;
-            // break;
-          case "slide":
-            // creationFunction = this.createDescription;
-            // break;
-          default:
-            break; 
+        
+        if (learningObject.educational.learningResourceType) {
+          switch (learningObject.educational.learningResourceType) {
+            case "narrative text":
+              // await this.uploadGeneratedAudio(learningObject);
+              break;
+            case "lecture":
+              // creationFunction = this.createTranscript;
+              break;
+            case "slide":
+              // creationFunction = this.createDescription;
+              break;
+            default:
+              break; 
+          }
         }
     
         if (creationFunction) {
@@ -331,10 +335,11 @@ class GenerateAIContent extends Component{
         }
       }
 
+      console.log(newLearningObjects);
       return newLearningObjects;
     }
 
-    async fetchAndGenerateLearningObjects(lessonID, ids) {
+    async fetchAndGenerateLearningObjects(ids) {
       try {
         const res = await axios.post(
           'http://localhost:5001/learning-objects/batch',
@@ -356,8 +361,14 @@ class GenerateAIContent extends Component{
       }
     }
 
-    async uploadGeneratedContent(lessonID, ids) {
-      const learningObjects = await this.fetchAndGenerateLearningObjects(lessonID, ids);
+    async uploadGeneratedContent(ids) {
+      const learningObjects = await this.fetchAndGenerateLearningObjects(ids);
+      
+      if (learningObjects.length === 0) {
+        console.log('No learning objects to upload.');
+        return;
+      }
+
       console.log(learningObjects);
 
       try {
@@ -374,28 +385,55 @@ class GenerateAIContent extends Component{
           }
         );
         console.log(res.data);
+        return res.data.ids;
       } catch (error) {
         console.error('Error adding learning objects:', error);
       }
     }
 
-    componentDidMount() {
-      axios
-        .get(`http://localhost:5001/lessons/`, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.context.auth.accessToken,
-          },
-        })
-        .then(res => {
-          const lessons = res.data;
-          for (let i = 0; i < lessons.length; i++) {
-              this.uploadGeneratedContent(lessons[i]._id, lessons[i]._learningObjects);
+    async addLearningObjectReferences(lessonId, ids) {
+      console.log(lessonId, ids);
+      try {
+        const res = await axios.post(
+          `http://localhost:5001/lessons/addLearningObjects/${lessonId}`,
+          { learningObjectsIDs: ids },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + this.context.auth.accessToken,
+              mode: 'cors',
+              withCredentials: true,
+            },
           }
-        })
-        .catch(error => {
+        );
+        console.log(res.data);
+      } catch (error) {
+        console.error('Error adding learning object references:', error);
+      }
+    }
+
+    componentDidMount() {
+      const generateAndUploadLessons = async () => {
+        try {
+          const res = await axios.get('http://localhost:5001/lessons/', {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + this.context.auth.accessToken,
+            },
+          });
+    
+          const lessons = res.data;
+    
+          for (let i = 0; i < lessons.length; i++) {
+            const ids = await this.uploadGeneratedContent(lessons[i]._learningObjects);
+            await this.addLearningObjectReferences(lessons[i]._id, ids);
+          }
+        } catch (error) {
           console.log(error);
-        });
+        }
+      };
+    
+      generateAndUploadLessons();
     }
 
     render(){
