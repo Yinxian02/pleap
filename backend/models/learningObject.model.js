@@ -1,8 +1,28 @@
+const { text } = require('express');
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-// Define schema
+const choiceSchema = new Schema({
+    text: { type: String, required: true },
+    value: { type: Number, required: true }
+});
+
+const questionnaireSchema = new Schema({
+    question: { type: String, required: true },
+    choices: { type: [choiceSchema], required: true }
+});
+
+const exerciseSchema = new Schema({
+    question: { type: String, required: true },
+    answer: { type: String, required: true }
+});
+
+const glossarySchema = new Schema({
+    term: { type: String, required: true },
+    definition: { type: String, required: true }
+});
+
 const learningObjectSchema = new Schema({
     general: {
         title: String,
@@ -32,7 +52,11 @@ const learningObjectSchema = new Schema({
     },
     content: {
         text: String,
-        link: String
+        link: String,
+        audio: String,
+        questionnaire: { type: [questionnaireSchema], required: true },
+        exercise: { type: [exerciseSchema], required: true },
+        glossary: { type: [glossarySchema], required: true }
     }
 }, {
     timestamps: true,

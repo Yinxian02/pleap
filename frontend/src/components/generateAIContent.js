@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
+import { LearningObject } from "./learningObject";
 
 function getYoutubeId(url) {
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -35,7 +36,7 @@ class GenerateAIContent extends Component{
     }
 
     async generateTextResponse(textPrompt) {
-      console.log(textPrompt);
+      // console.log(textPrompt);
       try {
         const response = await axios.post(
           'http://localhost:5001/vertex-ai/generateText', 
@@ -56,7 +57,7 @@ class GenerateAIContent extends Component{
     }
 
     async createMCQ(lessonText) {
-      const mcqPrompt = `You are a computer science lecturer. 
+      const mcqPrompt = `You are a computer science lecturer at university. 
       Create a list of 5 one-sentence multiple choice questions 
       based on the lesson content, 
       that test student understanding. \n\n
@@ -69,23 +70,105 @@ class GenerateAIContent extends Component{
             "text": "...", 
             "value": 1 (if correct) 0 (if wrong)]}, 
             ... ] } ... ]`;
+
+      let mcqGeneratedResponse;
+      const maxAttempts = 3;
+      let attempts = 0;
       
-      const mcqGeneratedResponse = await this.generateTextResponse(mcqPrompt); 
-      return this.parseResponse(mcqGeneratedResponse);
+      while (attempts < maxAttempts) {
+        try {
+          mcqGeneratedResponse = await this.generateTextResponse(mcqPrompt);
+          const parsedResponse = this.parseResponse(mcqGeneratedResponse);
+          console.log(parsedResponse);
+          // return parsedResponse;
+
+          const mcqObject = new LearningObject("MCQ", "text/plain", "active", "questionnaire", "medium");
+          mcqObject.setQuestionnaire(parsedResponse);
+          return mcqObject.getJSON();
+        } catch (error) {
+          attempts++;
+          if (attempts >= maxAttempts) {
+            console.log("Failed to generate a parsable JSON MCQ.");
+          }
+        }
+      }
     }
 
-    async createExercise(lessonText) {
-      const exercisePrompt = `You are a computer science lecturer. 
+    async createQuiz(lessonText) {
+      const quizPrompt = `You are a computer science lecturer at university. 
       Design a end-of-unit reflection quiz based on the lesson content, 
       that test understanding, and provide correct answers \n\n
-
+    
       Lesson Content:\n${lessonText}
       
       Format the response as a parsable json array 
        [ { "question" : "..." , "answer" : "..."} , ... ] `;
+    
+      let quizGeneratedResponse;
+      const maxAttempts = 3;
+      let attempts = 0;
       
-      const exerciseGeneratedResponse = await this.generateTextResponse(exercisePrompt); 
-      return this.parseResponse(exerciseGeneratedResponse);
+      while (attempts < maxAttempts) {
+        try {
+          quizGeneratedResponse = await this.generateTextResponse(quizPrompt);
+          const parsedResponse = this.parseResponse(quizGeneratedResponse);
+          // return parsedResponse;
+
+          const quizObject = new LearningObject("reflection quiz", "text/plain", "active", "exercise", "medium");
+          quizObject.setExercise(parsedResponse);
+          return quizObject.getJSON();
+        } catch (error) {
+          attempts++;
+          if (attempts >= maxAttempts) {
+            console.log("Failed to generate a parsable JSON reflection quiz.");
+          }
+        }
+      }
+    }
+
+    async createGlossary(lessonText) {
+      const glossaryPrompt = `You are a computer science lecturer  at university.
+      Create a glossary of key terms based on the lesson content. \n\n
+
+      Lesson Content:\n${lessonText}
+
+      Format the response as a parsable json array
+      [ { "term" : "..." , "definition" : "..."} , ... ] `;
+
+      let glossaryGeneratedResponse;
+      const maxAttempts = 3;
+      let attempts = 0;
+
+      while (attempts < maxAttempts) {
+        try {
+          glossaryGeneratedResponse = await this.generateTextResponse(glossaryPrompt);
+          const parsedResponse = this.parseResponse(glossaryGeneratedResponse);
+          console.log(parsedResponse);
+
+          const glossaryObject = new LearningObject("glossary", "text/plain", "expositive", "narrative text", "low");
+          glossaryObject.setGlossary(parsedResponse);
+          return glossaryObject.getJSON();
+        } catch (error) {
+          attempts++;
+          if (attempts >= maxAttempts) {
+            console.log("Failed to generate a parsable JSON glossary.");
+          }
+        }
+      }
+    }
+
+    async createChallenge(lessonText) {
+      const challengePrompt = `You are a computer science lecturer at university.
+      Create a brainstorm evaluation or creation
+      challenge based on the lesson content. \n\n
+
+      Lesson Content:\n${lessonText}`;
+
+      const challengeGeneratedResponse = await this.generateTextResponse(challengePrompt);
+
+      const challengeObject = new LearningObject("brainstorm", "text/plain", "active", "problem statement", "medium");
+      challengeObject.setText(challengeGeneratedResponse);
+      return challengeObject.getJSON();
     }
 
     async createAudio(learningObject){
@@ -175,11 +258,17 @@ class GenerateAIContent extends Component{
     async createLearningObjects(learningObjects) {
       const lessonText = this.getAllLessonText(learningObjects);
 
-        // const mcq = await this.createMCQ(lessonText);
-        // console.log(mcq);
+      // const mcq = await this.createMCQ(lessonText);
+      // console.log(mcq);
 
-        // const exercise = this.createExercise(lessonText);
-        // console.log(exercise);
+      // const quiz = await this.createQuiz(lessonText);
+      // console.log(quiz);
+
+      // const glossary = await this.createGlossary(lessonText);
+      // console.log(glossary);
+
+      // const challenge = await this.createChallenge(lessonText);
+      // console.log(challenge);
 
       for (let i = 0; i < learningObjects.length; i++) {
         // console.log(learningObjects[i].educational.learningResourceType);
