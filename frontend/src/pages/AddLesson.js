@@ -9,7 +9,6 @@ import { courseSummaryLO,
   whatIsProgrammingTextLO, 
   whatIsProgrammingMentiLO, 
   whatIsProgrammingAnsLO,
-  whatIsAProgramTextLO,
   whatIsAProgramMentiLO, 
   whatIsAProgramAnsLO,
   instructingComputerTextLO,
@@ -25,12 +24,12 @@ import { introTextLO,
   introLectureLO,
   designAlgoTextLO,
   designAlgoLectureLO,
-  designAlgoPseudocodeLO,
+  // designAlgoPseudocodeLO,
   simpleStatementImgLO,
   selectionImgLO,
   improveGameTextLO,
   improveGameLectureLO,
-  improveGamePseudocodeLO,
+  // improveGamePseudocodeLO,
   ifElseImgLO,
   challengeGameExerciseLO } from "../components/introToProgramming/designGame";  
 
@@ -41,7 +40,6 @@ const whatIsProgrammingLOs = [
     whatIsProgrammingMentiLO,
     whatIsProgrammingAnsLO, 
 
-    whatIsAProgramTextLO,
     whatIsAProgramMentiLO,
     whatIsAProgramAnsLO,
 
@@ -61,12 +59,12 @@ const designGameLOs = [
     introLectureLO,
     designAlgoTextLO,
     designAlgoLectureLO,
-    designAlgoPseudocodeLO,
+    // designAlgoPseudocodeLO,
     simpleStatementImgLO,
     selectionImgLO,
     improveGameTextLO,
     improveGameLectureLO,
-    improveGamePseudocodeLO,
+    // improveGamePseudocodeLO,
     ifElseImgLO,
     challengeGameExerciseLO
 ]
@@ -80,23 +78,23 @@ const AddLesson = () => {
 
   return (
     <div>
-        {/* <LessonComponent 
-          title="Intro to programming" 
-          author="Josiah Wang" 
-          description="Really... what exactly is programming?"
-          thumbnail="https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png"
-          learningObjects={whatIsProgrammingLOs} />
+        <LessonComponent 
+        title="Intro to programming" 
+        author="Josiah Wang" 
+        description="Really... what exactly is programming?"
+        thumbnail="https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png"
+        learningObjects={whatIsProgrammingLOs} />
       
-      <LessonComponent 
+         <LessonComponent 
           title="Design a guessing game" 
           author="Josiah Wang" 
           description="Let's dive straight into designing a game... because life is too short to waste!"
           thumbnail="https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png"
-          learningObjects={designGameLOs} /> */}
+          learningObjects={designGameLOs} />
 
-    {generateContent && <GenerateAIContent />}
+    {/* {generateContent && <GenerateAIContent />}
 
-      <button onClick={handleButtonClick}>Generate AI content</button>
+      <button onClick={handleButtonClick}>Generate AI content</button> */}
     </div>
   );
 };

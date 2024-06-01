@@ -57,6 +57,7 @@ const learningObjectSchema = new Schema({
         questionnaire: { type: [questionnaireSchema], required: true },
         exercise: { type: [exerciseSchema], required: true },
         glossary: { type: [glossarySchema], required: true },
+        embed: { type: Boolean, default: false },
         aiGenerated: { type: Boolean, default: false }
     }
 }, {

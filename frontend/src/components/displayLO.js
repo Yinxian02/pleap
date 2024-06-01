@@ -1,9 +1,21 @@
-// import DOMPurify from 'dompurify';
 import McqQuiz from "./mcqQuiz.component";
+
+function markDownToHtml(markdown) {
+    const html = markdown
+        .replace(/(?:\r\n|\r|\n)/g, '<br>')
+        .replace(/(?:\*\*)(.*?)(?:\*\*)/g, '<strong>$1</strong>')
+        .replace(/(?:\*)(.*?)(?:\*)/g, '<em>$1</em>')
+        // .replace(/(?:\~\~)(.*?)(?:\~\~)/g, '<del>$1</del>')
+        // .replace(/(?:\`)(.*?)(?:\`)/g, '<code>$1</code>')
+        // .replace(/(?:\[(.*?)\]\((.*?)\))/g, '<a href="$2" target="_blank">$1</a>');
+    // console.log(html);
+    return html;
+}
 
 export function displayLO(learningObject) {
     const LRT = learningObject.educational.learningResourceType; 
     const URL = learningObject.content.link;
+    // const htmlText = markDownToHtml(learningObject.content.text);
     
     if (LRT === "lecture"){
         const videoIdMatch = URL.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
@@ -13,6 +25,7 @@ export function displayLO(learningObject) {
             <div style={{ textAlign: 'center' }}>
               <iframe
                 width="560"
+                maxWidth="100%"
                 height="315"
                 src={embedUrl}
                 title="YouTube video player"
@@ -40,9 +53,12 @@ export function displayLO(learningObject) {
         );
     }
     
-    if (learningObject.content.text === "mentimeter") {
+    if (learningObject.content.embed) {
+        const embedCaption = learningObject.content.text ? markDownToHtml(learningObject.content.text) : "Click here to view the content";
         return (
-            <div style={{ textAlign: 'center', width: '100%', height: '100%' }}>
+            <div style={{ width: '100%', height: '100%' }}>
+                <div dangerouslySetInnerHTML={{ __html: embedCaption }} />
+                <br/>
                 <iframe 
                     allowfullscreen="true" 
                     frameborder="0" 
@@ -56,8 +72,9 @@ export function displayLO(learningObject) {
     // const sanitizedText = DOMPurify.sanitize(learningObject.content.text);
     
     if (learningObject.technical.format === "text/plain"){
+        const htmlText = markDownToHtml(learningObject.content.text);
         return (
-            <div dangerouslySetInnerHTML={{ __html: learningObject.content.text }} />
+            <div dangerouslySetInnerHTML={{ __html: htmlText }} />
         );
     }
 }

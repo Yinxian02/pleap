@@ -7,6 +7,7 @@ export class LearningObject {
         this.learningResourceType = learningResourceType;
         this.interactivityLevel = interactivityLevel;
         this.aiGenerated = false;
+        this.embed = false;
     }
 
     setText(text){
@@ -31,6 +32,10 @@ export class LearningObject {
 
     setGlossary(glossary){
         this.glossary = glossary;
+    }
+
+    setEmbedded(){
+        this.embed = true;
     }
 
     setAIGenerated(){
@@ -72,6 +77,7 @@ export class LearningObject {
                 questionnaire: this.questionnaire, // choices
                 exercise: this.exercise, // question and answer
                 glossary: this.glossary, // term and definition
+                embed: this.embed,
                 aiGenerated: this.aiGenerated,
             }
         };
