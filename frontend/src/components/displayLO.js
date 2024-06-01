@@ -2,7 +2,6 @@
 
 export function displayLO(learningObject) {
     const LRT = learningObject.educational.learningResourceType; 
-    
     const URL = learningObject.content.link;
     
     if (LRT === "lecture"){
@@ -13,7 +12,7 @@ export function displayLO(learningObject) {
             <div style={{ textAlign: 'center' }}>
               <iframe
                 width="560"
-                maxWidth="100%"
+                maxwidth="100%"
                 height="315"
                 src={embedUrl}
                 title="YouTube video player"
@@ -30,6 +29,12 @@ export function displayLO(learningObject) {
                 alt="Slide"
                 style={{ width: '100%', maxWidth: '100%', height: 'auto' }}
                 />
+            </div>
+        );
+    } else if (LRT === "questionnaire" && learningObject.content.questionnaire) {
+        return (
+            <div>
+                "hi"
             </div>
         );
     }
@@ -52,9 +57,6 @@ export function displayLO(learningObject) {
     if (learningObject.technical.format === "text/plain"){
         return (
             <div dangerouslySetInnerHTML={{ __html: learningObject.content.text }} />
-            // <div>
-            //     {learningObject.content.text}
-            // </div>
         );
     }
 }

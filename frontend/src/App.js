@@ -12,10 +12,7 @@ import LessonWrapper from './pages/Lesson'
 import AddLesson from './pages/AddLesson'
 import RequireAuth from './components/RequireAuth';
 import Missing from './pages/Missing';
-import GenerateAIContent from './components/generateAIContent';
-
 import ProfileQuiz from './components/profile-quiz.component'
-
 
 const ROLES = {
   'User': 2001,
@@ -34,7 +31,7 @@ function App() {
             <Route path='/signup' element={<Signup/>}/>
 
             <Route path="/" element={<RequireAuth allowedRoles={[ROLES.User]} redirectTo="/lessons" fallback={<Navigate to="/login" />} />}>
-              <Route index element={<Navigate to="/classes" />} />
+              <Route index element={<Navigate to="/lessons" />} />
             </Route>
             
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
@@ -43,7 +40,6 @@ function App() {
               <Route path='lessons' element={<Lessons/>}/>
               <Route path='lesson/:id' element={<LessonWrapper/>}/>
               <Route path='create-lesson' element={<AddLesson/>}/> 
-              <Route path='generate-ai-content' element={<GenerateAIContent/>}/>
             </Route>
 
             <Route path="*" element={<Missing/>} />

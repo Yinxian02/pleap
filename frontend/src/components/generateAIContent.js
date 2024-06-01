@@ -227,7 +227,6 @@ class GenerateAIContent extends Component{
       }
     }
 
-    // create new narrative text object with audio, return json LO
     async createTranscript(learningObject){
       try {
         const title = learningObject.general.title; 
@@ -258,7 +257,6 @@ class GenerateAIContent extends Component{
         }
       }
 
-    // create new narrative text object, return json LO 
     async createDescription(learningObject){
       try {
         const imageUrl = learningObject.content.link; 
@@ -294,7 +292,7 @@ class GenerateAIContent extends Component{
       // console.log(lessonText);
 
       const generationFunctions = [
-        this.createMCQ,
+        // this.createMCQ,
         // this.createQuiz,
         // this.createGlossary,
         // this.createChallenge
@@ -426,7 +424,9 @@ class GenerateAIContent extends Component{
     
           for (let i = 0; i < lessons.length; i++) {
             const ids = await this.uploadGeneratedContent(lessons[i]._learningObjects);
-            await this.addLearningObjectReferences(lessons[i]._id, ids);
+            if (ids) {
+              await this.addLearningObjectReferences(lessons[i]._id, ids);
+            }
           }
         } catch (error) {
           console.log(error);

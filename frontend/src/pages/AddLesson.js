@@ -1,8 +1,9 @@
 import React from 'react';
 import "../styles/Lesson.css";
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 import LessonComponent from '../components/LessonComponent';
+import GenerateAIContent from '../components/GenerateAIContent';
 
 import { courseSummaryLO, 
   whatIsProgrammingTextLO, 
@@ -70,29 +71,34 @@ const designGameLOs = [
     challengeGameExerciseLO
 ]
 
+const AddLesson = () => {
+  const [generateContent, setGenerateContent] = useState(false);
 
-const AddLesson = () => (
-  <div>
-    {/* <LessonComponent 
-        title="Intro to programming" 
-        author="Josiah Wang" 
-        description="Really... what exactly is programming?"
-        thumbnail="https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png"
-        learningObjects={whatIsProgrammingLOs} />
-    
-    <LessonComponent 
-        title="Design a guessing game" 
-        author="Josiah Wang" 
-        description="Let's dive straight into designing a game... because life is too short to waste!"
-        thumbnail="https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png"
-        learningObjects={designGameLOs} /> */}
-    
-    {/* <GenerateAIContent/> */}
+  const handleButtonClick = () => {
+    setGenerateContent(true);
+  };
 
-    <Link to="/generate-ai-content">
-      <button>Generate AI content</button>
-    </Link>
-  </div>
-);
+  return (
+    <div>
+        {/* <LessonComponent 
+          title="Intro to programming" 
+          author="Josiah Wang" 
+          description="Really... what exactly is programming?"
+          thumbnail="https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png"
+          learningObjects={whatIsProgrammingLOs} />
+      
+      <LessonComponent 
+          title="Design a guessing game" 
+          author="Josiah Wang" 
+          description="Let's dive straight into designing a game... because life is too short to waste!"
+          thumbnail="https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png"
+          learningObjects={designGameLOs} /> */}
+
+    {generateContent && <GenerateAIContent />}
+
+      <button onClick={handleButtonClick}>Generate AI content</button>
+    </div>
+  );
+};
 
 export default AddLesson;
