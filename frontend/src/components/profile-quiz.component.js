@@ -1,6 +1,6 @@
 import { useState ,useContext, useEffect } from "react";
 import { Dimension, fslsmQuiz , resultInitialState } from "./fslsmQuiz";
-import "../styles/ProfileQuiz.css";
+import "../styles/Quiz.css";
 import AuthContext from '../context/AuthContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { Link } from 'react-router-dom';

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/ProfileQuiz.css";
+import "../styles/Quiz.css";
 
 const McqQuiz = ({questionnaire}) => {
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
