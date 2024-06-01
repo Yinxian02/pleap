@@ -5,6 +5,9 @@ import AuthContext from '../context/AuthContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { MdOutlineKeyboardArrowRight, 
+    MdOutlineKeyboardDoubleArrowLeft, 
+    MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 function calculatePreferenceScore(prev, dimension, answer) {
     if (dimension === Dimension.ActiveReflexive) {
@@ -86,13 +89,17 @@ const ProfileQuiz = () => {
 
     const { question, dimension, choices } = fslsmQuiz.questions[currentQuestionNum];
 
-    const onSelectPreference = (choice, index, dimension) => {
+    const onSelectPreference = async (choice, index, dimension) => {
         setAnswerIndex(index); 
         setAnswer(choice.value);
         setDimension(dimension);
     }; 
 
-
+    const onClickPrev = async () => {
+        if (currentQuestionNum !== 0) {
+            setCurrentQuestionNum((prev) => prev - 1); 
+        }
+    }
     const onClickNext = async () => {
         setAnswerIndex(null); 
         setResult((prev) => 
@@ -104,8 +111,6 @@ const ProfileQuiz = () => {
         } else {
             setShowResult(true); 
         };
-
-        
     }
  
     useEffect(() => {
@@ -135,9 +140,8 @@ const ProfileQuiz = () => {
 
     }, [id, auth.accessToken, result, showResult]);
 
-    return <div className="profile-container">
+    return <div className="quiz-container">
         {!showResult ? (
-
         <>
             <span className="quiz-progress">{currentQuestionNum + 1} / {fslsmQuiz.questions.length} </span>
             <br />
@@ -153,10 +157,13 @@ const ProfileQuiz = () => {
                     </li>
                 ))}
             </ul>
-        
+
         <div className="footer">
-            <button onClick={onClickNext} className="nextButton" disabled={answerIndex === null}>
-                {currentQuestionNum === fslsmQuiz.questions.length - 1 ? "Finish" : "Next"}
+            <button onClick={onClickPrev} className="quizButton">
+                <MdOutlineKeyboardDoubleArrowLeft/>
+            </button>
+            <button onClick={onClickNext} className="quizButton" disabled={answerIndex === null}>
+                <MdOutlineKeyboardDoubleArrowRight/>
             </button>
         </div>
         </>

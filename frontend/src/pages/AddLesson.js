@@ -92,8 +92,7 @@ const AddLesson = () => {
   //       thumbnail="https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png" 
     //       learningObjects={designGameLOs} /> */}
 
-    {generateContent && <GenerateAIContent />}
-
+    {generateContent && <GenerateAIContent/>}
       <button onClick={handleButtonClick}>Generate AI content</button>
     </div>
   );

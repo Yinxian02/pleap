@@ -1,32 +1,60 @@
 import { useState } from "react";
 import "../styles/Quiz.css";
+import { MdOutlineKeyboardArrowRight, 
+        MdOutlineKeyboardDoubleArrowLeft, 
+        MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 const McqQuiz = ({questionnaire}) => {
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
+    
     const [answerIndex, setAnswerIndex] = useState(null); 
     const [answer, setAnswer] = useState(null); 
+
     const [result, setResult] = useState(0); 
     const [showResult, setShowResult] = useState(false); 
-    
+
+    const [correctAnswer, setCorrectAnswer] = useState(null);
+    const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
+
     const currentQuestion = questionnaire[currentQuestionNum];
     const { question, choices, _id } = currentQuestion;
 
     const onSelectChoice = (choice, index) => {
         setAnswerIndex(index); 
         setAnswer(choice.value);
+        if (choice.value === 1) {
+            setCorrectAnswer(true); 
+        } else {
+            setCorrectAnswer(false);
+        }
     }; 
 
-    const onClickNext = async () => {
-        setAnswerIndex(null); 
-        setResult((prev) => 
-            prev + answer
-        );
+    const onClickPrev = async () => {
+        if (currentQuestionNum !== 0) {
+            setCurrentQuestionNum((prev) => prev - 1); 
+        }
+    }
 
-        if (currentQuestionNum !== questionnaire.length - 1) { 
-            setCurrentQuestionNum((prev) => prev + 1); 
+    const onClickNext = async () => {
+        if (showCorrectAnswer) {
+            setShowCorrectAnswer(false);  
+            setAnswerIndex(null);
+            if (currentQuestionNum !== questionnaire.length - 1) {
+                setCurrentQuestionNum((prev) => prev + 1);
+            } else {
+                setShowResult(true);
+            }
+            return;  
+        }
+
+        setAnswerIndex(null);
+        setResult((prev) => prev + answer);
+
+        if (currentQuestionNum !== questionnaire.length - 1) {
+            setCurrentQuestionNum((prev) => prev + 1);
         } else {
-            setShowResult(true); 
-        };
+            setShowResult(true);
+        }
     }
 
     return <div className="profile-container">
@@ -40,7 +68,11 @@ const McqQuiz = ({questionnaire}) => {
                     <li
                         onClick={() => onSelectChoice(choice, index)}
                         key={choice.text}
-                        className={answerIndex === index ? "selected-answer" : null}             
+                        className={answerIndex === index ?
+                            (showCorrectAnswer && correctAnswer !== null ?
+                                (correctAnswer ? "correct-answer" : "incorrect-answer")
+                                : "selected-answer")
+                            : null}             
                     >
                         {choice.text}
                     </li>
@@ -48,8 +80,11 @@ const McqQuiz = ({questionnaire}) => {
             </ul>
         
         <div className="footer">
-            <button onClick={onClickNext} className="nextButton" disabled={answerIndex === null}>
-                {currentQuestionNum === questionnaire.length - 1 ? "Finish" : "Next"}
+            <button onClick={onClickPrev} className="quizButton">
+                <MdOutlineKeyboardDoubleArrowLeft/>
+            </button>
+            <button onClick={showCorrectAnswer ? onClickNext : () => setShowCorrectAnswer(true)} className="quizButton" disabled={answerIndex === null}>
+                { showCorrectAnswer ? <MdOutlineKeyboardDoubleArrowRight/> : <MdOutlineKeyboardArrowRight/>}
             </button>
         </div>
         </>

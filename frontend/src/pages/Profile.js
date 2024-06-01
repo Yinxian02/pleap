@@ -64,14 +64,14 @@ function Profile() {
             <h2>Learning Preferences:</h2>
             <br/>
 
-            <div class="bar">
+            <div className="bar">
               <span>Active / Reflexive:</span>
               <div className="percentages detail">
                 <span>{(preferences.active * 100).toFixed(0)}%</span>
                 <span>{(preferences.reflexive * 100).toFixed(0)}%</span>
               </div>
               <div className="progress-line-container">
-                  <div className="progress-line red}"
+                  <div className="progress-line red"
                         style={{ width: `${preferences.active * 100}%` }}>
                   </div>
                   <div className="progress-line green" 
