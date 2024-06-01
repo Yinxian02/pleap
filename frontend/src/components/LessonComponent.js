@@ -50,8 +50,6 @@ const LessonComponent = ({ title, author, description, thumbnail, learningObject
         }
       );
       console.log('Lesson:', res.data);
-
-
     } catch (error) {
       console.error('Error adding lesson:', error);
     }

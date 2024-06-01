@@ -107,7 +107,7 @@ const ProfileQuiz = () => {
 
         
     }
-    // }; 
+ 
     useEffect(() => {
         if (showResult) {
             const preferences = normaliseFinalPreferences(result); 

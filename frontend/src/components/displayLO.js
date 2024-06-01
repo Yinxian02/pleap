@@ -1,4 +1,5 @@
 // import DOMPurify from 'dompurify';
+import McqQuiz from "./mcqQuiz.component";
 
 export function displayLO(learningObject) {
     const LRT = learningObject.educational.learningResourceType; 
@@ -12,7 +13,6 @@ export function displayLO(learningObject) {
             <div style={{ textAlign: 'center' }}>
               <iframe
                 width="560"
-                maxwidth="100%"
                 height="315"
                 src={embedUrl}
                 title="YouTube video player"
@@ -31,10 +31,11 @@ export function displayLO(learningObject) {
                 />
             </div>
         );
-    } else if (LRT === "questionnaire" && learningObject.content.questionnaire) {
+    } else if (LRT === "questionnaire" && learningObject.content.aiGenerated) {
+        console.log(learningObject._id);
         return (
             <div>
-                "hi"
+                <McqQuiz questionnaire={learningObject.content.questionnaire} />
             </div>
         );
     }

@@ -91,6 +91,7 @@ class GenerateAIContent extends Component{
       }
       const mcqObject = new LearningObject("MCQ", "text/plain", "active", "questionnaire", "medium");
       mcqObject.setQuestionnaire(parsedResponse);
+      mcqObject.setAIGenerated();
       return mcqObject.getJSON();
     }
 
@@ -125,6 +126,7 @@ class GenerateAIContent extends Component{
       }
       const quizObject = new LearningObject("reflection quiz", "text/plain", "active", "exercise", "medium");
       quizObject.setExercise(parsedResponse);
+      quizObject.setAIGenerated();
       return quizObject.getJSON();
     }
 
@@ -158,6 +160,7 @@ class GenerateAIContent extends Component{
       }
       const glossaryObject = new LearningObject("glossary", "text/plain", "expositive", "narrative text", "low");
       glossaryObject.setGlossary(parsedResponse);
+      glossaryObject.setAIGenerated();
       return glossaryObject.getJSON();
     }
 
@@ -173,6 +176,7 @@ class GenerateAIContent extends Component{
 
       const challengeObject = new LearningObject("brainstorm", "text/plain", "active", "problem statement", "medium");
       challengeObject.setText(challengeGeneratedResponse);
+      challengeObject.setAIGenerated();
       return challengeObject.getJSON();
     }
 
@@ -250,12 +254,16 @@ class GenerateAIContent extends Component{
           const transcriptPrompt = 
               `Rewrite the following transcript to make sense, in the format of lecture notes:
               // ${res.data}`
+              
           const transcript = await this.generateTextResponse(transcriptPrompt); 
-          return transcript;
+          const transcriptObject = new LearningObject("transcript", "text/plain", "expositive", "narrative text", "low");
+          transcriptObject.setText(transcript);
+          transcriptObject.setAIGenerated();
+          return transcriptObject.getJSON();
         } catch (error) {
           console.error('Error generating transcript:', error);
         }
-      }
+    }
 
     async createDescription(learningObject){
       try {
@@ -278,7 +286,12 @@ class GenerateAIContent extends Component{
         }
       );
       console.log(res.data); 
-      return res.data;
+
+      const description = res.data;
+      const descriptionObject = new LearningObject("description", "text/plain", "expositive", "narrative text", "low");
+      descriptionObject.setText(description);
+      descriptionObject.setAIGenerated();
+      return descriptionObject.getJSON();
     } catch (error) {
       console.error('Error generating image:', error);
     }

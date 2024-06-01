@@ -56,7 +56,8 @@ const learningObjectSchema = new Schema({
         audio: String,
         questionnaire: { type: [questionnaireSchema], required: true },
         exercise: { type: [exerciseSchema], required: true },
-        glossary: { type: [glossarySchema], required: true }
+        glossary: { type: [glossarySchema], required: true },
+        aiGenerated: { type: Boolean, default: false }
     }
 }, {
     timestamps: true,
