@@ -11,12 +11,12 @@
     box-shadow: 0 4px 4px var(--hoverShadowColor); 
     text-align: center;
     text-decoration: none;
-    color: var(--txtColorMedium);
+    color: var(--txtColorDark);
 }
 
 
 .lesson-link-div:hover {  
-    color: var(--txtColorDark); 
+    /* color: var(--txtColorDark);  */
     background-color: var(--componentColorDark);
 }
 

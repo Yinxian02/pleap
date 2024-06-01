@@ -24,7 +24,7 @@ export function displayLO(learningObject) {
         return (
             <div style={{ textAlign: 'center' }}>
               <iframe
-                width="560"
+                width="600px"
                 maxWidth="100%"
                 height="315"
                 src={embedUrl}
