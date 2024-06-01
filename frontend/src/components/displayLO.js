@@ -1,4 +1,5 @@
 import McqQuiz from "./mcqQuiz.component";
+import { HiMiniSpeakerWave } from "react-icons/hi2";
 
 function markDownToHtml(markdown) {
     const html = markdown
@@ -24,7 +25,7 @@ export function displayLO(learningObject) {
         return (
             <div style={{ textAlign: 'center' }}>
               <iframe
-                width="600px"
+                width="500px"
                 maxWidth="100%"
                 height="315"
                 src={embedUrl}
@@ -51,6 +52,24 @@ export function displayLO(learningObject) {
                 <McqQuiz questionnaire={learningObject.content.questionnaire} />
             </div>
         );
+    } else if (LRT === "narrative text"){
+        const htmlText = markDownToHtml(learningObject.content.text);
+        
+        const handleButtonClick = () => {
+            const audio = new Audio(learningObject.content.audio);
+            audio.play();
+        };
+
+        return (
+            <div>
+                <div className="audio-header">
+                    <button className="audioButton" onClick={handleButtonClick}>
+                        <HiMiniSpeakerWave/>
+                    </button>
+                </div>
+                <div dangerouslySetInnerHTML={{ __html: htmlText }} />
+            </div>
+        );
     }
     
     if (learningObject.content.embed) {
@@ -69,8 +88,6 @@ export function displayLO(learningObject) {
         )
     }
 
-    // const sanitizedText = DOMPurify.sanitize(learningObject.content.text);
-    
     if (learningObject.technical.format === "text/plain"){
         const htmlText = markDownToHtml(learningObject.content.text);
         return (

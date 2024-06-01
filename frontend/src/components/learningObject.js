@@ -6,8 +6,12 @@ export class LearningObject {
         this.interactivityType = interactivityType;
         this.learningResourceType = learningResourceType;
         this.interactivityLevel = interactivityLevel;
-        this.aiGenerated = false;
+        
+        this.text = "";
+        this.link = "";
+        this.audio = "";
         this.embed = false;
+        this.aiGenerated = false;
     }
 
     setText(text){

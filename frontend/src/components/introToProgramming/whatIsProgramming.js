@@ -1,6 +1,6 @@
 import { LearningObject } from "../learningObject";
 
-const courseSummaryObj = new LearningObject("Introduction to Course", "text/plain", "expositive", "problem statement", "low");
+const courseSummaryObj = new LearningObject("Introduction to Course", "text/plain", "expositive", "narrative text", "low");
 const courseSummaryText = `In this lesson, I will be presenting programming from a Computer Science perspective, which may be quite different from how you learnt programming. 
 
                            I will concentrate on the big picture and the core ideas behind programming. It might all seem a bit basic to you but it is quite an important topic. So please, stick with me! 

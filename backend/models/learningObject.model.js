@@ -51,9 +51,9 @@ const learningObjectSchema = new Schema({
         typicalLearningTime: Number
     },
     content: {
-        text: String,
-        link: String,
-        audio: String,
+        text: { type: String, default: "" },
+        link: { type: String, default: "" },
+        audio: { type: String, default: "" },
         questionnaire: { type: [questionnaireSchema], required: true },
         exercise: { type: [exerciseSchema], required: true },
         glossary: { type: [glossarySchema], required: true },

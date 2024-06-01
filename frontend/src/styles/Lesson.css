@@ -30,3 +30,26 @@
 .learning-objects-div {
     margin: 5em;
 }
+
+.audio-header {
+    display: flex;
+    justify-content: flex-end; 
+}
+
+.audioButton {
+    inherits: none;
+    background-color: var(--inputColor);
+    border: none;
+    border-radius: 0px; 
+    padding: 10px 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: none; 
+}
+
+.audioButton:hover {
+    color: var(--buttonHoverColor);
+    background-color: var(--inputColor);
+    border: none;
+}
