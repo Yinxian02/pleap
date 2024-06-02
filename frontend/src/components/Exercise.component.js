@@ -16,7 +16,7 @@ const Exercise = ({exercise}) => {
     const [result, setResult] = useState(0); 
     const [showResult, setShowResult] = useState(false); 
     
-    const [correctAnswer, setCorrectAnswer] = useState(null);
+    const [correctAnswer, setCorrectAnswer] = useState('');
     
     const [feedback, setFeedback] = useState('');
     const [showFeedback, setShowFeedback] = useState(false);
@@ -51,10 +51,10 @@ const Exercise = ({exercise}) => {
         setFeedback(parsedResponse.feedback);
 
         if (parsedResponse.isCorrect) {
-            setCorrectAnswer(true); 
+            setCorrectAnswer('correct'); 
             setResult(result + 1);
         } else {
-            setCorrectAnswer(false); 
+            setCorrectAnswer('incorrect'); 
         }
         setShowFeedback(true);
     }; 
@@ -70,7 +70,7 @@ const Exercise = ({exercise}) => {
             setUserInput(''); 
             setFeedback('');
             setCurrentQuestionNum((prev) => prev - 1); 
-            setCorrectAnswer(null);
+            setCorrectAnswer('none');
         }
     }
 
@@ -79,7 +79,7 @@ const Exercise = ({exercise}) => {
             setUserInput(''); 
             setFeedback(''); 
             setCurrentQuestionNum((prev) => prev + 1);
-            setCorrectAnswer(null);
+            setCorrectAnswer('none');
         } 
     }
 
@@ -103,8 +103,10 @@ const Exercise = ({exercise}) => {
 
             <br/><br/>
 
-            {showFeedback && (
-                <div className={`feedback ${correctAnswer ? 'correct-answer' : 'incorrect-answer'}`}>
+            { showFeedback && (
+                <div className={`${ (correctAnswer === 'none') 
+                                    ? '' : ((correctAnswer === 'correct') ?
+                                    'correct-answer' : 'incorrect-answer')}`}>
                     {feedback}
                 </div>
             )}
