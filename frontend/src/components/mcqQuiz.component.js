@@ -57,10 +57,11 @@ const McqQuiz = ({questionnaire}) => {
         }
     }
 
-    return <div className="profile-container">
+    return <div className="mcq-div">
         {!showResult ? (
         <>
             <span className="quiz-progress">{currentQuestionNum + 1} / {questionnaire.length} </span>
+            <br />
             <br />
             <h2>{question}</h2>
             <ul>

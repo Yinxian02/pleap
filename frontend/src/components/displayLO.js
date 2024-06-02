@@ -1,5 +1,7 @@
 import { markDownToHtml } from "./markDownToHTML";
+
 import McqQuiz from "./McqQuiz.component";
+import Exercise from "./Exercise.component";
 import NarrativeText from "./NarrativeText.component";
 
 export function displayLO(learningObject) {
@@ -35,19 +37,14 @@ export function displayLO(learningObject) {
             </div>
         );
     } else if (LRT === "questionnaire" && learningObject.content.aiGenerated) {
-        console.log(learningObject._id);
+        // console.log(learningObject._id);
         return (
-            <div>
                 <McqQuiz questionnaire={learningObject.content.questionnaire} />
-            </div>
         );
     } else if (LRT === "exercise" && learningObject.content.aiGenerated) {
+        // console.log(learningObject.content.exercise);
         return (
-            <div>
-                hi
-                {/* <h3>{learningObject.content.question}</h3>
-                <p>{learningObject.content.text}</p> */}
-            </div>
+                <Exercise exercise={learningObject.content.exercise}/>
         );
     } else if (LRT === "narrative text"){
         return <NarrativeText learningObject={learningObject} />;

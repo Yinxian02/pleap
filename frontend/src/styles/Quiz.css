@@ -20,6 +20,10 @@
     font-weight: 500;
 }
 
+.mcq-div {
+    width: 100%;
+}
+
 ul {
     margin-top: 5px;
     align-items: center;
@@ -71,11 +75,11 @@ li {
 
 
 .correct-answer {
-    background-color: #b3ffb3;
+    background-color: #b6dfb6;
     box-shadow: 0 2px 4px var(--hoverShadowColor);  
 }
 
 .incorrect-answer {
-    background-color: #ff6666;
+    background-color: #de9797;
     box-shadow: 0 2px 4px var(--hoverShadowColor);  
 }

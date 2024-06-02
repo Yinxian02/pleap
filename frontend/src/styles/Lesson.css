@@ -58,3 +58,38 @@
     border: none;
 }
 
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.send-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; 
+}
+
+.send-button {
+    background-color: var(--inputColor);
+    border: none;
+    width: 100%;
+    /* border-radius: 0px;  */
+    padding: 10px 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: none; 
+}
+
+.quizButton:disabled {
+    cursor: not-allowed;
+}
+
+.exercise-div{
+    width: 100%;
+}
