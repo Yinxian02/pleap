@@ -104,7 +104,7 @@ class GenerateAIContent extends Component{
       challenge based on the lesson content. \n\n
 
       Lesson Content:\n${lessonText}`;
-      
+
       const challengeGeneratedResponse = await generateTextResponse(challengePrompt);
       console.log(challengeGeneratedResponse);
 

@@ -10,6 +10,11 @@ export class LearningObject {
         this.text = "";
         this.link = "";
         this.audio = "";
+
+        this.questionnaire = [];
+        this.exercise = [];
+        this.glossary = [];
+        
         this.embed = false;
         this.aiGenerated = false;
     }
@@ -37,7 +42,7 @@ export class LearningObject {
     setGlossary(glossary){
         this.glossary = glossary;
     }
-
+    
     setEmbedded(){
         this.embed = true;
     }

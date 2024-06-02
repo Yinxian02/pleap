@@ -106,7 +106,7 @@ const Exercise = ({exercise}) => {
             { showFeedback && (
                 <div className={`${ (correctAnswer === 'none') 
                                     ? '' : ((correctAnswer === 'correct') ?
-                                    'correct-answer' : 'incorrect-answer')}`}>
+                                    'correct-quiz-answer' : 'incorrect-quiz-answer')}`}>
                     {feedback}
                 </div>
             )}

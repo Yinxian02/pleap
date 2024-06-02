@@ -3,6 +3,11 @@ import { markDownToHtml } from "./markDownToHTML";
 import McqQuiz from "./McqQuiz.component";
 import Exercise from "./Exercise.component";
 import NarrativeText from "./NarrativeText.component";
+import Glossary from "./Glossary.component";
+
+function isGlossary(learningObject) {
+    return learningObject.content.glossary !== null && learningObject.content.glossary.length > 0;
+}; 
 
 export function displayLO(learningObject) {
     const LRT = learningObject.educational.learningResourceType; 
@@ -37,15 +42,14 @@ export function displayLO(learningObject) {
             </div>
         );
     } else if (LRT === "questionnaire" && learningObject.content.aiGenerated) {
-        // console.log(learningObject._id);
-        return (
-                <McqQuiz questionnaire={learningObject.content.questionnaire} />
-        );
+        return <McqQuiz questionnaire={learningObject.content.questionnaire}/>;
+    
     } else if (LRT === "exercise" && learningObject.content.aiGenerated) {
-        // console.log(learningObject.content.exercise);
-        return (
-                <Exercise exercise={learningObject.content.exercise}/>
-        );
+        return <Exercise exercise={learningObject.content.exercise}/>;
+    
+    } else if (LRT === "narrative text" && isGlossary(learningObject)){
+        return <Glossary glossary={learningObject.content.glossary}/>; 
+    
     } else if (LRT === "narrative text"){
         return <NarrativeText learningObject={learningObject} />;
     }
