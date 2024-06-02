@@ -31,6 +31,10 @@
     margin: 5em;
 }
 
+.narrative-text {
+    width: 100%;
+}
+
 .audio-header {
     display: flex;
     justify-content: flex-end; 
@@ -53,3 +57,4 @@
     background-color: var(--inputColor);
     border: none;
 }
+

@@ -61,13 +61,13 @@ export function displayLO(learningObject) {
         };
 
         return (
-            <div>
+            <div className="narrative-text">
                 <div className="audio-header">
                     <button className="audioButton" onClick={handleButtonClick}>
                         <HiMiniSpeakerWave/>
                     </button>
                 </div>
-                <div dangerouslySetInnerHTML={{ __html: htmlText }} />
+                <div className dangerouslySetInnerHTML={{ __html: htmlText }} />
             </div>
         );
     }

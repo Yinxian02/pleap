@@ -210,7 +210,8 @@ class GenerateAIContent extends Component{
     async uploadGeneratedAudio(learningObject) {
       const id = learningObject._id;
       const audio = await this.createAudio(learningObject);
-      
+      console.log(audio);
+
       try {
         const res = await axios.post(
           `http://localhost:5001/learning-objects/addAudio/${id}`,

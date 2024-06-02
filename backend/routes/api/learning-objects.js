@@ -60,7 +60,8 @@ router.route('/batch').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
 
 router.route('/addAudio/:id').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
   const { id } = req.params;
-  const { audio } = req.body.audio;
+  const { audio } = req.body;
+  console.log(req.body); 
 
   LearningObject.findById(id)
     .then(lo => {
