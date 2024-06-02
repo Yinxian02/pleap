@@ -12,8 +12,14 @@ const Exercise = ({exercise}) => {
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
  
     const [userInput, setUserInput] = useState('');
+
     const [result, setResult] = useState(0); 
     const [showResult, setShowResult] = useState(false); 
+    
+    const [correctAnswer, setCorrectAnswer] = useState(null);
+    
+    const [feedback, setFeedback] = useState('');
+    const [showFeedback, setShowFeedback] = useState(false);
 
     if (!exercise) {
         return <div> No questions available </div>
@@ -41,14 +47,16 @@ const Exercise = ({exercise}) => {
 
         const response = await generateTextResponse(markPrompt, auth.accessToken);
         console.log(response);
-        
-        
-            // if (userInput === answer) {
-            //     setCorrectAnswer(true); 
-            // } else {
-            //     setCorrectAnswer(false); 
-            // }
+        const parsedResponse = JSON.parse(response);
+        setFeedback(parsedResponse.feedback);
 
+        if (parsedResponse.isCorrect) {
+            setCorrectAnswer(true); 
+            setResult(result + 1);
+        } else {
+            setCorrectAnswer(false); 
+        }
+        setShowFeedback(true);
     }; 
 
     const handleInputChange = (e) => {
@@ -60,14 +68,18 @@ const Exercise = ({exercise}) => {
     const onClickPrev = async () => {
         if (currentQuestionNum !== 0) {
             setUserInput(''); 
+            setFeedback('');
             setCurrentQuestionNum((prev) => prev - 1); 
+            setCorrectAnswer(null);
         }
     }
 
     const onClickNext = async () => {
         if (currentQuestionNum !== exercise.length - 1) {
-            setUserInput('');  
+            setUserInput(''); 
+            setFeedback(''); 
             setCurrentQuestionNum((prev) => prev + 1);
+            setCorrectAnswer(null);
         } 
     }
 
@@ -88,6 +100,14 @@ const Exercise = ({exercise}) => {
             <button onClick={markAnswer} className="send-button">
                 <IoSend/>
             </button>
+
+            <br/><br/>
+
+            {showFeedback && (
+                <div className={`feedback ${correctAnswer ? 'correct-answer' : 'incorrect-answer'}`}>
+                    {feedback}
+                </div>
+            )}
 
             <div className="footer">
                 <button onClick={onClickPrev} className="quizButton">
