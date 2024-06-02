@@ -31,7 +31,7 @@ class GenerateAIContent extends Component{
         return JSON.parse(jsonArray);
       } catch (error) {
         console.error("Error parsing JSON:", error);
-        return null;
+        throw error;
       }
     }
 
@@ -61,6 +61,12 @@ class GenerateAIContent extends Component{
       Create a list of 5 one-sentence multiple choice questions 
       based on the lesson content, 
       that test student understanding. \n\n
+      
+      Ensure the questions cover the key concepts and important details from the lesson, 
+      but keep the quiz concise to avoid exceeding token limits.
+
+      Limit the quiz to a manageable length to ensure the response is 
+      not truncated due to token limits.
       
       Lesson Content:\n${lessonText}
       
@@ -97,16 +103,26 @@ class GenerateAIContent extends Component{
 
     async createQuiz(lessonText) {
       const quizPrompt = `You are a computer science lecturer at university. 
-      Design a end-of-unit reflection quiz based on the lesson content, 
+      Design a end-of-unit reflection quiz, with 5 questions, 
+      based on the lesson content, 
       that test understanding, and provide correct answers \n\n
-    
+
+      Ensure the questions cover the key concepts 
+      and important details from the lesson.
+      
+      Ensure the questions cover the key concepts and important details from the lesson, 
+      but keep the quiz concise to avoid exceeding token limits.
+
+      Limit the quiz to a manageable length to ensure the response is 
+      not truncated due to token limits.
+
       Lesson Content:\n${lessonText}
       
       Format the response as a parsable json array 
        [ { "question" : "..." , "answer" : "..."} , ... ] `;
     
       let quizGeneratedResponse;
-      const maxAttempts = 3;
+      const maxAttempts = 5;
       let attempts = 0;
       let parsedResponse;
       
@@ -116,7 +132,6 @@ class GenerateAIContent extends Component{
           parsedResponse = this.parseResponse(quizGeneratedResponse);
           console.log(parsedResponse);
           break;
-
         } catch (error) {
           attempts++;
           if (attempts >= maxAttempts) {
@@ -132,7 +147,9 @@ class GenerateAIContent extends Component{
 
     async createGlossary(lessonText) {
       const glossaryPrompt = `You are a computer science lecturer  at university.
-      Create a glossary of key terms based on the lesson content. \n\n
+      Create a glossary, by identifying and defining key terms based on the lesson content.
+
+      The goal is to create a glossary that helps students understand the main concepts of the lesson.  \n\n
 
       Lesson Content:\n${lessonText}
 

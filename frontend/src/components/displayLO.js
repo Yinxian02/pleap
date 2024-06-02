@@ -1,52 +1,6 @@
-import McqQuiz from "./mcqQuiz.component";
-import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
-import { useState, useEffect, useRef } from "react";
-
-function markDownToHtml(markdown) {
-    const html = markdown
-        .replace(/(?:\r\n|\r|\n)/g, '<br>')
-        .replace(/(?:\*\*)(.*?)(?:\*\*)/g, '<strong>$1</strong>')
-        .replace(/(?:\*)(.*?)(?:\*)/g, '<em>$1</em>')
-        // .replace(/(?:\~\~)(.*?)(?:\~\~)/g, '<del>$1</del>')
-        // .replace(/(?:\`)(.*?)(?:\`)/g, '<code>$1</code>')
-        // .replace(/(?:\[(.*?)\]\((.*?)\))/g, '<a href="$2" target="_blank">$1</a>');
-    // console.log(html);
-    return html;
-}
-
-const NarrativeText = ({ learningObject }) => {
-    const [audioOn, setAudioOn] = useState(false);
-    const audioRef =  useRef(new Audio(learningObject.content.audio));
-
-    const handleButtonClick = () => {
-        if (audioOn) {
-            audioRef.current.pause();
-        } else {
-            audioRef.current.play();
-
-        }
-        setAudioOn(!audioOn);
-    };
-
-    useEffect(() => {
-        return () => {
-            audioRef.current.pause();
-        };
-    }, []);
-
-    const htmlText = markDownToHtml(learningObject.content.text);
-
-    return (
-        <div className="narrative-text">
-            <div className="audio-header">
-                <button className="audioButton" onClick={handleButtonClick}>
-                    {audioOn ? <HiMiniSpeakerXMark /> : <HiMiniSpeakerWave />}
-                </button>
-            </div>
-            <div className="narrative-content" dangerouslySetInnerHTML={{ __html: htmlText }} />
-        </div>
-    );
-};
+import { markDownToHtml } from "./markDownToHTML";
+import McqQuiz from "./McqQuiz.component";
+import NarrativeText from "./NarrativeText.component";
 
 export function displayLO(learningObject) {
     const LRT = learningObject.educational.learningResourceType; 
@@ -87,33 +41,16 @@ export function displayLO(learningObject) {
                 <McqQuiz questionnaire={learningObject.content.questionnaire} />
             </div>
         );
+    } else if (LRT === "exercise" && learningObject.content.aiGenerated) {
+        return (
+            <div>
+                hi
+                {/* <h3>{learningObject.content.question}</h3>
+                <p>{learningObject.content.text}</p> */}
+            </div>
+        );
     } else if (LRT === "narrative text"){
         return <NarrativeText learningObject={learningObject} />;
-        // const htmlText = markDownToHtml(learningObject.content.text);
-        
-        // const audioOn = false;
-        // const audio = new Audio(learningObject.content.audio);
-
-        // const handleButtonClick = () => {
-        //     if (audioOn) {
-        //         audio.pause();
-        //         audioOn = false;
-        //     } else {
-        //         audio.play();
-        //         audioOn = true;
-        //     }
-        // };
-
-        // return (
-        //     <div className="narrative-text">
-        //         <div className="audio-header">
-        //             <button className="audioButton" onClick={handleButtonClick}>
-        //                 <HiMiniSpeakerWave/>
-        //             </button>
-        //         </div>
-        //         <div className dangerouslySetInnerHTML={{ __html: htmlText }} />
-        //     </div>
-        // );
     }
     
     if (learningObject.content.embed) {

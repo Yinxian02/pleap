@@ -3,7 +3,8 @@ import { LearningObject } from "../learningObject";
 const introTextObj = new LearningObject("Designing a guessing game", "text/plain", "expositive", "narrative text", "low");
 introTextObj.setText(`We will now dive in straight into designing a very simple guessing game. 
 
-                      Summary: Always try to understand the problem first before you start!`);
+                      Summary: 
+                      Always try to understand the problem first before you start!`);
 const introTextLO = introTextObj.getJSON(); 
 
 const introLectureObj = new LearningObject("Designing a guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low");
@@ -13,6 +14,7 @@ const introLectureLO = introLectureObj.getJSON();
 
 const designAlgoTextObj = new LearningObject("Designing an algorithm for the guessing game", "text/plain", "expositive", "narrative text", "low");
 designAlgoTextObj.setText(`Summary: 
+
                            You design your algorithm (on paper!) after understanding the problem. 
                            I have introduced two “basic building blocks” of programming in this video: 
                            1. Simple statement 
@@ -43,6 +45,7 @@ const improveGameTextObj = new LearningObject("Improving the guessing game", "te
 improveGameTextObj.setText(`We will now attempt to make the guessing game more user friendly. 
                             
                             Summary: 
+
                             I have introduced you to a “two-way selection” block (an if-else statement) 
                             Blocks can be nested inside another (composition).`);
 const improveGameTextLO = improveGameTextObj.getJSON(); 
