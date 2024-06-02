@@ -2,12 +2,16 @@ import { useState } from "react";
 import { MdOutlineKeyboardDoubleArrowLeft, 
         MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
-    
+import { generateTextResponse }  from "./generateText";
+
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext";
+
 const Exercise = ({exercise}) => {
+    const { auth } = useContext(AuthContext);
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
  
     const [userInput, setUserInput] = useState('');
-
     const [result, setResult] = useState(0); 
     const [showResult, setShowResult] = useState(false); 
 
@@ -18,11 +22,33 @@ const Exercise = ({exercise}) => {
     const { question, answer, _id } = currentQuestion;
 
     const markAnswer = async () => {
-        // if (userInput === answer) {
-        //     setCorrectAnswer(true); 
-        // } else {
-        //     setCorrectAnswer(false); 
-        // }
+        const markPrompt = `You are an intelligent grading assistant. 
+        Your task is to evaluate the provided user input based on the given question and the correct answer. 
+        Please mark the user's answer as either correct or incorrect,
+        and provide detailed feedback on the user's answer.
+
+        Question: ${question}
+        Correct Answer: ${answer}
+        User Input: ${userInput}
+        
+        Please provide your evaluation in the following JSON format:
+        {
+          "isCorrect": true/false,
+          "feedback": "..."
+        }
+        `; 
+        console.log(markPrompt);
+
+        const response = await generateTextResponse(markPrompt, auth.accessToken);
+        console.log(response);
+        
+        
+            // if (userInput === answer) {
+            //     setCorrectAnswer(true); 
+            // } else {
+            //     setCorrectAnswer(false); 
+            // }
+
     }; 
 
     const handleInputChange = (e) => {

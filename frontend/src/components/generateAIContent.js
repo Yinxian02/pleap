@@ -2,6 +2,8 @@ import { Component } from 'react';
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
 import { LearningObject } from "./learningObject";
+import { generateAndParseResponse } from "./parseJSON";
+import { generateTextResponse } from "./generateText";
 
 function getYoutubeId(url) {
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -20,40 +22,6 @@ class GenerateAIContent extends Component{
             }
         }
       return allText; 
-    }
-
-    parseResponse(text) {
-      const startIndex = text.indexOf('[');
-      const endIndex = text.lastIndexOf(']');
-      const jsonArray = text.substring(startIndex, endIndex + 1);
-  
-      try {
-        return JSON.parse(jsonArray);
-      } catch (error) {
-        console.error("Error parsing JSON:", error);
-        throw error;
-      }
-    }
-
-    async generateTextResponse(textPrompt) {
-      // console.log(textPrompt);
-      try {
-        const response = await axios.post(
-          'http://localhost:5001/vertex-ai/generateText', 
-          { textPrompt: textPrompt},         
-          {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + this.context.auth.accessToken,
-                mode: 'cors',
-                withCredentials: true,
-            }
-        });
-        // console.log('Generated content:', response.data.predictions[0].content);
-        return response.data.predictions[0].content;
-      } catch (error) {
-          console.error('Error:', error);
-      }
     }
 
     async createMCQ(lessonText) {
@@ -77,26 +45,9 @@ class GenerateAIContent extends Component{
             "value": 1 (if correct) 0 (if wrong)]}, 
             ... ] } ... ]`;
 
-      let mcqGeneratedResponse;
-      const maxAttempts = 3;
-      let attempts = 0;
-      let parsedResponse;
-
-      while (attempts < maxAttempts) {
-        try {
-          mcqGeneratedResponse = await this.generateTextResponse(mcqPrompt);
-          parsedResponse = this.parseResponse(mcqGeneratedResponse);
-          console.log(parsedResponse);
-          break;
-        } catch (error) {
-          attempts++;
-          if (attempts >= maxAttempts) {
-            console.log("Failed to generate a parsable JSON MCQ.");
-          }
-        }
-      }
+      const mcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken);
       const mcqObject = new LearningObject("MCQ", "text/plain", "active", "questionnaire", "medium");
-      mcqObject.setQuestionnaire(parsedResponse);
+      mcqObject.setQuestionnaire(mcqResponse);
       mcqObject.setAIGenerated();
       return mcqObject.getJSON();
     }
@@ -120,27 +71,11 @@ class GenerateAIContent extends Component{
       
       Format the response as a parsable json array 
        [ { "question" : "..." , "answer" : "..."} , ... ] `;
-    
-      let quizGeneratedResponse;
-      const maxAttempts = 5;
-      let attempts = 0;
-      let parsedResponse;
       
-      while (attempts < maxAttempts) {
-        try {
-          quizGeneratedResponse = await this.generateTextResponse(quizPrompt);
-          parsedResponse = this.parseResponse(quizGeneratedResponse);
-          console.log(parsedResponse);
-          break;
-        } catch (error) {
-          attempts++;
-          if (attempts >= maxAttempts) {
-            console.log("Failed to generate a parsable JSON reflection quiz.");
-          }
-        }
-      }
+      const maxAttempts = 5;
+      const quizResponse = await generateAndParseResponse(quizPrompt, this.context.auth.accessToken, maxAttempts);
       const quizObject = new LearningObject("reflection quiz", "text/plain", "active", "exercise", "medium");
-      quizObject.setExercise(parsedResponse);
+      quizObject.setExercise(quizResponse);
       quizObject.setAIGenerated();
       return quizObject.getJSON();
     }
@@ -156,27 +91,9 @@ class GenerateAIContent extends Component{
       Format the response as a parsable json array
       [ { "term" : "..." , "definition" : "..."} , ... ] `;
 
-      let glossaryGeneratedResponse;
-      const maxAttempts = 3;
-      let attempts = 0;
-      let parsedResponse;
-
-      while (attempts < maxAttempts) {
-        try {
-          glossaryGeneratedResponse = await this.generateTextResponse(glossaryPrompt);
-          parsedResponse = this.parseResponse(glossaryGeneratedResponse);
-          console.log(parsedResponse);
-          break;
-
-        } catch (error) {
-          attempts++;
-          if (attempts >= maxAttempts) {
-            console.log("Failed to generate a parsable JSON glossary.");
-          }
-        }
-      }
+      const glossaryResponse = await generateAndParseResponse(glossaryPrompt, this.context.auth.accessToken);
       const glossaryObject = new LearningObject("glossary", "text/plain", "expositive", "narrative text", "low");
-      glossaryObject.setGlossary(parsedResponse);
+      glossaryObject.setGlossary(glossaryResponse);
       glossaryObject.setAIGenerated();
       return glossaryObject.getJSON();
     }
@@ -187,8 +104,8 @@ class GenerateAIContent extends Component{
       challenge based on the lesson content. \n\n
 
       Lesson Content:\n${lessonText}`;
-
-      const challengeGeneratedResponse = await this.generateTextResponse(challengePrompt);
+      
+      const challengeGeneratedResponse = await generateTextResponse(challengePrompt);
       console.log(challengeGeneratedResponse);
 
       const challengeObject = new LearningObject("brainstorm", "text/plain", "active", "problem statement", "medium");
@@ -273,7 +190,7 @@ class GenerateAIContent extends Component{
               `Rewrite the following transcript to make sense, in the format of lecture notes:
               // ${res.data}`
               
-          const transcript = await this.generateTextResponse(transcriptPrompt); 
+          const transcript = await generateTextResponse(transcriptPrompt); 
           const transcriptObject = new LearningObject("transcript", "text/plain", "expositive", "narrative text", "low");
           transcriptObject.setText(transcript);
           transcriptObject.setAIGenerated();
