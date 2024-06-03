@@ -1,7 +1,9 @@
 import { LearningObject } from "../learningObject";
 
 const courseSummaryObj = new LearningObject("Introduction to Course", "text/plain", "expositive", "narrative text", "low");
-const courseSummaryText = `In this lesson, I will be presenting programming from a Computer Science perspective, which may be quite different from how you learnt programming. 
+const courseSummaryText = `**Introduction**
+                           
+                           In this lesson, I will be presenting programming from a Computer Science perspective, which may be quite different from how you learnt programming. 
 
                            I will concentrate on the big picture and the core ideas behind programming. It might all seem a bit basic to you but it is quite an important topic. So please, stick with me! 
 
@@ -49,7 +51,7 @@ whatIsAProgramAnsObj.setEmbedded();
 const whatIsAProgramAnsLO = whatIsAProgramAnsObj.getJSON(); 
 
 const instructingComputerTextObj =  new LearningObject("It's all about instructing the computer!", "text/plain", "expositive", "narrative text", "low");
-const instructingComputerText = `Summary: 
+const instructingComputerText = `**Summary:** 
 
         Programming ≠ coding 
         Programming ⊃ coding 
@@ -91,15 +93,7 @@ const byteCodeLO = byteCodeObj.getJSON();
 
 const compilerInterpreterObj = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low");
 compilerInterpreterObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/compilerInterpreter.png");
-const compilerInterpreterLO = compilerInterpreterObj.getJSON(); 
-
-// const programmingNotCodingObj = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low");
-// programmingNotCodingObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/programmingNotCoding.png");
-// const programmingNotCodingLO = programmingNotCodingObj.getJSON(); 
-
-// const programmingSupersetObj = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low");
-// programmingSupersetObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/programmingSuperset.png");
-// const programmingSupersetLO = programmingSupersetObj.getJSON(); 
+const compilerInterpreterLO = compilerInterpreterObj.getJSON();  
 
 export { courseSummaryLO, 
         whatIsProgrammingTextLO, 
@@ -113,6 +107,4 @@ export { courseSummaryLO,
         assemblerTranslatorLO,
         byteCodeLO,
         compilerInterpreterLO,
-        // programmingNotCodingLO,
-        // programmingSupersetLO 
 }; 

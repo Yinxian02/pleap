@@ -3,7 +3,7 @@ import { LearningObject } from "../learningObject";
 const enrichTextObj = new LearningObject("Enrich the guessing game", "text/plain", "expositive", "narrative text", "low");
 enrichTextObj.setText(`We will now update our guessing game so that users can make more than one guess!
 
-                        Summary:
+                        **Summary:**
                         I have introduced you to the third main programming building block - “repetition”.
                         We looked specifically at a while statement.`);
 const enrichTextLO = enrichTextObj.getJSON();
@@ -24,7 +24,7 @@ const enrichAlgorithmImgLO = enrichAlgorithmImgObj.getJSON();
 const makeGuessingGameMoreInterestingTextObj = new LearningObject("Make the guessing game more interesting", "text/plain", "expositive", "narrative text", "low");
 makeGuessingGameMoreInterestingTextObj.setText(`Continuing on from our previous video, perhaps we should not have given users infinite chances to get their guess correct?
 
-                                                Summary:
+                                                **Summary:**
 
                                                 We have added multiple conditions to the while loop.
                                                 Beware of logical/semantic errors!
@@ -41,7 +41,9 @@ makeGuessingGameMoreInterestingImgLO.setLink("https://storage.googleapis.com/ple
 const makeGuessingGameMoreInterestingImg = makeGuessingGameMoreInterestingImgLO.getJSON();
 
 const improveGuessingGameChallengeLO = new LearningObject("Improve the guessing game challenge", "text/plain", "expositive", "problem statement", "medium");
-improveGuessingGameChallengeLO.setText(`You now have three basic programming building blocks at your disposal - statement, selection and repetition.
+improveGuessingGameChallengeLO.setText(`**Challenge:**
+
+You now have three basic programming building blocks at your disposal - statement, selection and repetition.
 
 Now, here is another programming challenge for you!
 

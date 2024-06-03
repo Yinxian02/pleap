@@ -5,6 +5,7 @@ const verifyRoles = require('../../middleware/verifyRoles');
 
 router.route('/').get(verifyRoles(ROLES_LIST.User), async (req, res) => {
   await Lesson.find()
+    .sort({ createdAt: 1 })
     .then(lessons => res.json(lessons))
     .catch(err => res.status(400).json('Error: ' + err));
 });

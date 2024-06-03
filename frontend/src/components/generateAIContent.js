@@ -324,7 +324,7 @@ class GenerateAIContent extends Component{
         if (learningObject.educational.learningResourceType) {
           switch (learningObject.educational.learningResourceType) {
             case "narrative text":
-            //   // await this.uploadGeneratedAudio(learningObject);
+              // await this.uploadGeneratedAudio(learningObject);
               break;
             case "lecture":
               // creationFunction = this.createTranscript;

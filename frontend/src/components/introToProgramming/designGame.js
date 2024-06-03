@@ -3,7 +3,7 @@ import { LearningObject } from "../learningObject";
 const introTextObj = new LearningObject("Designing a guessing game", "text/plain", "expositive", "narrative text", "low");
 introTextObj.setText(`We will now dive in straight into designing a very simple guessing game. 
 
-                      Summary: 
+                      **Summary:**
                       Always try to understand the problem first before you start!`);
 const introTextLO = introTextObj.getJSON(); 
 
@@ -13,7 +13,7 @@ introLectureObj.setLink("https://youtu.be/Rl19zAOMGjs");
 const introLectureLO = introLectureObj.getJSON(); 
 
 const designAlgoTextObj = new LearningObject("Designing an algorithm for the guessing game", "text/plain", "expositive", "narrative text", "low");
-designAlgoTextObj.setText(`Summary: 
+designAlgoTextObj.setText(`**Summary:**
 
                            You design your algorithm (on paper!) after understanding the problem. 
                            I have introduced two “basic building blocks” of programming in this video: 
@@ -26,6 +26,10 @@ designAlgoLectureObj.setText("youtube");
 designAlgoLectureObj.setLink("https://youtu.be/eeRkO18_Pj8"); 
 const designAlgoLectureLO = designAlgoLectureObj.getJSON(); 
 
+const selectionImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
+selectionImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/selection.png"); 
+const selectionImgLO = selectionImgObj.getJSON(); 
+
 const designFlowchartImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
 designFlowchartImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/designFlowchart.png");
 const designFlowchartImgLO = designFlowchartImgObj.getJSON();
@@ -34,26 +38,10 @@ const simpleAlgorithmImgObj = new LearningObject("Designing an algorithm for the
 simpleAlgorithmImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/simpleAlgorithm.png"); 
 const simpleAlgorithmImgLO = simpleAlgorithmImgObj.getJSON();
 
-const designAlgoPseudocodeObj = new LearningObject("Designing an algorithm for the guessing game", "text/plain", "expositive", "narrative text", "low");
-const designAlgoPseudocode = `let secretNumber = 42 
-                let userGuess = read input 
-                if userGuess = secretNumber print 'correct'`;
-designAlgoPseudocodeObj.setText(designAlgoPseudocode);
-const designAlgoPseudocodeLO = designAlgoPseudocodeObj.getJSON(); 
-
-// const simpleStatementImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
-// simpleStatementImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/simpleStatement.png");
-// const simpleStatementImgLO = simpleStatementImgObj.getJSON(); 
-
-const selectionImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
-selectionImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/selection.png"); 
-const selectionImgLO = selectionImgObj.getJSON(); 
-
-
 const improveGameTextObj = new LearningObject("Improving the guessing game", "text/plain", "expositive", "narrative text", "low");
 improveGameTextObj.setText(`We will now attempt to make the guessing game more user friendly. 
                             
-                            Summary: 
+                            **Summary:**
 
                             I have introduced you to a “two-way selection” block (an if-else statement) 
                             Blocks can be nested inside another (composition).`);
@@ -64,25 +52,10 @@ improveGameLectureObj.setText("youtube");
 improveGameLectureObj.setLink("https://youtu.be/5sXO3FKS_vg"); 
 const improveGameLectureLO = improveGameLectureObj.getJSON(); 
 
-const improveGamePseudocodeObj = new LearningObject("Improving the guessing game", "text/plain", "expositive", "narrative text", "low");
-const improveGamePseudocode = `let secretNumber = 42 
-                             let userGuess = read input 
-                             if userGuess = secretNumber 
-                                 print 'correct'
-                                 else 
-                                   if userGuess < secretNumber 
-                                   print 'too low' 
-                                else 
-                                    print 'too high'`;
-improveGamePseudocodeObj.setText(improveGamePseudocode);                                    
-const improveGamePseudocodeLO = improveGamePseudocodeObj.getJSON(); 
-
-// const ifElseImgObj = new LearningObject("Improving the guessing game","image/png", "expositive", "slide", "low");
-// ifElseImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png");
-// const ifElseImgLO = ifElseImgObj.getJSON(); 
-
 const challengeGameExerciseObj = new LearningObject("Challenge! Make the guessing game even more informative", "text/plain", "active", "exercise", "low");
-challengeGameExerciseObj.setText(`To become a good programmer, what you need to do is to practise, practise and practise!
+challengeGameExerciseObj.setText(`**Challenge**
+
+                            To become a good programmer, what you need to do is to practise, practise and practise!
 
                             So here is a challenge for you. Try to make the guessing game **even more** informative!
 
@@ -108,11 +81,11 @@ export { introTextLO,
          designAlgoLectureLO,
          designFlowchartImgLO, 
          simpleAlgorithmImgLO,
-         designAlgoPseudocodeLO,
+        //  designAlgoPseudocodeLO,
         //  simpleStatementImgLO,
          selectionImgLO,
          improveGameTextLO,
          improveGameLectureLO,
-         improveGamePseudocodeLO,
+        //  improveGamePseudocodeLO,
         //  ifElseImgLO,
          challengeGameExerciseLO }; 

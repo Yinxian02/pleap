@@ -102,24 +102,24 @@ const AddLesson = () => {
         author="Josiah Wang" 
         description="Really... what exactly is programming?"
         thumbnail="https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png"
-       learningObjects={whatIsProgrammingLOs} />
+       learningObjects={whatIsProgrammingLOs} />  
       
          <LessonComponent 
           title="Design a guessing game" 
           author="Josiah Wang" 
           description="Let's dive straight into designing a game... because life is too short to waste!"
          thumbnail="https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png" 
-         learningObjects={designGameLOs} />   */}
+         learningObjects={designGameLOs} />    
 
         <LessonComponent
           title="Improve the guessing game"
           author="Josiah Wang"
           description="Let's make the guessing game more interesting!"
           thumbnail="https://storage.googleapis.com/pleap/improveGuessingGame/repetition.png"
-          learningObjects={improveGuessingGameLOs} />
+          learningObjects={improveGuessingGameLOs} /> */}
 
-    {/* {generateContent && <GenerateAIContent/>}
-      <button onClick={handleButtonClick}>Generate AI content</button> */}
+    {generateContent && <GenerateAIContent/>}
+      <button onClick={handleButtonClick}>Generate AI content</button>
     </div>
   );
 };

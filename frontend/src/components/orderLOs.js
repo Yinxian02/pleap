@@ -114,8 +114,9 @@ export function orderLearningObjects(learningObjects, userPreferences) {
         weight: loWeights[index],
         }));
         
-    weightedObjects.sort((a, b) => a.weight - b.weight);
+    // weightedObjects.sort((a, b) => a.weight - b.weight);
     // console.log(weightedObjects)
     
     return weightedObjects.map(pair => pair.object);
+    // return weightedObjects;
 }
