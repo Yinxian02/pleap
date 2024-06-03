@@ -64,15 +64,8 @@ export default class Lessons extends Component {
 
   render() {
     return (
-      <div>
-        <Link to="/create-lesson">
-          <p>add lessons to database</p>
-        </Link>
-        <div>
-            <div className="lessons-list">
-              {this.lessonsList()}
-            </div>
-        </div>
+      <div className="lessons-list">
+        {this.lessonsList()}
       </div>
     );
   }

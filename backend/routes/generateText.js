@@ -7,7 +7,8 @@ async function generateText(text) {
     });
 
     const generativeModel = vertexAI.getGenerativeModel({
-        model: 'gemini-1.0-pro-vision-001'
+        // model: 'gemini-1.0-pro-vision-001'
+        model: 'gemini-1.5-pro-001'
     });
 
     const request = {

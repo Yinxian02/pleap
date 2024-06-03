@@ -9,4 +9,9 @@ export const SidebarData = [
     path: "/lessons",
     cName: "nav-text",
   },
+  {
+    title: "Upload Lesson",
+    path: "/create-lesson",
+    cName: "nav-text",
+  }
 ];
