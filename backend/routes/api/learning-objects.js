@@ -96,4 +96,24 @@ router.route('/addDescription/:id').post(verifyRoles(ROLES_LIST.User), async (re
       res.status(400).json({ error: 'Error adding description to slide: ' + err }));
 });
 
+router.route('/addTranscript/:id').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+  const { id } = req.params;
+  const { transcript } = req.body;
+  console.log(req.body); 
+
+  LearningObject.findById(id)
+    .then(lo => {
+      if (!lo) {
+        return res.status(404).json({ error: 'Learning object not found' });
+      }
+      lo.content.text = transcript;
+      lo.save();
+    })
+    .then(() => 
+      res.json('Transcript added to the video.'))
+    .catch(err => 
+      res.status(400).json({ error: 'Error adding video transcript: ' + err }));
+});
+
+
 module.exports = router;

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
-import { FaImages } from "react-icons/fa6";
+import { MdOutlineTextFields } from "react-icons/md";
 import { BiHide } from "react-icons/bi";
 
 import { markDownToHtml } from "./markDownToHTML";
@@ -46,7 +46,7 @@ const Slide = ({ learningObject }) => {
 
             <div className="slide-footer">
                 <button className="slide-button" onClick={showOrHideText}>
-                    {showText ? <BiHide /> : <FaImages />}
+                    {showText ? <BiHide /> : <MdOutlineTextFields/>}
                 </button>
             </div>
 

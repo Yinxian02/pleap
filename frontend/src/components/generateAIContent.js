@@ -105,11 +105,9 @@ class GenerateAIContent extends Component{
       The challenge should require students to brainstorm, evaluate, and create a solution related to the lesson content.
       Make sure the challenge encourages students to apply their knowledge creatively to a real-world scenario outside of lesson content.
 
-
       Lesson Content:\n${lessonText}`;
 
-
-      const challengeGeneratedResponse = await generateTextResponse(challengePrompt);
+      const challengeGeneratedResponse = await generateTextResponse(challengePrompt, this.context.auth.accessToken);
       console.log(challengeGeneratedResponse);
 
       const challengeObject = new LearningObject("brainstorm", "text/plain", "active", "problem statement", "medium");
@@ -170,6 +168,28 @@ class GenerateAIContent extends Component{
       }
     }
 
+    async addTranscript(learningObject, transcript) {
+      const id = learningObject._id;
+
+      try {
+        const res = await axios.post(
+          `http://localhost:5001/learning-objects/addTranscript/${id}`,
+          { transcript }, 
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + this.context.auth.accessToken,
+              mode: 'cors',
+              withCredentials: true,
+            },
+          }
+        );
+        console.log(res.data); 
+      } catch (error) {
+        console.error('Error adding transcript to learning object:', error);
+      }
+    }
+
     async addDescription(learningObject, description) {
       const id = learningObject._id;
 
@@ -211,15 +231,22 @@ class GenerateAIContent extends Component{
             },
           }
         );
-          // console.log(res.data); 
+          console.log(res.data); 
+
           const transcriptPrompt = 
               `Rewrite the following transcript to make sense, in the format of lecture notes:
               // ${res.data}`
               
-          const transcript = await generateTextResponse(transcriptPrompt); 
+          const transcript = await generateTextResponse(transcriptPrompt, this.context.auth.accessToken); 
+          
+          await this.addTranscript(learningObject, transcript);
+
           const transcriptObject = new LearningObject("transcript", "text/plain", "expositive", "narrative text", "low");
+          
           transcriptObject.setText(transcript);
+          transcriptObject.setLink(link);
           transcriptObject.setAIGenerated();
+
           return transcriptObject.getJSON();
         } catch (error) {
           console.error('Error generating transcript:', error);
@@ -296,9 +323,9 @@ class GenerateAIContent extends Component{
         
         if (learningObject.educational.learningResourceType) {
           switch (learningObject.educational.learningResourceType) {
-            // case "narrative text":
+            case "narrative text":
             //   // await this.uploadGeneratedAudio(learningObject);
-            //   break;
+              break;
             case "lecture":
               // creationFunction = this.createTranscript;
               break;
@@ -319,7 +346,7 @@ class GenerateAIContent extends Component{
       return newLearningObjects;
     }
 
-    async fetchAndGenerateLearningObjects(ids) {
+    async fetchLearningObjects(ids) {
       try {
         const res = await axios.post(
           'http://localhost:5001/learning-objects/batch',
@@ -333,16 +360,15 @@ class GenerateAIContent extends Component{
             },
           }
         );
-        //   console.log(res.data);
-        const learningObjects = res.data; 
-        return await this.createLearningObjects(learningObjects);
+        return res.data;
       } catch (error) {
         console.error('Error fetching learning objects:', error);
       }
     }
 
     async uploadGeneratedContent(ids) {
-      const learningObjects = await this.fetchAndGenerateLearningObjects(ids);
+      const currLearningObjects = await this.fetchLearningObjects(ids);
+      const learningObjects = await this.createLearningObjects(currLearningObjects);
       
       if (learningObjects.length === 0) {
         console.log('No learning objects to upload.');

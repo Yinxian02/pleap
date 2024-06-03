@@ -1,10 +1,11 @@
 import { markDownToHtml } from "./markDownToHTML";
 
+import Lecture from "./Lecture.component";
+import Slide from "./Slide.component";
 import McqQuiz from "./McqQuiz.component";
 import Exercise from "./Exercise.component";
-import NarrativeText from "./NarrativeText.component";
 import Glossary from "./Glossary.component";
-import Slide from "./Slide.component";
+import NarrativeText from "./NarrativeText.component";
 
 function isGlossary(learningObject) {
     return learningObject.content.glossary !== null && learningObject.content.glossary.length > 0;
@@ -14,28 +15,13 @@ export function displayLO(learningObject) {
     console.log(learningObject.educational.learningResourceType);
     const LRT = learningObject.educational.learningResourceType; 
     const URL = learningObject.content.link;
-    // const htmlText = markDownToHtml(learningObject.content.text);
     
     if (LRT === "lecture"){
-        const videoIdMatch = URL.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-        const videoId = videoIdMatch ? videoIdMatch[1] : null;
-        const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : null;
-        return (
-            <div style={{ textAlign: 'center' }}>
-              <iframe
-                width="500px"
-                maxWidth="100%"
-                height="315"
-                src={embedUrl}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                ></iframe>
-            </div>
-          );
+        return <Lecture learningObject={learningObject} />;
+    
     } else if (LRT === "slide") {
         return <Slide learningObject={learningObject} />;
-        
+
     } else if (LRT === "questionnaire" && learningObject.content.aiGenerated) {
         return <McqQuiz questionnaire={learningObject.content.questionnaire}/>;
     
