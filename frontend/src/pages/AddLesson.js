@@ -17,22 +17,31 @@ import { courseSummaryLO,
   assemblerTranslatorLO,
   byteCodeLO,
   compilerInterpreterLO,
-  // programmingNotCodingLO,
-  // programmingSupersetLO 
 } from "../components/introToProgramming/whatIsProgramming"
 
 import { introTextLO,
   introLectureLO,
   designAlgoTextLO,
   designAlgoLectureLO,
+  designFlowchartImgLO, 
+  simpleAlgorithmImgLO,
   // designAlgoPseudocodeLO,
-  // simpleStatementImgLO,
   selectionImgLO,
   improveGameTextLO,
   improveGameLectureLO,
   // improveGamePseudocodeLO,
-  // ifElseImgLO,
   challengeGameExerciseLO } from "../components/introToProgramming/designGame";  
+
+import {
+  enrichTextLO,
+  enrichLectureLO,
+  repetitionImgLO,
+  enrichAlgorithmImgLO,
+  makeGuessingGameMoreInterestingTextLO,
+  makeGuessingGameMoreInterestingLectureLO,
+  makeGuessingGameMoreInterestingImg,
+  improveGuessingGameChallenge
+} from "../components/introToProgramming/improveGuessingGames";
 
 const whatIsProgrammingLOs = [
     courseSummaryLO, 
@@ -50,9 +59,7 @@ const whatIsProgrammingLOs = [
     algoFlowChartLO,
     assemblerTranslatorLO,
     byteCodeLO,
-    compilerInterpreterLO,
-    // programmingNotCodingLO,
-    // programmingSupersetLO
+    compilerInterpreterLO
 ]
 
 const designGameLOs = [
@@ -60,14 +67,25 @@ const designGameLOs = [
     introLectureLO,
     designAlgoTextLO,
     designAlgoLectureLO,
+    designFlowchartImgLO, 
+    simpleAlgorithmImgLO,
     // designAlgoPseudocodeLO,
-    // simpleStatementImgLO,
     selectionImgLO,
     improveGameTextLO,
     improveGameLectureLO,
     // improveGamePseudocodeLO,
-    // ifElseImgLO,
     challengeGameExerciseLO
+]
+
+const improveGuessingGameLOs = [
+    enrichTextLO,
+    enrichLectureLO,
+    repetitionImgLO,
+    enrichAlgorithmImgLO,
+    makeGuessingGameMoreInterestingTextLO,
+    makeGuessingGameMoreInterestingLectureLO,
+    makeGuessingGameMoreInterestingImg,
+    improveGuessingGameChallenge
 ]
 
 const AddLesson = () => {
@@ -93,8 +111,15 @@ const AddLesson = () => {
          thumbnail="https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png" 
          learningObjects={designGameLOs} />   */}
 
-    {generateContent && <GenerateAIContent/>}
-      <button onClick={handleButtonClick}>Generate AI content</button>
+        <LessonComponent
+          title="Improve the guessing game"
+          author="Josiah Wang"
+          description="Let's make the guessing game more interesting!"
+          thumbnail="https://storage.googleapis.com/pleap/improveGuessingGame/repetition.png"
+          learningObjects={improveGuessingGameLOs} />
+
+    {/* {generateContent && <GenerateAIContent/>}
+      <button onClick={handleButtonClick}>Generate AI content</button> */}
     </div>
   );
 };

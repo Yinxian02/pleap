@@ -304,7 +304,7 @@ class GenerateAIContent extends Component{
         // this.createMCQ,
         // this.createQuiz,
         // this.createGlossary,
-        this.createChallenge
+        // this.createChallenge
       ];
 
       const createAndAddToLOList = async (generationFunction, ...args) => {

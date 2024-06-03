@@ -26,12 +26,20 @@ designAlgoLectureObj.setText("youtube");
 designAlgoLectureObj.setLink("https://youtu.be/eeRkO18_Pj8"); 
 const designAlgoLectureLO = designAlgoLectureObj.getJSON(); 
 
-// const designAlgoPseudocodeObj = new LearningObject("Designing an algorithm for the guessing game", "text/plain", "expositive", "narrative text", "low");
-// const designAlgoPseudocode = `let secretNumber = 42 
-//                 let userGuess = read input 
-//                 if userGuess = secretNumber print 'correct'`;
-// designAlgoPseudocodeObj.setText(designAlgoPseudocode);
-// const designAlgoPseudocodeLO = designAlgoPseudocodeObj.getJSON(); 
+const designFlowchartImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
+designFlowchartImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/designFlowchart.png");
+const designFlowchartImgLO = designFlowchartImgObj.getJSON();
+
+const simpleAlgorithmImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
+simpleAlgorithmImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/simpleAlgorithm.png"); 
+const simpleAlgorithmImgLO = simpleAlgorithmImgObj.getJSON();
+
+const designAlgoPseudocodeObj = new LearningObject("Designing an algorithm for the guessing game", "text/plain", "expositive", "narrative text", "low");
+const designAlgoPseudocode = `let secretNumber = 42 
+                let userGuess = read input 
+                if userGuess = secretNumber print 'correct'`;
+designAlgoPseudocodeObj.setText(designAlgoPseudocode);
+const designAlgoPseudocodeLO = designAlgoPseudocodeObj.getJSON(); 
 
 // const simpleStatementImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
 // simpleStatementImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/simpleStatement.png");
@@ -40,6 +48,7 @@ const designAlgoLectureLO = designAlgoLectureObj.getJSON();
 const selectionImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
 selectionImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/selection.png"); 
 const selectionImgLO = selectionImgObj.getJSON(); 
+
 
 const improveGameTextObj = new LearningObject("Improving the guessing game", "text/plain", "expositive", "narrative text", "low");
 improveGameTextObj.setText(`We will now attempt to make the guessing game more user friendly. 
@@ -55,18 +64,18 @@ improveGameLectureObj.setText("youtube");
 improveGameLectureObj.setLink("https://youtu.be/5sXO3FKS_vg"); 
 const improveGameLectureLO = improveGameLectureObj.getJSON(); 
 
-// const improveGamePseudocodeObj = new LearningObject("Improving the guessing game", "text/plain", "expositive", "narrative text", "low");
-// const improveGamePseudocode = `let secretNumber = 42 
-//                              let userGuess = read input 
-//                              if userGuess = secretNumber 
-//                                  print 'correct'
-//                                  else 
-//                                    if userGuess < secretNumber 
-//                                    print 'too low' 
-//                                 else 
-//                                     print 'too high'`;
-// improveGamePseudocodeObj.setText(improveGamePseudocode);                                    
-// const improveGamePseudocodeLO = improveGamePseudocodeObj.getJSON(); 
+const improveGamePseudocodeObj = new LearningObject("Improving the guessing game", "text/plain", "expositive", "narrative text", "low");
+const improveGamePseudocode = `let secretNumber = 42 
+                             let userGuess = read input 
+                             if userGuess = secretNumber 
+                                 print 'correct'
+                                 else 
+                                   if userGuess < secretNumber 
+                                   print 'too low' 
+                                else 
+                                    print 'too high'`;
+improveGamePseudocodeObj.setText(improveGamePseudocode);                                    
+const improveGamePseudocodeLO = improveGamePseudocodeObj.getJSON(); 
 
 // const ifElseImgObj = new LearningObject("Improving the guessing game","image/png", "expositive", "slide", "low");
 // ifElseImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png");
@@ -97,11 +106,13 @@ export { introTextLO,
          introLectureLO,
          designAlgoTextLO,
          designAlgoLectureLO,
-        //  designAlgoPseudocodeLO,
+         designFlowchartImgLO, 
+         simpleAlgorithmImgLO,
+         designAlgoPseudocodeLO,
         //  simpleStatementImgLO,
          selectionImgLO,
          improveGameTextLO,
          improveGameLectureLO,
-        //  improveGamePseudocodeLO,
+         improveGamePseudocodeLO,
         //  ifElseImgLO,
          challengeGameExerciseLO }; 
