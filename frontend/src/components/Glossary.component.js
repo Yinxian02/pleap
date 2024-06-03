@@ -12,11 +12,6 @@ const Glossary = ({ glossary }) => {
         setView(view === 'table' ? 'flashcards' : 'table');
     };
 
-    const flashcardData = glossary.map((item) => ({
-        frontHTML: item.term,
-        backHTML: item.definition,
-    }));
-
     return (
         <div className="glossary-div">
             {view === 'table' ? (
@@ -35,13 +30,11 @@ const Glossary = ({ glossary }) => {
                         backHTML: item.definition,
                     }))} 
                     frontContentStyle={{
-                        fontSize: "larger",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                       }}
                     backContentStyle={{
-                        fontSize: "larger",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",

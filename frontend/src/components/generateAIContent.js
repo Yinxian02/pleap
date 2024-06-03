@@ -100,10 +100,14 @@ class GenerateAIContent extends Component{
 
     async createChallenge(lessonText) {
       const challengePrompt = `You are a computer science lecturer at university.
-      Create a brainstorm evaluation or creation
-      challenge based on the lesson content. \n\n
+      Create a challenge question for your students based on the lesson content.
+
+      The challenge should require students to brainstorm, evaluate, and create a solution related to the lesson content.
+      Make sure the challenge encourages students to apply their knowledge creatively to a real-world scenario outside of lesson content.
+
 
       Lesson Content:\n${lessonText}`;
+
 
       const challengeGeneratedResponse = await generateTextResponse(challengePrompt);
       console.log(challengeGeneratedResponse);
@@ -166,6 +170,28 @@ class GenerateAIContent extends Component{
       }
     }
 
+    async addDescription(learningObject, description) {
+      const id = learningObject._id;
+
+      try {
+        const res = await axios.post(
+          `http://localhost:5001/learning-objects/addDescription/${id}`,
+          { description }, 
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + this.context.auth.accessToken,
+              mode: 'cors',
+              withCredentials: true,
+            },
+          }
+        );
+        console.log(res.data); 
+      } catch (error) {
+        console.error('Error adding description to learning object:', error);
+      }
+    }
+
     async createTranscript(learningObject){
       try {
         const title = learningObject.general.title; 
@@ -223,9 +249,17 @@ class GenerateAIContent extends Component{
       console.log(res.data); 
 
       const description = res.data;
+
+      // add description to existing slide learning object
+      await this.addDescription(learningObject, description);
+
+      // create new narrative text learning object with slide 
       const descriptionObject = new LearningObject("description", "text/plain", "expositive", "narrative text", "low");
+      
       descriptionObject.setText(description);
+      descriptionObject.setLink(imageUrl);
       descriptionObject.setAIGenerated();
+
       return descriptionObject.getJSON();
     } catch (error) {
       console.error('Error generating image:', error);
@@ -262,9 +296,9 @@ class GenerateAIContent extends Component{
         
         if (learningObject.educational.learningResourceType) {
           switch (learningObject.educational.learningResourceType) {
-            case "narrative text":
-              // await this.uploadGeneratedAudio(learningObject);
-              break;
+            // case "narrative text":
+            //   // await this.uploadGeneratedAudio(learningObject);
+            //   break;
             case "lecture":
               // creationFunction = this.createTranscript;
               break;
@@ -375,6 +409,7 @@ class GenerateAIContent extends Component{
             if (ids) {
               await this.addLearningObjectReferences(lessons[i]._id, ids);
             }
+            // add all narrative text audio here?
           }
         } catch (error) {
           console.log(error);

@@ -77,7 +77,7 @@ const McqQuiz = ({questionnaire}) => {
                             (showCorrectAnswer && correctAnswer !== null ?
                                 (correctAnswer ? "correct-answer" : "incorrect-answer")
                                 : "selected-answer")
-                            : null}             
+                            : "unselected-answer"}             
                     >
                         {choice.text}
                     </li>

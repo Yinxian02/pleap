@@ -93,13 +93,13 @@ const compilerInterpreterObj = new LearningObject("It's all about instructing th
 compilerInterpreterObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/compilerInterpreter.png");
 const compilerInterpreterLO = compilerInterpreterObj.getJSON(); 
 
-const programmingNotCodingObj = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low");
-programmingNotCodingObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/programmingNotCoding.png");
-const programmingNotCodingLO = programmingNotCodingObj.getJSON(); 
+// const programmingNotCodingObj = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low");
+// programmingNotCodingObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/programmingNotCoding.png");
+// const programmingNotCodingLO = programmingNotCodingObj.getJSON(); 
 
-const programmingSupersetObj = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low");
-programmingSupersetObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/programmingSuperset.png");
-const programmingSupersetLO = programmingSupersetObj.getJSON(); 
+// const programmingSupersetObj = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low");
+// programmingSupersetObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/programmingSuperset.png");
+// const programmingSupersetLO = programmingSupersetObj.getJSON(); 
 
 export { courseSummaryLO, 
         whatIsProgrammingTextLO, 
@@ -113,5 +113,6 @@ export { courseSummaryLO,
         assemblerTranslatorLO,
         byteCodeLO,
         compilerInterpreterLO,
-        programmingNotCodingLO,
-        programmingSupersetLO }; 
+        // programmingNotCodingLO,
+        // programmingSupersetLO 
+}; 

@@ -17,20 +17,21 @@ import { courseSummaryLO,
   assemblerTranslatorLO,
   byteCodeLO,
   compilerInterpreterLO,
-  programmingNotCodingLO,
-  programmingSupersetLO } from "../components/introToProgramming/whatIsProgramming"
+  // programmingNotCodingLO,
+  // programmingSupersetLO 
+} from "../components/introToProgramming/whatIsProgramming"
 
 import { introTextLO,
   introLectureLO,
   designAlgoTextLO,
   designAlgoLectureLO,
   // designAlgoPseudocodeLO,
-  simpleStatementImgLO,
+  // simpleStatementImgLO,
   selectionImgLO,
   improveGameTextLO,
   improveGameLectureLO,
   // improveGamePseudocodeLO,
-  ifElseImgLO,
+  // ifElseImgLO,
   challengeGameExerciseLO } from "../components/introToProgramming/designGame";  
 
 const whatIsProgrammingLOs = [
@@ -50,8 +51,8 @@ const whatIsProgrammingLOs = [
     assemblerTranslatorLO,
     byteCodeLO,
     compilerInterpreterLO,
-    programmingNotCodingLO,
-    programmingSupersetLO
+    // programmingNotCodingLO,
+    // programmingSupersetLO
 ]
 
 const designGameLOs = [
@@ -60,12 +61,12 @@ const designGameLOs = [
     designAlgoTextLO,
     designAlgoLectureLO,
     // designAlgoPseudocodeLO,
-    simpleStatementImgLO,
+    // simpleStatementImgLO,
     selectionImgLO,
     improveGameTextLO,
     improveGameLectureLO,
     // improveGamePseudocodeLO,
-    ifElseImgLO,
+    // ifElseImgLO,
     challengeGameExerciseLO
 ]
 

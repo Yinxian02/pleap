@@ -33,9 +33,9 @@ const designAlgoLectureLO = designAlgoLectureObj.getJSON();
 // designAlgoPseudocodeObj.setText(designAlgoPseudocode);
 // const designAlgoPseudocodeLO = designAlgoPseudocodeObj.getJSON(); 
 
-const simpleStatementImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
-simpleStatementImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/simpleStatement.png");
-const simpleStatementImgLO = simpleStatementImgObj.getJSON(); 
+// const simpleStatementImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
+// simpleStatementImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/simpleStatement.png");
+// const simpleStatementImgLO = simpleStatementImgObj.getJSON(); 
 
 const selectionImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
 selectionImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/selection.png"); 
@@ -68,9 +68,9 @@ const improveGameLectureLO = improveGameLectureObj.getJSON();
 // improveGamePseudocodeObj.setText(improveGamePseudocode);                                    
 // const improveGamePseudocodeLO = improveGamePseudocodeObj.getJSON(); 
 
-const ifElseImgObj = new LearningObject("Improving the guessing game","image/png", "expositive", "slide", "low");
-ifElseImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png");
-const ifElseImgLO = ifElseImgObj.getJSON(); 
+// const ifElseImgObj = new LearningObject("Improving the guessing game","image/png", "expositive", "slide", "low");
+// ifElseImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png");
+// const ifElseImgLO = ifElseImgObj.getJSON(); 
 
 const challengeGameExerciseObj = new LearningObject("Challenge! Make the guessing game even more informative", "text/plain", "active", "exercise", "low");
 challengeGameExerciseObj.setText(`To become a good programmer, what you need to do is to practise, practise and practise!
@@ -98,10 +98,10 @@ export { introTextLO,
          designAlgoTextLO,
          designAlgoLectureLO,
         //  designAlgoPseudocodeLO,
-         simpleStatementImgLO,
+        //  simpleStatementImgLO,
          selectionImgLO,
          improveGameTextLO,
          improveGameLectureLO,
         //  improveGamePseudocodeLO,
-         ifElseImgLO,
+        //  ifElseImgLO,
          challengeGameExerciseLO }; 

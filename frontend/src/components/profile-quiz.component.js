@@ -151,7 +151,7 @@ const ProfileQuiz = () => {
                     <li
                         onClick={() => onSelectPreference(choice, index, dimension)}
                         key={choice.text}
-                        className={answerIndex === index ? "selected-answer" : null}             
+                        className={answerIndex === index ? "selected-answer" : "unselected-answer"}             
                     >
                         {choice.text}
                     </li>

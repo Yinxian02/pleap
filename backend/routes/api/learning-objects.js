@@ -77,4 +77,23 @@ router.route('/addAudio/:id').post(verifyRoles(ROLES_LIST.User), async (req, res
       res.status(400).json({ error: 'Error adding audio to the learning object: ' + err }));
 });
 
+router.route('/addDescription/:id').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+  const { id } = req.params;
+  const { description } = req.body;
+  console.log(req.body); 
+
+  LearningObject.findById(id)
+    .then(lo => {
+      if (!lo) {
+        return res.status(404).json({ error: 'Learning object not found' });
+      }
+      lo.content.text = description;
+      lo.save();
+    })
+    .then(() => 
+      res.json('Description added to the slide.'))
+    .catch(err => 
+      res.status(400).json({ error: 'Error adding description to slide: ' + err }));
+});
+
 module.exports = router;

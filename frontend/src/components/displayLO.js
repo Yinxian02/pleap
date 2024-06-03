@@ -10,6 +10,7 @@ function isGlossary(learningObject) {
 }; 
 
 export function displayLO(learningObject) {
+    console.log(learningObject.educational.learningResourceType);
     const LRT = learningObject.educational.learningResourceType; 
     const URL = learningObject.content.link;
     // const htmlText = markDownToHtml(learningObject.content.text);
@@ -32,13 +33,22 @@ export function displayLO(learningObject) {
             </div>
           );
     } else if (LRT === "slide") {
+        const showText = (learningObject) => {
+
+            if (learningObject.content.text !== null && learningObject.content.text !== "") {
+                return (<div className="slide-text" dangerouslySetInnerHTML={{ __html: markDownToHtml(learningObject.content.text) }} />
+            );
+            }
+        };
+
         return (
-            <div style={{ textAlign: 'center' }}>
+            <div>
                 <img
                 src={ URL }
                 alt="Slide"
                 style={{ width: '100%', maxWidth: '100%', height: 'auto' }}
                 />
+                {showText(learningObject)};
             </div>
         );
     } else if (LRT === "questionnaire" && learningObject.content.aiGenerated) {

@@ -23,7 +23,20 @@ const NarrativeText = ({ learningObject }) => {
     }, []);
 
     const htmlText = markDownToHtml(learningObject.content.text);
+    const showSlide = (learningObject) => {
 
+        if (learningObject.content.link !== null && learningObject.content.link !== "") {
+            return (
+                <div style={{ textAlign: 'center' }}>
+                <img
+                    src={ learningObject.content.link }
+                    alt="Slide"
+                    style={{ width: '100%', maxWidth: '100%', height: 'auto' }}
+                />
+            </div>
+            );
+        }
+    };
     return (
         <div className="narrative-text">
             <div className="audio-header">
@@ -32,6 +45,7 @@ const NarrativeText = ({ learningObject }) => {
                 </button>
             </div>
             <div className="narrative-content" dangerouslySetInnerHTML={{ __html: htmlText }} />
+            {showSlide(learningObject)}
         </div>
     );
 };

@@ -36,13 +36,19 @@ li {
     font-size: 16px;
     /* border: 1px solid;  */
     padding: 5px; 
-    margin-top: 5px;
+    margin-top: 10px;
     cursor: pointer; 
 }
 
 .selected-answer {
     background-color: #e6e6e6;
     box-shadow: 0 2px 4px var(--hoverShadowColor);  
+}
+
+.unselected-answer {
+    background-color: var(--bgColorDark);
+    border-color: var(--txtColorMedium);
+    box-shadow: 0 2px 4px var(--hoverShadowColor); 
 }
 
 .footer {
