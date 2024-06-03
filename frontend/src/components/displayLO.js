@@ -4,6 +4,7 @@ import McqQuiz from "./McqQuiz.component";
 import Exercise from "./Exercise.component";
 import NarrativeText from "./NarrativeText.component";
 import Glossary from "./Glossary.component";
+import Slide from "./Slide.component";
 
 function isGlossary(learningObject) {
     return learningObject.content.glossary !== null && learningObject.content.glossary.length > 0;
@@ -33,24 +34,8 @@ export function displayLO(learningObject) {
             </div>
           );
     } else if (LRT === "slide") {
-        const showText = (learningObject) => {
-
-            if (learningObject.content.text !== null && learningObject.content.text !== "") {
-                return (<div className="slide-text" dangerouslySetInnerHTML={{ __html: markDownToHtml(learningObject.content.text) }} />
-            );
-            }
-        };
-
-        return (
-            <div>
-                <img
-                src={ URL }
-                alt="Slide"
-                style={{ width: '100%', maxWidth: '100%', height: 'auto' }}
-                />
-                {showText(learningObject)};
-            </div>
-        );
+        return <Slide learningObject={learningObject} />;
+        
     } else if (LRT === "questionnaire" && learningObject.content.aiGenerated) {
         return <McqQuiz questionnaire={learningObject.content.questionnaire}/>;
     

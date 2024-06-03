@@ -137,6 +137,7 @@ textarea {
 
 .toggle-button {
     box-shadow: none; 
+    background-color: var(--buttonColor);
 }
 
 .flashcard {
@@ -152,7 +153,7 @@ textarea {
 }
 
 .slide-button {
-    background-color: var(--bgColorDark);
+    background-color: var(--buttonColor);
     border: none;
     width: 100%;
     /* border-radius: 0px;  */

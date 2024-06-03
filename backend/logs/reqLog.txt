@@ -12892,3 +12892,15 @@
 20240603	15:59:53	cb116563-ccb8-485e-8fca-7602cf58676d	OPTIONS	http://localhost:3000	/lessons/665b998236a139080e9e0482
 20240603	15:59:53	78ff8d3d-887c-4837-8d94-7dd730b0c058	GET	http://localhost:3000	/lessons/665b998236a139080e9e0482
 20240603	15:59:53	9a7bd3dc-6aa6-4d75-9dcd-b9daac4f67a4	POST	http://localhost:3000	/learning-objects/batch
+20240603	16:14:58	5a77c7ed-7e34-4fee-9e05-01d9e5d12285	OPTIONS	http://localhost:3000	/learning-objects/batch
+20240603	16:14:58	23b7db54-1572-4e00-8487-edcc476eee98	POST	http://localhost:3000	/learning-objects/batch
+20240603	16:14:58	ae386e47-1717-4fbe-a05c-44b7895203c9	OPTIONS	http://localhost:3000	/lessons/665b998236a139080e9e0482
+20240603	16:14:58	84bbed37-90a3-4a4e-accd-319cf23bdee7	GET	http://localhost:3000	/lessons/665b998236a139080e9e0482
+20240603	16:14:58	8553336e-11d2-4008-a5c0-458f1754f90e	POST	http://localhost:3000	/learning-objects/batch
+20240603	16:23:41	d36d3e46-055a-4b23-bc62-cfb34241aa24	OPTIONS	http://localhost:3000	/lessons/
+20240603	16:23:41	73faa80b-c222-4b09-b463-093908f8407c	GET	http://localhost:3000	/lessons/
+20240603	16:23:43	22bf1050-96e3-4980-8eec-f7238ef44a10	OPTIONS	http://localhost:3000	/learning-objects/batch
+20240603	16:23:43	81cc65e9-d3ae-4381-822c-e27986864790	OPTIONS	http://localhost:3000	/lessons/665b998236a139080e9e0484
+20240603	16:23:43	52304e1c-ae88-45fe-b3fc-8925a4f6ea68	POST	http://localhost:3000	/learning-objects/batch
+20240603	16:23:43	762e3c2b-6027-4fe1-804b-46a2e5876326	GET	http://localhost:3000	/lessons/665b998236a139080e9e0484
+20240603	16:23:43	09b6a541-d1e7-4853-88dd-5752eaa88a0b	POST	http://localhost:3000	/learning-objects/batch
