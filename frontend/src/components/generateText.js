@@ -14,7 +14,8 @@ const generateTextResponse = async (textPrompt, accessToken) => {
                 },
             }
         );
-        return response.data.predictions[0].content;
+        console.log(response);
+        return response.data;
     } catch (error) {
         console.error('Error:', error);
     }

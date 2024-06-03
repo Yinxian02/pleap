@@ -12,56 +12,56 @@ const textToSpeech = require('@google-cloud/text-to-speech');
 const uploadToGCS = require('../uploadToGCS');
 const { generateTranscript } = require('../generateTranscript');
 const { generateDescription } = require('../generateDescription');
+const { generateText } = require('../generateText');
 
+// router.route('/generateText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+//     const textPrompt = req.body.textPrompt;
 
-router.route('/generateText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
-    const textPrompt = req.body.textPrompt;
+//     const auth = new GoogleAuth({
+//         keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+//         scopes: "https://www.googleapis.com/auth/cloud-platform",
+//      });
 
-    const auth = new GoogleAuth({
-        keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-        scopes: "https://www.googleapis.com/auth/cloud-platform",
-     });
+//     try {
+//         const client = await auth.getClient();
+//         const accessToken = (await client.getAccessToken()).token;
+        
+//         const instances = [{ content: textPrompt }];
+//         const parameters = { temperature: 0.2, maxOutputTokens: 1024 };
+//         const apiEndpoint = 'us-central1-aiplatform.googleapis.com';
+//         const projectId = 'pleap24';
+//         const modelId = 'text-bison@001'; 
 
-    try {
-        const client = await auth.getClient();
-        const accessToken = (await client.getAccessToken()).token;
+//         const data = { instances, parameters };
+//         console.log(data);
         
-        const instances = [{ content: textPrompt }];
-        const parameters = { temperature: 0.2, maxOutputTokens: 1024 };
-        const apiEndpoint = 'us-central1-aiplatform.googleapis.com';
-        const projectId = 'pleap24';
-        const modelId = 'text-bison@001'; 
-
-        const data = { instances, parameters };
-        console.log(data);
+//         const response = await fetch(
+//             `https://${apiEndpoint}/v1/projects/${projectId}/locations/us-central1/publishers/google/models/${modelId}:predict`, 
+//             {
+//                 method: 'POST',
+//                 headers: {
+//                     Authorization: `Bearer ${accessToken}`,
+//                     "Content-Type": "application/json",
+//                     mode: 'cors',
+//                     withCredentials: true,
+//                 },
+//                 body: JSON.stringify(data)
+//             }
+//         );
         
-        const response = await fetch(
-            `https://${apiEndpoint}/v1/projects/${projectId}/locations/us-central1/publishers/google/models/${modelId}:predict`, 
-            {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                    "Content-Type": "application/json",
-                    mode: 'cors',
-                    withCredentials: true,
-                },
-                body: JSON.stringify(data)
-            }
-        );
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//         }
         
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+//         const result = await response.json();
+//         console.log(result);
         
-        const result = await response.json();
-        console.log(result);
-        
-        res.status(200).send(result);
-    } catch (error) {
-        console.error('Error generating AI content:', error);
-        res.status(500).send({ error: error.message });
-    }
-}); 
+//         res.status(200).send(result);
+//     } catch (error) {
+//         console.error('Error generating AI content:', error);
+//         res.status(500).send({ error: error.message });
+//     }
+// }); 
 
 router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
     const text = req.body.text;
@@ -130,5 +130,17 @@ router.route('/imageToText').post(verifyRoles(ROLES_LIST.User), async (req, res)
         res.status(500).send({ error: error.message });
     }
 });
+
+router.route('/generateText').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+    // console.log(req.body.textPrompt);
+    try {
+        const text = await generateText(req.body.textPrompt); 
+        // console.log(text);
+        res.status(200).send(text);
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
 
 module.exports = router;

@@ -301,7 +301,7 @@ class GenerateAIContent extends Component{
       console.log(lessonText);
 
       const generationFunctions = [
-        // this.createMCQ,
+        this.createMCQ,
         // this.createQuiz,
         // this.createGlossary,
         // this.createChallenge
