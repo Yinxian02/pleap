@@ -133,3 +133,14 @@ textarea {
 .glossary-definition {
     flex: 2;
 }
+
+
+.toggle-button {
+    box-shadow: none; 
+}
+
+.flashcard {
+    font-size: large;
+    align-items: center;
+    display: flex;
+}

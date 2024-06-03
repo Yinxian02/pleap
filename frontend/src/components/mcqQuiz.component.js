@@ -3,6 +3,7 @@ import "../styles/Quiz.css";
 import { MdOutlineKeyboardArrowRight, 
         MdOutlineKeyboardDoubleArrowLeft, 
         MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import { BsStars } from "react-icons/bs";
 
 const McqQuiz = ({questionnaire}) => {
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
@@ -58,6 +59,9 @@ const McqQuiz = ({questionnaire}) => {
     }
 
     return <div className="mcq-div">
+        <span>
+            <BsStars className="ai-icon"/>
+        </span>
         {!showResult ? (
         <>
             <span className="quiz-progress">{currentQuestionNum + 1} / {questionnaire.length} </span>
