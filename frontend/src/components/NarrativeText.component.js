@@ -1,10 +1,15 @@
 import { useState, useEffect, useRef } from "react";
+
 import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
+import { FaImages } from "react-icons/fa6";
+import { BiHide } from "react-icons/bi";
+
 import { markDownToHtml } from "./markDownToHTML";
 
 const NarrativeText = ({ learningObject }) => {
     const [audioOn, setAudioOn] = useState(false);
     const audioRef =  useRef(new Audio(learningObject.content.audio));
+    const [showSlide, setShowSlide] = useState(false);
 
     const handleButtonClick = () => {
         if (audioOn) {
@@ -23,20 +28,11 @@ const NarrativeText = ({ learningObject }) => {
     }, []);
 
     const htmlText = markDownToHtml(learningObject.content.text);
-    const showSlide = (learningObject) => {
-
-        if (learningObject.content.link !== null && learningObject.content.link !== "") {
-            return (
-                <div style={{ textAlign: 'center' }}>
-                <img
-                    src={ learningObject.content.link }
-                    alt="Slide"
-                    style={{ width: '100%', maxWidth: '100%', height: 'auto' }}
-                />
-            </div>
-            );
-        }
+    
+    const showOrHideSlide = () => {
+        setShowSlide(!showSlide);
     };
+
     return (
         <div className="narrative-text">
             <div className="audio-header">
@@ -45,9 +41,25 @@ const NarrativeText = ({ learningObject }) => {
                 </button>
             </div>
             <div className="narrative-content" dangerouslySetInnerHTML={{ __html: htmlText }} />
-            {showSlide(learningObject)}
+            {showSlide && (
+                <div style={{ textAlign: 'center' }}>
+                    <br/>
+                    <img
+                        src={learningObject.content.link}
+                        alt="Slide"
+                        style={{ width: '100%', maxWidth: '100%', height: 'auto' }}
+                    />
+            </div>
+            )}
+            {learningObject.content.link !== null && learningObject.content.link !== "" && (
+                <div className="slide-footer">
+                    <button className="slide-button" onClick={showOrHideSlide}>
+                        {showSlide ? <BiHide /> : <FaImages />}
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
 
-export default NarrativeText
+export default NarrativeText;
