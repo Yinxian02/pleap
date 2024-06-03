@@ -97,7 +97,7 @@ const Exercise = ({exercise}) => {
                 value={userInput}
                 onChange={handleInputChange}
             />
-            <button onClick={markAnswer} className="send-button">
+            <button onClick={markAnswer} className="send-button slide-button">
                 <IoSend/>
             </button>
 

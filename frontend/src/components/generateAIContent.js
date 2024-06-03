@@ -298,13 +298,13 @@ class GenerateAIContent extends Component{
       const newLearningObjects = [];
 
       const lessonText = this.getAllLessonText(learningObjects);
-      // console.log(lessonText);
+      console.log(lessonText);
 
       const generationFunctions = [
         // this.createMCQ,
         // this.createQuiz,
         // this.createGlossary,
-        // this.createChallenge
+        this.createChallenge
       ];
 
       const createAndAddToLOList = async (generationFunction, ...args) => {
@@ -434,8 +434,16 @@ class GenerateAIContent extends Component{
             const ids = await this.uploadGeneratedContent(lessons[i]._learningObjects);
             if (ids) {
               await this.addLearningObjectReferences(lessons[i]._id, ids);
+
+              const learningObjects = await this.fetchLearningObjects(ids);
+            
+              for (let j = 0; j < learningObjects.length; j++) {
+                  if (learningObjects[j].educational.learningResourceType === 'narrative text' 
+                      && learningObjects[j].content.audio === "" ) {
+                      await this.uploadGeneratedAudio(learningObjects[j]);
+                  }
+              }
             }
-            // add all narrative text audio here?
           }
         } catch (error) {
           console.log(error);

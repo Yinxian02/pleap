@@ -4,6 +4,7 @@ import Lecture from "./Lecture.component";
 import Slide from "./Slide.component";
 import McqQuiz from "./McqQuiz.component";
 import Exercise from "./Exercise.component";
+import Challenge from "./Challenge.component";
 import Glossary from "./Glossary.component";
 import NarrativeText from "./NarrativeText.component";
 
@@ -28,6 +29,9 @@ export function displayLO(learningObject) {
     } else if (LRT === "exercise" && learningObject.content.aiGenerated) {
         return <Exercise exercise={learningObject.content.exercise}/>;
     
+    } else if (LRT === "problem statement" && learningObject.content.aiGenerated) {
+        return <Challenge challenge={learningObject.content.text}/>;
+
     } else if (LRT === "narrative text" && isGlossary(learningObject)){
         return <Glossary glossary={learningObject.content.glossary}/>; 
     
