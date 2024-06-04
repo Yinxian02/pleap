@@ -3,7 +3,7 @@ import axios from "axios";
 const generateTextResponse = async (textPrompt, accessToken) => {
     try {
         const response = await axios.post(
-            'http://localhost:5001/vertex-ai/generateText',
+            'http://localhost:5001/open-ai/generateText',
             { textPrompt: textPrompt },
             {
                 headers: {

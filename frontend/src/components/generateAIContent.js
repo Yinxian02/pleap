@@ -150,7 +150,7 @@ class GenerateAIContent extends Component{
         // console.log(text); 
 
         const res = await axios.post(
-          'http://localhost:5001/vertex-ai/textToSpeech',
+          'http://localhost:5001/generate-ai/textToSpeech',
           { title, text }, 
           {
             headers: {
@@ -245,7 +245,7 @@ class GenerateAIContent extends Component{
         const videoId = getYoutubeId(link);
         // console.log(videoId);
         const res = await axios.post(
-          'http://localhost:5001/vertex-ai/speechToText',
+          'http://localhost:5001/generate-ai/speechToText',
           { title, videoId }, 
           {
             headers: {
@@ -287,7 +287,7 @@ class GenerateAIContent extends Component{
           `Write alternative lecture notes based on the image: ${imageUrl}`;
 
         const res = await axios.post(
-          'http://localhost:5001/vertex-ai/imageToText',
+          'http://localhost:5001/generate-ai/imageToText',
           { imageUrl, lecturePrompt }, 
           {
             headers: {
