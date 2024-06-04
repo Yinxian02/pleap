@@ -6,7 +6,7 @@ const readline = require('readline');
 const ytdl = require('ytdl-core');
 
 const speech = require('@google-cloud/speech');
-const uploadToGCS = require('./uploadToGCS');
+const uploadToGCS = require('../../uploadToGCS');
 
 const client = new speech.SpeechClient();
 

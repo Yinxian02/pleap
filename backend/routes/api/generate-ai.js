@@ -4,10 +4,11 @@ const ROLES_LIST = require('../../config/rolesList');
 const verifyRoles = require('../../middleware/verifyRoles');
 
 const uploadToGCS = require('../uploadToGCS');
-const { generateAudio } = require('../generateAudio');
-const { generateTranscript } = require('../generateTranscript');
-const { generateDescription } = require('../generateDescription');
-const { generateText } = require('../generateText');
+
+const { generateAudio } = require('./vertexAI/generateAudio');
+const { generateTranscript } = require('./vertexAI/generateTranscript');
+const { generateDescription } = require('./vertexAI/generateDescription');
+const { generateText } = require('./vertexAI/generateText');
 
 router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
     const text = req.body.text;
