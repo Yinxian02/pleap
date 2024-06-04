@@ -1,18 +1,21 @@
-const { OpenAI }= require('OpenAI');
+require('dotenv').config();
+
+const { OpenAI } = require('openai');
 
 const openai = new OpenAI({
-    organization: 'org-HHJ1aCFmDOBTck24wRkgtrxi',
-    apiKey: 'sk-proj-O8ytqqcswrZ1EdVcnt7HT3BlbkFJt7jJxqAEMWi3oALdoKLz' }
-);
+  organization: 'org-HHJ1aCFmDOBTck24wRkgtrxi',
+  apiKey: '',
+});
 
 async function main() {
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: "system", content: "You are a helpful assistant." }],
-      model: "gpt-3.5-turbo",
-    });
-  
-    console.log(completion.choices[0]);
-  }
-  
+  const completion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "system", content: "You are a helpful assistant." }],
+    // response_format: { type: "json_object" },
+  });
+  console.log(completion);
+
+  console.log(completion.choices[0].message.content);
+}
+
 main();
-  
