@@ -5,3 +5,10 @@ routes/api/audio/
 pleap24-2283bc0de862.json
 routes/audioMP3/
 routes/audioWAV/
+download.sh
+USE_POLICY.md 
+LICENSE
+consolidated.00.pth
+checklist.chk
+tokenizer_checklist.chk
+tokenizer.model
