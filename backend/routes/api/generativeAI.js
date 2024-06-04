@@ -10,6 +10,11 @@ const { generateTranscript } = require('./vertexAI/generateTranscript');
 const { generateDescription } = require('./vertexAI/generateDescription');
 const { generateText } = require('./vertexAI/generateText');
 
+// const { generateAudio } = require('./openAI/generateAudio');
+// const { generateTranscript } = require('./openAI/generateTranscript');
+// const { generateDescription } = require('./openAI/generateDescription');
+// const { generateText } = require('./openAI/generateText');
+
 router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
     const text = req.body.text;
     console.log(text); 
