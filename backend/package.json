@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.0",
     "node-fetch": "^3.3.2",
+    "openai": "^4.47.3",
     "optiic": "^0.0.21",
     "uuid": "^9.0.1",
     "validator": "^13.11.0",
