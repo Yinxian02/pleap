@@ -44,8 +44,16 @@ class GenerateAIContent extends Component{
             "text": "...", 
             "value": 1 (if correct) 0 (if wrong)]}, 
             ... ] } ... ]`;
+      
+      let mcqResponse;
 
-      const mcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken);
+      try {
+        mcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken);
+      } catch (error) {
+        console.error('Error generating mcq:', error);
+        return undefined;
+      }
+
       const mcqObject = new LearningObject("MCQ", "text/plain", "active", "questionnaire", "medium");
       mcqObject.setQuestionnaire(mcqResponse);
       mcqObject.setAIGenerated();
@@ -73,7 +81,16 @@ class GenerateAIContent extends Component{
        [ { "question" : "..." , "answer" : "..."} , ... ] `;
       
       const maxAttempts = 5;
-      const quizResponse = await generateAndParseResponse(quizPrompt, this.context.auth.accessToken, maxAttempts);
+
+      let quizResponse;
+
+      try {
+        quizResponse = await generateAndParseResponse(quizPrompt, this.context.auth.accessToken, maxAttempts);
+      } catch (error) {
+        console.error('Error generating quiz:', error);
+        return undefined;
+      }
+
       const quizObject = new LearningObject("reflection quiz", "text/plain", "active", "exercise", "medium");
       quizObject.setExercise(quizResponse);
       quizObject.setAIGenerated();
@@ -91,7 +108,15 @@ class GenerateAIContent extends Component{
       Format the response as a parsable json array
       [ { "term" : "..." , "definition" : "..."} , ... ] `;
 
-      const glossaryResponse = await generateAndParseResponse(glossaryPrompt, this.context.auth.accessToken);
+      let glossaryResponse;
+
+      try {
+        glossaryResponse = await generateAndParseResponse(glossaryPrompt, this.context.auth.accessToken);
+      } catch (error) {
+        console.error('Error generating glossary:', error);
+        return undefined;
+      }
+
       const glossaryObject = new LearningObject("glossary", "text/plain", "expositive", "narrative text", "low");
       glossaryObject.setGlossary(glossaryResponse);
       glossaryObject.setAIGenerated();
@@ -215,10 +240,10 @@ class GenerateAIContent extends Component{
     async createTranscript(learningObject){
       try {
         const title = learningObject.general.title; 
-        const link = learningObject.content.link; 
+        const link = learningObject.content.video; 
 
         const videoId = getYoutubeId(link);
-
+        // console.log(videoId);
         const res = await axios.post(
           'http://localhost:5001/vertex-ai/speechToText',
           { title, videoId }, 
@@ -244,7 +269,7 @@ class GenerateAIContent extends Component{
           const transcriptObject = new LearningObject("transcript", "text/plain", "expositive", "narrative text", "low");
           
           transcriptObject.setText(transcript);
-          transcriptObject.setLink(link);
+          transcriptObject.setVideo(link);
           transcriptObject.setAIGenerated();
 
           return transcriptObject.getJSON();
@@ -255,7 +280,7 @@ class GenerateAIContent extends Component{
 
     async createDescription(learningObject){
       try {
-        const imageUrl = learningObject.content.link; 
+        const imageUrl = learningObject.content.image; 
         console.log(imageUrl); 
 
         const lecturePrompt = 
@@ -284,7 +309,7 @@ class GenerateAIContent extends Component{
       const descriptionObject = new LearningObject("description", "text/plain", "expositive", "narrative text", "low");
       
       descriptionObject.setText(description);
-      descriptionObject.setLink(imageUrl);
+      descriptionObject.setImage(imageUrl);
       descriptionObject.setAIGenerated();
 
       return descriptionObject.getJSON();
@@ -298,10 +323,10 @@ class GenerateAIContent extends Component{
       const newLearningObjects = [];
 
       const lessonText = this.getAllLessonText(learningObjects);
-      console.log(lessonText);
+      // console.log(lessonText);
 
       const generationFunctions = [
-        this.createMCQ,
+        // this.createMCQ,
         // this.createQuiz,
         // this.createGlossary,
         // this.createChallenge
@@ -309,6 +334,8 @@ class GenerateAIContent extends Component{
 
       const createAndAddToLOList = async (generationFunction, ...args) => {
         const createdObject = await generationFunction.apply(this, args);
+        console.log("Created object:", createdObject);
+
         if (createdObject !== undefined) {
           newLearningObjects.push(createdObject);
         }
@@ -342,7 +369,7 @@ class GenerateAIContent extends Component{
         }
       }
 
-      console.log(newLearningObjects);
+      console.log("New learning objects:", newLearningObjects);
       return newLearningObjects;
     }
 
@@ -370,12 +397,12 @@ class GenerateAIContent extends Component{
       const currLearningObjects = await this.fetchLearningObjects(ids);
       const learningObjects = await this.createLearningObjects(currLearningObjects);
       
+      console.log(learningObjects);
+
       if (learningObjects.length === 0) {
         console.log('No learning objects to upload.');
         return;
       }
-
-      console.log(learningObjects);
 
       try {
         const res = await axios.post(
@@ -434,15 +461,6 @@ class GenerateAIContent extends Component{
             const ids = await this.uploadGeneratedContent(lessons[i]._learningObjects);
             if (ids) {
               await this.addLearningObjectReferences(lessons[i]._id, ids);
-
-              const learningObjects = await this.fetchLearningObjects(ids);
-            
-              for (let j = 0; j < learningObjects.length; j++) {
-                  if (learningObjects[j].educational.learningResourceType === 'narrative text' 
-                      && learningObjects[j].content.audio === "" ) {
-                      await this.uploadGeneratedAudio(learningObjects[j]);
-                  }
-              }
             }
           }
         } catch (error) {

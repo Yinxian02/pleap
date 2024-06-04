@@ -54,6 +54,8 @@ const learningObjectSchema = new Schema({
         text: { type: String, default: "" },
         link: { type: String, default: "" },
         audio: { type: String, default: "" },
+        image: { type: String, default: "" },
+        video: { type: String, default: "" },
         questionnaire: { type: [questionnaireSchema], required: true },
         exercise: { type: [exerciseSchema], required: true },
         glossary: { type: [glossarySchema], required: true },

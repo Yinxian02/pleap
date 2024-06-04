@@ -1,15 +1,14 @@
 const router = require('express').Router();
-const { GoogleAuth } = require('google-auth-library');
-const fs = require('fs');
-const util = require('util');
-const path = require('path');
+// const { GoogleAuth } = require('google-auth-library');
+// const fs = require('fs');
+// const util = require('util');
+// const path = require('path');
 
 const ROLES_LIST = require('../../config/rolesList');
 const verifyRoles = require('../../middleware/verifyRoles');
 
-const textToSpeech = require('@google-cloud/text-to-speech');
-
 const uploadToGCS = require('../uploadToGCS');
+const { generateAudio } = require('../generateAudio');
 const { generateTranscript } = require('../generateTranscript');
 const { generateDescription } = require('../generateDescription');
 const { generateText } = require('../generateText');
@@ -71,31 +70,31 @@ router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res
     console.log(title); 
     const sanitizedTitle = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
 
-    const client = new textToSpeech.TextToSpeechClient();
+    // const client = new textToSpeech.TextToSpeechClient();
 
-    async function generateAudio(text, title) {
-        const request = {
-            input: { text: text },
-            voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
-            audioConfig: { audioEncoding: 'MP3' },
-        };
+    // async function generateAudio(text, title) {
+    //     const request = {
+    //         input: { text: text },
+    //         voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+    //         audioConfig: { audioEncoding: 'MP3' },
+    //     };
 
-        const [response] = await client.synthesizeSpeech(request);
+    //     const [response] = await client.synthesizeSpeech(request);
 
-        const audioDir = path.join(__dirname, 'audio');
-        if (!fs.existsSync(audioDir)) {
-            fs.mkdirSync(audioDir);
-        }
+    //     const audioDir = path.join(__dirname, 'audio');
+    //     if (!fs.existsSync(audioDir)) {
+    //         fs.mkdirSync(audioDir);
+    //     }
         
-        const sanitizedTitle = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-        const filename = path.join(audioDir, `${sanitizedTitle}.mp3`);
+    //     const sanitizedTitle = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+    //     const filename = path.join(audioDir, `${sanitizedTitle}.mp3`);
 
-        const writeFile = util.promisify(fs.writeFile);
-        await writeFile(filename, response.audioContent, 'binary');
+    //     const writeFile = util.promisify(fs.writeFile);
+    //     await writeFile(filename, response.audioContent, 'binary');
 
-        console.log(`Audio content written to file: ${filename}`);
-        return filename; 
-    }
+    //     console.log(`Audio content written to file: ${filename}`);
+    //     return filename; 
+    // }
 
     try {
         const filename = await generateAudio(text, sanitizedTitle);

@@ -9,7 +9,7 @@ const introTextLO = introTextObj.getJSON();
 
 const introLectureObj = new LearningObject("Designing a guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low");
 introLectureObj.setText("youtube");
-introLectureObj.setLink("https://youtu.be/Rl19zAOMGjs"); 
+introLectureObj.setVideo("https://youtu.be/Rl19zAOMGjs"); 
 const introLectureLO = introLectureObj.getJSON(); 
 
 const designAlgoTextObj = new LearningObject("Designing an algorithm for the guessing game", "text/plain", "expositive", "narrative text", "low");
@@ -23,19 +23,19 @@ const designAlgoTextLO = designAlgoTextObj.getJSON();
 
 const designAlgoLectureObj = new LearningObject("Designing an algorithm for the guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low");
 designAlgoLectureObj.setText("youtube");
-designAlgoLectureObj.setLink("https://youtu.be/eeRkO18_Pj8"); 
+designAlgoLectureObj.setVideo("https://youtu.be/eeRkO18_Pj8"); 
 const designAlgoLectureLO = designAlgoLectureObj.getJSON(); 
 
 const selectionImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
-selectionImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/selection.png"); 
+selectionImgObj.setImage("https://storage.googleapis.com/pleap/designGuessingGame/selection.png"); 
 const selectionImgLO = selectionImgObj.getJSON(); 
 
 const designFlowchartImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
-designFlowchartImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/designFlowchart.png");
+designFlowchartImgObj.setImage("https://storage.googleapis.com/pleap/designGuessingGame/designFlowchart.png");
 const designFlowchartImgLO = designFlowchartImgObj.getJSON();
 
 const simpleAlgorithmImgObj = new LearningObject("Designing an algorithm for the guessing game","image/png", "expositive", "slide", "low");
-simpleAlgorithmImgObj.setLink("https://storage.googleapis.com/pleap/designGuessingGame/simpleAlgorithm.png"); 
+simpleAlgorithmImgObj.setImage("https://storage.googleapis.com/pleap/designGuessingGame/simpleAlgorithm.png"); 
 const simpleAlgorithmImgLO = simpleAlgorithmImgObj.getJSON();
 
 const improveGameTextObj = new LearningObject("Improving the guessing game", "text/plain", "expositive", "narrative text", "low");
@@ -49,7 +49,7 @@ const improveGameTextLO = improveGameTextObj.getJSON();
 
 const improveGameLectureObj = new LearningObject("Improving the guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low"); 
 improveGameLectureObj.setText("youtube");
-improveGameLectureObj.setLink("https://youtu.be/5sXO3FKS_vg"); 
+improveGameLectureObj.setVideo("https://youtu.be/5sXO3FKS_vg"); 
 const improveGameLectureLO = improveGameLectureObj.getJSON(); 
 
 const challengeGameExerciseObj = new LearningObject("Challenge! Make the guessing game even more informative", "text/plain", "active", "exercise", "low");

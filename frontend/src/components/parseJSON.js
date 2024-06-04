@@ -1,10 +1,20 @@
 import { generateTextResponse } from "./generateText";
 
 const parseJSONArray = (text) => {
+    if (Array.isArray(text)) {
+        return text;
+    }
+
+    try {
+        return JSON.parse(text);
+    } catch (error) {
+        console.log("Further JSON processing required:", error);
+    }
+    
     const startIndex = text.indexOf('[');
     const endIndex = text.lastIndexOf(']');
     const jsonArray = text.substring(startIndex, endIndex + 1);
-
+    
     try {
         return JSON.parse(jsonArray);
     } catch (error) {

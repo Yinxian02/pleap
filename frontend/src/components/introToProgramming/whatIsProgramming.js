@@ -76,23 +76,23 @@ const instructingComputerTextLO = instructingComputerTextObj.getJSON();
  
 const instructingComputerLectureObj = new LearningObject("It's all about instructing the computer!", "video/vnd.youtube.yt", "expositive", "lecture", "low");
 instructingComputerLectureObj.setText("It's all about instructing the computer!");
-instructingComputerLectureObj.setLink("https://youtu.be/pBGfpi9T4pk");
+instructingComputerLectureObj.setVideo("https://youtu.be/pBGfpi9T4pk");
 const instructingComputerLectureLO = instructingComputerLectureObj.getJSON();
 
 const algoFlowChartObj = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low");
-algoFlowChartObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png");
+algoFlowChartObj.setImage("https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png");
 const algoFlowChartLO = algoFlowChartObj.getJSON();
 
 const assemblerTranslatorObj = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low");
-assemblerTranslatorObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/assemblerTranslator.png");
+assemblerTranslatorObj.setImage("https://storage.googleapis.com/pleap/whatIsProgramming/assemblerTranslator.png");
 const assemblerTranslatorLO = assemblerTranslatorObj.getJSON();
 
 const byteCodeObj = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low");
-byteCodeObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/byteCode.png");
+byteCodeObj.setImage("https://storage.googleapis.com/pleap/whatIsProgramming/byteCode.png");
 const byteCodeLO = byteCodeObj.getJSON(); 
 
 const compilerInterpreterObj = new LearningObject("It's all about instructing the computer!", "image/png", "expositive", "slide", "low");
-compilerInterpreterObj.setLink("https://storage.googleapis.com/pleap/whatIsProgramming/compilerInterpreter.png");
+compilerInterpreterObj.setImage("https://storage.googleapis.com/pleap/whatIsProgramming/compilerInterpreter.png");
 const compilerInterpreterLO = compilerInterpreterObj.getJSON();  
 
 export { courseSummaryLO, 

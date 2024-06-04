@@ -6,7 +6,7 @@ import { BiHide } from "react-icons/bi";
 import { markDownToHtml } from "./markDownToHTML";
 
 const Lecture = ({ learningObject }) => {
-    const URL = learningObject.content.link;
+    const URL = learningObject.content.video;
     const videoIdMatch = URL.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
     const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : null;
@@ -27,7 +27,7 @@ const Lecture = ({ learningObject }) => {
                 maxWidth="100%"
                 height="315"
                 src={embedUrl}
-                title="YouTube video player"
+                title={learningObject.general.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 ></iframe>

@@ -5,8 +5,7 @@ import AuthContext from '../context/AuthContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { MdOutlineKeyboardArrowRight, 
-    MdOutlineKeyboardDoubleArrowLeft, 
+import { MdOutlineKeyboardDoubleArrowLeft, 
     MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 function calculatePreferenceScore(prev, dimension, answer) {

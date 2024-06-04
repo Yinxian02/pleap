@@ -31,6 +31,14 @@ export class LearningObject {
         this.audio = audio;
     }
 
+    setImage(image){
+        this.image = image;
+    }
+
+    setVideo(video){
+        this.video = video;
+    }
+
     setQuestionnaire(questionnaire){    
         this.questionnaire = questionnaire;
     }
@@ -83,6 +91,8 @@ export class LearningObject {
                 text: this.text,
                 link: this.link,
                 audio: this.audio,
+                image: this.image,
+                video: this.video,
                 questionnaire: this.questionnaire, // choices
                 exercise: this.exercise, // question and answer
                 glossary: this.glossary, // term and definition

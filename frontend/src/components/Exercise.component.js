@@ -80,7 +80,9 @@ const Exercise = ({exercise}) => {
             setFeedback(''); 
             setCurrentQuestionNum((prev) => prev + 1);
             setCorrectAnswer('none');
-        } 
+        } else {
+            setShowResult(true);
+        }
     }
 
     return <div className="exercise-div">

@@ -8,7 +8,7 @@ class Lesson extends Component {
   static contextType = AuthContext;
 
   render() {
-    const { title, author, description, thumbnail, _id } = this.props.lesson;
+    const { title, description, thumbnail, _id } = this.props.lesson;
 
     return (
       // <div className="lesson-div-container">

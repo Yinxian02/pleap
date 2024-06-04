@@ -10,15 +10,15 @@ const enrichTextLO = enrichTextObj.getJSON();
 
 const enrichLectureObj = new LearningObject("Enrich the guessing game", "video/vnd.youtube.yt", "expositive", "lecture", "low");
 enrichLectureObj.setText("youtube");
-enrichLectureObj.setLink("https://youtu.be/aWB-IxRjmOQ");
+enrichLectureObj.setVideo("https://youtu.be/aWB-IxRjmOQ");
 const enrichLectureLO = enrichLectureObj.getJSON();
 
 const repetitionImgObj = new LearningObject("Enrich the guessing game", "image/png", "expositive", "slide", "low");
-repetitionImgObj.setLink("https://storage.googleapis.com/pleap/improveGuessingGame/repetition.png");
+repetitionImgObj.setImage("https://storage.googleapis.com/pleap/improveGuessingGame/repetition.png");
 const repetitionImgLO = repetitionImgObj.getJSON();
 
 const enrichAlgorithmImgObj = new LearningObject("Enrich the guessing game", "image/png", "expositive", "slide", "low");
-enrichAlgorithmImgObj.setLink("https://storage.googleapis.com/pleap/improveGuessingGame/enrichAlgorithm.png");
+enrichAlgorithmImgObj.setImage("https://storage.googleapis.com/pleap/improveGuessingGame/enrichAlgorithm.png");
 const enrichAlgorithmImgLO = enrichAlgorithmImgObj.getJSON();
 
 const makeGuessingGameMoreInterestingTextObj = new LearningObject("Make the guessing game more interesting", "text/plain", "expositive", "narrative text", "low");
@@ -33,11 +33,11 @@ const makeGuessingGameMoreInterestingTextLO = makeGuessingGameMoreInterestingTex
 
 const makeGuessingGameMoreInterestingLectureObj = new LearningObject("Make the guessing game more interesting", "video/vnd.youtube.yt", "expositive", "lecture", "low");
 makeGuessingGameMoreInterestingLectureObj.setText("youtube");
-makeGuessingGameMoreInterestingLectureObj.setLink("https://youtu.be/xly0dC8eXdc");
+makeGuessingGameMoreInterestingLectureObj.setVideo("https://youtu.be/xly0dC8eXdc");
 const makeGuessingGameMoreInterestingLectureLO = makeGuessingGameMoreInterestingLectureObj.getJSON();
 
 const makeGuessingGameMoreInterestingImgLO = new LearningObject("Make the guessing game more interesting", "image/png", "expositive", "slide", "low");
-makeGuessingGameMoreInterestingImgLO.setLink("https://storage.googleapis.com/pleap/improveGuessingGame/interestingAlgorithm.png");
+makeGuessingGameMoreInterestingImgLO.setVideo("https://storage.googleapis.com/pleap/improveGuessingGame/interestingAlgorithm.png");
 const makeGuessingGameMoreInterestingImg = makeGuessingGameMoreInterestingImgLO.getJSON();
 
 const improveGuessingGameChallengeLO = new LearningObject("Improve the guessing game challenge", "text/plain", "expositive", "problem statement", "medium");

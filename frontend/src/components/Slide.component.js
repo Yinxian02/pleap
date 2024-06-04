@@ -38,7 +38,7 @@ const Slide = ({ learningObject }) => {
             <div style={{ textAlign: 'center' }}>
                 <br/>
                 <img
-                    src={learningObject.content.link}
+                    src={learningObject.content.image}
                     alt="Slide"
                     style={{ width: '100%', maxWidth: '100%', height: 'auto' }}
                 />

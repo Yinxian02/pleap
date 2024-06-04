@@ -98,20 +98,20 @@ const AddLesson = () => {
   return (
     <div>
         {/* <LessonComponent 
-        title="Intro to programming" 
-        author="Josiah Wang" 
-        description="Really... what exactly is programming?"
-        thumbnail="https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png"
-       learningObjects={whatIsProgrammingLOs} />  
+          title="Intro to programming" 
+          author="Josiah Wang" 
+          description="Really... what exactly is programming?"
+          thumbnail="https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png"
+          learningObjects={whatIsProgrammingLOs} />  */}
       
-         <LessonComponent 
+         {/* <LessonComponent 
           title="Design a guessing game" 
           author="Josiah Wang" 
           description="Let's dive straight into designing a game... because life is too short to waste!"
          thumbnail="https://storage.googleapis.com/pleap/designGuessingGame/ifElseStatement.png" 
-         learningObjects={designGameLOs} />    
+         learningObjects={designGameLOs} />     */}
 
-        <LessonComponent
+        {/*  <LessonComponent
           title="Improve the guessing game"
           author="Josiah Wang"
           description="Let's make the guessing game more interesting!"

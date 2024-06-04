@@ -13,9 +13,8 @@ function isGlossary(learningObject) {
 }; 
 
 export function displayLO(learningObject) {
-    console.log(learningObject.educational.learningResourceType);
+    // console.log(learningObject.educational.learningResourceType);
     const LRT = learningObject.educational.learningResourceType; 
-    const URL = learningObject.content.link;
     
     if (LRT === "lecture"){
         return <Lecture learningObject={learningObject} />;
@@ -40,6 +39,7 @@ export function displayLO(learningObject) {
     }
     
     if (learningObject.content.embed) {
+        const URL = learningObject.content.link;
         const embedCaption = learningObject.content.text ? markDownToHtml(learningObject.content.text) : "Click here to view the content";
         return (
             <div style={{ width: '100%', height: '100%' }}>
@@ -50,6 +50,7 @@ export function displayLO(learningObject) {
                     frameborder="0" 
                     height="300" 
                     src={ URL } 
+                    title= {learningObject.general.title}
                     width="100%"></iframe>
             </div>
         )
