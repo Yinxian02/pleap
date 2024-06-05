@@ -163,3 +163,28 @@ textarea {
     font-weight: 500;
     box-shadow: none; 
 }
+
+.rating {
+    display: flex;
+    direction: row;
+    justify-content: flex-end;
+}
+  
+.rating button {
+    background: none;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.rating .on .star {
+    color: gold;
+    font-size: 1rem;
+}
+
+.rating .off .star {
+    color: #e4e5e9;
+    font-size: 1rem;
+}

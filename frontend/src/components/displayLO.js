@@ -7,6 +7,7 @@ import Exercise from "./Exercise.component";
 import Challenge from "./Challenge.component";
 import Glossary from "./Glossary.component";
 import NarrativeText from "./NarrativeText.component";
+import Rating from "./Rating.component";
 
 function isGlossary(learningObject) {
     return learningObject.content.glossary !== null && learningObject.content.glossary.length > 0;
@@ -26,16 +27,22 @@ export function displayLO(learningObject) {
         return <McqQuiz questionnaire={learningObject.content.questionnaire}/>;
     
     } else if (LRT === "exercise" && learningObject.content.aiGenerated) {
-        return <Exercise exercise={learningObject.content.exercise}/>;
+        return <Exercise exercise={learningObject.content.exercise}/>
     
     } else if (LRT === "problem statement" && learningObject.content.aiGenerated) {
-        return <Challenge challenge={learningObject.content.text}/>;
+        return <Challenge challenge={learningObject.content.text}/>
 
     } else if (LRT === "narrative text" && isGlossary(learningObject)){
-        return <Glossary glossary={learningObject.content.glossary}/>; 
+        return (<div>
+                   <Glossary glossary={learningObject.content.glossary}/>
+                   <Rating />
+                </div>);  
     
     } else if (LRT === "narrative text"){
-        return <NarrativeText learningObject={learningObject} />;
+        return (<div>
+                    <NarrativeText learningObject={learningObject} />
+                    <Rating />
+                </div>); 
     }
     
     if (learningObject.content.embed) {
