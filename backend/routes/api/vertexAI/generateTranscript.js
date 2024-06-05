@@ -16,6 +16,7 @@ async function youtubeToMP3(title, youtubeID){
     });
     
     const filePath = `${__dirname}/audioMP3/${title}.mp3`; 
+    
     let start = Date.now();
     ffmpeg(stream)
       .audioBitrate(128)
@@ -31,6 +32,7 @@ async function youtubeToMP3(title, youtubeID){
 }
 
 async function convertMP3ToWAV(mp3Path, wavPath) {
+    console.log("Converting MP3 to WAV");
     return new Promise((resolve, reject) => {
         ffmpeg(mp3Path)
             .toFormat('wav')
@@ -80,6 +82,7 @@ async function generateTranscript(title, youtubeID) {
 
     try {
         const mp3Path = await youtubeToMP3(sanitizedTitle, youtubeID);
+        console.log("MP3 Path: ", mp3Path);
         await convertMP3ToWAV(mp3Path, wavPath);
         await uploadToGCS(wavPath, bucketName, subfolder, `${sanitizedTitle}.wav`);
         const transcript = await transcribeAudio(gcsUri); 

@@ -1,7 +1,12 @@
 .env
 node_modules
 logs
-routes/audio/
+routes/api/vertexAI/audio/
+routes/api/vertexAI/audioMP3/
+routes/api/vertexAI/audioWAV/
+routes/api/openAI/audio/
+routes/api/openAI/audioMP3/
+routes/api/openAI/audioWAV/
 pleap24-2283bc0de862.json
 routes/audioMP3/
 routes/audioWAV/

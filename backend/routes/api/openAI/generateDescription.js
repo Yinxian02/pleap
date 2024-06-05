@@ -7,16 +7,29 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-async function generateText(text) {
+async function generateDescription(image, text) {
     const request = {
         model: "gpt-4o",
-        messages: [{ role: "user", content: text }]
-    };
+        messages: [
+          {
+            role: "user",
+            content: [
+              { type: "text", text: text },
+              {
+                type: "image_url",
+                image_url: {
+                  "url": image,
+                },
+              },
+            ],
+          },
+        ],
+      };
 
     try {
         const response = await openai.chat.completions.create(request);
-        console.log(response.choices[0].message.content);
-        const generatedText = response.choices[0].message.content;
+        console.log(response.choices[0]);
+        const generatedText = response.choices[0];
         
         if (generatedText) {
             console.log(generatedText);
@@ -25,9 +38,9 @@ async function generateText(text) {
             throw new Error('Generated text not found in the response.');
         }
     } catch (error) {
-        console.error('Error generating text:', error);
+        console.error('Error generating description:', error);
         throw error;
     }
 }
 
-module.exports = { generateText };
+module.exports = { generateDescription };
