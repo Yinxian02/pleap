@@ -115,7 +115,7 @@ export function orderLearningObjects(learningObjects, userPreferences) {
         }));
         
     // weightedObjects.sort((a, b) => a.weight - b.weight);
-    // console.log(weightedObjects)
+    console.log(weightedObjects)
     
     return weightedObjects.map(pair => pair.object);
     // return weightedObjects;

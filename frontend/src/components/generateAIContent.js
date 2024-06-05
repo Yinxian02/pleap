@@ -357,7 +357,7 @@ class GenerateAIContent extends Component{
               // creationFunction = this.createTranscript;
               break;
             case "slide":
-              creationFunction = this.createDescription;
+              // creationFunction = this.createDescription;
               break;
             default:
               break; 

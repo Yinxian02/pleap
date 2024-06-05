@@ -44,22 +44,22 @@ import {
 } from "../components/introToProgramming/improveGuessingGames";
 
 const whatIsProgrammingLOs = [
-    // courseSummaryLO, 
+    courseSummaryLO, 
 
-    // whatIsProgrammingTextLO,
+    whatIsProgrammingTextLO,
     whatIsProgrammingMentiLO,
     whatIsProgrammingAnsLO, 
 
-    // whatIsAProgramMentiLO,
-    // whatIsAProgramAnsLO,
+    whatIsAProgramMentiLO,
+    whatIsAProgramAnsLO,
 
     instructingComputerTextLO,
     instructingComputerLectureLO,
 
     algoFlowChartLO,
-    // assemblerTranslatorLO,
-    // byteCodeLO,
-    // compilerInterpreterLO
+    assemblerTranslatorLO,
+    byteCodeLO,
+    compilerInterpreterLO
 ]
 
 const designGameLOs = [
@@ -97,12 +97,12 @@ const AddLesson = () => {
 
   return (
     <div>
-        {/* <LessonComponent 
+        {/*<LessonComponent 
           title="Intro to programming" 
           author="Josiah Wang" 
           description="Really... what exactly is programming?"
           thumbnail="https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png"
-          learningObjects={whatIsProgrammingLOs} />  */}
+  learningObjects={whatIsProgrammingLOs} /> */}
       
          {/* <LessonComponent 
           title="Design a guessing game" 
