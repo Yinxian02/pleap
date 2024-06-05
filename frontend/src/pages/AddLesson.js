@@ -44,22 +44,22 @@ import {
 } from "../components/introToProgramming/improveGuessingGames";
 
 const whatIsProgrammingLOs = [
-    courseSummaryLO, 
+    // courseSummaryLO, 
 
-    whatIsProgrammingTextLO,
+    // whatIsProgrammingTextLO,
     whatIsProgrammingMentiLO,
     whatIsProgrammingAnsLO, 
 
-    whatIsAProgramMentiLO,
-    whatIsAProgramAnsLO,
+    // whatIsAProgramMentiLO,
+    // whatIsAProgramAnsLO,
 
     instructingComputerTextLO,
     instructingComputerLectureLO,
 
     algoFlowChartLO,
-    assemblerTranslatorLO,
-    byteCodeLO,
-    compilerInterpreterLO
+    // assemblerTranslatorLO,
+    // byteCodeLO,
+    // compilerInterpreterLO
 ]
 
 const designGameLOs = [

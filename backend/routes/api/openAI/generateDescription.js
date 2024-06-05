@@ -8,6 +8,7 @@ const openai = new OpenAI({
 });
 
 async function generateDescription(image, text) {
+    console.log(image);
     const request = {
         model: "gpt-4o",
         messages: [
@@ -28,11 +29,11 @@ async function generateDescription(image, text) {
 
     try {
         const response = await openai.chat.completions.create(request);
+        const generatedText = response.choices[0].message.content;
         console.log(response.choices[0]);
-        const generatedText = response.choices[0];
         
         if (generatedText) {
-            console.log(generatedText);
+            // console.log(generatedText);
             return generatedText;
         } else {
             throw new Error('Generated text not found in the response.');
