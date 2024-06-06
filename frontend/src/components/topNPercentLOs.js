@@ -1,4 +1,5 @@
-// algorithm from "A Felder and Silverman Model"
+
+// Based on A Felder and Silverman Learning Styles Model Based Personalization Approach to Recommend Learning Objects
 function calculateLOScore(learningObject) {
     const LOScore = {f1: 0, f2: 0, f3: 0, f4: 0};
     const LRT = {g1: 0, g2: 0, g3: 0, g4: 0};
@@ -105,7 +106,7 @@ function calculateLOWeight(learningObjectScore, learningPreferences) {
     return weight; 
 }
 
-export function orderLearningObjects(learningObjects, userPreferences) {
+export function topNPercentLearningObjects(learningObjects, userPreferences, n) {
     const loScores = learningObjects.map(lo => calculateLOScore(lo)); 
     const loWeights = loScores.map(score => calculateLOWeight(score, userPreferences))
 
@@ -113,25 +114,20 @@ export function orderLearningObjects(learningObjects, userPreferences) {
         object: lo,
         weight: loWeights[index],
         }));
-    
+
     const sortedWeights = [...loWeights].sort((a, b) => b - a);
     console.log("Sorted weights:", sortedWeights);
 
-    //
-    // const topNCount = Math.ceil(sortedWeights.length / 2);
-
-    // get top40% of the learning objects
-    const topNCount = Math.ceil(sortedWeights.length * 0.5);
+    // get topn% of the learning objects
+    const topNCount = Math.ceil(sortedWeights.length * n / 100);
     const thresholdWeight = sortedWeights[topNCount - 1];
     console.log("Threshold weight:", thresholdWeight);
     
     // Filter the original weighted objects array to get the top 50% without changing order
     const topNLearningObjects = weightedObjects.filter(item => item.weight >= thresholdWeight);
 
-    console.log(topNLearningObjects)
-    
-    // const initialRatedLOs = weightedObjects.map(pair => pair.object);
+    console.log(topNLearningObjects);
    
+    // returns initial ratings of learning objects
     return topNLearningObjects.map(pair => pair.object);
-    // return weightedObjects;
 }

@@ -3,7 +3,7 @@ import "../styles/Lesson.css";
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
 import { useParams } from 'react-router-dom';
-import { orderLearningObjects } from '../components/orderLOs';
+import { topNPercentLearningObjects } from '../components/topNPercentLOs';
 import { displayLO } from '../components/displayLO';
 
 class LessonFetch extends Component {
@@ -53,7 +53,7 @@ class LessonFetch extends Component {
                                           f3: this.context.auth.preferences.visual, 
                                           f4: this.context.auth.preferences.sequential }
   
-    const sortedLOs = orderLearningObjects(learningObjects, learningDimensionPreferences);
+    const sortedLOs = topNPercentLearningObjects(learningObjects, learningDimensionPreferences, 50);
 
     return (
       <div>

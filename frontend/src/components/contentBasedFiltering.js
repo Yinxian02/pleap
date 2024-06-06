@@ -71,3 +71,8 @@ function pearsonCorrelation(v1, v2) {
     let den = Math.sqrt((sum1Sq - (sum1 ** 2) / n) * (sum2Sq - (sum2 ** 2) / n));
     return num / den;
 }
+
+function contentBasedFiltering(learningObjects){
+    // apply k-means clustering to learning objects rated by learning styles
+    
+}

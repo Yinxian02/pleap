@@ -42,6 +42,7 @@ app.use('/users', require('./routes/api/users'));
 app.use('/lessons', require('./routes/api/lessons'));
 app.use('/learning-objects', require('./routes/api/learning-objects'));
 app.use('/generativeAI', require('./routes/api/generativeAI'));
+app.use('/ratings', require('./routes/api/ratings'));
 
 app.all('*', (req, res) => {
   res.status(404);

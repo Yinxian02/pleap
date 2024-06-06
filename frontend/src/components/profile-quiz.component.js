@@ -5,8 +5,10 @@ import AuthContext from '../context/AuthContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { calculateLOScore, calculateLOWeight } from "./initialLORating";
 import { MdOutlineKeyboardDoubleArrowLeft, 
     MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+
 
 function calculatePreferenceScore(prev, dimension, answer) {
     if (dimension === Dimension.ActiveReflexive) {
@@ -111,30 +113,89 @@ const ProfileQuiz = () => {
             setShowResult(true); 
         };
     }
- 
-    useEffect(() => {
-        if (showResult) {
-            const preferences = normaliseFinalPreferences(result); 
-            console.log('preferences:' , preferences);
-            auth.preferences = preferences;
-            axios
-                .post(
-                    `http://localhost:5001/users/update/${id}`, 
-                    preferences,
-                    {
-                    headers: {
+
+    const calculateInitialLORatings = async () => {
+        const response = await axios.get('http://localhost:5001/learning-objects', 
+                                    {
+                                        headers: { 
+                                            'Content-Type': 'application/json',
+                                            Authorization: 'Bearer ' + auth.accessToken,
+                                            mode: 'cors',
+                                            withCredentials: true,
+                                        },
+                                    }
+                                );
+
+        const learningObjects = response.data;
+
+        const loScores = learningObjects.map(lo => calculateLOScore(lo)); 
+        console.log(loScores);
+        
+        const userPreferences = { f1: auth.preferences.active,
+                                    f2: auth.preferences.sensing, 
+                                    f3: auth.preferences.visual, 
+                                    f4: auth.preferences.sequential }
+
+        const loWeights = loScores.map(score => calculateLOWeight(score, userPreferences))
+        console.log(loWeights);
+
+        const ratings = learningObjects.map((lo, index) => ({
+            userId: id, 
+            learningObjectId: lo._id,
+            rating: loWeights[index],
+        }));
+
+        console.log('Learning object ratings:', ratings);
+        
+        try {
+            const res = await axios.post('http://localhost:5001/ratings/addBatch', 
+                { ratings },
+                {
+                    headers: { 
                         'Content-Type': 'application/json',
                         Authorization: 'Bearer ' + auth.accessToken,
+                        mode: 'cors',
+                        withCredentials: true,
                     },
-                    })
-                .then((res) => {
-                    console.log(res.data)
-                    setAuth(auth)
-                    // navigate('/profile', { replace: true });
-                }).catch((error) => {
-                    // Handle errors here
-                    console.error(error);
-                });
+                }
+            );
+            console.log('Learning object ratings:', res.data);
+        } catch (error) {
+            console.error('Error rating learning objects:', error);
+        }
+    };
+
+    const updateUserProfile = async () => {
+        const preferences = normaliseFinalPreferences(result); 
+        console.log('preferences:' , preferences);
+        auth.preferences = preferences;
+        return axios
+            .post(
+                `http://localhost:5001/users/update/${id}`, 
+                preferences,
+                {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.accessToken,
+                },
+                })
+            .then((res) => {
+                console.log(res.data);
+                setAuth(auth);
+            }).catch((error) => {
+                console.error(error);
+            });
+    }
+
+    useEffect(() => {
+        if (showResult) {
+            updateUserProfile()
+            .then(() => {
+                calculateInitialLORatings(auth.preferences);
+            })
+            .catch(error => {
+                console.error('Error updating user profile:', error);
+            });;
         }
 
     }, [id, auth.accessToken, result, showResult]);
