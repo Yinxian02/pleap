@@ -113,10 +113,25 @@ export function orderLearningObjects(learningObjects, userPreferences) {
         object: lo,
         weight: loWeights[index],
         }));
-        
-    // weightedObjects.sort((a, b) => a.weight - b.weight);
-    console.log(weightedObjects)
     
-    return weightedObjects.map(pair => pair.object);
+    const sortedWeights = [...loWeights].sort((a, b) => b - a);
+    console.log("Sorted weights:", sortedWeights);
+
+    //
+    // const topNCount = Math.ceil(sortedWeights.length / 2);
+
+    // get top40% of the learning objects
+    const topNCount = Math.ceil(sortedWeights.length * 0.5);
+    const thresholdWeight = sortedWeights[topNCount - 1];
+    console.log("Threshold weight:", thresholdWeight);
+    
+    // Filter the original weighted objects array to get the top 50% without changing order
+    const topNLearningObjects = weightedObjects.filter(item => item.weight >= thresholdWeight);
+
+    console.log(topNLearningObjects)
+    
+    // const initialRatedLOs = weightedObjects.map(pair => pair.object);
+   
+    return topNLearningObjects.map(pair => pair.object);
     // return weightedObjects;
 }

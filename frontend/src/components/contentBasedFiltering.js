@@ -1,6 +1,6 @@
-// on recomendation model
+// Based on algorithm in On Recommendation of Learning Objects Using Felder-Silverman Learning Style Model
 
-// k-means algorithm
+// K-means algorithm
 function kMeans(data, k) {
     // 1. Select K random points from dataset as initial cluster centroids
     let centroids = data.slice(0, k);
