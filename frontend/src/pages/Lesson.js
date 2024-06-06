@@ -1,26 +1,40 @@
-import React, { Component } from 'react';
+import React, { Component, useContext, useState, useEffect } from 'react';
 import "../styles/Lesson.css";
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
 import { useParams } from 'react-router-dom';
-import { topNPercentLearningObjects } from '../components/topNPercentLOs';
 import { displayLO } from '../components/displayLO';
 
-class LessonFetch extends Component {
-  static contextType = AuthContext;
+const LessonFetch = ({lesson}) => {
+  const { auth } = useContext(AuthContext);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      learningObjects: [],
-    };
-  }
+  const [learningObjects, setLearningObjects] = useState([]);
+  const [ratings, setRatings] = useState([]);
+  const [topNLOs, setTopNLOs] = useState([]);
 
-  componentDidMount() {
-    this.fetchLearningObjects(this.props.lesson._learningObjects);
-  }
+  useEffect(() => {
+    fetchLearningObjects(lesson._learningObjects)
+  }, [lesson]);
 
-  async fetchLearningObjects(ids) {
+  useEffect(() => {
+    if (learningObjects.length > 0) {
+      console.log('Learning objects: ', learningObjects);
+      const learningObjectIds = learningObjects.map((lo) => lo._id);
+      console.log('Learning object IDs: ', learningObjectIds);
+      retrieveLORatings(learningObjectIds);
+    }
+  }, [learningObjects]);
+
+  useEffect(() => {
+    if (ratings.length > 0) {
+      console.log('Ratings:', ratings);
+      const topN = 50;
+      topNPercentLearningObjects(topN);
+    }
+  }, [ratings]);
+
+  
+  const fetchLearningObjects = async (ids) => {
     try {
       const res = await axios.post(
         'http://localhost:5001/learning-objects/batch',
@@ -28,49 +42,76 @@ class LessonFetch extends Component {
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.context.auth.accessToken,
+            Authorization: 'Bearer ' + auth.accessToken,
             mode: 'cors',
             withCredentials: true,
           },
         }
       );
-      this.setState({ learningObjects: res.data });
+      console.log(res.data);
+      setLearningObjects(res.data);
     } catch (error) {
       console.error('Error fetching learning objects:', error);
     }
   }
 
-  render() {
-    // console.log("User ID: ", this.context.auth.id); 
-
-    const { title, author, description } = this.props.lesson;
-    const { learningObjects } = this.state;
-    // console.log(learningObjects);
-
-    // console.log("User preferences: ", this.context.auth.preferences)
-    const learningDimensionPreferences = { f1: this.context.auth.preferences.active,
-                                          f2: this.context.auth.preferences.sensing, 
-                                          f3: this.context.auth.preferences.visual, 
-                                          f4: this.context.auth.preferences.sequential }
+   const retrieveLORatings = async (ids) => {
+    try {
+      const res = await axios.post(
+        'http://localhost:5001/ratings/batch',
+        { ids },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + auth.accessToken,
+            mode: 'cors',
+            withCredentials: true,
+          },
+        }
+      );
+      console.log(res.data);
+      setRatings(res.data);
+    } catch (error) {
+      console.error('Error fetching learning objects:', error);
+    }
+  };
   
-    const sortedLOs = topNPercentLearningObjects(learningObjects, learningDimensionPreferences, 50);
+   const topNPercentLearningObjects = async (n) => {
+    console.log("Ratings:", ratings);
+    const sortedWeights = [...ratings].sort((a, b) => b.rating - a.rating);
+    console.log("Sorted weights:", sortedWeights);
 
-    return (
-      <div>
-        <h2 className="lesson-title">{title}</h2>
-        <h3 className="lesson-author">{author}</h3>
-        <p className="lesson-description">{description}</p>
-        <br/>
+    const topNCount = Math.ceil(sortedWeights.length * n / 100);
+    console.log("Top N count:", topNCount);
 
-        <div>
-        {sortedLOs.map((lo, index) => (
-            <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
-          ))}
-        </div>
-      </div>
-    );
+    const thresholdRating = sortedWeights[topNCount - 1].rating;
+    console.log("Threshold weight:", thresholdRating);
+    
+    // Filter the original weighted objects array to get the top 50% without changing order
+    console.log(learningObjects);
+
+    const topNLearningObjects = learningObjects.filter((lo, index) => ratings[index].rating >= thresholdRating);
+    console.log("Top N learning objects:", topNLearningObjects);
+    setTopNLOs(topNLearningObjects);
+    return topNLearningObjects;
+  };
+
+  
+    return <div>
+              <h2 className="lesson-title">{lesson.title}</h2>
+              <h3 className="lesson-author">{lesson.author}</h3>
+              <p className="lesson-description">{lesson.description}</p>
+              <br/>
+
+              <div>
+                {topNLOs.map((lo, index) => (
+                    <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
+                  ))}
+              </div>
+            </div>
+    
   }
-}
+
 
 class Lesson extends Component {
   static contextType = AuthContext;
@@ -114,7 +155,7 @@ class Lesson extends Component {
 
   lessonDisplay() {
     if (this.state.lesson !== null){
-      return <LessonFetch lesson={this.state.lesson} key={this.state.lesson._id} />;
+      return <LessonFetch lesson={this.state.lesson}/>;
     }
   }
 
