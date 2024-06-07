@@ -215,11 +215,11 @@ const getPreferencesArray = (preferences) => {
     return [preferences.active, preferences.reflexive, preferences.visual, preferences.verbal, preferences.sensing, preferences.intuitive, preferences.sequential, preferences.global];
 }
 
-async function retrieveLORatings(ids, userId, accessToken) {
+async function retrieveLORatings(id, accessToken) {
     try {
         const res = await axios.post(
             `http://localhost:5001/ratings/batch`,
-            { learningObjectIds: ids, userId: userId },
+            { userId: id},
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -235,7 +235,7 @@ async function retrieveLORatings(ids, userId, accessToken) {
             return [];
         }
 
-        const ratings = res.data.map((rating) => rating.rating);
+        const ratings = res.data;
         return ratings;
     } catch (error) {
         console.error('Error fetching learning objects ratings by user:', error);
@@ -279,8 +279,8 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
     }));
     console.log('Learning object scores: ', loScores);
 
-    // get learning objects with corresponding user ratings
-    const ratings = await retrieveLORatings(learningObjectIds, userId, accessToken);
+    // get set of all learning objects rated by LS
+    const ratings = await retrieveLORatings(userId, accessToken);
     console.log('Ratings:', ratings);
     // If ratings array is empty, 
     
@@ -319,6 +319,7 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
         
     } else {
         // apply k-means clustering to learning objects rated by by learning styles
+
     }
     
 }

@@ -13,8 +13,9 @@ const Rating = ({ id }) => {
   }, [rating]);
     
   const addRatingToDatabase = async () => {
+    console.log(auth.id, id, rating);
     const request = {
-        userId: auth._id,
+        userId: auth.id,
         learningObjectId: id,
         rating: rating,
     };

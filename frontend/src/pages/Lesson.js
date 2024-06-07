@@ -52,9 +52,9 @@ const LessonFetch = ({lesson}) => {
               <br/>
 
               <div>
-                {/* {filteredLearningObjects.map((lo, index) => (
+                {learningObjects.map((lo, index) => (
                     <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
-                  ))} */}
+                  ))}
               </div>
             </div>
     
