@@ -39,7 +39,7 @@ router.route('/add').post(verifyRoles(ROLES_LIST.User),(req, res) => {
   let learningObject = req.body.learningObject;
 
   const score = calculateLOScore(learningObject); 
-  learningObject = { ... learningObject, score};
+  learningObject = { ...learningObject, score};
   console.log(learningObject);
 
   const newLearningObject = new LearningObject(learningObject);

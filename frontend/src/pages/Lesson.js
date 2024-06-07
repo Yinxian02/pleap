@@ -4,98 +4,46 @@ import axios from 'axios';
 import AuthContext from "../context/AuthContext";
 import { useParams } from 'react-router-dom';
 import { displayLO } from '../components/displayLO';
+import { contentBasedFiltering } from '../components/contentBasedFiltering';
 
 const LessonFetch = ({lesson}) => {
   const { auth } = useContext(AuthContext);
-  // const { setAuth } = useAuthContext();
-
   const [learningObjects, setLearningObjects] = useState([]);
-  // const [ratings, setRatings] = useState([]);
-  // const [topNLOs, setTopNLOs] = useState([]);
+  const [filteredLearningObjects, setFilteredLearningObjects] = useState([]);
 
   useEffect(() => {
-    fetchLearningObjects(lesson._learningObjects)
-    // then content based filtering
-  }, [lesson]);
+    const fetchLearningObjects = async (ids) => {
+      try {
+        const res = await axios.post(
+          'http://localhost:5001/learning-objects/batch',
+          { ids },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + auth.accessToken,
+              mode: 'cors',
+              withCredentials: true,
+            },
+          }
+        );
+        console.log(res.data);
+        setLearningObjects(res.data);
+      } catch (error) {
+        console.error('Error fetching learning objects:', error);
+      }
+    };
 
-  // useEffect(() => {
-  //   if (learningObjects.length > 0) {
-  //     console.log('Learning objects: ', learningObjects);
-  //     const learningObjectIds = learningObjects.map((lo) => lo._id);
-  //     console.log('Learning object IDs: ', learningObjectIds);
-  //     retrieveLORatings(learningObjectIds);
-  //   }
-  // }, [learningObjects]);
-
-  // useEffect(() => {
-  //   if (ratings.length > 0) {
-  //     console.log('Ratings:', ratings);
-  //     const topN = 50;
-  //     topNPercentLearningObjects(topN);
-  //   }
-  // }, [ratings]);
-
-  
-  const fetchLearningObjects = async (ids) => {
-    try {
-      const res = await axios.post(
-        'http://localhost:5001/learning-objects/batch',
-        { ids },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + auth.accessToken,
-            mode: 'cors',
-            withCredentials: true,
-          },
-        }
-      );
-      console.log(res.data);
-      setLearningObjects(res.data);
-    } catch (error) {
-      console.error('Error fetching learning objects:', error);
+    if (lesson._learningObjects) {
+      fetchLearningObjects(lesson._learningObjects);
     }
-  }
+  }, [lesson, auth.accessToken]);
 
-  //  const retrieveLORatings = async (ids) => {
-  //   try {
-  //     const res = await axios.post(
-  //       'http://localhost:5001/ratings/batch',
-  //       { ids },
-  //       {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: 'Bearer ' + auth.accessToken,
-  //           mode: 'cors',
-  //           withCredentials: true,
-  //         },
-  //       }
-  //     );
-  //     console.log(res.data);
-  //     setRatings(res.data);
-  //   } catch (error) {
-  //     console.error('Error fetching learning objects:', error);
-  //   }
-  // };
-  
-  //  const topNPercentLearningObjects = async (n) => {
-  //   console.log("Ratings:", ratings);
-  //   const sortedRatings = [...ratings].sort((a, b) => b.rating - a.rating);
-  //   console.log("Sorted ratings:", sortedRatings);
-
-  //   const topNCount = Math.ceil(sortedRatings.length * n / 100);
-  //   console.log("Top N count:", topNCount);
-
-  //   const thresholdRating = sortedRatings[topNCount - 1].rating;
-  //   console.log("Threshold rating:", thresholdRating);
-
-  //   const topNLearningObjects = learningObjects.filter((lo, index) => ratings[index].rating >= thresholdRating);
-  //   console.log("Top N learning objects:", topNLearningObjects);
-    
-  //   setTopNLOs(topNLearningObjects);
-  //   return topNLearningObjects;
-  // };
-
+  useEffect(() => {
+    if (learningObjects.length > 0) {
+      const filteredObjects = contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
+      setFilteredLearningObjects(filteredObjects);
+    }
+  }, [learningObjects, auth.id, auth.preferences, auth.accessToken]);
   
     return <div>
               <h2 className="lesson-title">{lesson.title}</h2>
@@ -104,9 +52,9 @@ const LessonFetch = ({lesson}) => {
               <br/>
 
               <div>
-                {learningObjects.map((lo, index) => (
+                {/* {filteredLearningObjects.map((lo, index) => (
                     <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
-                  ))}
+                  ))} */}
               </div>
             </div>
     
