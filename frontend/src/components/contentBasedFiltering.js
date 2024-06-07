@@ -53,7 +53,17 @@ const hammingDistance = (x, y) => {
     return distance;
 }
 
+// data is an array of numbers
 const calculateMean = (data) => {
+    let result = 0;
+    for (let i = 0; i < data.length; i++) {
+       result += data[i];
+    }
+    return result / data.length;
+};
+
+// data is an array of vectors
+const calculateVectorsMean = (data) => {
     if (data.length === 0) return [];
 
     const numVectors = data.length;
@@ -162,7 +172,7 @@ const kMeans = (data, k, distanceFunction) => {
     //     // Step 4: Save old centroids and update the centroids
         prevCentroids = centroids;
         clusters.forEach(cluster => {
-            cluster.centroid = calculateMean(cluster.points.map(point => point.score));
+            cluster.centroid = calculateVectorsMean(cluster.points.map(point => point.score));
             // console.log("New centroid:", cluster.centroid);
         });
         // console.log("Clusters after updating centroids:", clusters);
@@ -175,23 +185,26 @@ const kMeans = (data, k, distanceFunction) => {
     return clusters;
 }
 
-const cosineSimilarity = (v1, v2) => {
+const cosineSimilarity = (x, y) => {
+    const n = x.length;
     let dotProduct = 0;
-    let normA = 0;
-    let normB = 0;
-    for (let i = 0; i < v1.length; i++) {
-        dotProduct += v1[i] * v2[i];
-        normA += v1[i] ** 2;
-        normB += v2[i] ** 2;
+    let normX = 0;
+    let normY = 0;
+
+    for (let i = 0; i < n; i++) {
+        dotProduct += x[i] * y[i];
+        normX += x[i] ** 2;
+        normY += y[i] ** 2;
     }
-    return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+    return dotProduct / (Math.sqrt(normX) * Math.sqrt(normY));
 }
 
 const pearsonCorrelation = (x, y) => {
     let n = x.length;
 
-    let xMean = x.reduce((a, b) => a + b) / n;
-    let yMean = y.reduce((a, b) => a + b) / n;
+    let xMean = calculateMean(x);
+    let yMean = calculateMean(y);
+    console.log('Means:', xMean, yMean);
 
     let accXY = 0;
     let accX = 0;
@@ -243,8 +256,10 @@ async function retrieveLORatings(id, accessToken) {
     }
 }
 
-const getNearestCluster = (clusters, userLS) => {
-    const distancesToCentroids = clusters.map((cluster) => euclideanDistance(cluster.centroid, userLS));
+const getNearestCluster = (clusters, x) => {
+    // get closest cluster by cosine similarity
+    const distancesToCentroids = clusters.map((cluster) => cosineSimilarity(cluster.centroid, x));
+    // const distancesToCentroids = clusters.map((cluster) => euclideanDistance(cluster.centroid, userLS));
     // console.log('Distances to centroids:', distancesToCentroids);
 
     const closestDistance = Math.min(...distancesToCentroids);
@@ -257,45 +272,64 @@ const getNearestCluster = (clusters, userLS) => {
     const closestCluster = clusters[closestClusterNum];
     // console.log('Closest cluster:', closestCluster);
 
-    const closestClusterLOs = closestCluster.points;
-    return closestClusterLOs;
+    // const closestClusterLOs = closestCluster.points;
+    return closestCluster;
 }
 
 const predictInitialRating = (userLS, loScore) => {
     return 0.5 + pearsonCorrelation(userLS, loScore) * 5;
 }
 
+async function getRatedLearningObjects(ratings, accessToken) {
+    const ratedIDs = ratings.map((rating) => rating.learningObjectId);
+    try {
+        const ratedLOs = await axios.post(
+            'http://localhost:5001/learning-objects/batch',
+            { ids: ratedIDs },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + accessToken,
+                    mode: 'cors',
+                    withCredentials: true,
+                },
+            }
+        );
+        console.log('Rated learning objects:', ratedLOs.data);
+        return ratedLOs.data;
+    } catch (error) {
+        console.error('Error fetching rated learning objects:', error);
+        return [];
+    }
+}
+
 // learningObjects: set of learning objects for one lesson
 async function contentBasedFiltering(learningObjects, userId, learningPreferences, accessToken){
     console.log('Learning objects: ', learningObjects);
-    
-    const learningObjectIds = learningObjects.map((lo) => lo._id);
-    console.log('Learning object IDs: ', learningObjectIds);
-    
-    // const loScores = learningObjects.map((lo) => getScoreArray(lo.score));
-    const loScores = learningObjects.map((lo) => ({
-        id: lo._id,
-        score: getScoreArray(lo.score),
-    }));
-    console.log('Learning object scores: ', loScores);
+            
+    // get nearest cluster to user LS, by comparing euclidean distance to each centroid
+    const userLS = getPreferencesArray(learningPreferences);
+    // console.log('User LS:', userLS);
 
     // get set of all learning objects rated by LS
     const ratings = await retrieveLORatings(userId, accessToken);
     console.log('Ratings:', ratings);
-    // If ratings array is empty, 
     
+    // If ratings array is empty, 
     if (ratings.length === 0) {
         console.log('No ratings found');
+        
+        const loScores = learningObjects.map((lo) => ({
+            id: lo._id,
+            score: getScoreArray(lo.score),
+        }));
+        console.log('Learning object scores: ', loScores);
 
         // Apply K-means to cluster all learning objects scores
         const clusters = kMeans(loScores, 2, hammingDistance);
         console.log('Clusters:', clusters);
-        
-        // get nearest cluster to user LS, by comparing euclidean distance to each centroid
-        const userLS = getPreferencesArray(learningPreferences);
-        // console.log('User LS:', userLS);
 
-        const nearestClusterLOs = getNearestCluster(clusters, userLS);
+        const nearestClusterLOs = getNearestCluster(clusters, userLS).points;
         console.log('Nearest cluster LOs:', nearestClusterLOs);
         
         // predict initial ratings for learning objects in the nearest cluster
@@ -307,19 +341,61 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
 
         // get top 5 learning objects with highest predicted ratings
         predictedRatings.sort((a, b) => b.rating - a.rating);
-        console.log('Sorted predicted ratings:', predictedRatings);
-        predictedRatings.slice(0, 5);
+        const topNPredictedRatings = predictedRatings.slice(0, 5);
+        console.log('Top N predicted ratings:', topNPredictedRatings);
 
         // get learning objects with predicted ratings using learning object ids
         const filteredLearningObjects = learningObjects.filter(lo => {
-            return predictedRatings.map(p => p.learningObjectId).includes(lo._id);
+            return topNPredictedRatings.map(p => p.learningObjectId).includes(lo._id);
         });
         console.log('Filtered learning objects:', filteredLearningObjects);
-
         
     } else {
-        // apply k-means clustering to learning objects rated by by learning styles
+        // const ratedLOs = await getRatedLearningObjects(ratings, accessToken);
+        // const ratingScores = ratings.map((rating) => ({
+        //     id: rating.learningObjectId,
+        //     score: [rating.rating],
+        // }));
+        // console.log('Rated learning objects:', ratingScores);
 
+        // // apply k-means clustering to learning objects rated by by learning styles
+        // const clusters = kMeans(ratingScores, 2, euclideanDistance);
+        // console.log('Clusters:', clusters);
+
+        // for each learning object x, find nearest cluster by cosine similarity
+        // for (let i = 0; i < learningObjects.length; i++) {
+        //     const lo = learningObjects[i];
+        //     const loScore = getScoreArray(lo.score);
+        //     console.log('Learning object score:', loScore);
+        //     const nearestCluster = getNearestCluster(clusters, loScore);
+            
+        //     const nearestClusterRatings = nearestCluster.points;
+        //     console.log('Nearest cluster:', nearestClusterRatings);
+            
+        //     const nearestLOs = learningObjects.filter(lo => {
+        //         return nearestClusterRatings.map(p => p.id).includes(lo._id);
+        //     });
+
+        //     const nearestLOsScores = nearestLOs.map(lo => ({
+        //             id: lo._id,
+        //             score: getScoreArray(lo.score),
+        //             // rating: 
+        //         }));
+        //     console.log('Nearest learning objects:', nearestLOsScores);
+
+        //     const sortedLOs = nearestLOsScores
+        //         .map((lo) => ({ lo, correlation: pearsonCorrelation(loScore, lo.score) }))
+        //         .sort((a, b) => b.correlation - a.correlation)
+        //         .map(item => item.lo);
+
+        //     // Select top N learning objects
+        //     const topN = 5;
+        //     const topNnearestLOsSelected = sortedLOs.slice(0, topN);
+
+        //     console.log('Top N nearest learning objects:', topNnearestLOsSelected);
+
+        // }
+        // 
     }
     
 }
