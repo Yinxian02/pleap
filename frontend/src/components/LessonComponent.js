@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
-import Rating from './Rating.component';
 
 const LessonComponent = ({ title, author, description, thumbnail, learningObjects }) => {
   const [lesson, setLesson] = useState({

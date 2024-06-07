@@ -18,32 +18,49 @@ export function displayLO(learningObject) {
     const LRT = learningObject.educational.learningResourceType; 
     
     if (LRT === "lecture"){
-        return <Lecture learningObject={learningObject} />;
-    
+        return <div className="lo-container-div">
+            <Lecture learningObject={learningObject} />
+            <Rating id={learningObject._id}/>
+        </div>
+
     } else if (LRT === "slide") {
-        return <Slide learningObject={learningObject} />;
+        return <div className="lo-container-div">
+            <Slide learningObject={learningObject} />
+            <Rating id={learningObject._id}/>
+        </div>
 
     } else if (LRT === "questionnaire" && learningObject.content.aiGenerated) {
-        return <McqQuiz questionnaire={learningObject.content.questionnaire}/>;
-    
+        return <div className="lo-container-div">
+            <McqQuiz questionnaire={learningObject.content.questionnaire}/>
+            <Rating id={learningObject._id}/>
+        </div>
+
     } else if (LRT === "exercise" && learningObject.content.aiGenerated) {
-        return <Exercise exercise={learningObject.content.exercise}/>
+        return <div className="lo-container-div">
+            <Exercise exercise={learningObject.content.exercise}/>
+            <Rating id={learningObject._id}/>
+        </div>
     
     } else if (LRT === "problem statement" && learningObject.content.aiGenerated) {
-        return <Challenge challenge={learningObject.content.text}/>
+        return <div className="lo-container-div">
+            <Challenge challenge={learningObject.content.text}/>
+            <Rating id={learningObject._id}/>
+        </div>
 
     } else if (LRT === "narrative text" && isGlossary(learningObject)){
-        return (<div>
-                   <Glossary glossary={learningObject.content.glossary}/>
-                   <Rating />
-                </div>);  
-    
-    } else if (LRT === "narrative text"){
-        return (<div>
-                    <NarrativeText learningObject={learningObject} />
-                    <Rating />
-                </div>); 
+        return <div className="lo-container-div">
+            <Glossary glossary={learningObject.content.glossary}/>
+            <Rating id={learningObject._id}/>
+        </div>
+
+    } else if (LRT === "narrative text" 
+                || LRT === "problem statement"){
+        return <div className="lo-container-div">
+            <NarrativeText learningObject={learningObject} />
+            <Rating id={learningObject._id}/>
+        </div>
     }
+
     
     if (learningObject.content.embed) {
         const URL = learningObject.content.link;
@@ -59,14 +76,15 @@ export function displayLO(learningObject) {
                     src={ URL } 
                     title= {learningObject.general.title}
                     width="100%"></iframe>
+                <Rating id={learningObject._id}/>
             </div>
         )
     }
 
-    if (learningObject.technical.format === "text/plain"){
-        const htmlText = markDownToHtml(learningObject.content.text);
-        return (
-            <div dangerouslySetInnerHTML={{ __html: htmlText }} />
-        );
-    }
+    // if (learningObject.technical.format === "text/plain"){
+    //     const htmlText = markDownToHtml(learningObject.content.text);
+    //     return (
+    //         <div dangerouslySetInnerHTML={{ __html: htmlText }} />
+    //     );
+    // }
 }

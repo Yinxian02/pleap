@@ -1,7 +1,42 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import AuthContext from "../context/AuthContext";
 
-const Rating = () => {
+const Rating = ({ id }) => {
+  const { auth } = useContext(AuthContext);
   const [rating, setRating] = useState(0);
+
+  useEffect(() => {
+    if (rating !== 0) {
+      addRatingToDatabase();
+    }
+  }, [rating]);
+    
+  const addRatingToDatabase = async () => {
+    const request = {
+        userId: auth._id,
+        learningObjectId: id,
+        rating: rating,
+    };
+
+    try {
+      const res = await axios.post(
+        'http://localhost:5001/ratings/add',
+        request,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + auth.accessToken,
+            mode: 'cors',
+            withCredentials: true,
+          },
+        }
+      );
+      console.log('Rating added:', res.data); 
+    } catch (error) {
+      console.error('Error adding rating:', error);
+    }
+  };
 
   return (
     <div className="rating">

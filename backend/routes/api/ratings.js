@@ -13,7 +13,7 @@ const verifyRoles = require('../../middleware/verifyRoles');
 router.route('/add').post(verifyRoles(ROLES_LIST.User),(req, res) => {
   console.log(req.body)
   console.log("adding rating")
-  const rating = req.body.rating; 
+  const rating = req.body; 
 
   const newRating = new Rating(rating);
 
@@ -32,22 +32,25 @@ router.route('/addBatch').post(verifyRoles(ROLES_LIST.User), async (req, res) =>
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:userID').get(verifyRoles(ROLES_LIST.User), async (req, res) => {
-  await Rating.find(req.params.userID)
-    .then(rating => res.json(rating))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+// router.route('/:userID/').get(verifyRoles(ROLES_LIST.User), async (req, res) => {
+//   await Rating.find(req.params.userID)
+//     .then(rating => res.json(rating))
+//     .catch(err => res.status(400).json('Error: ' + err));
+// });
 
 // get batch of learning object ratings by learning object ids
 router.route('/batch').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
-  const { ids } = req.body;
+  const { learningObjectIds, userId } = req.body;
 
-  if (!Array.isArray(ids) || !ids.length) {
+  if (!Array.isArray(learningObjectIds) || !learningObjectIds.length) {
     return res.status(400).json({ error: 'Invalid or missing "ids" array' });
   }
 
   try {
-    const ratings = await Rating.find({ learningObjectId: { $in: ids } });
+    const ratings = await Rating.find({ 
+      userId: userId,
+      learningObjectId: { $in: ids } 
+    });
     res.json(ratings);
   } catch (err) {
     res.status(400).json({ error: 'Error fetching ratings: ' + err });

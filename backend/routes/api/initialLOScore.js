@@ -89,20 +89,30 @@ function calculateLOScore(learningObject) {
     LOScore.f4 = LRT.g4; 
 
     // console.log("learning object score:", LOScore);
-    return LOScore; 
+    const score = {
+        act: LOScore.f1, 
+        ref: 1 - LOScore.f1, 
+        vis: LOScore.f2,
+        ver: 1 - LOScore.f2,
+        sen: LOScore.f3,
+        int: 1 - LOScore.f3,
+        seq: LOScore.f4,
+        glo: 1 - LOScore.f4,
+    }
+    return score; 
 }
 
 // algorithm from "A Felder and Silverman Model"
-function calculateLOWeight(learningObjectScore, learningPreferences) {
-    var weight = 0;
+// function calculateLOWeight(learningObjectScore, learningPreferences) {
+//     var weight = 0;
 
-    // Calculate pairwise differences and sum them up
-    for (const key in learningObjectScore) {
-        weight += Math.abs(learningObjectScore[key] - learningPreferences[key]);
-    }
+//     // Calculate pairwise differences and sum them up
+//     for (const key in learningObjectScore) {
+//         weight += Math.abs(learningObjectScore[key] - learningPreferences[key]);
+//     }
 
-    // console.log("learning object weight:", weight);
-    return weight; 
-}
+//     // console.log("learning object weight:", weight);
+//     return weight; 
+// }
 
-export { calculateLOScore, calculateLOWeight }
+module.exports = calculateLOScore; 

@@ -61,6 +61,15 @@ const learningObjectSchema = new Schema({
         glossary: { type: [glossarySchema], required: true },
         embed: { type: Boolean, default: false },
         aiGenerated: { type: Boolean, default: false }
+    }, score: {
+        act: {type: Number, default: 0.5},
+        ref: {type: Number, default: 0.5},
+        vis: {type: Number, default: 0.5},
+        ver: {type: Number, default: 0.5},
+        sen: {type: Number, default: 0.5},
+        int: {type: Number, default: 0.5},
+        seq: {type: Number, default: 0.5},
+        glo: {type: Number, default: 0.5},
     }
 }, {
     timestamps: true,

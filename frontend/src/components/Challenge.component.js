@@ -5,6 +5,8 @@ import { generateTextResponse }  from "./generateText";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
+import { markDownToHtml } from "./markDownToHTML";
+
 const Challenge = ({challenge}) => {
     const { auth } = useContext(AuthContext);
  
@@ -13,19 +15,22 @@ const Challenge = ({challenge}) => {
     const [feedback, setFeedback] = useState('');
     const [showFeedback, setShowFeedback] = useState(false);
 
+    const htmlChallenge = markDownToHtml(challenge);
+    
     const markAnswer = async () => {
         const markPrompt = `You are an intelligent grading assistant. 
         Your task is to evaluate the provided user input based on the given question and the correct answer. 
         Please provide detailed feedback on the user's answer.
 
         Question: ${challenge}
-        User Input: ${userInput}
-        `; 
+        User Input: ${userInput}`; 
         // console.log(markPrompt);
 
         const response = await generateTextResponse(markPrompt, auth.accessToken);
         console.log(response);
-        setFeedback(response);
+
+        const htmlFeedback = markDownToHtml(response);
+        setFeedback(htmlFeedback);
 
         setShowFeedback(true);
     }; 
@@ -36,7 +41,7 @@ const Challenge = ({challenge}) => {
 
     return <div className="exercise-div">
         <>
-            <h2>{challenge}</h2>
+        <div dangerouslySetInnerHTML={{ __html: htmlChallenge }} /> 
             <br/>
             <textarea
                 className="answer-text-area"
@@ -51,9 +56,7 @@ const Challenge = ({challenge}) => {
             <br/><br/>
 
             {showFeedback && (
-                <div>
-                    {feedback}
-                </div>
+                <div dangerouslySetInnerHTML={{ __html: feedback }} /> 
             )}
         </>
     </div>

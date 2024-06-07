@@ -5,7 +5,7 @@ import AuthContext from '../context/AuthContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { calculateLOScore, calculateLOWeight } from "./initialLORating";
+// import { calculateLOScore } from "./initialLORating";
 import { MdOutlineKeyboardDoubleArrowLeft, 
     MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
@@ -114,56 +114,56 @@ const ProfileQuiz = () => {
         };
     }
 
-    const calculateInitialLORatings = async () => {
-        const response = await axios.get('http://localhost:5001/learning-objects', 
-                                    {
-                                        headers: { 
-                                            'Content-Type': 'application/json',
-                                            Authorization: 'Bearer ' + auth.accessToken,
-                                            mode: 'cors',
-                                            withCredentials: true,
-                                        },
-                                    }
-                                );
+    // const calculateInitialLORatings = async () => {
+    //     const response = await axios.get('http://localhost:5001/learning-objects', 
+    //                                 {
+    //                                     headers: { 
+    //                                         'Content-Type': 'application/json',
+    //                                         Authorization: 'Bearer ' + auth.accessToken,
+    //                                         mode: 'cors',
+    //                                         withCredentials: true,
+    //                                     },
+    //                                 }
+    //                             );
 
-        const learningObjects = response.data;
+    //     const learningObjects = response.data;
 
-        const loScores = learningObjects.map(lo => calculateLOScore(lo)); 
-        console.log(loScores);
+    //     const loScores = learningObjects.map(lo => calculateLOScore(lo)); 
+    //     console.log(loScores);
         
-        const userPreferences = { f1: auth.preferences.active,
-                                    f2: auth.preferences.sensing, 
-                                    f3: auth.preferences.visual, 
-                                    f4: auth.preferences.sequential }
+        // const userPreferences = { f1: auth.preferences.active,
+        //                             f2: auth.preferences.sensing, 
+        //                             f3: auth.preferences.visual, 
+        //                             f4: auth.preferences.sequential }
 
-        const loWeights = loScores.map(score => calculateLOWeight(score, userPreferences))
-        console.log(loWeights);
+        // const loWeights = loScores.map(score => calculateLOWeight(score, userPreferences))
+        // console.log(loWeights);
 
-        const ratings = learningObjects.map((lo, index) => ({
-            userId: id, 
-            learningObjectId: lo._id,
-            rating: loWeights[index],
-        }));
+        // const ratings = learningObjects.map((lo, index) => ({
+        //     userId: id, 
+        //     learningObjectId: lo._id,
+        //     rating: loWeights[index],
+        // }));
 
-        console.log('Learning object ratings:', ratings);
+        // console.log('Learning object ratings:', ratings);
         
-        try {
-            const res = await axios.post('http://localhost:5001/ratings/addBatch', 
-                { ratings },
-                {
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        Authorization: 'Bearer ' + auth.accessToken,
-                        mode: 'cors',
-                        withCredentials: true,
-                    },
-                }
-            );
-            console.log('Learning object ratings:', res.data);
-        } catch (error) {
-            console.error('Error rating learning objects:', error);
-        }
-    };
+        // try {
+        //     const res = await axios.post('http://localhost:5001/ratings/addBatch', 
+        //         { ratings },
+        //         {
+        //             headers: { 
+        //                 'Content-Type': 'application/json',
+        //                 Authorization: 'Bearer ' + auth.accessToken,
+        //                 mode: 'cors',
+        //                 withCredentials: true,
+        //             },
+        //         }
+        //     );
+        //     console.log('Learning object ratings:', res.data);
+        // } catch (error) {
+        //     console.error('Error rating learning objects:', error);
+        // }
+    // };
 
     const updateUserProfile = async () => {
         const preferences = normaliseFinalPreferences(result); 
@@ -190,9 +190,9 @@ const ProfileQuiz = () => {
     useEffect(() => {
         if (showResult) {
             updateUserProfile()
-            .then(() => {
-                calculateInitialLORatings(auth.preferences);
-            })
+            // .then(() => {
+            //     calculateInitialLORatings(auth.preferences);
+            // })
             .catch(error => {
                 console.error('Error updating user profile:', error);
             });;

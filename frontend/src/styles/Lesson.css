@@ -7,7 +7,7 @@
 .learning-object-div {
     justify-content: space-between; /* Horizontally center */
     align-items: center;  
-    width: 70%;
+    width: 90%;
     background-color: var(--componentColorDark);
     border-radius: 4px;
     padding: 60px 60px;
@@ -90,7 +90,7 @@ textarea {
     cursor: not-allowed;
 }
 
-.exercise-div{
+.lo-container-div{
     width: 100%;
 }
 

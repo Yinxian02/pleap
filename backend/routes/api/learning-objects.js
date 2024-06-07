@@ -2,6 +2,7 @@ const router = require('express').Router();
 let LearningObject = require('../../models/learningObject.model');
 const ROLES_LIST = require('../../config/rolesList');
 const verifyRoles = require('../../middleware/verifyRoles');
+const calculateLOScore = require('./initialLOScore');
 
 router.route('/').get(verifyRoles(ROLES_LIST.User), async (req, res) => {
   await LearningObject.find()
@@ -12,7 +13,14 @@ router.route('/').get(verifyRoles(ROLES_LIST.User), async (req, res) => {
 router.route('/addBatch').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
   console.log(req.body.learningObjects);
   console.log("adding learning objects");
-  const learningObjects = req.body.learningObjects; 
+  let learningObjects = req.body.learningObjects; 
+  
+  learningObjects = learningObjects.map(lo => {
+    const score = calculateLOScore(lo);
+    return { ...lo, score };
+  });
+
+  console.log(learningObjects);
 
   try {
     const insertedLearningObjects = await LearningObject.insertMany(learningObjects);
@@ -28,7 +36,11 @@ router.route('/addBatch').post(verifyRoles(ROLES_LIST.User), async (req, res) =>
 router.route('/add').post(verifyRoles(ROLES_LIST.User),(req, res) => {
   console.log(req.body)
   console.log("adding learning object")
-  const learningObject = req.body.learningObject;
+  let learningObject = req.body.learningObject;
+
+  const score = calculateLOScore(learningObject); 
+  learningObject = { ... learningObject, score};
+  console.log(learningObject);
 
   const newLearningObject = new LearningObject(learningObject);
 
