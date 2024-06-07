@@ -10,22 +10,22 @@ const arrayContainsVector = (array, vector) => {
     }
     return false;
 }
-const selectKRandomPoints = (data, k) => {
-    const selectedIndices = new Set();
-    const selectedPoints = [];
+// const selectKRandomPoints = (data, k) => {
+//     const selectedIndices = new Set();
+//     const selectedPoints = [];
 
-    while (selectedIndices.size < k) {
-        const randomIndex = Math.floor(Math.random() * data.length);
-        const point = data[randomIndex];
+//     while (selectedIndices.size < k) {
+//         const randomIndex = Math.floor(Math.random() * data.length);
+//         const point = data[randomIndex];
 
-        if (!arrayContainsVector(selectedPoints.map(p => p.score), point.score)) {
-            selectedIndices.add(randomIndex);
-            console.log('Selected point:', point);
-            selectedPoints.push(point);
-        }
-    }
-    return selectedPoints;
-}
+//         if (!arrayContainsVector(selectedPoints.map(p => p.score), point.score)) {
+//             selectedIndices.add(randomIndex);
+//             console.log('Selected point:', point);
+//             selectedPoints.push(point);
+//         }
+//     }
+//     return selectedPoints;
+// }
 
 const isEqual = (a, b) => {
     return JSON.stringify(a) === JSON.stringify(b);
@@ -132,11 +132,12 @@ const kMeans = (data, k, distanceFunction) => {
     let clusters = centroids.map(centroid => ({ centroid: centroid, points: [] }));
     console.log('Clusters:', clusters);
 
-    const maxIterations = 10;
+    const maxIterations = 100;
     let iterations = 0;
 
+    
     // Step 4: Repeat Steps 2 and 3 until the centroids no longer change
-    while (iterations < maxIterations) {
+    while (!isEqual(centroids, prevCentroids) && iterations < maxIterations) {
         // console.log('centroids still changing');
         clusters.forEach(cluster => cluster.points = []);
 
@@ -166,7 +167,8 @@ const kMeans = (data, k, distanceFunction) => {
         });
         // console.log("Clusters after updating centroids:", clusters);
         centroids = clusters.map(cluster => cluster.centroid);
-        
+
+        console.log('COMPARE:', isEqual(centroids, prevCentroids));
         iterations++;
     }
     // console.log(clusters);
@@ -309,9 +311,8 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
         predictedRatings.slice(0, 5);
 
         // get learning objects with predicted ratings using learning object ids
-        const filteredLearningObjects = learningObjects.map((lo) => {
-            const rating = predictedRatings.find((rating) => rating.learningObjectId === lo._id);
-            return lo;
+        const filteredLearningObjects = learningObjects.filter(lo => {
+            return predictedRatings.map(p => p.learningObjectId).includes(lo._id);
         });
         console.log('Filtered learning objects:', filteredLearningObjects);
 
