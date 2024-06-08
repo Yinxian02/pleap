@@ -349,7 +349,7 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
             return topNPredictedRatings.map(p => p.learningObjectId).includes(lo._id);
         });
         console.log('Filtered learning objects:', filteredLearningObjects);
-        
+        return filteredLearningObjects;
     } else {
         // const ratedLOs = await getRatedLearningObjects(ratings, accessToken);
         // const ratingScores = ratings.map((rating) => ({

@@ -40,8 +40,17 @@ const LessonFetch = ({lesson}) => {
 
   useEffect(() => {
     if (learningObjects.length > 0) {
-      const filteredObjects = contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
-      setFilteredLearningObjects(filteredObjects);
+      const fetchFilteredLearningObjects = async () => {
+        try {
+          const filteredObjects = await contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
+          setFilteredLearningObjects(filteredObjects);
+          console.log(filteredObjects);
+        } catch (error) {
+          console.error('Error fetching filtered learning objects:', error);
+        }
+      };
+
+      fetchFilteredLearningObjects();
     }
   }, [learningObjects, auth.id, auth.preferences, auth.accessToken]);
   
@@ -52,7 +61,7 @@ const LessonFetch = ({lesson}) => {
               <br/>
 
               <div>
-                {learningObjects.map((lo, index) => (
+                {filteredLearningObjects.map((lo, index) => (
                     <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
                   ))}
               </div>
