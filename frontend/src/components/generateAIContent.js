@@ -144,11 +144,11 @@ class GenerateAIContent extends Component{
 
       Lesson Content:\n${lessonText}`;
 
-      const challengeGeneratedResponse = await generateTextResponse(challengePrompt, this.context.auth.accessToken);
-      console.log(challengeGeneratedResponse);
+      const openAIchallengeResponse = await generateTextResponse(challengePrompt, this.context.auth.accessToken, 'openAI');
+      const vertexAIchallengeResponse = await generateTextResponse(challengePrompt, this.context.auth.accessToken, 'vertexAI');
 
-      const openAIchallengeResponse = await generateAndParseResponse(challengePrompt, this.context.auth.accessToken, 'openAI');
-      const vertexAIchallengeResponse = await generateAndParseResponse(challengePrompt, this.context.auth.accessToken, 'vertexAI');
+      console.log(openAIchallengeResponse);
+      console.log(vertexAIchallengeResponse);
 
       const challengeObject = new LearningObject("brainstorm", "text/plain", "active", "problem statement", "medium");
       // challengeObject.setText(challengeGeneratedResponse);

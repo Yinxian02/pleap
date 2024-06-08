@@ -43,7 +43,7 @@ export function displayLO(learningObject) {
     
     } else if (LRT === "problem statement" && learningObject.content.aiGenerated) {
         return <div className="lo-container-div">
-            {/* <Challenge challenge={learningObject.content.challenge}/> */}
+            <Challenge challenge={learningObject.content.challenge}/>
             <Rating id={learningObject._id}/>
         </div>
 
