@@ -27,7 +27,7 @@ const LessonComponent = ({ title, author, description, thumbnail, learningObject
         }
       );
 
-      // console.log(`Learning objects added: ${res.data.ids}`);
+      console.log(`Learning objects added: ${res.data.ids}`);
       return res.data.ids;
     } catch (error) {
       console.error('Error adding learning objects:', error);

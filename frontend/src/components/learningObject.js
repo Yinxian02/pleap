@@ -9,11 +9,11 @@ export class LearningObject {
         
         this.text = "";
         this.link = "";
-        this.audio = "";
+        // this.audio = "";
 
-        this.questionnaire = [];
-        this.exercise = [];
-        this.glossary = [];
+        // this.questionnaire = [];
+        // this.exercise = [];
+        // this.glossary = [];
         
         this.embed = false;
         this.aiGenerated = false;
@@ -27,8 +27,9 @@ export class LearningObject {
         this.link = link; 
     }
 
-    setAudio(audio){
-        this.audio = audio;
+    setAudio(openAIAudio, vertexAIAudio){
+        this.openAIAudio = openAIAudio;
+        this.vertexAIAudio = vertexAIAudio;
     }
 
     setImage(image){
@@ -44,12 +45,29 @@ export class LearningObject {
         this.vertexAIQuestionnaire = vertexAIQuestionnaire;
     }
 
-    setExercise(exercise){
-        this.exercise = exercise;
+    setExercise(openAIExercise, vertexAIExercise){
+        this.openAIExercise = openAIExercise;
+        this.vertexAIExercise = vertexAIExercise;
     }
 
-    setGlossary(glossary){
-        this.glossary = glossary;
+    setGlossary(openAIGlossary, vertexAIGlossary){
+        this.openAIGlossary = openAIGlossary;
+        this.vertexAIGlossary = vertexAIGlossary;
+    }
+
+    setChallenge(openAIChallenge, vertexAIChallenge){
+        this.openAIChallenge = openAIChallenge;
+        this.vertexAIChallenge = vertexAIChallenge;
+    }
+
+    setTranscript(openAITranscript, vertexAITranscript){
+        this.openAITranscript = openAITranscript;
+        this.vertexAITranscript = vertexAITranscript;
+    }
+
+    setDescription(openAIDescription, vertexAIDescription){
+        this.openAIDescription = openAIDescription;
+        this.vertexAIDescription = vertexAIDescription;
     }
     
     setEmbedded(){
@@ -91,15 +109,36 @@ export class LearningObject {
             content: {
                 text: this.text,
                 link: this.link,
-                audio: this.audio,
+                audio: {
+                    openAI: this.openAIAudio,
+                    vertexAI: this.vertexAIAudio
+                },
                 image: this.image,
                 video: this.video,
                 questionnaire: {
                     openAI: this.openAIQuestionnaire, // choices
                     vertexAI: this.vertexAIQuestionnaire
                 },
-                exercise: this.exercise, // question and answer
-                glossary: this.glossary, // term and definition
+                exercise: {
+                    openAI: this.openAIExercise, // question and answer
+                    vertexAI: this.vertexAIExercise
+                },
+                glossary: {
+                    openAI: this.openAIGlossary, // term and definition
+                    vertexAI: this.vertexAIGlossary
+                },
+                challenge: {
+                    openAI: this.openAIChallenge, // problem statement
+                    vertexAI: this.vertexAIChallenge
+                },  
+                transcript: {
+                    openAI: this.openAITranscript, // text
+                    vertexAI: this.vertexAITranscript
+                },
+                description: {
+                    openAI: this.openAIDescription, // text
+                    vertexAI: this.vertexAIDescription
+                },
                 embed: this.embed,
                 aiGenerated: this.aiGenerated,
             }

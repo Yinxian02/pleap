@@ -53,16 +53,36 @@ const learningObjectSchema = new Schema({
     content: {
         text: { type: String, default: "" },
         link: { type: String, default: "" },
-        audio: { type: String, default: "" },
+        audio: {
+            openAI: { type: String, default: "" },
+            vertexAI: { type: String, default: "" }
+        },  
         image: { type: String, default: "" },
         video: { type: String, default: "" },
-        // questionnaire: { type: [questionnaireSchema], required: true },
         questionnaire: {
             openAI: { type: [questionnaireSchema], default: [] },
             vertexAI: { type: [questionnaireSchema], default: [] }
         },
-        exercise: { type: [exerciseSchema], required: true },
-        glossary: { type: [glossarySchema], required: true },
+        exercise: {
+            openAI: { type: [exerciseSchema], default: [] },
+            vertexAI: { type: [exerciseSchema], default: [] }
+        } ,
+        glossary: { 
+            openAI: { type: [glossarySchema], default: [] },
+            vertexAI: { type: [glossarySchema], default: [] }
+        }, 
+        challenge: {
+            openAI: { type: String, default: "" },
+            vertexAI: { type: String, default: "" }
+        }, 
+        transcript: {
+            openAI: { type: String, default: "" },
+            vertexAI: { type: String, default: "" }
+        }, 
+        description: {
+            openAI: { type: String, default: "" },
+            vertexAI: { type: String, default: "" }
+        },
         embed: { type: Boolean, default: false },
         aiGenerated: { type: Boolean, default: false }
     }, score: {

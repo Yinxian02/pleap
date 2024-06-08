@@ -72,7 +72,11 @@ router.route('/batch').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
 
 router.route('/addAudio/:id').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
   const { id } = req.params;
-  const { audio } = req.body;
+  // const { audio } = req.body;
+  const audio = {
+    openAI: req.body.openAIAudio,
+    vertexAI: req.body.vertexAIAudio,
+  }
   console.log(req.body); 
 
   LearningObject.findById(id)
@@ -91,7 +95,10 @@ router.route('/addAudio/:id').post(verifyRoles(ROLES_LIST.User), async (req, res
 
 router.route('/addDescription/:id').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
   const { id } = req.params;
-  const { description } = req.body;
+  const description = {
+    openAI: req.body.openAIDescription,
+    vertexAI: req.body.vertexAIDescription,
+  }
   console.log(req.body); 
 
   LearningObject.findById(id)
@@ -99,7 +106,7 @@ router.route('/addDescription/:id').post(verifyRoles(ROLES_LIST.User), async (re
       if (!lo) {
         return res.status(404).json({ error: 'Learning object not found' });
       }
-      lo.content.text = description;
+      lo.content.description = description;
       lo.save();
     })
     .then(() => 
@@ -110,7 +117,7 @@ router.route('/addDescription/:id').post(verifyRoles(ROLES_LIST.User), async (re
 
 router.route('/addTranscript/:id').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
   const { id } = req.params;
-  const { transcript } = req.body;
+  const transcript = req.body;
   console.log(req.body); 
 
   LearningObject.findById(id)
@@ -118,7 +125,7 @@ router.route('/addTranscript/:id').post(verifyRoles(ROLES_LIST.User), async (req
       if (!lo) {
         return res.status(404).json({ error: 'Learning object not found' });
       }
-      lo.content.text = transcript;
+      lo.content.transcript = transcript;
       lo.save();
     })
     .then(() => 

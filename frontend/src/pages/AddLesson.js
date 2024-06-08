@@ -97,12 +97,12 @@ const AddLesson = () => {
 
   return (
     <div>
-        {/*<LessonComponent 
+        {/* <LessonComponent 
           title="Intro to programming" 
           author="Josiah Wang" 
           description="Really... what exactly is programming?"
           thumbnail="https://storage.googleapis.com/pleap/whatIsProgramming/algoFlowChart.png"
-  learningObjects={whatIsProgrammingLOs} /> */}
+          learningObjects={whatIsProgrammingLOs} /> */}
       
          {/* <LessonComponent 
           title="Design a guessing game" 

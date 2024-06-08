@@ -88,17 +88,20 @@ class GenerateAIContent extends Component{
       
       const maxAttempts = 5;
 
-      let quizResponse;
+      // let quizResponse;
+      let openAIquizResponse;
+      let vertexAIquizResponse;
 
       try {
-        quizResponse = await generateAndParseResponse(quizPrompt, this.context.auth.accessToken, maxAttempts);
+        openAIquizResponse = await generateAndParseResponse(quizPrompt, this.context.auth.accessToken,'openAI', maxAttempts);
+        vertexAIquizResponse = await generateAndParseResponse(quizPrompt, this.context.auth.accessToken, 'vertexAI', maxAttempts);
       } catch (error) {
         console.error('Error generating quiz:', error);
         return undefined;
       }
 
       const quizObject = new LearningObject("reflection quiz", "text/plain", "active", "exercise", "medium");
-      quizObject.setExercise(quizResponse);
+      quizObject.setExercise(openAIquizResponse, vertexAIquizResponse);
       quizObject.setAIGenerated();
       return quizObject.getJSON();
     }
@@ -114,17 +117,20 @@ class GenerateAIContent extends Component{
       Format the response as a parsable json array
       [ { "term" : "..." , "definition" : "..."} , ... ] `;
 
-      let glossaryResponse;
+      // let glossaryResponse;
+      let openAIglossaryResponse;
+      let vertexAIglossaryResponse;
 
       try {
-        glossaryResponse = await generateAndParseResponse(glossaryPrompt, this.context.auth.accessToken);
+        openAIglossaryResponse = await generateAndParseResponse(glossaryPrompt, this.context.auth.accessToken, 'openAI');
+        vertexAIglossaryResponse = await generateAndParseResponse(glossaryPrompt, this.context.auth.accessToken, 'vertexAI');
       } catch (error) {
         console.error('Error generating glossary:', error);
         return undefined;
       }
 
       const glossaryObject = new LearningObject("glossary", "text/plain", "expositive", "narrative text", "low");
-      glossaryObject.setGlossary(glossaryResponse);
+      glossaryObject.setGlossary(openAIglossaryResponse, vertexAIglossaryResponse);
       glossaryObject.setAIGenerated();
       return glossaryObject.getJSON();
     }
@@ -141,8 +147,12 @@ class GenerateAIContent extends Component{
       const challengeGeneratedResponse = await generateTextResponse(challengePrompt, this.context.auth.accessToken);
       console.log(challengeGeneratedResponse);
 
+      const openAIchallengeResponse = await generateAndParseResponse(challengePrompt, this.context.auth.accessToken, 'openAI');
+      const vertexAIchallengeResponse = await generateAndParseResponse(challengePrompt, this.context.auth.accessToken, 'vertexAI');
+
       const challengeObject = new LearningObject("brainstorm", "text/plain", "active", "problem statement", "medium");
-      challengeObject.setText(challengeGeneratedResponse);
+      // challengeObject.setText(challengeGeneratedResponse);
+      challengeObject.setChallenge(openAIchallengeResponse, vertexAIchallengeResponse);
       challengeObject.setAIGenerated();
       return challengeObject.getJSON();
     }
@@ -155,8 +165,8 @@ class GenerateAIContent extends Component{
         const text = learningObject.content.text; 
         // console.log(text); 
 
-        const res = await axios.post(
-          'http://localhost:5001/generativeAI/textToSpeech',
+        const resOpenAI = await axios.post(
+          'http://localhost:5001/openAI/textToSpeech',
           { title, text }, 
           {
             headers: {
@@ -167,8 +177,24 @@ class GenerateAIContent extends Component{
             },
           }
         );
-        console.log(res.data.audio);
-        return(res.data.audio);
+        const openAIAudio = resOpenAI.data.audio;
+
+        const resVertexAI = await axios.post(
+          'http://localhost:5001/vertexAI/textToSpeech',
+          { title, text }, 
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + this.context.auth.accessToken,
+              mode: 'cors',
+              withCredentials: true,
+            },
+          }
+        );
+        const vertexAIAudio = resVertexAI.data.audio;
+
+        console.log({openAIAudio, vertexAIAudio});
+        return({openAIAudio, vertexAIAudio});
       } catch (error) {
         console.error('Error generating audio:', error);
       }
@@ -176,13 +202,13 @@ class GenerateAIContent extends Component{
     
     async uploadGeneratedAudio(learningObject) {
       const id = learningObject._id;
-      const audio = await this.createAudio(learningObject);
-      console.log(audio);
+      const { openAIAudio, vertexAIAudio } = await this.createAudio(learningObject);
+      // console.log(audio);
 
       try {
         const res = await axios.post(
           `http://localhost:5001/learning-objects/addAudio/${id}`,
-          { audio }, 
+          { openAIAudio, vertexAIAudio }, 
           {
             headers: {
               'Content-Type': 'application/json',
@@ -243,57 +269,55 @@ class GenerateAIContent extends Component{
       }
     }
 
+    async generateSpeechToText(title, videoId, apiType) {
+      const res = await axios.post(
+        `http://localhost:5001/${apiType}/speechToText`,
+        { title, videoId }, 
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.context.auth.accessToken,
+            mode: 'cors',
+            withCredentials: true,
+          },
+        }
+      );
+
+      return `Rewrite the following transcript to make sense, in the format of lecture notes:
+          // ${res.data}`
+    }
+
     async createTranscript(learningObject){
       try {
         const title = learningObject.general.title; 
         const link = learningObject.content.video; 
-
         const videoId = getYoutubeId(link);
-        // console.log(videoId);
-        const res = await axios.post(
-          'http://localhost:5001/generativeAI/speechToText',
-          { title, videoId }, 
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + this.context.auth.accessToken,
-              mode: 'cors',
-              withCredentials: true,
-            },
-          }
-        );
-          console.log(res.data); 
 
-          const transcriptPrompt = 
-              `Rewrite the following transcript to make sense, in the format of lecture notes:
-              // ${res.data}`
-              
-          const transcript = await generateTextResponse(transcriptPrompt, this.context.auth.accessToken); 
-          
-          await this.addTranscript(learningObject, transcript);
+        const openAItranscriptPrompt = await this.generateSpeechToText(title, videoId, 'openAI');
+        const openAItranscript = await generateTextResponse(openAItranscriptPrompt, this.context.auth.accessToken, 'openAI');
+        
+        const vertexAItranscriptPrompt = await this.generateSpeechToText(title, videoId, 'vertexAI');
+        const vertexAItranscript = await generateTextResponse(vertexAItranscriptPrompt, this.context.auth.accessToken, 'vertexAI');
 
-          const transcriptObject = new LearningObject("transcript", "text/plain", "expositive", "narrative text", "low");
-          
-          transcriptObject.setText(transcript);
-          transcriptObject.setVideo(link);
-          transcriptObject.setAIGenerated();
+        const transcript = { openAItranscript,  vertexAItranscript};
+        
+        await this.addTranscript(learningObject, transcript);
 
-          return transcriptObject.getJSON();
-        } catch (error) {
-          console.error('Error generating transcript:', error);
-        }
+        const transcriptObject = new LearningObject("transcript", "text/plain", "expositive", "narrative text", "low");
+        
+        transcriptObject.setTranscript(transcript);
+        transcriptObject.setVideo(link);
+        transcriptObject.setAIGenerated();
+
+        return transcriptObject.getJSON();
+      } catch (error) {
+        console.error('Error generating transcript:', error);
+      }
     }
 
-    async createDescription(learningObject){
-      try {
-        const imageUrl = learningObject.content.image; 
-        console.log(imageUrl); 
-
-        const lecturePrompt = 
-          `Write alternative lecture notes based on the image: ${imageUrl}`;
-
+    async generateImageToText(imageUrl, lecturePrompt, apiType) {
         const res = await axios.post(
-          'http://localhost:5001/generativeAI/imageToText',
+          `http://localhost:5001/${apiType}/imageToText`,
           { imageUrl, lecturePrompt }, 
           {
             headers: {
@@ -302,26 +326,36 @@ class GenerateAIContent extends Component{
               mode: 'cors',
               withCredentials: true,
             },
-        }
-      );
-      console.log(res.data); 
-
-      const description = res.data;
-
-      // add description to existing slide learning object
-      await this.addDescription(learningObject, description);
-
-      // create new narrative text learning object with slide 
-      const descriptionObject = new LearningObject("description", "text/plain", "expositive", "narrative text", "low");
-      
-      descriptionObject.setText(description);
-      descriptionObject.setImage(imageUrl);
-      descriptionObject.setAIGenerated();
-
-      return descriptionObject.getJSON();
-    } catch (error) {
-      console.error('Error generating image:', error);
+        }); 
+        console.log(res.data); 
+        return res.data;
     }
+
+    async createDescription(learningObject){
+      try {
+          const imageUrl = learningObject.content.image; 
+          console.log(imageUrl); 
+
+          const lecturePrompt = 
+            `Write alternative lecture notes based on the image: ${imageUrl}`;
+
+          const openAIDescription = await this.generateImageToText(imageUrl, lecturePrompt, 'openAI');
+          const vertexAIDescription = await this.generateImageToText(imageUrl, lecturePrompt, 'vertexAI');
+
+          const description = { openAIDescription, vertexAIDescription };
+          // add description to existing slide learning object
+          await this.addDescription(learningObject, description);
+
+          // create new narrative text learning object with slide 
+          const descriptionObject = new LearningObject("description", "text/plain", "expositive", "narrative text", "low");
+          
+          descriptionObject.setText(description);
+          descriptionObject.setImage(imageUrl);
+          descriptionObject.setAIGenerated();
+          return descriptionObject.getJSON();
+      } catch (error) {
+        console.error('Error generating image:', error);
+      }
     }
 
     async createLearningObjects(learningObjects) {

@@ -58,8 +58,9 @@ const McqQuiz = ({ questionnaire }) => {
             return;  
         }
 
-        setAnswerIndex(null);
         setResult((prev) => prev + answer);
+        console.log(result);
+        setAnswerIndex(null);
 
         if (currentQuestionNum !== openAIQuestionnaire.length - 1) {
             setCurrentQuestionNum((prev) => prev + 1);
@@ -86,7 +87,7 @@ const McqQuiz = ({ questionnaire }) => {
                                 <ul>
                                     {currentQuestionOpenAI.choices.map((choice, index) => (
                                         <li
-                                            onClick={() => { onSelectChoice(choice, index); setSelectedQuiz('openAI'); }}
+                                            onClick={() => { onSelectChoice(choice, index);}}
                                             key={choice.text}
                                             className={answerIndex === index ?
                                                 (showCorrectAnswer && correctAnswer !== null ?
@@ -103,11 +104,11 @@ const McqQuiz = ({ questionnaire }) => {
                         {selectedQuiz !== 'openAI' && (
                             <div className="quiz-section" onClick={() => setSelectedQuiz('vertexAI')}>
                                 {/* <h2>VertexAI</h2> */}
-                                <h3>{vertexAIQuestionnaire[currentQuestionNum].question}</h3>
+                                <h3>{currentQuestionVertexAI.question}</h3>
                                 <ul>
-                                    {vertexAIQuestionnaire[currentQuestionNum].choices.map((choice, index) => (
+                                    {currentQuestionVertexAI.choices.map((choice, index) => (
                                         <li
-                                            onClick={() => { onSelectChoice(choice, index); setSelectedQuiz('vertexAI'); }}
+                                            onClick={() => { onSelectChoice(choice, index)}}
                                             key={choice.text}
                                             className={answerIndex === index ?
                                                 (showCorrectAnswer && correctAnswer !== null ?

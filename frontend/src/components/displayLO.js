@@ -37,19 +37,19 @@ export function displayLO(learningObject) {
 
     } else if (LRT === "exercise" && learningObject.content.aiGenerated) {
         return <div className="lo-container-div">
-            <Exercise exercise={learningObject.content.exercise}/>
+            {/* <Exercise exercise={learningObject.content.exercise}/> */}
             <Rating id={learningObject._id}/>
         </div>
     
     } else if (LRT === "problem statement" && learningObject.content.aiGenerated) {
         return <div className="lo-container-div">
-            <Challenge challenge={learningObject.content.text}/>
+            {/* <Challenge challenge={learningObject.content.challenge}/> */}
             <Rating id={learningObject._id}/>
         </div>
 
     } else if (LRT === "narrative text" && isGlossary(learningObject)){
         return <div className="lo-container-div">
-            <Glossary glossary={learningObject.content.glossary}/>
+            {/* <Glossary glossary={learningObject.content.glossary}/> */}
             <Rating id={learningObject._id}/>
         </div>
 

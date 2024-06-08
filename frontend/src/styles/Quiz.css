@@ -15,18 +15,14 @@
     padding: 60px 60px;
     box-sizing: border-box; 
     display: grid;
-    margin: 5px; 
-    box-shadow: 0 4px 4px var(--hoverShadowColor); 
+    margin: 10px; 
+    box-shadow: 4px 4px 4px 4px var(--hoverShadowColor); 
     transition: opacity 0.5s ease;
 }
 
 .quiz-section.fade-out {
     opacity: 0;
 }
-
-/* .quiz-section:hover{
-    background-color: var(--hoverColorLight);
-} */
 
 .quiz-progress {
     font-size: 12px;

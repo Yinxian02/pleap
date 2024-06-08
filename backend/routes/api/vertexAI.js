@@ -21,7 +21,7 @@ router.route('/textToSpeech').post(verifyRoles(ROLES_LIST.User), async (req, res
     try {
         const filename = await generateAudio(text, sanitizedTitle);
         const bucketName = 'pleap';
-        const subfolder = 'generated-audio';
+        const subfolder = 'vertexAI';
         const gcsUri = `https://storage.googleapis.com/${bucketName}/${subfolder}/${sanitizedTitle}.mp3`;
         
         await uploadToGCS(filename, bucketName, subfolder, `${sanitizedTitle}.mp3`);

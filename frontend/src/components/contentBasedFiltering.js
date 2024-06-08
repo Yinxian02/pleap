@@ -355,7 +355,7 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
 
         // get top 5 learning objects with highest predicted ratings
         predictedRatings.sort((a, b) => b.rating - a.rating);
-        const topNPredictedRatings = predictedRatings.slice(0, 5);
+        const topNPredictedRatings = predictedRatings.slice(0, 10);
         // console.log('Top N predicted ratings:', topNPredictedRatings);
 
         // get learning objects with predicted ratings using learning object ids

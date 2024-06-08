@@ -8,7 +8,7 @@ import { markDownToHtml } from "./markDownToHTML";
 
 const NarrativeText = ({ learningObject }) => {
     const [audioOn, setAudioOn] = useState(false);
-    const audioRef =  useRef(new Audio(learningObject.content.audio));
+    const audioRef =  useRef(new Audio(learningObject.content.audio.vertexAI));
     const [showSlide, setShowSlide] = useState(false);
 
     const handleButtonClick = () => {
@@ -38,7 +38,7 @@ const NarrativeText = ({ learningObject }) => {
         setShowSlide(!showSlide);
     };
 
-    const hasAudio = learningObject.content.audio !== null && learningObject.content.audio !== "";
+    const hasAudio = learningObject.content.audio.vertexAI !== null && learningObject.content.audio.vertexAI !== "";
     const hasVideo = learningObject.content.video !== null && learningObject.content.video !== "";
     const hasImage = learningObject.content.image !== null && learningObject.content.image !== "";
 

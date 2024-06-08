@@ -2,12 +2,12 @@ import { useState } from "react";
 import { MdOutlineKeyboardDoubleArrowLeft, 
         MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
+import { BsStars } from "react-icons/bs";
 import { generateTextResponse }  from "./generateText";
-
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
-const Exercise = ({exercise}) => {
+const Exercise = ({ exercise }) => {
     const { auth } = useContext(AuthContext);
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
  
@@ -21,9 +21,9 @@ const Exercise = ({exercise}) => {
     const [feedback, setFeedback] = useState('');
     const [showFeedback, setShowFeedback] = useState(false);
 
-    if (!exercise) {
-        return <div> No questions available </div>
-    }
+    // if (!exercise) {
+    //     return <div> No questions available </div>
+    // }
     const currentQuestion = exercise[currentQuestionNum];
     const { question, answer, _id } = currentQuestion;
 
@@ -86,6 +86,9 @@ const Exercise = ({exercise}) => {
     }
 
     return <div className="exercise-div">
+        <span>
+            <BsStars className="ai-icon"/>
+        </span>
         {!showResult ? (
         <>
             <span className="quiz-progress">{currentQuestionNum + 1} / {exercise.length} </span>
