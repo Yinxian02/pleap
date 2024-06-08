@@ -8,6 +8,9 @@ import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
 const Exercise = ({ exercise }) => {
+    const openAIExercise = exercise.openAI;
+    const vertexAIExercise = exercise.vertexAI;
+
     const { auth } = useContext(AuthContext);
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
  
@@ -24,10 +27,25 @@ const Exercise = ({ exercise }) => {
     // if (!exercise) {
     //     return <div> No questions available </div>
     // }
-    const currentQuestion = exercise[currentQuestionNum];
-    const { question, answer, _id } = currentQuestion;
+    // const currentQuestion = exercise[currentQuestionNum];
+    // const { question, answer, _id } = currentQuestion;
+    const currentQuestionOpenAI = openAIExercise[currentQuestionNum];
+    const currentQuestionVertexAI = vertexAIExercise[currentQuestionNum];
 
+    const [selectedExercise, setSelectedExercise] = useState(null);
+    
     const markAnswer = async () => {
+        let question;
+        let answer;
+
+        if (selectedExercise === "openAI") {
+            question = currentQuestionOpenAI.question;
+            answer = currentQuestionOpenAI.answer;
+        } else if (selectedExercise === "vertexAI"){
+            question = currentQuestionVertexAI.question;
+            answer = currentQuestionVertexAI.answer;
+        } 
+
         const markPrompt = `You are an intelligent grading assistant. 
         Your task is to evaluate the provided user input based on the given question and the correct answer. 
         Please mark the user's answer as either correct or incorrect,
@@ -45,10 +63,23 @@ const Exercise = ({ exercise }) => {
         `; 
         console.log(markPrompt);
 
-        const response = await generateTextResponse(markPrompt, auth.accessToken);
+        const response = await generateTextResponse(markPrompt, auth.accessToken, selectedExercise);
         console.log(response);
-        const parsedResponse = JSON.parse(response);
-        setFeedback(parsedResponse.feedback);
+
+        let parsedResponse;
+
+        // if response is a json object, parse it
+        if (response.feedback){
+            parsedResponse = response;
+            setFeedback(response.feedback);
+        } else {
+            try {
+                parsedResponse = JSON.parse(response);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+            setFeedback(parsedResponse.feedback);
+        }
 
         if (parsedResponse.isCorrect) {
             setCorrectAnswer('correct'); 
@@ -71,6 +102,8 @@ const Exercise = ({ exercise }) => {
             setFeedback('');
             setCurrentQuestionNum((prev) => prev - 1); 
             setCorrectAnswer('none');
+        } else {
+            setSelectedExercise(null);
         }
     }
 
@@ -91,20 +124,36 @@ const Exercise = ({ exercise }) => {
         </span>
         {!showResult ? (
         <>
-            <span className="quiz-progress">{currentQuestionNum + 1} / {exercise.length} </span>
+            <span className="quiz-progress">{currentQuestionNum + 1} / {openAIExercise.length} </span>
             <br/>
             <br/>
-            <h2>{question}</h2>
-            <br/>
-            <textarea
-                className="answer-text-area"
-                placeholder="Enter your answer here"
-                value={userInput}
-                onChange={handleInputChange}
-            />
-            <button onClick={markAnswer} className="send-button slide-button">
-                <IoSend/>
-            </button>
+            <div className="quiz-container" >
+                {selectedExercise !== 'vertexAI' && (
+                    <div className="quiz-section" onClick={() => setSelectedExercise('openAI')}>
+                        <h2>{currentQuestionOpenAI.question}</h2>
+                    </div>
+                )}
+                {selectedExercise !== 'openAI' && (
+                    <div className="quiz-section" onClick={() => setSelectedExercise('vertexAI')}>
+                        <h2>{currentQuestionVertexAI.question}</h2>
+                    </div>
+                )}
+            </div>
+            
+            { selectedExercise !== null && (
+                <div>
+                    <textarea
+                        className="answer-text-area"
+                        placeholder="Enter your answer here"
+                        value={userInput}
+                        onChange={handleInputChange}
+                    /> 
+                    <button onClick={markAnswer} className="send-button slide-button">
+                        <IoSend/>
+                    </button>
+                </div>
+            )}
+
 
             <br/><br/>
 
@@ -114,7 +163,7 @@ const Exercise = ({ exercise }) => {
                                     'correct-quiz-answer' : 'incorrect-quiz-answer')}`}>
                     {feedback}
                 </div>
-            )}
+            )} 
 
             <div className="footer">
                 <button onClick={onClickPrev} className="quizButton">
@@ -127,7 +176,7 @@ const Exercise = ({ exercise }) => {
         </>
         ) : (
         <div>
-            Final results: {result} / {exercise.length}
+            Final results: {result} / {openAIExercise.length}
         </div>) 
         }
     </div>

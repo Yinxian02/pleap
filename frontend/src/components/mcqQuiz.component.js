@@ -31,11 +31,7 @@ const McqQuiz = ({ questionnaire }) => {
     const onSelectChoice = (choice, index) => {
         setAnswerIndex(index); 
         setAnswer(choice.value);
-        if (choice.value === 1) {
-            setCorrectAnswer(true); 
-        } else {
-            setCorrectAnswer(false);
-        }
+        setCorrectAnswer(choice.value === 1);
     }; 
 
     const onClickPrev = async () => {
@@ -50,6 +46,7 @@ const McqQuiz = ({ questionnaire }) => {
         if (showCorrectAnswer) {
             setShowCorrectAnswer(false);  
             setAnswerIndex(null);
+            setResult(prev => prev + (answer === 1 ? 1 : 0));
             if (currentQuestionNum !== openAIQuestionnaire.length - 1) {
                 setCurrentQuestionNum((prev) => prev + 1);
             } else {
@@ -57,16 +54,7 @@ const McqQuiz = ({ questionnaire }) => {
             }
             return;  
         }
-
-        setResult((prev) => prev + answer);
-        console.log(result);
-        setAnswerIndex(null);
-
-        if (currentQuestionNum !== openAIQuestionnaire.length - 1) {
-            setCurrentQuestionNum((prev) => prev + 1);
-        } else {
-            setShowResult(true);
-        }
+        setShowCorrectAnswer(true);
     }
 
     return (
