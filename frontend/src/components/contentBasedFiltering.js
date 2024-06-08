@@ -228,7 +228,7 @@ const getPreferencesArray = (preferences) => {
     return [preferences.active, preferences.reflexive, preferences.visual, preferences.verbal, preferences.sensing, preferences.intuitive, preferences.sequential, preferences.global];
 }
 
-async function retrieveLORatings(id, accessToken) {
+async function retrieveUserLORatings(id, accessToken) {
     try {
         const res = await axios.post(
             `http://localhost:5001/ratings/batch`,
@@ -326,7 +326,7 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
     // console.log('User LS:', userLS);
 
     // get set of all learning objects rated by LS
-    const ratings = await retrieveLORatings(userId, accessToken);
+    const ratings = await retrieveUserLORatings(userId, accessToken);
     console.log('Ratings:', ratings);
     
     // If ratings array is empty, 

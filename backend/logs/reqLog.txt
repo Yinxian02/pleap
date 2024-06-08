@@ -17788,3 +17788,5 @@
 20240608	09:54:58	4f62db3f-6d74-488f-ae8b-17f193185e52	OPTIONS	http://localhost:3000	/ratings/batch
 20240608	09:54:58	8c684fea-ed03-41fc-981d-bb93905371a4	POST	http://localhost:3000	/ratings/batch
 20240608	09:54:58	cc0b4735-9a0e-462e-90c0-ffe102fc03b5	POST	http://localhost:3000	/learning-objects/batch
+20240608	10:00:10	03804329-ab6a-494e-8d46-9b61db6fc03e	OPTIONS	http://localhost:3000	/lessons/
+20240608	10:00:10	61006cf5-0675-404a-9d08-98c32221bacd	GET	http://localhost:3000	/lessons/
