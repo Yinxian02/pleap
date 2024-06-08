@@ -10,7 +10,9 @@ import NarrativeText from "./NarrativeText.component";
 import Rating from "./Rating.component";
 
 function isGlossary(learningObject) {
-    return learningObject.content.glossary !== null && learningObject.content.glossary.length > 0;
+    return (learningObject.content.glossary.vertexAI !== null && learningObject.content.glossary.vertexAI.length > 0 
+        || learningObject.content.glossary.openAI !== null && learningObject.content.glossary.openAI.length > 0
+    );
 }; 
 
 export function displayLO(learningObject) {
@@ -49,7 +51,7 @@ export function displayLO(learningObject) {
 
     } else if (LRT === "narrative text" && isGlossary(learningObject)){
         return <div className="lo-container-div">
-            {/* <Glossary glossary={learningObject.content.glossary}/> */}
+            <Glossary glossary={learningObject.content.glossary.vertexAI}/>
             <Rating id={learningObject._id}/>
         </div>
 

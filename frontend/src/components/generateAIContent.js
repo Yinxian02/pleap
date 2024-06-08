@@ -117,20 +117,19 @@ class GenerateAIContent extends Component{
       Format the response as a parsable json array
       [ { "term" : "..." , "definition" : "..."} , ... ] `;
 
-      // let glossaryResponse;
-      let openAIglossaryResponse;
-      let vertexAIglossaryResponse;
+      let glossaryResponse;
+      // let openAIglossaryResponse;
+      // let vertexAIglossaryResponse;
 
       try {
-        openAIglossaryResponse = await generateAndParseResponse(glossaryPrompt, this.context.auth.accessToken, 'openAI');
-        vertexAIglossaryResponse = await generateAndParseResponse(glossaryPrompt, this.context.auth.accessToken, 'vertexAI');
+        glossaryResponse = await generateAndParseResponse(glossaryPrompt, this.context.auth.accessToken, 'vertexAI');
       } catch (error) {
         console.error('Error generating glossary:', error);
         return undefined;
       }
 
       const glossaryObject = new LearningObject("glossary", "text/plain", "expositive", "narrative text", "low");
-      glossaryObject.setGlossary(openAIglossaryResponse, vertexAIglossaryResponse);
+      glossaryObject.setGlossary([], glossaryResponse);
       glossaryObject.setAIGenerated();
       return glossaryObject.getJSON();
     }

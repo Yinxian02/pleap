@@ -5,7 +5,7 @@ import { FaTableList } from "react-icons/fa6";
 import { PiCards } from "react-icons/pi";
 
 const Glossary = ({ glossary }) => {
-    // console.log(glossary);
+    console.log(glossary);
     const [view, setView] = useState('table');
 
     const toggleView = () => {
