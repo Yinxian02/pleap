@@ -95,10 +95,7 @@ router.route('/addAudio/:id').post(verifyRoles(ROLES_LIST.User), async (req, res
 
 router.route('/addDescription/:id').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
   const { id } = req.params;
-  const description = {
-    openAI: req.body.openAIDescription,
-    vertexAI: req.body.vertexAIDescription,
-  }
+  const description = req.body;
   console.log(req.body); 
 
   LearningObject.findById(id)

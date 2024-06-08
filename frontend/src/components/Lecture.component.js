@@ -13,7 +13,7 @@ const Lecture = ({ learningObject }) => {
 
     const [showText, setShowText] = useState(false);
 
-    const htmlText = markDownToHtml(learningObject.content.text);
+    const htmlText = markDownToHtml(learningObject.content.transcript.vertexAI);
     
     const showOrHideText = () => {
         setShowText(!showText);

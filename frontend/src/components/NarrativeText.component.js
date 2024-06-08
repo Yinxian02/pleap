@@ -27,20 +27,28 @@ const NarrativeText = ({ learningObject }) => {
         };
     }, []);
 
-    const htmlText = markDownToHtml(learningObject.content.text);
     
     const URL = learningObject.content.video;
     const videoIdMatch = URL.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
     const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : null;
-
+    
     const showOrHideSlide = () => {
         setShowSlide(!showSlide);
     };
-
+    
     const hasAudio = learningObject.content.audio.vertexAI !== null && learningObject.content.audio.vertexAI !== "";
     const hasVideo = learningObject.content.video !== null && learningObject.content.video !== "";
     const hasImage = learningObject.content.image !== null && learningObject.content.image !== "";
+    
+    let htmlText; 
+    if (hasVideo) {
+        htmlText = markDownToHtml(learningObject.content.transcript.vertexAI);
+    } else if (hasImage) {
+        htmlText = markDownToHtml(learningObject.content.description.vertexAI);
+    } else {
+        htmlText = markDownToHtml(learningObject.content.text);
+    }
 
     return (
         <div className="narrative-text"> 

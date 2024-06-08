@@ -224,13 +224,18 @@ class GenerateAIContent extends Component{
       }
     }
 
-    async addTranscript(learningObject, transcript) {
+    async addTranscript(learningObject, openAItranscript, vertexAItranscript) {
       const id = learningObject._id;
+      const transcript = { 
+        openAI: openAItranscript,
+        vertexAI :vertexAItranscript
+      };
+      console.log(transcript);
 
       try {
         const res = await axios.post(
           `http://localhost:5001/learning-objects/addTranscript/${id}`,
-          { transcript }, 
+          transcript, 
           {
             headers: {
               'Content-Type': 'application/json',
@@ -246,13 +251,17 @@ class GenerateAIContent extends Component{
       }
     }
 
-    async addDescription(learningObject, description) {
+    async addDescription(learningObject, openAIDescription, vertexAIDescription) {
       const id = learningObject._id;
+      const description = {
+        openAI: openAIDescription,
+        vertexAI: vertexAIDescription
+      }
 
       try {
         const res = await axios.post(
           `http://localhost:5001/learning-objects/addDescription/${id}`,
-          { description }, 
+          description, 
           {
             headers: {
               'Content-Type': 'application/json',
@@ -292,19 +301,21 @@ class GenerateAIContent extends Component{
         const link = learningObject.content.video; 
         const videoId = getYoutubeId(link);
 
-        const openAItranscriptPrompt = await this.generateSpeechToText(title, videoId, 'openAI');
-        const openAItranscript = await generateTextResponse(openAItranscriptPrompt, this.context.auth.accessToken, 'openAI');
-        
+        // const openAItranscriptPrompt = await this.generateSpeechToText(title, videoId, 'openAI');
+        // const openAItranscript = await generateTextResponse(openAItranscriptPrompt, this.context.auth.accessToken, 'openAI');
+        const openAItranscript = "";
+
         const vertexAItranscriptPrompt = await this.generateSpeechToText(title, videoId, 'vertexAI');
         const vertexAItranscript = await generateTextResponse(vertexAItranscriptPrompt, this.context.auth.accessToken, 'vertexAI');
 
-        const transcript = { openAItranscript,  vertexAItranscript};
-        
-        await this.addTranscript(learningObject, transcript);
+        // const transcript = { openAItranscript,  vertexAItranscript};
+        // console.log(transcript); 
+
+        await this.addTranscript(learningObject, openAItranscript, vertexAItranscript);
 
         const transcriptObject = new LearningObject("transcript", "text/plain", "expositive", "narrative text", "low");
         
-        transcriptObject.setTranscript(transcript);
+        transcriptObject.setTranscript(openAItranscript, vertexAItranscript);
         transcriptObject.setVideo(link);
         transcriptObject.setAIGenerated();
 
@@ -338,17 +349,18 @@ class GenerateAIContent extends Component{
           const lecturePrompt = 
             `Write alternative lecture notes based on the image: ${imageUrl}`;
 
-          const openAIDescription = await this.generateImageToText(imageUrl, lecturePrompt, 'openAI');
+          // const openAIDescription = await this.generateImageToText(imageUrl, lecturePrompt, 'openAI');
+          const openAIDescription = "";
           const vertexAIDescription = await this.generateImageToText(imageUrl, lecturePrompt, 'vertexAI');
 
-          const description = { openAIDescription, vertexAIDescription };
+          // const description = { openAIDescription, vertexAIDescription };
           // add description to existing slide learning object
-          await this.addDescription(learningObject, description);
+          await this.addDescription(learningObject, openAIDescription, vertexAIDescription);
 
           // create new narrative text learning object with slide 
           const descriptionObject = new LearningObject("description", "text/plain", "expositive", "narrative text", "low");
           
-          descriptionObject.setText(description);
+          descriptionObject.setDescription(openAIDescription, vertexAIDescription);
           descriptionObject.setImage(imageUrl);
           descriptionObject.setAIGenerated();
           return descriptionObject.getJSON();

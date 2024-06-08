@@ -27,7 +27,7 @@ const Slide = ({ learningObject }) => {
         };
     }, []);
 
-    const htmlText = markDownToHtml(learningObject.content.text);
+    const htmlText = markDownToHtml(learningObject.content.description.vertexAI);
     
     const showOrHideText = () => {
         setShowText(!showText);
