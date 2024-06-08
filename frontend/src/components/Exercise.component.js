@@ -5,6 +5,7 @@ import { IoSend } from "react-icons/io5";
 import { BsStars } from "react-icons/bs";
 import { generateTextResponse }  from "./generateText";
 import { useContext } from "react";
+import { parseJSON } from "./parseJSON";
 import AuthContext from "../context/AuthContext";
 
 const Exercise = ({ exercise }) => {
@@ -24,11 +25,6 @@ const Exercise = ({ exercise }) => {
     const [feedback, setFeedback] = useState('');
     const [showFeedback, setShowFeedback] = useState(false);
 
-    // if (!exercise) {
-    //     return <div> No questions available </div>
-    // }
-    // const currentQuestion = exercise[currentQuestionNum];
-    // const { question, answer, _id } = currentQuestion;
     const currentQuestionOpenAI = openAIExercise[currentQuestionNum];
     const currentQuestionVertexAI = vertexAIExercise[currentQuestionNum];
 
@@ -66,24 +62,12 @@ const Exercise = ({ exercise }) => {
         const response = await generateTextResponse(markPrompt, auth.accessToken, selectedExercise);
         console.log(response);
 
-        let parsedResponse;
-
-        // if response is a json object, parse it
-        if (response.feedback){
-            parsedResponse = response;
-            setFeedback(response.feedback);
-        } else {
-            try {
-                parsedResponse = JSON.parse(response);
-            } catch (error) {
-                console.error('Error:', error);
-            }
-            setFeedback(parsedResponse.feedback);
-        }
+        const parsedResponse = parseJSON(response);
+        setFeedback(parsedResponse.feedback);
 
         if (parsedResponse.isCorrect) {
             setCorrectAnswer('correct'); 
-            setResult(result + 1);
+            setResult(prev => prev + 1);
         } else {
             setCorrectAnswer('incorrect'); 
         }
