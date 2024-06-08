@@ -86,27 +86,27 @@ const calculateVectorsMean = (data) => {
 }
 
 const kMeansPlusPlus = (data, k, distanceFunction) => {
-    console.log('Data:', data);
+    // console.log('Data:', data);
     const centroids = [];
     const n = data.length;
 
     // choose the first centroid randomly from the data points
     const firstCentroidIndex = Math.floor(Math.random() * n);
     centroids.push(data[firstCentroidIndex]);
-    console.log('First centroid:', centroids[0]);
+    // console.log('First centroid:', centroids[0]);
 
     // choose remaining k-1 centroids
 
     for (let i = 1; i < k; i++) {
-        console.log('Centroids:', centroids);
+        // console.log('Centroids:', centroids);
         const distances = data.map(d => {
             const minDistance = Math.min(
                 ...centroids.map(centroid => distanceFunction(d.score, centroid.score))
             );
-            console.log('Min distance:', minDistance);
+            // console.log('Min distance:', minDistance);
             return minDistance * minDistance;
         });
-        console.log('Distances:', distances);
+        // console.log('Distances:', distances);
 
         const totalDistance = distances.reduce((sum, d) => sum + d, 0);
         const threshold = Math.random() * totalDistance;
@@ -125,7 +125,7 @@ const kMeansPlusPlus = (data, k, distanceFunction) => {
         }
     }
 
-    console.log('Centroids:', centroids);
+    // console.log('Centroids:', centroids);
     return centroids;
 };
 
@@ -136,11 +136,11 @@ const kMeans = (data, k, distanceFunction) => {
     
     // Use k-means++ algorithm to select initial centroids
     let centroids = kMeansPlusPlus(data, k, distanceFunction).map(point => point.score);
-    console.log('Selected data points:', centroids);
+    // console.log('Selected data points:', centroids);
     let prevCentroids = [];
 
     let clusters = centroids.map(centroid => ({ centroid: centroid, points: [] }));
-    console.log('Clusters:', clusters);
+    // console.log('Clusters:', clusters);
 
     const maxIterations = 100;
     let iterations = 0;
@@ -166,7 +166,7 @@ const kMeans = (data, k, distanceFunction) => {
             // console.log("Closest centroid:", closestCentroid);      
             
             clusters[closestCentroid].points.push(point);
-            console.log("Clusters after one iteration:", clusters);
+            // console.log("Clusters after one iteration:", clusters);
         }
 
     //     // Step 4: Save old centroids and update the centroids
@@ -178,7 +178,7 @@ const kMeans = (data, k, distanceFunction) => {
         // console.log("Clusters after updating centroids:", clusters);
         centroids = clusters.map(cluster => cluster.centroid);
 
-        console.log('COMPARE:', isEqual(centroids, prevCentroids));
+        // console.log('COMPARE:', isEqual(centroids, prevCentroids));
         iterations++;
     }
     // console.log(clusters);
@@ -204,7 +204,7 @@ const pearsonCorrelation = (x, y) => {
 
     let xMean = calculateMean(x);
     let yMean = calculateMean(y);
-    console.log('Means:', xMean, yMean);
+    // console.log('Means:', xMean, yMean);
 
     let accXY = 0;
     let accX = 0;
@@ -216,7 +216,7 @@ const pearsonCorrelation = (x, y) => {
         accY += (y[i] - yMean) ** 2;
     }
 
-    console.log('Pearson correlation:', accXY / Math.sqrt(accX * accY));
+    // console.log('Pearson correlation:', accXY / Math.sqrt(accX * accY));
     return accXY / Math.sqrt(accX * accY);
 }
 
@@ -309,7 +309,7 @@ async function getRatedLearningObjects(ratings, accessToken) {
                 },
             }
         );
-        console.log('Rated learning objects:', ratedLOs.data);
+        // console.log('Rated learning objects:', ratedLOs.data);
         return ratedLOs.data;
     } catch (error) {
         console.error('Error fetching rated learning objects:', error);
@@ -337,26 +337,26 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
             id: lo._id,
             score: getScoreArray(lo.score),
         }));
-        console.log('Learning object scores: ', loScores);
+        // console.log('Learning object scores: ', loScores);
 
         // Apply K-means to cluster all learning objects scores
         const clusters = kMeans(loScores, 2, hammingDistance);
-        console.log('Clusters:', clusters);
+        // console.log('Clusters:', clusters);
 
         const nearestClusterLOs = getNearestCluster(clusters, userLS).points;
-        console.log('Nearest cluster LOs:', nearestClusterLOs);
+        // console.log('Nearest cluster LOs:', nearestClusterLOs);
         
         // predict initial ratings for learning objects in the nearest cluster
         const predictedRatings = nearestClusterLOs.map((lo) => ({
             learningObjectId: lo.id,
             rating: predictInitialRating(lo.score, userLS),
         }));
-        console.log('Predicted ratings:', predictedRatings);
+        // console.log('Predicted ratings:', predictedRatings);
 
         // get top 5 learning objects with highest predicted ratings
         predictedRatings.sort((a, b) => b.rating - a.rating);
         const topNPredictedRatings = predictedRatings.slice(0, 5);
-        console.log('Top N predicted ratings:', topNPredictedRatings);
+        // console.log('Top N predicted ratings:', topNPredictedRatings);
 
         // get learning objects with predicted ratings using learning object ids
         const filteredLearningObjects = learningObjects.filter(lo => {
@@ -371,11 +371,11 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
             score: getScoreArray(ratedLOs.find(lo => lo._id === rating.learningObjectId).score),
             rating: rating.rating,
         }));
-        console.log('Rated learning objects:', ratingScores);
+        // console.log('Rated learning objects:', ratingScores);
 
         // // apply k-means clustering to learning objects rated by by learning styles
         const clusters = kMeans(ratingScores, 2, euclideanDistance);
-        console.log('Clusters:', clusters);
+        // console.log('Clusters:', clusters);
 
         let predictedRatings = [];
 
@@ -384,26 +384,26 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
             const newLO = learningObjects[i];
             const newLOScore = getScoreArray(newLO.score);
             const nearestCluster = getNearestCluster(clusters, newLOScore);
-            console.log('Nearest cluster:', nearestCluster);
+            // console.log('Nearest cluster:', nearestCluster);
         
             // get set of topN learning objects in the nearest cluster
            const topN = 5;
            const sortedLOs = nearestCluster.points.sort((a, b) => pearsonCorrelation(newLOScore, a.score) - pearsonCorrelation(newLOScore, b.score));
            
            const topNnearestLOs = sortedLOs.slice(0, topN);
-           console.log('Top N nearest learning objects:', topNnearestLOs);
+        //    console.log('Top N nearest learning objects:', topNnearestLOs);
            
            // calculate predicted rating for new learning object
             const predictedRating = predictNewLORating(topNnearestLOs, newLOScore);
-            console.log('Predicted rating:', predictedRating);
+            // console.log('Predicted rating:', predictedRating);
             predictedRatings.push({id: newLO._id, rating: predictedRating});
         }
         // 
-        console.log('Predicted ratings:', predictedRatings);
+        // console.log('Predicted ratings:', predictedRatings);
 
         predictedRatings.sort((a, b) => b.rating - a.rating);
-        const topNPredictedRatings = predictedRatings.slice(0, 5);
-        console.log('Top N predicted ratings:', topNPredictedRatings);
+        const topNPredictedRatings = predictedRatings.slice(0, 35);
+        // console.log('Top N predicted ratings:', topNPredictedRatings);
 
         // get learning objects with predicted ratings using learning object ids
         const filteredLearningObjects = learningObjects.filter(lo => {

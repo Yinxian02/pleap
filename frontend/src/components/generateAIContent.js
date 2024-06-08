@@ -45,17 +45,23 @@ class GenerateAIContent extends Component{
             "value": 1 (if correct) 0 (if wrong)]}, 
             ... ] } ... ]`;
       
-      let mcqResponse;
+      // console.log(mcqPrompt);
+      // let mcqResponse;
+      let openAImcqResponse;
+      let vertexAImcqResponse;
 
       try {
-        mcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken);
+        openAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'openAI');
+        console.log(openAImcqResponse);
+        vertexAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'vertexAI');
+        console.log(vertexAImcqResponse);
       } catch (error) {
         console.error('Error generating mcq:', error);
         return undefined;
       }
 
       const mcqObject = new LearningObject("MCQ", "text/plain", "active", "questionnaire", "medium");
-      mcqObject.setQuestionnaire(mcqResponse);
+      mcqObject.setQuestionnaire(openAImcqResponse, vertexAImcqResponse);
       mcqObject.setAIGenerated();
       return mcqObject.getJSON();
     }

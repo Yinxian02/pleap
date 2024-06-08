@@ -41,7 +41,8 @@ app.use(requireAuth);
 app.use('/users', require('./routes/api/users'));
 app.use('/lessons', require('./routes/api/lessons'));
 app.use('/learning-objects', require('./routes/api/learning-objects'));
-app.use('/generativeAI', require('./routes/api/generativeAI'));
+app.use('/openAI', require('./routes/api/openAI'));
+app.use('/vertexAI', require('./routes/api/vertexAI'));
 app.use('/ratings', require('./routes/api/ratings'));
 
 app.all('*', (req, res) => {

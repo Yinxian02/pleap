@@ -56,7 +56,11 @@ const learningObjectSchema = new Schema({
         audio: { type: String, default: "" },
         image: { type: String, default: "" },
         video: { type: String, default: "" },
-        questionnaire: { type: [questionnaireSchema], required: true },
+        // questionnaire: { type: [questionnaireSchema], required: true },
+        questionnaire: {
+            openAI: { type: [questionnaireSchema], default: [] },
+            vertexAI: { type: [questionnaireSchema], default: [] }
+        },
         exercise: { type: [exerciseSchema], required: true },
         glossary: { type: [glossarySchema], required: true },
         embed: { type: Boolean, default: false },

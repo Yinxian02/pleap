@@ -23,13 +23,15 @@ const parseJSONArray = (text) => {
     }
 }
 
-const generateAndParseResponse = async (prompt, accessToken, maxAttempts = 3) => {
+const generateAndParseResponse = async (prompt, accessToken, apiType, maxAttempts = 3) => {
+    console.log(`Generating and parsing response for ${apiType}...`)
     let attempts = 0;
     let parsedResponse;
 
     while (attempts < maxAttempts) {
         try {
-            const response = await generateTextResponse(prompt, accessToken);
+            const response = await generateTextResponse(prompt, accessToken, apiType);
+            console.log(response);
             parsedResponse = parseJSONArray(response);
             console.log(parsedResponse);
             break;

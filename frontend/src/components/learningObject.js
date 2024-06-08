@@ -39,8 +39,9 @@ export class LearningObject {
         this.video = video;
     }
 
-    setQuestionnaire(questionnaire){    
-        this.questionnaire = questionnaire;
+    setQuestionnaire(openAIQuestionnaire, vertexAIQuestionnaire){    
+        this.openAIQuestionnaire = openAIQuestionnaire;
+        this.vertexAIQuestionnaire = vertexAIQuestionnaire;
     }
 
     setExercise(exercise){
@@ -93,7 +94,10 @@ export class LearningObject {
                 audio: this.audio,
                 image: this.image,
                 video: this.video,
-                questionnaire: this.questionnaire, // choices
+                questionnaire: {
+                    openAI: this.openAIQuestionnaire, // choices
+                    vertexAI: this.vertexAIQuestionnaire
+                },
                 exercise: this.exercise, // question and answer
                 glossary: this.glossary, // term and definition
                 embed: this.embed,

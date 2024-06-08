@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const generateTextResponse = async (textPrompt, accessToken) => {
+const generateTextResponse = async (textPrompt, accessToken, apiType) => {
+    console.log(`Generating text response for ${apiType}...`)
     try {
         const response = await axios.post(
-            'http://localhost:5001/generativeAI/generateText',
+            `http://localhost:5001/${apiType}/generateText`,
             { textPrompt: textPrompt },
             {
                 headers: {

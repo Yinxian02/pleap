@@ -5,7 +5,10 @@ import { MdOutlineKeyboardArrowRight,
         MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { BsStars } from "react-icons/bs";
 
-const McqQuiz = ({questionnaire}) => {
+const McqQuiz = ({ questionnaire }) => {
+    const openAIQuestionnaire = questionnaire.openAI; 
+    const vertexAIQuestionnaire = questionnaire.vertexAI;
+
     const [currentQuestionNum, setCurrentQuestionNum] = useState(0); 
     
     const [answerIndex, setAnswerIndex] = useState(null); 
@@ -17,8 +20,13 @@ const McqQuiz = ({questionnaire}) => {
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
 
-    const currentQuestion = questionnaire[currentQuestionNum];
-    const { question, choices, _id } = currentQuestion;
+    const [selectedQuiz, setSelectedQuiz] = useState(null);
+
+    // const currentQuestion = questionnaire[currentQuestionNum];
+    const currentQuestionOpenAI = openAIQuestionnaire[currentQuestionNum];
+    const currentQuestionVertexAI = vertexAIQuestionnaire[currentQuestionNum];
+
+    // const { question, choices, _id } = currentQuestion;
 
     const onSelectChoice = (choice, index) => {
         setAnswerIndex(index); 
@@ -33,6 +41,8 @@ const McqQuiz = ({questionnaire}) => {
     const onClickPrev = async () => {
         if (currentQuestionNum !== 0) {
             setCurrentQuestionNum((prev) => prev - 1); 
+        } else {
+            setSelectedQuiz(null);
         }
     }
 
@@ -40,7 +50,7 @@ const McqQuiz = ({questionnaire}) => {
         if (showCorrectAnswer) {
             setShowCorrectAnswer(false);  
             setAnswerIndex(null);
-            if (currentQuestionNum !== questionnaire.length - 1) {
+            if (currentQuestionNum !== openAIQuestionnaire.length - 1) {
                 setCurrentQuestionNum((prev) => prev + 1);
             } else {
                 setShowResult(true);
@@ -51,54 +61,83 @@ const McqQuiz = ({questionnaire}) => {
         setAnswerIndex(null);
         setResult((prev) => prev + answer);
 
-        if (currentQuestionNum !== questionnaire.length - 1) {
+        if (currentQuestionNum !== openAIQuestionnaire.length - 1) {
             setCurrentQuestionNum((prev) => prev + 1);
         } else {
             setShowResult(true);
         }
     }
 
-    return <div className="mcq-div">
-        <span>
-            <BsStars className="ai-icon"/>
-        </span>
-        {!showResult ? (
-        <>
-            <span className="quiz-progress">{currentQuestionNum + 1} / {questionnaire.length} </span>
-            <br />
-            <br />
-            <h2>{question}</h2>
-            <ul>
-                {choices.map((choice, index) => (
-                    <li
-                        onClick={() => onSelectChoice(choice, index)}
-                        key={choice.text}
-                        className={answerIndex === index ?
-                            (showCorrectAnswer && correctAnswer !== null ?
-                                (correctAnswer ? "correct-answer" : "incorrect-answer")
-                                : "selected-answer")
-                            : "unselected-answer"}             
-                    >
-                        {choice.text}
-                    </li>
-                ))}
-            </ul>
-        
-        <div className="footer">
-            <button onClick={onClickPrev} className="quizButton">
-                <MdOutlineKeyboardDoubleArrowLeft/>
-            </button>
-            <button onClick={showCorrectAnswer ? onClickNext : () => setShowCorrectAnswer(true)} className="quizButton" disabled={answerIndex === null}>
-                { showCorrectAnswer ? <MdOutlineKeyboardDoubleArrowRight/> : <MdOutlineKeyboardArrowRight/>}
-            </button>
+    return (
+        <div className="mcq-div">
+            <span>
+                <BsStars className="ai-icon"/>
+            </span>
+            {!showResult ? (
+                <>
+                    <span className="quiz-progress">{currentQuestionNum + 1} / {openAIQuestionnaire.length} </span>
+                    <br />
+                    <br />
+                    <div className="quiz-container" >
+                        {selectedQuiz !== 'vertexAI' && (
+                            <div className="quiz-section" onClick={() => setSelectedQuiz('openAI')}>
+                                {/* <h2>OpenAI</h2> */}
+                                <h3>{currentQuestionOpenAI.question}</h3>
+                                <ul>
+                                    {currentQuestionOpenAI.choices.map((choice, index) => (
+                                        <li
+                                            onClick={() => { onSelectChoice(choice, index); setSelectedQuiz('openAI'); }}
+                                            key={choice.text}
+                                            className={answerIndex === index ?
+                                                (showCorrectAnswer && correctAnswer !== null ?
+                                                    (correctAnswer ? "correct-answer" : "incorrect-answer")
+                                                    : "selected-answer")
+                                                : "unselected-answer"}
+                                        >
+                                            {choice.text}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                        {selectedQuiz !== 'openAI' && (
+                            <div className="quiz-section" onClick={() => setSelectedQuiz('vertexAI')}>
+                                {/* <h2>VertexAI</h2> */}
+                                <h3>{vertexAIQuestionnaire[currentQuestionNum].question}</h3>
+                                <ul>
+                                    {vertexAIQuestionnaire[currentQuestionNum].choices.map((choice, index) => (
+                                        <li
+                                            onClick={() => { onSelectChoice(choice, index); setSelectedQuiz('vertexAI'); }}
+                                            key={choice.text}
+                                            className={answerIndex === index ?
+                                                (showCorrectAnswer && correctAnswer !== null ?
+                                                    (correctAnswer ? "correct-answer" : "incorrect-answer")
+                                                    : "selected-answer")
+                                                : "unselected-answer"}
+                                        >
+                                            {choice.text}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+                    <div className="footer">
+                        <button onClick={onClickPrev} className="quizButton">
+                            <MdOutlineKeyboardDoubleArrowLeft />
+                        </button>
+                        <button onClick={showCorrectAnswer ? onClickNext : () => setShowCorrectAnswer(true)} className="quizButton" disabled={answerIndex === null}>
+                            {showCorrectAnswer ? <MdOutlineKeyboardDoubleArrowRight /> : <MdOutlineKeyboardArrowRight />}
+                        </button>
+                    </div>
+                </>
+            ) : (
+                <div>
+                    Final results: {result} / {openAIQuestionnaire.length}
+                </div>
+            )}
         </div>
-        </>
-        ) : (
-        <div>
-            Final results: {result} / {questionnaire.length}
-        </div>) 
-        }
-    </div>
+    );
 }
 
 export default McqQuiz; 

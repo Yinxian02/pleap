@@ -1,19 +1,32 @@
 .quiz-container {
-    align-items: center; /* Vertically center */
-    width: 500px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    background-color: var(--inputColor);
+}
+
+.quiz-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
     background-color: var(--inputColor);
     border-radius: 4px;
     padding: 60px 60px;
     box-sizing: border-box; 
     display: grid;
-    margin: 0 auto; 
+    margin: 5px; 
     box-shadow: 0 4px 4px var(--hoverShadowColor); 
     transition: opacity 0.5s ease;
 }
 
-.quiz-container.fade-out {
+.quiz-section.fade-out {
     opacity: 0;
 }
+
+/* .quiz-section:hover{
+    background-color: var(--hoverColorLight);
+} */
 
 .quiz-progress {
     font-size: 12px;
@@ -21,7 +34,10 @@
 }
 
 .mcq-div {
-    width: 100%;
+    /* width: 100%; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 ul {
