@@ -12,7 +12,7 @@ import { kMeans,
     retrieveLORatings, 
     getAllLearningStyles} from './filteringFunctions';
 
-const calculateR3 = async (ratings, loScore, accessToken) => {
+const calculateContentPrediction = async (ratings, loScore, accessToken) => {
     const ratedLOs = await getRatedLearningObjects(ratings, accessToken);
     
     const ratingScores = ratings.map((rating) => ({
@@ -34,12 +34,10 @@ const calculateR3 = async (ratings, loScore, accessToken) => {
     console.log('Top N nearest learning objects:', topNnearestLOs);
     
     // calculate predicted rating for new learning object
-    const r3 = predictNewLORating(topNnearestLOs, loScore); 
-    console.log(r3); 
-    return r3;
+    return predictNewLORating(topNnearestLOs, loScore); 
 }
 
-const calculateR1 = (nearestClusterLS, userLS, ratingsForLO) => {
+const calculateCollaborativePrediction = (nearestClusterLS, userLS, ratingsForLO) => {
     const sortedClusterLS = nearestClusterLS.sort((a, b) => pearsonCorrelation(a.score, userLS) - pearsonCorrelation(b.score, userLS));
     console.log('Sorted cluster LS:', sortedClusterLS);
 
@@ -56,9 +54,8 @@ const calculateR1 = (nearestClusterLS, userLS, ratingsForLO) => {
         }
     });
     console.log('Top N cluster LS:', topNclusterLSRated);
-    const r1 = predictNewLORating(topNclusterLSRated, userLS);
-    console.log(r1);
-    return r1;
+
+    return predictNewLORating(topNclusterLSRated, userLS);
 }
 
 async function hybridFiltering(learningObjects, userId, learningPreferences, accessToken, weight){
@@ -102,12 +99,12 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
         if (ratingsForLO.length === 0 && allRatingsByUser.length === 0) {
             predictedRating = predictInitialRating(userLS, loScore);
         } else if (ratingsForLO.length === 0) {
-            predictedRating = await calculateR3(allRatingsByUser, loScore, accessToken);
+            predictedRating = await calculateContentPrediction(allRatingsByUser, loScore, accessToken);
         } else if (allRatingsByUser.length === 0) {
-            predictedRating = calculateR1(nearestClusterLS, userLS, ratingsForLO);
+            predictedRating = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
         } else {
-            const r1 = calculateR1(nearestClusterLS, userLS, ratingsForLO);
-            const r3 = await calculateR3(allRatingsByUser, loScore, accessToken);
+            const r1 = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
+            const r3 = await calculateContentPrediction(allRatingsByUser, loScore, accessToken);
             predictedRating = weight * r1 + (1 - weight) * r3; 
         }
 
@@ -131,8 +128,6 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
     });
     console.log('Filtered learning objects:', filteredLearningObjects);
     return filteredLearningObjects;
-    
-
 }
 
 export { hybridFiltering };

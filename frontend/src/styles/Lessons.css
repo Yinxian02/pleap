@@ -1,30 +1,78 @@
-.lesson-link-div {
-    justify-content: space-evenly; /* Horizontally center */
-    align-items: center;  
-    width: 70%;
-    border-radius: 4px;
-    padding: 60px 60px;
-    box-sizing: border-box; 
+.lessons-list {
     display: flex;
-    flex-direction: row;
-    margin: 2em auto; 
-    box-shadow: 0 4px 4px var(--hoverShadowColor); 
-    text-align: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+}
+  
+.lessons-link-div {
+    /* max-width: 500px; */
+    background: #FFF1CD;
+    border: 1px solid #FFB800;
+    border-radius: 20px;
+    overflow: hidden;
     text-decoration: none;
-    color: var(--txtColorDark);
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 70px 38px 50px;
+    margin: 0 30px;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 4px var(--hoverShadowColor); 
 }
-
-
-.lesson-link-div:hover {  
-    /* color: var(--txtColorDark);  */
-    background-color: var(--componentColorDark);
+  
+.lessons-link-div:hover {
+    transform: scale(1.05);
+    box-shadow: 7.5px 7.5px 0px 2px #FFB800;
 }
-
-.lesson-title {
-    font-size: larger;
+  
+.lessons-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+    height: 100%;
+  }
+  
+.lessons-title-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     text-align: center;
 }
 
-.lesson-author { 
+.lessons-title {
+    color: #FFB800;
+    font-size: 35px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+}
+  
+.lessons-subtitle {
+    color: #FFB800;
+    font-size: 21.6px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 450;
+    word-wrap: break-word;  
+}
+  
+.lessons-thumbnail {
+    width: 275px;
+    height: 239px;
+}
+  
+.lessons-description {
+    width: 274px;
     text-align: center;
+    color: #3E3E3E;
+    font-size: 20px;
+    font-family: 'Lusitana', serif;
+    font-weight: 400;
+    word-wrap: break-word;
 }

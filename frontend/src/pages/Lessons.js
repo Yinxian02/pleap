@@ -11,22 +11,16 @@ class Lesson extends Component {
     const { title, description, thumbnail, _id } = this.props.lesson;
 
     return (
-      // <div className="lesson-div-container">
-        <Link className="lesson-link-div" to={"/lesson/" + _id}>
-          {/* <div>
-            <img
-              src={ thumbnail }
-              alt="Slide"
-              style={{ width: '300px', maxWidth: '100%', height: 'auto' }}
-            />
-          </div> */}
-          <div>
-            <h2 className='lesson-title'>{title}</h2>
-            {/* <h3 className='lesson-author'>{author}</h3> */}
-            <p>{description}</p>
+      <Link className="lessons-link-div" to={"/lesson/" + _id}>
+        <div className="lessons-content">
+          <div className="lessons-title-container">
+            <div className="lessons-title">{title.split(' ')[0]}</div>
+            <div className="lessons-subtitle">{title.split(' ').slice(1).join(' ')}</div>
           </div>
-        </Link>
-      // </div>
+          <img className="lessons-thumbnail" src={thumbnail} alt="Slide" />
+          <div className="lessons-description">{description}</div>
+        </div>
+      </Link>
     );
   }
 }
