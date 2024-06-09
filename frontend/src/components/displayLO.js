@@ -56,7 +56,8 @@ export function displayLO(learningObject) {
         </div>
 
     } else if (LRT === "narrative text" 
-                || LRT === "problem statement"){
+                || LRT === "problem statement"
+                || LRT === "exercise"){
         return <div className="lo-container-div">
             <NarrativeText learningObject={learningObject} />
             <Rating id={learningObject._id}/>

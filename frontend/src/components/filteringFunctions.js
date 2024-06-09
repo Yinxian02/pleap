@@ -269,5 +269,4 @@ const predictNewLORating = (topNnearestLOs, newLOScore) => {
     return accNum / accDen;
 }
 
-
 export { kMeans, euclideanDistance, cosineSimilarity, pearsonCorrelation, getScoreArray, getPreferencesArray, calculateMean, calculateVectorsMean, hammingDistance, getNearestCluster, predictInitialRating, predictNewLORating }

@@ -70,7 +70,7 @@ async function collaborativeFiltering(learningObjects, userId, learningPreferenc
     console.log('Clusters:', clusters);
 
     // select the nearest cluster to userLS
-    const nearestCluster = getNearestCluster(clusters, userLS);
+    const nearestCluster = getNearestCluster(clusters, userLS).points;
     console.log('Nearest cluster:', nearestCluster);
 
     const predictedRatings = [];
@@ -85,37 +85,38 @@ async function collaborativeFiltering(learningObjects, userId, learningPreferenc
         const ratings = await retrieveLORatings(lo._id, accessToken);
         console.log('Ratings:', ratings);
 
+        let predictedRating = 0;
+
         // if no ratings, assign average rating
         if (ratings.length === 0) {
             // console.log(userLS, lo.score);
-            const predictedRating = predictInitialRating(userLS, loScore);
+            predictedRating = predictInitialRating(userLS, loScore);
             console.log('Predicted rating:', predictedRating);
-            predictedRatings.push({
-                learningObjectId: lo._id,
-                rating: predictedRating
-            });
-        } else {
-            // set of top n nearest elements to userLS that have rated the learning object
-            const nearestClusterLS = nearestCluster.points.map(ls => ls.id);
-            const nearestClusterRatings = ratings.filter(r => nearestClusterLS.includes(r.userId));
-            console.log('Nearest cluster ratings:', nearestClusterRatings);
             
-            // nearestClusterRatings.sort((a, b) => b.)
-            // const predictedRating = predictNewLORating(nearestClusterRatings, loScore);
-            // const nearestLS = ratings.filter(r => {
-            //     return nearestCluster.points.map(ls => ls.id).includes(r.userId);
-            // });
-            // const topNnearestLS = nearestLS.slice(0, 5);
-            // const predictedRating = predictNewLORating(topNnearestLS, userLS);
+        } else {
+            // set of top n nearest elements to userLS in ratings
+            // const nearestClusterLS = nearestCluster.sort((a, b) => b.);
+            const sortedClusterLS = nearestCluster.sort((a, b) => pearsonCorrelation(a.score, userLS) - pearsonCorrelation(b.score, userLS));
+            console.log('Sorted cluster LS:', sortedClusterLS);
 
-            // console.log('Nearest LSs:', nearestLS);
-            // const predictedRating = 
+            const topNclusterLS = sortedClusterLS.slice(0, 5);
+            const topNclusterLSRated = topNclusterLS.map(ls => {
+                const userRating = ratings.find(r => r.userId === ls.id);   
+                return {
+                    id: ls.id,
+                    score: ls.score,
+                    rating: userRating.rating
+                }
+            });
+            console.log('Top N cluster LS:', topNclusterLSRated);
+            predictedRating = predictNewLORating(topNclusterLSRated, userLS);
         }
-
-        // get the ratings of the nearest cluster LOs
-
-
+        predictedRatings.push({
+            learningObjectId: lo._id,
+            rating: predictedRating
+        });
     }
+
     console.log('Predicted ratings:', predictedRatings);
     predictedRatings.sort((a, b) => b.rating - a.rating);
     console.log('Sorted predicted ratings:', predictedRatings);

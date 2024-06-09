@@ -42,8 +42,8 @@ const LessonFetch = ({lesson}) => {
     if (learningObjects.length > 0) {
       const fetchFilteredLearningObjects = async () => {
         try {
-          const filteredObjects = await contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
-          // const filteredObjects = await collaborativeFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
+          // const filteredObjects = await contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
+          const filteredObjects = await collaborativeFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
           setFilteredLearningObjects(filteredObjects);
           console.log(filteredObjects);
         } catch (error) {
@@ -65,6 +65,9 @@ const LessonFetch = ({lesson}) => {
                 {filteredLearningObjects.map((lo, index) => (
                     <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
                   ))}
+                  {/* {learningObjects.map((lo, index) => (
+                    <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
+                  ))} */}
               </div>
             </div>
     
