@@ -27,7 +27,7 @@ body {
   color: var(--txtColorDark); 
 }
 
-.navbar {
+/* .navbar {
   background: none;
   height: 75px;
   display: flex;
@@ -60,7 +60,7 @@ body {
   background-color: var(--componentColorDark);
   transition: 450ms;
   z-index: 2;
-  /* position: relative; */
+  /* position: relative;  
 }
 
 .nav-text {
@@ -103,7 +103,7 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-}
+} */
 
 /* span {
   margin-left: 16px;
@@ -165,8 +165,16 @@ button:hover {
   color: #4444449e;
 }
 
-/* .ai-icon {
-    width: 24px; 
-    height: 24px;  
-    fill: url(#bluePurpleGradient);
-} */
+.top-navigation-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  margin: 2em auto; 
+}
+
+.profile-icon {
+    width: 30px; 
+    height: 30px;  
+    color: var(--txtColorMedium);
+}

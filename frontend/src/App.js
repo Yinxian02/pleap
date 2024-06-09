@@ -13,6 +13,8 @@ import AddLesson from './pages/AddLesson'
 import RequireAuth from './components/RequireAuth';
 import Missing from './pages/Missing';
 import ProfileQuiz from './components/profile-quiz.component'
+import ProfileIcon from './components/ProfileIcon'
+import LessonIcon from './components/LessonIcon'
 
 const ROLES = {
   'User': 2001,
@@ -25,25 +27,29 @@ function App() {
   return (
     <>
       <Router>
-        <Navbar/>
-          <Routes>
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/signup' element={<Signup/>}/>
+        <div className='top-navigation-bar'>
+          {/* <Navbar/> */}
+          <LessonIcon className='lessons-icon'/>
+          <ProfileIcon className='profile-icon'/>
+        </div>
+        <Routes>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/signup' element={<Signup/>}/>
 
-            <Route path="/" element={<RequireAuth allowedRoles={[ROLES.User]} redirectTo="/lessons" fallback={<Navigate to="/login" />} />}>
-              <Route index element={<Navigate to="/lessons" />} />
-            </Route>
-            
-            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-              <Route path='profile' element={<Profile/>}/>
-              <Route path='profile-quiz' element={<ProfileQuiz/>}/>
-              <Route path='lessons' element={<Lessons/>}/>
-              <Route path='lesson/:id' element={<LessonWrapper/>}/>
-              <Route path='create-lesson' element={<AddLesson/>}/> 
-            </Route>
+          <Route path="/" element={<RequireAuth allowedRoles={[ROLES.User]} redirectTo="/lessons" fallback={<Navigate to="/login" />} />}>
+            <Route index element={<Navigate to="/lessons" />} />
+          </Route>
+          
+          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+            <Route path='profile' element={<Profile/>}/>
+            <Route path='profile-quiz' element={<ProfileQuiz/>}/>
+            <Route path='lessons' element={<Lessons/>}/>
+            <Route path='lesson/:id' element={<LessonWrapper/>}/>
+            <Route path='create-lesson' element={<AddLesson/>}/> 
+          </Route>
 
-            <Route path="*" element={<Missing/>} />
-          </Routes>      
+          <Route path="*" element={<Missing/>} />
+        </Routes>      
       </Router>
     </>
   );
