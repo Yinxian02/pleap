@@ -60,18 +60,19 @@ const LessonFetch = ({lesson}) => {
   }, [learningObjects, auth.id, auth.preferences, auth.accessToken]);
   
     return <div>
-              <h2 className="lesson-title">{lesson.title}</h2>
-              <h3 className="lesson-author">{lesson.author}</h3>
+            <div className='lesson-header'>
+              <p className="lesson-title">{lesson.title}</p>
+              <p className="lesson-author">{lesson.author}</p>
               <p className="lesson-description">{lesson.description}</p>
-              <br/>
+            </div>
 
-              <div>
-                {filteredLearningObjects.map((lo, index) => (
-                    <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
-                  ))}
-                  {/* {learningObjects.map((lo, index) => (
+              <div className='learning-objects-divs-container'>
+                {/* {filteredLearningObjects.map((lo, index) => (
                     <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
                   ))} */}
+                  {learningObjects.map((lo, index) => (
+                    <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
+                  ))}
               </div>
             </div>
     

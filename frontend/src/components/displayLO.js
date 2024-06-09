@@ -8,6 +8,7 @@ import Challenge from "./Challenge.component";
 import Glossary from "./Glossary.component";
 import NarrativeText from "./NarrativeText.component";
 import Rating from "./Rating.component";
+import Embed from "./Embed.component";
 
 function isGlossary(learningObject) {
     return (learningObject.content.glossary.vertexAI !== null && learningObject.content.glossary.vertexAI.length > 0 
@@ -58,36 +59,11 @@ export function displayLO(learningObject) {
     } else if (LRT === "narrative text" 
                 || LRT === "problem statement"
                 || LRT === "exercise"){
-        return <div className="lo-container-div">
-            <NarrativeText learningObject={learningObject} />
-            <Rating id={learningObject._id}/>
-        </div>
+        return <NarrativeText learningObject={learningObject} />
     }
 
     
     if (learningObject.content.embed) {
-        const URL = learningObject.content.link;
-        const embedCaption = learningObject.content.text ? markDownToHtml(learningObject.content.text) : "Click here to view the content";
-        return (
-            <div style={{ width: '100%', height: '100%' }}>
-                <div dangerouslySetInnerHTML={{ __html: embedCaption }} />
-                <br/>
-                <iframe 
-                    allowfullscreen="true" 
-                    frameborder="0" 
-                    height="300" 
-                    src={ URL } 
-                    title= {learningObject.general.title}
-                    width="100%"></iframe>
-                <Rating id={learningObject._id}/>
-            </div>
-        )
+        return <Embed learningObject={learningObject} />
     }
-
-    // if (learningObject.technical.format === "text/plain"){
-    //     const htmlText = markDownToHtml(learningObject.content.text);
-    //     return (
-    //         <div dangerouslySetInnerHTML={{ __html: htmlText }} />
-    //     );
-    // }
 }

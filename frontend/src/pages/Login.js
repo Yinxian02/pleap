@@ -72,8 +72,8 @@ const Login = () => {
     return (
         <div className="login-container">
         <section>
-            <p ref={errRef} className={error ? "errmsg" : "offscreen"} aria-live="assertive">{error}</p>
             <h1>Sign In</h1>
+            <p ref={errRef} className={error ? "errmsg" : "offscreen"} aria-live="assertive">{error}</p>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Email:</label>
                 <input

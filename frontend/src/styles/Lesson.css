@@ -1,61 +1,59 @@
-.lesson-description {
-    display: flex;
+.lesson-header {
+    display: grid;
     justify-content: center; /* Center horizontally */
     align-items: center; 
-}
-
-.learning-object-div {
-    justify-content: space-between; /* Horizontally center */
-    align-items: center;  
-    width: 90%;
-    background-color: var(--componentColorDark);
-    border-radius: 4px;
-    padding: 60px 60px;
-    box-sizing: border-box; 
-    display: flex;
-    flex-direction: row;
-    margin: 5em auto; 
-    box-shadow: 0 4px 4px var(--hoverShadowColor); 
+    text-align: center;
 }
 
 .lesson-title {
-    font-size: larger;
-    text-align: center;
+    color: #3E3E3E;
+    font-size: 35px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    word-wrap: break-word;
+    margin-bottom: 10px;
 }
 
-.lesson-author { 
-    text-align: center;
+.lesson-author {
+    color: #3E3E3E;
+    font-size: 21.6px;
+    font-family: 'Lusitana', serif;
+    font-weight: 700;
+    word-wrap: break-word;
+    margin-bottom: 10px;
 }
 
-.learning-objects-div {
-    margin: 5em;
+.lesson-description {
+    color: #3E3E3E;
+    font-size: 21.6px;
+    font-family: 'Lusitana', serif;
+    font-weight: 400;
+    word-wrap: break-word;
+    margin-bottom: 10px;
 }
 
-.narrative-text {
+
+.learning-objects-divs-container {
+    margin-top: 100px;
+    width: 80%;
+    display: grid;
+    /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 10%;
+}
+
+.learning-object-div {
     width: 100%;
-}
-
-.audio-header {
-    display: flex;
-    justify-content: flex-end; 
-}
-
-.audioButton {
-    inherits: none;
-    background-color: var(--inputColor);
-    border: none;
-    border-radius: 0px; 
-    padding: 10px 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    box-shadow: none; 
-}
-
-.audioButton:hover {
-    color: var(--buttonHoverColor);
-    background-color: var(--inputColor);
-    border: none;
+    height: 100%;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    display: inline-flex;
 }
 
 textarea {

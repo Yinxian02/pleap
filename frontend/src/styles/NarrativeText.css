@@ -1,0 +1,72 @@
+.narrative-text-div {
+    width: 100%;
+    height: 100%;
+    padding-top: 25px;
+    padding-bottom: 40px;
+    padding-left: 30px;
+    padding-right: 29px;
+    background: #FFF1CD;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px #FFB800 solid;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    display: inline-flex;
+}
+
+.narrative-title-container {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.narrative-icon{
+    color: #FFB800;
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+.narrative-title {
+    color: #FFB800;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    word-wrap: break-word;
+}
+
+.narrative-text {
+    /* width: 885px; */
+    color: #3E3E3E;
+    font-size: 20px;
+    font-family: 'Lusitana', serif;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+.audio-header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; 
+}
+
+.audioButton {
+    inherits: none;
+    background: #FFF1CD;
+    border: none;
+    border-radius: 0px; 
+    padding: 10px 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: none; 
+}
+
+.audioButton:hover {
+    color: #FFB800;
+    background: #FFF1CD;
+    border: none;
+}

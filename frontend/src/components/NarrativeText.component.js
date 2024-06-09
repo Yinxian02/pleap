@@ -3,8 +3,11 @@ import { useState, useEffect, useRef } from "react";
 import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
 import { FaImages } from "react-icons/fa6";
 import { BiHide } from "react-icons/bi";
+import { MdOutlineShortText } from "react-icons/md";
 
 import { markDownToHtml } from "./markDownToHTML";
+import Rating from "./Rating.component";
+import '../styles/NarrativeText.css';
 
 const NarrativeText = ({ learningObject }) => {
     const [audioOn, setAudioOn] = useState(false);
@@ -51,15 +54,20 @@ const NarrativeText = ({ learningObject }) => {
     }
 
     return (
-        <div className="narrative-text"> 
+        <div className="narrative-text-div"> 
             { hasAudio && (
-            <div className="audio-header">
+                <div className="audio-header">
                 <button className="audioButton" onClick={handleButtonClick}>
                     {audioOn ? <HiMiniSpeakerXMark /> : <HiMiniSpeakerWave />}
                 </button>
             </div>) }
+            
+            <div className="narrative-title-container">
+                <MdOutlineShortText className="narrative-icon"/>
+                <h1 className="narrative-title">{learningObject.general.title}</h1>
+            </div>
 
-            <div className="narrative-content" dangerouslySetInnerHTML={{ __html: htmlText }} /> 
+            <div className="narrative-text" dangerouslySetInnerHTML={{ __html: htmlText }} /> 
             
             { hasImage && showSlide && (
 
@@ -94,6 +102,7 @@ const NarrativeText = ({ learningObject }) => {
                     </button>
                 </div>
             )}
+            <Rating id={learningObject._id}/>
         </div>
     );
 };
