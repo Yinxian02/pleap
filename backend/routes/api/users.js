@@ -36,4 +36,20 @@ router.route('/update/:id').post(verifyRoles(ROLES_LIST.User),(req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/learning-styles').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+  console.log('Getting learning styles');
+  try {
+      const users = await User.find();
+      const learningStyles = users.map(user => ({
+          id: user._id,
+          score: user.learningPreferences
+      }));
+      console.log(learningStyles);
+      res.json(learningStyles);
+  } catch (err) {
+      res.status(400).json('Error: ' + err);
+  }
+});
+
+
 module.exports = router;

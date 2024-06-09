@@ -5,7 +5,7 @@ import AuthContext from "../context/AuthContext";
 import { useParams } from 'react-router-dom';
 import { displayLO } from '../components/displayLO';
 import { contentBasedFiltering } from '../components/contentBasedFiltering';
-
+import { collaborativeFiltering } from '../components/collaborativeFiltering';
 const LessonFetch = ({lesson}) => {
   const { auth } = useContext(AuthContext);
   const [learningObjects, setLearningObjects] = useState([]);
@@ -43,6 +43,7 @@ const LessonFetch = ({lesson}) => {
       const fetchFilteredLearningObjects = async () => {
         try {
           const filteredObjects = await contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
+          // const filteredObjects = await collaborativeFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
           setFilteredLearningObjects(filteredObjects);
           console.log(filteredObjects);
         } catch (error) {
@@ -61,12 +62,9 @@ const LessonFetch = ({lesson}) => {
               <br/>
 
               <div>
-                {/* {filteredLearningObjects.map((lo, index) => (
+                {filteredLearningObjects.map((lo, index) => (
                     <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
-                  ))} */}
-                {learningObjects.map((lo, index) => (
-                  <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
-                ))}
+                  ))}
               </div>
             </div>
     

@@ -41,7 +41,7 @@ router.route('/addBatch').post(verifyRoles(ROLES_LIST.User), async (req, res) =>
 // });
 
 // get batch of learning object ratings by learning object ids
-router.route('/batch').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+router.route('/user').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
   console.log(req.body);
   const { userId } = req.body;
   
@@ -56,6 +56,24 @@ router.route('/batch').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
     const ratings = await Rating.find({ 
       userId: userId,
       // learningObjectId: { $in: learningObjectIds } 
+    });
+    console.log(ratings);
+    res.json(ratings);
+  } catch (err) {
+    res.status(400).json({ error: 'Error fetching ratings: ' + err });
+  }
+});
+
+// get learning object ratings by learning object id
+router.route('/learning-object').post(verifyRoles(ROLES_LIST.User), async (req, res) => {
+  console.log(req.body);
+  const { learningObjectId } = req.body;
+  
+  console.log(learningObjectId);
+  
+  try {
+    const ratings = await Rating.find({ 
+      learningObjectId: learningObjectId 
     });
     console.log(ratings);
     res.json(ratings);

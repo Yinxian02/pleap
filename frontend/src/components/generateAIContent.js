@@ -377,10 +377,10 @@ class GenerateAIContent extends Component{
       // console.log(lessonText);
 
       const generationFunctions = [
-        // this.createMCQ,
-        // this.createQuiz,
-        // this.createGlossary,
-        // this.createChallenge
+        this.createMCQ,
+        this.createQuiz,
+        this.createGlossary,
+        this.createChallenge
       ];
 
       const createAndAddToLOList = async (generationFunction, ...args) => {
@@ -402,13 +402,13 @@ class GenerateAIContent extends Component{
         if (learningObject.educational.learningResourceType) {
           switch (learningObject.educational.learningResourceType) {
             case "narrative text":
-              // await this.uploadGeneratedAudio(learningObject);
+              await this.uploadGeneratedAudio(learningObject);
               break;
             case "lecture":
-              // creationFunction = this.createTranscript;
+              creationFunction = this.createTranscript;
               break;
             case "slide":
-              // creationFunction = this.createDescription;
+              creationFunction = this.createDescription;
               break;
             default:
               break; 
@@ -507,13 +507,15 @@ class GenerateAIContent extends Component{
           });
     
           const lessons = res.data;
+          console.log(res.data); 
     
-          for (let i = 0; i < lessons.length; i++) {
-            const ids = await this.uploadGeneratedContent(lessons[i]._learningObjects);
-            if (ids) {
-              await this.addLearningObjectReferences(lessons[i]._id, ids);
-            }
-          }
+          // for (let i = 0; i < lessons.length; i++) {
+          //   const ids = await this.uploadGeneratedContent(lessons[i]._learningObjects);
+          //   if (ids) {
+          //     await this.addLearningObjectReferences(lessons[i]._id, ids);
+          //   }
+          // }
+            
         } catch (error) {
           console.log(error);
         }

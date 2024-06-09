@@ -77,16 +77,16 @@ const designGameLOs = [
     challengeGameExerciseLO
 ]
 
-const improveGuessingGameLOs = [
-    enrichTextLO,
-    enrichLectureLO,
-    repetitionImgLO,
-    enrichAlgorithmImgLO,
-    makeGuessingGameMoreInterestingTextLO,
-    makeGuessingGameMoreInterestingLectureLO,
-    makeGuessingGameMoreInterestingImg,
-    improveGuessingGameChallenge
-]
+// const improveGuessingGameLOs = [
+//     enrichTextLO,
+//     enrichLectureLO,
+//     repetitionImgLO,
+//     enrichAlgorithmImgLO,
+//     makeGuessingGameMoreInterestingTextLO,
+//     makeGuessingGameMoreInterestingLectureLO,
+//     makeGuessingGameMoreInterestingImg,
+//     improveGuessingGameChallenge
+// ]
 
 const AddLesson = () => {
   const [generateContent, setGenerateContent] = useState(false);
