@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { Link, useNavigate, useLocation} from 'react-router-dom';
-
+import '../styles/Login.css';
 import axios from '../api/axios';
 const LOGIN_URL = '/auth';
 
@@ -70,7 +70,7 @@ const Login = () => {
     }
 
     return (
-        <div className="container">
+        <div className="login-container">
         <section>
             <p ref={errRef} className={error ? "errmsg" : "offscreen"} aria-live="assertive">{error}</p>
             <h1>Sign In</h1>
@@ -87,6 +87,7 @@ const Login = () => {
                     className="transparent-input"
                 />
                 <br/>
+                <br/>
 
                 <label htmlFor="password">Password:</label>
                 <input
@@ -100,12 +101,11 @@ const Login = () => {
                 <br/>
                 <button>Login</button>
             </form>
-            <p>
-                <br/>   
-                <span className="line">
-                    <Link to="/signup">Register to be a builder</Link>
-                </span>
-            </p>
+            
+            <br/>
+           <Link className="sign-up-link" to="/signup">Register to be a builder</Link>
+
+          
         </section>
     </div>
     )

@@ -23,7 +23,7 @@
 }
 
 body {
-  background-color: var(--bgColorDark); /* Set your desired background color here */
+  background-color: #FFFAF8; /* Set your desired background color here */
   color: var(--txtColorDark); 
 }
 
