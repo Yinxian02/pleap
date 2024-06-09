@@ -1,9 +1,12 @@
 import { useState } from "react";
 
-import { MdOutlineTextFields } from "react-icons/md";
-import { BiHide } from "react-icons/bi";
+import { MdContentPaste } from "react-icons/md";
+import { GoVideo } from "react-icons/go";
+import { CgTranscript } from "react-icons/cg";
 
 import { markDownToHtml } from "./markDownToHTML";
+import Rating from "./Rating.component";
+import '../styles/Lecture.css';
 
 const Lecture = ({ learningObject }) => {
     const URL = learningObject.content.video;
@@ -15,33 +18,49 @@ const Lecture = ({ learningObject }) => {
 
     const htmlText = markDownToHtml(learningObject.content.transcript.vertexAI);
     
-    const showOrHideText = () => {
-        setShowText(!showText);
-    };
+    // const showOrHideText = () => {
+    //     setShowText(!showText);
+    // };
+
+    const showLecture = () => {
+        setShowText(false);
+    }
+
+    const showTranscript = () => {
+        setShowText(true);
+    }
 
     return (
-        <div className="slide">
-            <div style={{ textAlign: 'center' }}>
-              <iframe
-                width="500px"
-                maxWidth="100%"
-                height="315"
+        <div className="lecture-div">
+            
+            <div className="lecture-header">
+            <div className={`lecture-toggle ${showText ? 'active' : ''}`}>
+                <button className={`lecture-button ${!showText ? 'active' : ''}`} onClick={showLecture}>
+                    <GoVideo />
+                </button>
+                <button className={`lecture-button ${showText ? 'active' : ''}`} onClick={showTranscript}>
+                    <CgTranscript />
+                </button>
+            </div>
+            </div>
+
+            <div className="lecture-title-container">
+                <MdContentPaste className="lecture-icon"/>
+                <h1 className="lecture-title">{learningObject.general.title}</h1>
+            </div>
+
+            {!showText && <iframe
                 src={embedUrl}
                 title={learningObject.general.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                ></iframe>
-            </div>
-
-            <div className="slide-footer">
-                <button className="slide-button" onClick={showOrHideText}>
-                    {showText ? <BiHide /> : <MdOutlineTextFields/>}
-                </button>
-            </div>
+                className="lecture-embed-frame"
+            ></iframe>}
 
             {showText && (
                 <div className="narrative-content" dangerouslySetInnerHTML={{ __html: htmlText }} />
             )}
+            <Rating id={learningObject._id}/>
         </div>
     );
 };

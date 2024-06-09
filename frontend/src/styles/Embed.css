@@ -16,8 +16,22 @@
     display: inline-flex;  
 }
 
-.embed-title {
+.embed-title-container {
     margin-top: 50px;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.embed-icon{
+    color: #164f72;
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+.embed-title {
     color: #164f72;
     font-size: 25px;
     font-family: 'Montserrat', sans-serif;

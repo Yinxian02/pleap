@@ -21,10 +21,7 @@ export function displayLO(learningObject) {
     const LRT = learningObject.educational.learningResourceType; 
     
     if (LRT === "lecture"){
-        return <div className="lo-container-div">
-            <Lecture learningObject={learningObject} />
-            <Rating id={learningObject._id}/>
-        </div>
+        return <Lecture learningObject={learningObject} />
 
     } else if (LRT === "slide") {
         return <div className="lo-container-div">
