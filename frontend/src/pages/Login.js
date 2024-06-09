@@ -86,8 +86,6 @@ const Login = () => {
                     required
                     className="transparent-input"
                 />
-                <br/>
-                <br/>
 
                 <label htmlFor="password">Password:</label>
                 <input

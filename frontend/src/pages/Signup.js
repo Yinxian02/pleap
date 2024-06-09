@@ -104,119 +104,119 @@ const Signup = () => {
 
     return (
         <>
-            {success ? (
-                <section>
-                    <h1>Success!</h1>
-                    <p>
-                        <a href="/profile-quiz">Find out your learning style.</a>
+
+        {success ? (
+            <section>
+                <h1>Success!</h1>
+                <p>
+                    <a href="/profile-quiz">Find out your learning style.</a>
+                </p>
+            </section>
+        ) : (
+        <div className="signup-container">
+            <section>
+                <h1>Register</h1>
+                <p ref={errRef} className={error ? "errmsg" : "offscreen"} aria-live="assertive">{error}</p>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="email">
+                        Email:
+                        <TiTick className={validEmail ? "valid" : "hide"} />
+                        {/* <RxCross2 className={validEmail || !email ? "hide" : "invalid"} /> */}
+                    </label>
+                    <input
+                        type="text"
+                        id="email"
+                        ref={emailRef}
+                        autoComplete="off"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        required
+                        aria-invalid={validEmail ? "false" : "true"}
+                        aria-describedby="emailnote"
+                        onFocus={() => setEmailFocus(true)}
+                        onBlur={() => setEmailFocus(false)}
+                        className="transparent-input"
+                    />
+                    <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+                        Example: abc21@ic.ac.uk
                     </p>
-                </section>
-            ) : (
-                <div className="container">
-                <section>
-                    <h1>Register</h1>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="email">
-                            Email:
-                            <TiTick className={validEmail ? "valid" : "hide"} />
-                            {/* <RxCross2 className={validEmail || !email ? "hide" : "invalid"} /> */}
-                        </label>
-                        <input
-                            type="text"
-                            id="email"
-                            ref={emailRef}
-                            autoComplete="off"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            required
-                            aria-invalid={validEmail ? "false" : "true"}
-                            aria-describedby="emailnote"
-                            onFocus={() => setEmailFocus(true)}
-                            onBlur={() => setEmailFocus(false)}
-                            className="transparent-input"
-                        />
-                        <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
-                            Example: abc21@ic.ac.uk
-                        </p>
-                        <br/>
+                    <br/>
 
-                        <label htmlFor="name">
-                            Name:
-                        </label>
-                        <input
-                            type="text"
-                            id="name"
-                            ref={nameRef}
-                            autoComplete="off"
-                            onChange={(e) => setName(e.target.value)}
-                            value={name}
-                            required
-                            className="transparent-input"
-                        />
-                        <br/>
+                    <label htmlFor="name">
+                        Name:
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        ref={nameRef}
+                        autoComplete="off"
+                        onChange={(e) => setName(e.target.value)}
+                        value={name}
+                        required
+                        className="transparent-input"
+                    />
+                    <br/>
 
 
-                        <label htmlFor="password">
-                            Password:
-                            <TiTick className={validPassword ? "valid" : "hide"} />
-                            <RxCross2 className={validPassword || !password ? "hide" : "invalid"} />
-                        </label>
-                        <input
-                            type="password"
-                            id="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            required
-                            aria-invalid={validPassword ? "false" : "true"}
-                            aria-describedby="pwdnote"
-                            onFocus={() => setPasswordFocus(true)}
-                            onBlur={() => setPasswordFocus(false)}
-                            className="transparent-input"
-                        />
-                        <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
-                            8 to 24 characters.<br />
-                            Must include uppercase and lowercase letters, a number and a special character.<br />
-                            Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
-                        </p>
-
-                        <br/> 
-
-                        <label htmlFor="confirm_pwd">
-                            Confirm Password:
-                            <TiTick className={validMatch && matchPassword ? "valid" : "hide"} />
-                            <RxCross2 className={(validMatch && matchPassword)|| !matchPassword ? "hide" : "invalid"} />
-                        </label>
-                        <input
-                            type="password"
-                            id="confirm_pwd"
-                            onChange={(e) => setMatchPassword(e.target.value)}
-                            value={matchPassword}
-                            required
-                            aria-invalid={validMatch ? "false" : "true"}
-                            aria-describedby="confirmnote"
-                            onFocus={() => setMatchFocus(true)}
-                            onBlur={() => setMatchFocus(false)}
-                            className="transparent-input"
-                        />
-                        <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                            Must match the first password input field.
-                        </p>
-
-                        <br/><br/>
-                        <button>Sign Up</button>
-                        {/* <button disabled={!validEmail || !validPassword || !validMatch ? true : false}>Sign Up</button> */}
-                    </form>
-
-                    <br />
-                    <p ref={errRef} className={error ? "errmsg" : "offscreen"} aria-live="assertive">{error}</p>
-                    <p>
-                        <span className="line">
-                            <a href="/login">Already registered?</a>
-                        </span>
+                    <label htmlFor="password">
+                        Password:
+                        <TiTick className={validPassword ? "valid" : "hide"} />
+                        <RxCross2 className={validPassword || !password ? "hide" : "invalid"} />
+                    </label>
+                    <input
+                        type="password"
+                        id="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                        required
+                        aria-invalid={validPassword ? "false" : "true"}
+                        aria-describedby="pwdnote"
+                        onFocus={() => setPasswordFocus(true)}
+                        onBlur={() => setPasswordFocus(false)}
+                        className="transparent-input"
+                    />
+                    <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
+                        8 to 24 characters.<br />
+                        Must include uppercase and lowercase letters, a number and a special character.<br />
+                        Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
                     </p>
-                </section>
-                </div>
-            )}
+
+                    <br/> 
+
+                    <label htmlFor="confirm_pwd">
+                        Confirm Password:
+                        <TiTick className={validMatch && matchPassword ? "valid" : "hide"} />
+                        <RxCross2 className={(validMatch && matchPassword)|| !matchPassword ? "hide" : "invalid"} />
+                    </label>
+                    <input
+                        type="password"
+                        id="confirm_pwd"
+                        onChange={(e) => setMatchPassword(e.target.value)}
+                        value={matchPassword}
+                        required
+                        aria-invalid={validMatch ? "false" : "true"}
+                        aria-describedby="confirmnote"
+                        onFocus={() => setMatchFocus(true)}
+                        onBlur={() => setMatchFocus(false)}
+                        className="transparent-input"
+                    />
+                    <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                        Must match the first password input field.
+                    </p>
+
+                    <br/>
+                    <button>Sign Up</button>
+                    {/* <button disabled={!validEmail || !validPassword || !validMatch ? true : false}>Sign Up</button> */}
+                </form>
+
+                <br/>
+                
+                <a className='login-link' href="/login">Already registered?</a>
+
+            </section>
+        </div>
+
+        )}
         </>
     )
 }
