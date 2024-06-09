@@ -22262,3 +22262,5 @@
 20240609	19:30:21	89a3caae-b7ac-4dbe-ba43-82bf7dd4feb9	POST	http://localhost:3000	/learning-objects/batch
 20240609	19:30:21	660bcfd3-e9ed-4bac-a272-32d8679b27f2	POST	http://localhost:3000	/ratings/learning-object
 20240609	19:30:21	ccca1702-27dc-43b9-98f7-1a91be3424d6	POST	http://localhost:3000	/learning-objects/batch
+20240609	19:55:35	35da42e7-e2d2-4012-bb9c-983c9b3cb494	OPTIONS	http://localhost:3000	/signup
+20240609	19:55:35	48fc9f84-4529-41f5-a1ff-af1b700baa79	POST	http://localhost:3000	/signup

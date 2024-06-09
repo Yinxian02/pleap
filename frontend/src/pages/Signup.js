@@ -4,6 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 import axios from '../api/axios';
 import '../styles/SignUp.css'
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -206,13 +207,10 @@ const Signup = () => {
 
                     <br/>
                     <button>Sign Up</button>
-                    {/* <button disabled={!validEmail || !validPassword || !validMatch ? true : false}>Sign Up</button> */}
                 </form>
 
                 <br/>
-                
-                <a className='login-link' href="/login">Already registered?</a>
-
+                <Link className="login-link" to="/login">Already registered?</Link>
             </section>
         </div>
 
