@@ -4,8 +4,11 @@ import axios from 'axios';
 import AuthContext from "../context/AuthContext";
 import { useParams } from 'react-router-dom';
 import { displayLO } from '../components/displayLO';
+
 import { contentBasedFiltering } from '../components/contentBasedFiltering';
 import { collaborativeFiltering } from '../components/collaborativeFiltering';
+import { hybridFiltering } from '../components/hybridFiltering';
+
 const LessonFetch = ({lesson}) => {
   const { auth } = useContext(AuthContext);
   const [learningObjects, setLearningObjects] = useState([]);
@@ -43,7 +46,8 @@ const LessonFetch = ({lesson}) => {
       const fetchFilteredLearningObjects = async () => {
         try {
           // const filteredObjects = await contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
-          const filteredObjects = await collaborativeFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
+          // const filteredObjects = await collaborativeFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
+          const filteredObjects = await hybridFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken, 0.5);
           setFilteredLearningObjects(filteredObjects);
           console.log(filteredObjects);
         } catch (error) {

@@ -1,54 +1,13 @@
-import axios from 'axios';
-import  { kMeans, euclideanDistance, cosineSimilarity, pearsonCorrelation, getScoreArray, getPreferencesArray, calculateMean, calculateVectorsMean, hammingDistance, getNearestCluster, predictInitialRating, predictNewLORating } from './filteringFunctions';
-
-async function retrieveLORatings (id, accessToken) {
-    try {
-        const res = await axios.post(
-            `http://localhost:5001/ratings/learning-object`,
-            { learningObjectId: id },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + accessToken,
-                    mode: 'cors',
-                    withCredentials: true,
-                },
-            }
-        );
-        console.log(res.data);
-
-        if (!Array.isArray(res.data) || res.data.length === 0) {
-            return [];
-        }
-
-        const ratings = res.data;
-        return ratings;
-    } catch (error) {
-        console.error('Error fetching learning objects ratings:', error);
-      return [];
-    }
-}
-
-async function getAllLearningStyles(accessToken) {
-    try {
-        const res = await axios.post(
-            `http://localhost:5001/users/learning-styles`,
-            {}, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + accessToken,
-                    mode: 'cors',
-                    withCredentials: true,
-                },
-            }
-        );
-        // console.log(res.data);
-        return res.data;
-    } catch (error) {
-        console.error('Error fetching learning styles:', error);
-        return [];
-    }
-}
+import { kMeans, 
+    euclideanDistance,  
+    pearsonCorrelation, 
+    getScoreArray, 
+    getPreferencesArray, 
+    getNearestCluster, 
+    predictInitialRating, 
+    predictNewLORating, 
+    retrieveLORatings,
+    getAllLearningStyles} from './filteringFunctions';
 
 async function collaborativeFiltering(learningObjects, userId, learningPreferences, accessToken){
     // console.log('Learning objects: ', learningObjects);

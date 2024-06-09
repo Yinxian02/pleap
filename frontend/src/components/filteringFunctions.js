@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const arrayContainsVector = (array, vector) => {
     for (let i = 0; i < array.length; i++) {
         console.log('Comparing:', array[i], vector, isEqual(array[i], vector));
@@ -269,4 +271,120 @@ const predictNewLORating = (topNnearestLOs, newLOScore) => {
     return accNum / accDen;
 }
 
-export { kMeans, euclideanDistance, cosineSimilarity, pearsonCorrelation, getScoreArray, getPreferencesArray, calculateMean, calculateVectorsMean, hammingDistance, getNearestCluster, predictInitialRating, predictNewLORating }
+
+async function retrieveUserRatings(id, accessToken) {
+    try {
+        const res = await axios.post(
+            `http://localhost:5001/ratings/user`,
+            { userId: id },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + accessToken,
+                    mode: 'cors',
+                    withCredentials: true,
+                },
+            }
+        );
+        console.log(res.data);
+
+        if (!Array.isArray(res.data)|| res.data.length === 0) {
+            return [];
+        }
+
+        const ratings = res.data;
+        return ratings;
+    } catch (error) {
+        console.error('Error fetching user ratings by user:', error);
+        return [];
+    }
+}
+
+async function getRatedLearningObjects(ratings, accessToken) {
+    const ratedIDs = ratings.map((rating) => rating.learningObjectId);
+    try {
+        const ratedLOs = await axios.post(
+            'http://localhost:5001/learning-objects/batch',
+            { ids: ratedIDs },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + accessToken,
+                    mode: 'cors',
+                    withCredentials: true,
+                },
+            }
+        );
+        // console.log('Rated learning objects:', ratedLOs.data);
+        return ratedLOs.data;
+    } catch (error) {
+        console.error('Error fetching rated learning objects:', error);
+        return [];
+    }
+}
+
+async function retrieveLORatings (id, accessToken) {
+    try {
+        const res = await axios.post(
+            `http://localhost:5001/ratings/learning-object`,
+            { learningObjectId: id },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + accessToken,
+                    mode: 'cors',
+                    withCredentials: true,
+                },
+            }
+        );
+        console.log(res.data);
+
+        if (!Array.isArray(res.data) || res.data.length === 0) {
+            return [];
+        }
+
+        const ratings = res.data;
+        return ratings;
+    } catch (error) {
+        console.error('Error fetching learning objects ratings:', error);
+      return [];
+    }
+}
+
+async function getAllLearningStyles(accessToken) {
+    try {
+        const res = await axios.post(
+            `http://localhost:5001/users/learning-styles`,
+            {}, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + accessToken,
+                    mode: 'cors',
+                    withCredentials: true,
+                },
+            }
+        );
+        // console.log(res.data);
+        return res.data;
+    } catch (error) {
+        console.error('Error fetching learning styles:', error);
+        return [];
+    }
+}
+
+export { kMeans, 
+        euclideanDistance, 
+        cosineSimilarity, 
+        pearsonCorrelation, 
+        getScoreArray, 
+        getPreferencesArray, 
+        calculateMean, 
+        calculateVectorsMean,
+        hammingDistance, 
+        getNearestCluster, 
+        predictInitialRating, 
+        predictNewLORating, 
+        retrieveUserRatings, 
+        getRatedLearningObjects, 
+        retrieveLORatings,
+        getAllLearningStyles}

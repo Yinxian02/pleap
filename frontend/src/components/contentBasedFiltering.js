@@ -1,57 +1,15 @@
 // Based on algorithm in On Recommendation of Learning Objects Using Felder-Silverman Learning Style Model
-import axios from 'axios';
-import  { kMeans, euclideanDistance, cosineSimilarity, pearsonCorrelation, getScoreArray, getPreferencesArray, calculateMean, calculateVectorsMean, hammingDistance, getNearestCluster, predictInitialRating, predictNewLORating} from './filteringFunctions';
-
-async function retrieveUserRatings(id, accessToken) {
-    try {
-        const res = await axios.post(
-            `http://localhost:5001/ratings/user`,
-            { userId: id },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + accessToken,
-                    mode: 'cors',
-                    withCredentials: true,
-                },
-            }
-        );
-        console.log(res.data);
-
-        if (!Array.isArray(res.data)|| res.data.length === 0) {
-            return [];
-        }
-
-        const ratings = res.data;
-        return ratings;
-    } catch (error) {
-        console.error('Error fetching user ratings by user:', error);
-        return [];
-    }
-}
-
-async function getRatedLearningObjects(ratings, accessToken) {
-    const ratedIDs = ratings.map((rating) => rating.learningObjectId);
-    try {
-        const ratedLOs = await axios.post(
-            'http://localhost:5001/learning-objects/batch',
-            { ids: ratedIDs },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + accessToken,
-                    mode: 'cors',
-                    withCredentials: true,
-                },
-            }
-        );
-        // console.log('Rated learning objects:', ratedLOs.data);
-        return ratedLOs.data;
-    } catch (error) {
-        console.error('Error fetching rated learning objects:', error);
-        return [];
-    }
-}
+import  { kMeans, 
+        euclideanDistance, 
+        pearsonCorrelation, 
+        getScoreArray, 
+        getPreferencesArray, 
+        hammingDistance, 
+        getNearestCluster, 
+        predictInitialRating,
+        predictNewLORating, 
+        retrieveUserRatings, 
+        getRatedLearningObjects} from './filteringFunctions';
 
 // learningObjects: set of learning objects for one lesson
 async function contentBasedFiltering(learningObjects, userId, learningPreferences, accessToken){
