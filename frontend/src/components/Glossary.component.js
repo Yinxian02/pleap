@@ -3,8 +3,10 @@ import '../styles/Glossary.css';
 import { FlashcardArray } from 'react-quizlet-flashcard';
 import { FaTableList } from "react-icons/fa6";
 import { PiCards } from "react-icons/pi";
+import Rating from './Rating.component';
 
-const Glossary = ({ glossary }) => {
+const Glossary = ({ learningObject }) => {
+    const glossary = learningObject.content.glossary.vertexAI;
     console.log(glossary);
     const [view, setView] = useState('table');
 
@@ -45,6 +47,7 @@ const Glossary = ({ glossary }) => {
                     {view === 'table' ? <PiCards/> : <FaTableList/>}
                 </button>
             {/* </div> */}
+            <Rating id={learningObject._id}/>
         </div>
     );
 }

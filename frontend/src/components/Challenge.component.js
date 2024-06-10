@@ -7,8 +7,10 @@ import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
 import { markDownToHtml } from "./markDownToHTML";
+import Rating from "./Rating.component";
 
-const Challenge = ({challenge}) => {
+const Challenge = ({ learningObject }) => {
+    const challenge = learningObject.content.challenge;
     const openAIChallenge = challenge.openAI;
     const vertexAIChallenge = challenge.vertexAI;
 
@@ -90,8 +92,10 @@ const Challenge = ({challenge}) => {
 
             {showFeedback && (
                 <div dangerouslySetInnerHTML={{ __html: feedback }} /> 
-            )} 
+            )}
+
         </>
+        <Rating id={learningObject._id}/>
     </div>
 }
 

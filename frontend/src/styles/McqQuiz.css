@@ -60,6 +60,9 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 15px;
 } */
+.quiz-container {
+    display: flex;
+}
 
 .quiz-container h3 {
     font-family: 'IBM Plex Mono', monospace;
@@ -86,4 +89,5 @@
 .quiz-section {
     box-shadow: 0 0 0 0;
     border: 1px solid #3E3E3E;
+    width: 50%;
 }

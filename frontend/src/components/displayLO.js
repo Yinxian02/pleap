@@ -33,16 +33,10 @@ export function displayLO(learningObject) {
         return <Exercise learningObject={learningObject}/>
     
     } else if (LRT === "problem statement" && learningObject.content.aiGenerated) {
-        return <div className="lo-container-div">
-            <Challenge challenge={learningObject.content.challenge}/>
-            <Rating id={learningObject._id}/>
-        </div>
+        return <Challenge learningObject={learningObject}/>
 
     } else if (LRT === "narrative text" && isGlossary(learningObject)){
-        return <div className="lo-container-div">
-            <Glossary glossary={learningObject.content.glossary.vertexAI}/>
-            <Rating id={learningObject._id}/>
-        </div>
+        return <Glossary learningObject={learningObject}/>
 
     } else if (LRT === "narrative text" 
                 || LRT === "problem statement"

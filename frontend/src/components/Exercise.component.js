@@ -7,6 +7,7 @@ import { generateTextResponse }  from "./generateText";
 import { useContext } from "react";
 import { parseJSON } from "./parseJSON";
 import AuthContext from "../context/AuthContext";
+import Rating from "./Rating.component";
 import '../styles/Exercise.css';
 
 const Exercise = ({ learningObject }) => {
@@ -165,6 +166,7 @@ const Exercise = ({ learningObject }) => {
             Final results: {result} / {openAIExercise.length}
         </div>) 
         }
+        <Rating id={learningObject._id}/>
     </div>
 }
 
