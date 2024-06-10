@@ -107,10 +107,10 @@ const Signup = () => {
         <>
 
         {success ? (
-            <section>
+            <section className="signup-success">
                 <h1>Success!</h1>
                 <p>
-                    <a href="/profile-quiz">Find out your learning style.</a>
+                    <a className="login-link" href="/login">Login.</a>
                 </p>
             </section>
         ) : (
