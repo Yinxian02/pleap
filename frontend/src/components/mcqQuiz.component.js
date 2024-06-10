@@ -76,9 +76,9 @@ const McqQuiz = ({ learningObject }) => {
                     <span className="quiz-number-progress">{currentQuestionNum + 1} / {openAIQuestionnaire.length} </span>
                     <br />
                     <br />
-                    <div className="quiz-container" >
+                    <div className="mcq-quiz-container" >
                         {selectedQuiz !== 'vertexAI' && (
-                            <div className="quiz-section" onClick={() => setSelectedQuiz('openAI')}>
+                            <div className="mcq-quiz-section" onClick={() => setSelectedQuiz('openAI')}>
                                 {/* <h2>OpenAI</h2> */}
                                 <h3>{currentQuestionOpenAI.question}</h3>
                                 <ul>
@@ -99,7 +99,7 @@ const McqQuiz = ({ learningObject }) => {
                             </div>
                         )}
                         {selectedQuiz !== 'openAI' && (
-                            <div className="quiz-section" onClick={() => setSelectedQuiz('vertexAI')}>
+                            <div className="mcq-quiz-section" onClick={() => setSelectedQuiz('vertexAI')}>
                                 {/* <h2>VertexAI</h2> */}
                                 <h3>{currentQuestionVertexAI.question}</h3>
                                 <ul>
@@ -120,12 +120,12 @@ const McqQuiz = ({ learningObject }) => {
                             </div>
                         )}
                     </div>
-                    <div className="footer">
+                    <div className="next-footer">
                         <button onClick={onClickPrev} className="quizButton">
-                            <MdOutlineKeyboardDoubleArrowLeft />
+                            Prev
                         </button>
-                        <button onClick={showCorrectAnswer ? onClickNext : () => setShowCorrectAnswer(true)} className="quizButton" disabled={answerIndex === null}>
-                            {showCorrectAnswer ? <MdOutlineKeyboardDoubleArrowRight /> : <MdOutlineKeyboardArrowRight />}
+                        <button onClick={showCorrectAnswer ? onClickNext : () => setShowCorrectAnswer(true)} disabled={answerIndex === null}>
+                            Next
                         </button>
                     </div>
                 </>

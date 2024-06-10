@@ -102,9 +102,12 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
             predictedRating = await calculateContentPrediction(allRatingsByUser, loScore, accessToken);
         } else if (allRatingsByUser.length === 0) {
             predictedRating = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
+            console.log('Predicted collaborative rating:', predictedRating);
         } else {
             const r1 = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
+            console.log('r1:', r1)
             const r3 = await calculateContentPrediction(allRatingsByUser, loScore, accessToken);
+            console.log('r3:', r3)
             predictedRating = weight * r1 + (1 - weight) * r3; 
         }
 

@@ -167,14 +167,15 @@ button:hover {
 
 .top-navigation-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   width: 95%;
   margin: 2em auto; 
+  gap: 20px;
 }
 
 .profile-icon {
-    width: 30px; 
-    height: 30px;  
-    color: var(--txtColorMedium);
+    width: 50px; 
+    height: 50px;  
+    color: #3E3E3E;
 }

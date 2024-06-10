@@ -14,3 +14,40 @@
     gap: 10px;
     display: inline-flex;
 }
+
+.exercise-header {
+    margin-top: 50px;
+    height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.exercise-icon {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    color: #000;
+}
+
+.exercise-title {
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.ai-icon {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    color: #00A399;
+}
+
+.exercise-number-progress {
+    color: #3E3E3E;
+    font-size: 20;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { MdOutlineKeyboardDoubleArrowLeft, 
         MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
-import { IoSend } from "react-icons/io5";
-import { BsStars } from "react-icons/bs";
+import { FaClipboardList } from "react-icons/fa"
+import { IoSparkles } from "react-icons/io5";
 import { generateTextResponse }  from "./generateText";
 import { useContext } from "react";
 import { parseJSON } from "./parseJSON";
@@ -106,12 +106,14 @@ const Exercise = ({ learningObject }) => {
     }
 
     return <div className="exercise-div">
-        <span>
-            <BsStars className="ai-icon"/>
-        </span>
+        <div className="exercise-header">
+            <FaClipboardList className="exercise-icon"/>
+            <h1 className="exercise-title">{learningObject.general.title}</h1>
+            <IoSparkles className="ai-icon"/>
+        </div>
         {!showResult ? (
         <>
-            <span className="quiz-progress">{currentQuestionNum + 1} / {openAIExercise.length} </span>
+            <span className="exercise-number-progress">{currentQuestionNum + 1} / {openAIExercise.length} </span>
             <br/>
             <br/>
             <div className="quiz-container" >

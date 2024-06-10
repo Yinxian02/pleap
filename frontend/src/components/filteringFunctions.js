@@ -215,6 +215,10 @@ const pearsonCorrelation = (x, y) => {
         accY += (y[i] - yMean) ** 2;
     }
 
+    if (accX === 0 || accY === 0) {
+        return 0;
+    };
+
     // console.log('Pearson correlation:', accXY / Math.sqrt(accX * accY));
     return accXY / Math.sqrt(accX * accY);
 }
@@ -258,8 +262,9 @@ const predictNewLORating = (topNnearestLOs, newLOScore) => {
         const lo = topNnearestLOs[i];
         const loScore = lo.score;
         const rating = lo.rating;
+        console.log('LO Score:', loScore, 'newLOScore:', newLOScore, 'Rating:', rating);
         const similarity = pearsonCorrelation(loScore, newLOScore);
-        // console.log('Similarity:', similarity);
+        console.log('Similarity:', similarity);
         accNum += similarity * rating;
         accDen += similarity;
     }

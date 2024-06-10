@@ -60,20 +60,21 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 15px;
 } */
-.quiz-container {
+.mcq-quiz-container {
     display: flex;
+    width: 100%;
 }
 
-.quiz-container h3 {
+.mcq-quiz-container h3 {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 15px;
 }
 
-.quiz-container ul {
+.mcq-quiz-container ul {
     width: 100%;
 }
 
-.quiz-container li {
+.mcq-quiz-container li {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 15px;
     text-decoration: none;
@@ -86,8 +87,24 @@
     border-radius: 30px;
 }
 
-.quiz-section {
+.mcq-quiz-container li:hover {
+    background-color: #E9E9E9;
+}
+
+.mcq-quiz-section {
     box-shadow: 0 0 0 0;
     border: 1px solid #3E3E3E;
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: var(--inputColor);
+    border-radius: 4px;
+    padding: 60px 60px;
+    box-sizing: border-box; 
+    display: grid;
+    margin: 10px; 
+    /* box-shadow: 4px 4px 4px 4px var(--hoverShadowColor);  */
+    transition: opacity 0.5s ease;
 }
