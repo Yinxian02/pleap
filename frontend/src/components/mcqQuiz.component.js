@@ -73,7 +73,7 @@ const McqQuiz = ({ learningObject }) => {
             </div>
             {!showResult ? (
                 <>
-                    <span className="quiz-progress">{currentQuestionNum + 1} / {openAIQuestionnaire.length} </span>
+                    <span className="quiz-number-progress">{currentQuestionNum + 1} / {openAIQuestionnaire.length} </span>
                     <br />
                     <br />
                     <div className="quiz-container" >

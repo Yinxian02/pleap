@@ -79,8 +79,8 @@ const Challenge = ({challenge}) => {
                         value={userInput}
                         onChange={handleInputChange}
                     /> 
-                    <button onClick={markAnswer} className="send-button slide-button">
-                        <IoSend/>
+                    <button onClick={markAnswer}>
+                        Submit
                     </button>
                 </div>
             )}

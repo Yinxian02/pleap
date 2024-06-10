@@ -7,8 +7,10 @@ import { generateTextResponse }  from "./generateText";
 import { useContext } from "react";
 import { parseJSON } from "./parseJSON";
 import AuthContext from "../context/AuthContext";
+import '../styles/Exercise.css';
 
-const Exercise = ({ exercise }) => {
+const Exercise = ({ learningObject }) => {
+    const exercise = learningObject.content.exercise;
     const openAIExercise = exercise.openAI;
     const vertexAIExercise = exercise.vertexAI;
 
@@ -132,8 +134,8 @@ const Exercise = ({ exercise }) => {
                         value={userInput}
                         onChange={handleInputChange}
                     /> 
-                    <button onClick={markAnswer} className="send-button slide-button">
-                        <IoSend/>
+                    <button onClick={markAnswer}>
+                        Submit
                     </button>
                 </div>
             )}

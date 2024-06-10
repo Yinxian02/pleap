@@ -1,6 +1,6 @@
 import { useState ,useContext, useEffect } from "react";
 import { Dimension, fslsmQuiz , resultInitialState } from "./fslsmQuiz";
-import "../styles/Quiz.css";
+import "../styles/UserQuiz.css";
 import AuthContext from '../context/AuthContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { Link } from 'react-router-dom';
@@ -200,12 +200,15 @@ const ProfileQuiz = () => {
 
     }, [id, auth.accessToken, result, showResult]);
 
-    return <div className="quiz-container">
+    return <div className="user-quiz-container">
         {!showResult ? (
         <>
-            <span className="quiz-progress">{currentQuestionNum + 1} / {fslsmQuiz.questions.length} </span>
+            <div className="user-quiz-title-container">
+                <h1 className="user-quiz-title">Learning Preferences Quiz</h1>
+            </div>
+            <span className="user-quiz-progress">{currentQuestionNum + 1} / {fslsmQuiz.questions.length} </span>
             <br />
-            <h2>{question}</h2>
+            <h3>{question}</h3>
             <ul>
                 {choices.map((choice, index) => (
                     <li
@@ -218,12 +221,12 @@ const ProfileQuiz = () => {
                 ))}
             </ul>
 
-        <div className="footer">
+        <div className="next-footer">
             <button onClick={onClickPrev} className="quizButton">
-                <MdOutlineKeyboardDoubleArrowLeft/>
+                Prev
             </button>
             <button onClick={onClickNext} className="quizButton" disabled={answerIndex === null}>
-                <MdOutlineKeyboardDoubleArrowRight/>
+                Next
             </button>
         </div>
         </>

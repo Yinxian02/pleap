@@ -30,10 +30,7 @@ export function displayLO(learningObject) {
         return <McqQuiz learningObject={learningObject} />
 
     } else if (LRT === "exercise" && learningObject.content.aiGenerated) {
-        return <div className="lo-container-div">
-            <Exercise exercise={learningObject.content.exercise}/>
-            <Rating id={learningObject._id}/>
-        </div>
+        return <Exercise learningObject={learningObject}/>
     
     } else if (LRT === "problem statement" && learningObject.content.aiGenerated) {
         return <div className="lo-container-div">

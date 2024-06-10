@@ -42,3 +42,48 @@
     position: relative;
     color: #00A399;
 }
+
+.quiz-number-progress {
+    color: #3E3E3E;
+    font-size: 20;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+/* .quiz-container h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+}
+
+.quiz-container li {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+} */
+
+.quiz-container h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+}
+
+.quiz-container ul {
+    width: 100%;
+}
+
+.quiz-container li {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    text-decoration: none;
+    list-style: none;
+    border-radius: 5px;
+    padding: 10px; 
+    margin-top: 10px;
+    cursor: pointer; 
+    box-shadow: none;
+    border-radius: 30px;
+}
+
+.quiz-section {
+    box-shadow: 0 0 0 0;
+    border: 1px solid #3E3E3E;
+}
