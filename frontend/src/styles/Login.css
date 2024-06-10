@@ -57,6 +57,7 @@
     padding: 10px;
     box-sizing: border-box;
     margin-bottom: 20px;
+    padding-left: 25px;
 }
 
 .transparent-input::placeholder {

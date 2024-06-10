@@ -17,10 +17,7 @@ const Lecture = ({ learningObject }) => {
     const [showText, setShowText] = useState(false);
 
     const htmlText = markDownToHtml(learningObject.content.transcript.vertexAI);
-    
-    // const showOrHideText = () => {
-    //     setShowText(!showText);
-    // };
+
 
     const showLecture = () => {
         setShowText(false);
@@ -34,14 +31,14 @@ const Lecture = ({ learningObject }) => {
         <div className="lecture-div">
             
             <div className="lecture-header">
-            <div className={`lecture-toggle ${showText ? 'active' : ''}`}>
-                <button className={`lecture-button ${!showText ? 'active' : ''}`} onClick={showLecture}>
-                    <GoVideo />
-                </button>
-                <button className={`lecture-button ${showText ? 'active' : ''}`} onClick={showTranscript}>
-                    <CgTranscript />
-                </button>
-            </div>
+                <div className={`lecture-toggle ${showText ? 'active' : ''}`}>
+                    <button className={`lecture-button ${!showText ? 'active' : ''}`} onClick={showLecture}>
+                        <GoVideo />
+                    </button>
+                    <button className={`lecture-button ${showText ? 'active' : ''}`} onClick={showTranscript}>
+                        <CgTranscript />
+                    </button>
+                </div>
             </div>
 
             <div className="lecture-title-container">

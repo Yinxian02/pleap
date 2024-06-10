@@ -1,25 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 
-import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
+import { MdContentPaste } from "react-icons/md";
+import { GoVideo } from "react-icons/go";
+import { CgTranscript } from "react-icons/cg";
 import { MdOutlineTextFields } from "react-icons/md";
 import { BiHide } from "react-icons/bi";
 
 import { markDownToHtml } from "./markDownToHTML";
+import Rating from "./Rating.component";
+import '../styles/Slide.css';
 
 const Slide = ({ learningObject }) => {
-    const [audioOn, setAudioOn] = useState(false);
     const audioRef =  useRef(new Audio(learningObject.content.audio));
     const [showText, setShowText] = useState(false);
-
-    const handleButtonClick = () => {
-        if (audioOn) {
-            audioRef.current.pause();
-        } else {
-            audioRef.current.play();
-
-        }
-        setAudioOn(!audioOn);
-    };
 
     useEffect(() => {
         return () => {
@@ -28,38 +21,44 @@ const Slide = ({ learningObject }) => {
     }, []);
 
     const htmlText = markDownToHtml(learningObject.content.description.vertexAI);
-    
-    const showOrHideText = () => {
-        setShowText(!showText);
-    };
+
+    const showSlide = () => {
+        setShowText(false);
+    }
+
+    const showDescription = () => {
+        setShowText(true);
+    }
 
     return (
-        <div className="slide">
-            <div style={{ textAlign: 'center' }}>
-                <br/>
-                <img
+        <div className="slide-div">
+
+            <div className="slide-header">
+                <div className="slide-toggle">
+                    <button className={`slide-button ${!showText ? 'active' : ''}`} onClick={showSlide}>
+                        <GoVideo />
+                    </button>
+                    <button className={`slide-button ${showText ? 'active' : ''}`} onClick={showDescription}>
+                        <CgTranscript />
+                    </button>
+                </div>
+            </div>
+
+            <div className="slide-title-container">
+                <MdContentPaste className="slide-icon"/>
+                <h1 className="slide-title">{learningObject.general.title}</h1>
+            </div>
+
+            {!showText && <img
                     src={learningObject.content.image}
                     alt="Slide"
-                    style={{ width: '100%', maxWidth: '100%', height: 'auto' }}
-                />
-            </div>
-
-            <div className="slide-footer">
-                <button className="slide-button" onClick={showOrHideText}>
-                    {showText ? <BiHide /> : <MdOutlineTextFields/>}
-                </button>
-            </div>
+                    className="slide-image"/>}
 
             {showText && (
-                <div>
-                    <div className="audio-header">
-                        <button className="audioButton" onClick={handleButtonClick}>
-                            {audioOn ? <HiMiniSpeakerXMark /> : <HiMiniSpeakerWave />}
-                        </button>
-                    </div>
-                    <div className="narrative-content" dangerouslySetInnerHTML={{ __html: htmlText }} />
-            </div>
+                <div className="narrative-text" dangerouslySetInnerHTML={{ __html: htmlText }} />
             )}
+
+            <Rating id={learningObject._id}/>
         </div>
     );
 };
