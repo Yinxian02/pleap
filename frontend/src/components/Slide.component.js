@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 
 import { MdContentPaste } from "react-icons/md";
-import { GoVideo } from "react-icons/go";
+import { FaImage } from "react-icons/fa";
 import { CgTranscript } from "react-icons/cg";
-import { MdOutlineTextFields } from "react-icons/md";
-import { BiHide } from "react-icons/bi";
 
 import { markDownToHtml } from "./markDownToHTML";
 import Rating from "./Rating.component";
@@ -36,7 +34,7 @@ const Slide = ({ learningObject }) => {
             <div className="slide-header">
                 <div className="slide-toggle">
                     <button className={`slide-button ${!showText ? 'active' : ''}`} onClick={showSlide}>
-                        <GoVideo />
+                        <FaImage />
                     </button>
                     <button className={`slide-button ${showText ? 'active' : ''}`} onClick={showDescription}>
                         <CgTranscript />

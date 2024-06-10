@@ -1,11 +1,18 @@
 import { useState } from "react";
-import "../styles/Quiz.css";
+// import "../styles/Quiz.css";
+
 import { MdOutlineKeyboardArrowRight, 
         MdOutlineKeyboardDoubleArrowLeft, 
         MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
-import { BsStars } from "react-icons/bs";
+import { FaClipboardList } from "react-icons/fa";
+import { IoSparkles } from "react-icons/io5";
 
-const McqQuiz = ({ questionnaire }) => {
+import Rating from "./Rating.component";
+import '../styles/McqQuiz.css';
+
+const McqQuiz = ({ learningObject }) => {
+    const questionnaire = learningObject.content.questionnaire;
+
     const openAIQuestionnaire = questionnaire.openAI; 
     const vertexAIQuestionnaire = questionnaire.vertexAI;
 
@@ -59,9 +66,11 @@ const McqQuiz = ({ questionnaire }) => {
 
     return (
         <div className="mcq-div">
-            <span>
-                <BsStars className="ai-icon"/>
-            </span>
+            <div className="mcq-header">
+                <FaClipboardList className="mcq-icon"/>
+                <h1 className="mcq-title">{learningObject.general.title}</h1>
+                <IoSparkles className="ai-icon"/>
+            </div>
             {!showResult ? (
                 <>
                     <span className="quiz-progress">{currentQuestionNum + 1} / {openAIQuestionnaire.length} </span>
@@ -125,6 +134,7 @@ const McqQuiz = ({ questionnaire }) => {
                     Final results: {result} / {openAIQuestionnaire.length}
                 </div>
             )}
+            <Rating id={learningObject._id}/>
         </div>
     );
 }

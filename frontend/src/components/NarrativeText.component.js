@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 
 import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
-import { FaImages } from "react-icons/fa6";
+import { FaImage } from "react-icons/fa6";
 import { BiHide } from "react-icons/bi";
 import { MdOutlineShortText } from "react-icons/md";
+import { CgTranscript } from "react-icons/cg";
+
 
 import { markDownToHtml } from "./markDownToHTML";
 import Rating from "./Rating.component";
@@ -36,9 +38,13 @@ const NarrativeText = ({ learningObject }) => {
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
     const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : null;
     
-    const showOrHideSlide = () => {
-        setShowSlide(!showSlide);
-    };
+    const showSlideImage = () => {
+        setShowSlide(true);
+    }
+
+    const showDescription = () => {
+        setShowSlide(false);
+    }
     
     const hasAudio = learningObject.content.audio.vertexAI !== null && learningObject.content.audio.vertexAI !== "";
     const hasVideo = learningObject.content.video !== null && learningObject.content.video !== "";
@@ -62,12 +68,25 @@ const NarrativeText = ({ learningObject }) => {
                 </button>
             </div>) }
             
+            {( hasImage || hasVideo ) && (
+                <div className="media-header">
+                    <div className="media-toggle">
+                        <button className={`media-button ${showSlide ? 'active' : ''}`} onClick={showSlideImage}>
+                            <FaImage />
+                        </button>
+                        <button className={`media-button ${!showSlide ? 'active' : ''}`} onClick={showDescription}>
+                            <CgTranscript />
+                        </button>
+                    </div>
+                </div>
+            )}
+
             <div className="narrative-title-container">
                 <MdOutlineShortText className="narrative-icon"/>
                 <h1 className="narrative-title">{learningObject.general.title}</h1>
             </div>
 
-            <div className="narrative-text" dangerouslySetInnerHTML={{ __html: htmlText }} /> 
+            { !showSlide && <div className="narrative-text" dangerouslySetInnerHTML={{ __html: htmlText }} /> }
             
             { hasImage && showSlide && (
 
@@ -76,7 +95,7 @@ const NarrativeText = ({ learningObject }) => {
                         <img
                             src={learningObject.content.image}
                             alt="Slide"
-                            style={{ width: '100%', maxWidth: '100%', height: 'auto' }}
+                            className="media-content"
                         />
                     </div>
             )}
@@ -95,13 +114,6 @@ const NarrativeText = ({ learningObject }) => {
                     </div>
             )}
             
-            {( hasImage || hasVideo ) && (
-                <div className="slide-footer">
-                    <button className="slide-button" onClick={showOrHideSlide}>
-                        {showSlide ? <BiHide /> : <FaImages />}
-                    </button>
-                </div>
-            )}
             <Rating id={learningObject._id}/>
         </div>
     );

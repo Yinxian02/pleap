@@ -27,10 +27,7 @@ export function displayLO(learningObject) {
         return <Slide learningObject={learningObject} />
 
     } else if (LRT === "questionnaire" && learningObject.content.aiGenerated) {
-        return <div className="lo-container-div">
-            <McqQuiz questionnaire={learningObject.content.questionnaire}/>
-            <Rating id={learningObject._id}/>
-        </div>
+        return <McqQuiz learningObject={learningObject} />
 
     } else if (LRT === "exercise" && learningObject.content.aiGenerated) {
         return <div className="lo-container-div">
