@@ -7,7 +7,8 @@ import { kMeans,
     predictInitialRating, 
     predictNewLORating, 
     retrieveLORatings,
-    getAllLearningStyles} from './filteringFunctions';
+    getAllLearningStyles,
+    getTopNPercentByRating} from './filteringFunctions';
 
 async function collaborativeFiltering(learningObjects, userId, learningPreferences, accessToken){
     // console.log('Learning objects: ', learningObjects);
@@ -76,18 +77,26 @@ async function collaborativeFiltering(learningObjects, userId, learningPreferenc
         });
     }
 
-    console.log('Predicted ratings:', predictedRatings);
-    predictedRatings.sort((a, b) => b.rating - a.rating);
-    console.log('Sorted predicted ratings:', predictedRatings);
+    // console.log('Predicted ratings:', predictedRatings);
+    // predictedRatings.sort((a, b) => b.rating - a.rating);
+    // console.log('Sorted predicted ratings:', predictedRatings);
 
-    const topNPredictedRatings = predictedRatings.slice(0, 10);
-    console.log('Top N predicted ratings:', topNPredictedRatings);
+    // const topNPredictedRatings = predictedRatings.slice(0, 10);
+    // console.log('Top N predicted ratings:', topNPredictedRatings);
+
+    // // get learning objects with predicted ratings using learning object ids
+    // const filteredLearningObjects = learningObjects.filter(lo => {
+    //     return topNPredictedRatings.map(p => p.learningObjectId).includes(lo._id);
+    // });
+    // console.log('Filtered learning objects:', filteredLearningObjects);
+    // return filteredLearningObjects;
+    const topNPredictedRatings = getTopNPercentByRating(predictedRatings);
 
     // get learning objects with predicted ratings using learning object ids
     const filteredLearningObjects = learningObjects.filter(lo => {
         return topNPredictedRatings.map(p => p.learningObjectId).includes(lo._id);
     });
-    console.log('Filtered learning objects:', filteredLearningObjects);
+    console.log('Filtered above mean learning objects:', filteredLearningObjects);
     return filteredLearningObjects;
 
     // 

@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { kMeans, 
     euclideanDistance, 
+    hammingDistance, 
     pearsonCorrelation, 
     getScoreArray, 
     getPreferencesArray, 
@@ -10,7 +10,8 @@ import { kMeans,
     retrieveUserRatings, 
     getRatedLearningObjects, 
     retrieveLORatings, 
-    getAllLearningStyles} from './filteringFunctions';
+    getAllLearningStyles,
+    getTopNPercentByRating} from './filteringFunctions';
 
 const calculateContentPrediction = async (ratings, loScore, accessToken) => {
     const ratedLOs = await getRatedLearningObjects(ratings, accessToken);
@@ -20,18 +21,18 @@ const calculateContentPrediction = async (ratings, loScore, accessToken) => {
         score: getScoreArray(ratedLOs.find(lo => lo._id === rating.learningObjectId).score),
         rating: rating.rating,
     }));
-    console.log('Rated learning objects by user:', ratingScores);
+    // console.log('Rated learning objects by user:', ratingScores);
 
     // apply k-means clustering to learning objects rated by by userLS
-    const clustersLO = kMeans(ratingScores, 2, euclideanDistance);
-    console.log('Rated learning objects clusters:', clustersLO);
+    const clustersLO = kMeans(ratingScores, 2, hammingDistance);
+    // console.log('Rated learning objects clusters:', clustersLO);
 
     const nearestClusterLO = getNearestCluster(clustersLO, loScore);
-    const topN = 5;
+    const topN = 3;
     const sortedLOs = nearestClusterLO.points.sort((a, b) => pearsonCorrelation(loScore, a.score) - pearsonCorrelation(loScore, b.score));
     
     const topNnearestLOs = sortedLOs.slice(0, topN);
-    console.log('Top N nearest learning objects:', topNnearestLOs);
+    // console.log('Top N nearest learning objects:', topNnearestLOs);
     
     // calculate predicted rating for new learning object
     return predictNewLORating(topNnearestLOs, loScore); 
@@ -39,28 +40,28 @@ const calculateContentPrediction = async (ratings, loScore, accessToken) => {
 
 const calculateCollaborativePrediction = (nearestClusterLS, userLS, ratingsForLO) => {
     const sortedClusterLS = nearestClusterLS.sort((a, b) => pearsonCorrelation(a.score, userLS) - pearsonCorrelation(b.score, userLS));
-    console.log('Sorted cluster LS:', sortedClusterLS);
+    // console.log('Sorted cluster LS:', sortedClusterLS);
 
     const topNclusterLS = sortedClusterLS.slice(0, 5);
-    console.log('Top N cluster LS:', topNclusterLS);
+    // console.log('Top N cluster LS:', topNclusterLS);
 
     const topNclusterLSRated = topNclusterLS.map(ls => {
         const userRating = ratingsForLO.find(r => r.userId === ls.id);   
-        console.log('User rating:', userRating);
+        // console.log('User rating:', userRating);
         return {
             id: ls.id,
             score: ls.score,
             rating: userRating ? userRating.rating : 0
         }
     });
-    console.log('Top N cluster LS:', topNclusterLSRated);
+    // console.log('Top N cluster LS:', topNclusterLSRated);
 
     return predictNewLORating(topNclusterLSRated, userLS);
 }
 
 async function hybridFiltering(learningObjects, userId, learningPreferences, accessToken, weight){
     const userLS = getPreferencesArray(learningPreferences);
-    console.log('User LS:', userLS);
+    // console.log('User LS:', userLS);
 
     const learningStyles = await getAllLearningStyles(accessToken);
     // console.log('Learning styles:', learningStyles);
@@ -77,7 +78,7 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
 
     // select the nearest cluster to userLS
     const nearestClusterLS = getNearestCluster(clustersLS, userLS).points;
-    console.log('Nearest user learning style cluster:', nearestClusterLS);
+    // console.log('Nearest user learning style cluster:', nearestClusterLS);
 
     // get set of all learning objects rated by user
     const allRatingsByUser = await retrieveUserRatings(userId, accessToken);
@@ -92,7 +93,7 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
 
         // get ratings for the learning object
         const ratingsForLO = await retrieveLORatings(lo._id, accessToken);
-        console.log('Ratings for this learning object:', ratingsForLO);
+        // console.log('Ratings for this learning object:', ratingsForLO);
 
         let predictedRating = 0;
 
@@ -102,12 +103,12 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
             predictedRating = await calculateContentPrediction(allRatingsByUser, loScore, accessToken);
         } else if (allRatingsByUser.length === 0) {
             predictedRating = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
-            console.log('Predicted collaborative rating:', predictedRating);
+            // console.log('Predicted collaborative rating:', predictedRating);
         } else {
             const r1 = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
-            console.log('r1:', r1)
+            // console.log('r1:', r1)
             const r3 = await calculateContentPrediction(allRatingsByUser, loScore, accessToken);
-            console.log('r3:', r3)
+            // console.log('r3:', r3)
             predictedRating = weight * r1 + (1 - weight) * r3; 
         }
 
@@ -117,19 +118,14 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
             rating: predictedRating,
         });
     }
-    console.log('Predicted ratings:', predictedRatings);
-
-    predictedRatings.sort((a, b) => b.rating - a.rating);
-    console.log('Sorted predicted ratings:', predictedRatings);
-
-    const topNPredictedRatings = predictedRatings.slice(0, 10);
-    console.log('Top N predicted ratings:', topNPredictedRatings);
+    // console.log('Unsorted predicted ratings:', predictedRatings);
+    const topNPredictedRatings = getTopNPercentByRating(predictedRatings);
 
     // get learning objects with predicted ratings using learning object ids
     const filteredLearningObjects = learningObjects.filter(lo => {
         return topNPredictedRatings.map(p => p.learningObjectId).includes(lo._id);
     });
-    console.log('Filtered learning objects:', filteredLearningObjects);
+    console.log('Filtered above mean learning objects:', filteredLearningObjects);
     return filteredLearningObjects;
 }
 

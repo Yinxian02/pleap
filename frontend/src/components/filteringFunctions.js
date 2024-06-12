@@ -135,11 +135,11 @@ const kMeans = (data, k, distanceFunction) => {
     
     // Use k-means++ algorithm to select initial centroids
     let centroids = kMeansPlusPlus(data, k, distanceFunction).map(point => point.score);
-    // console.log('Selected data points:', centroids);
+    console.log('Selected data points:', centroids);
     let prevCentroids = [];
 
     let clusters = centroids.map(centroid => ({ centroid: centroid, points: [] }));
-    // console.log('Clusters:', clusters);
+    console.log('Clusters:', clusters);
 
     const maxIterations = 100;
     let iterations = 0;
@@ -165,7 +165,7 @@ const kMeans = (data, k, distanceFunction) => {
             // console.log("Closest centroid:", closestCentroid);      
             
             clusters[closestCentroid].points.push(point);
-            console.log("Clusters after one iteration:", clusters);
+            // console.log("Clusters after one iteration:", clusters);
         }
 
     //     // Step 4: Save old centroids and update the centroids
@@ -214,12 +214,13 @@ const pearsonCorrelation = (x, y) => {
         accX += (x[i] - xMean) ** 2;
         accY += (y[i] - yMean) ** 2;
     }
-
+    
+    // console.log('accX', accX, 'accY', accY, 'accXY', accXY);
     if (accX === 0 || accY === 0) {
         return 0;
     };
 
-    // console.log('Pearson correlation:', accXY / Math.sqrt(accX * accY));
+    console.log('Pearson correlation:', accXY / Math.sqrt(accX * accY));
     return accXY / Math.sqrt(accX * accY);
 }
 
@@ -237,7 +238,7 @@ const getNearestCluster = (clusters, x) => {
     // const distancesToCentroids = clusters.map((cluster) => euclideanDistance(cluster.centroid, userLS));
     // console.log('Distances to centroids:', distancesToCentroids);
 
-    const closestDistance = Math.min(...distancesToCentroids);
+    const closestDistance = Math.max(...distancesToCentroids);
     // console.log("Closest distance:", closestDistance);
 
     const closestClusterNum = distancesToCentroids.indexOf(closestDistance);
@@ -262,9 +263,10 @@ const predictNewLORating = (topNnearestLOs, newLOScore) => {
         const lo = topNnearestLOs[i];
         const loScore = lo.score;
         const rating = lo.rating;
-        console.log('LO Score:', loScore, 'newLOScore:', newLOScore, 'Rating:', rating);
+        // console.log('rated LO', lo)
+        // console.log('new LO', newLOScore);
         const similarity = pearsonCorrelation(loScore, newLOScore);
-        console.log('Similarity:', similarity);
+        // console.log('Similarity:', similarity);
         accNum += similarity * rating;
         accDen += similarity;
     }
@@ -377,6 +379,39 @@ async function getAllLearningStyles(accessToken) {
     }
 }
 
+const getTopNPercentByRating = (ratings) => {
+    ratings.sort((a, b) => b.rating - a.rating);
+    console.log('Sorted predicted ratings:', ratings);
+
+    const totalRating = ratings.reduce((acc, lo) => acc + lo.rating, 0);
+    console.log('Total rating:', totalRating);
+    
+    // get median
+    let medianRating;
+    const len = ratings.length;
+
+    if (len % 2 === 0) {
+        medianRating = (ratings[len / 2 - 1].rating + ratings[len / 2].rating) / 2;
+    } else {
+        medianRating = ratings[Math.floor(len / 2)].rating;
+    }
+
+    console.log('Median rating:', medianRating);
+    let aboveMedianRatings = ratings.filter(lo => lo.rating >= medianRating);
+    console.log('Above median filtered:', aboveMedianRatings);
+
+    const meanRating = totalRating / ratings.length;
+    console.log('Mean rating:', meanRating);
+
+    let filteredRatings = ratings.filter(lo => lo.rating >= meanRating);
+    console.log('Filtered ratings higher than mean', filteredRatings); 
+
+    // let top50PercentCount = Math.ceil(filteredRatings.length / 2);
+    // console.log('TOP 50 percent count:',top50PercentCount);
+    // return filteredRatings.slice(0, top50PercentCount);
+    return filteredRatings;
+}
+
 export { kMeans, 
         euclideanDistance, 
         cosineSimilarity, 
@@ -392,4 +427,5 @@ export { kMeans,
         retrieveUserRatings, 
         getRatedLearningObjects, 
         retrieveLORatings,
-        getAllLearningStyles}
+        getAllLearningStyles, 
+        getTopNPercentByRating}

@@ -29,7 +29,7 @@ const LessonFetch = ({lesson}) => {
             },
           }
         );
-        console.log(res.data);
+        console.log((res.data).map(lo => lo._id));
         setLearningObjects(res.data);
       } catch (error) {
         console.error('Error fetching learning objects:', error);
@@ -45,9 +45,9 @@ const LessonFetch = ({lesson}) => {
     if (learningObjects.length > 0) {
       const fetchFilteredLearningObjects = async () => {
         try {
-          // const filteredObjects = await contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
+          const filteredObjects = await contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
           // const filteredObjects = await collaborativeFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
-          const filteredObjects = await hybridFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken, 0.5);
+          // const filteredObjects = await hybridFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken, 0.5);
           setFilteredLearningObjects(filteredObjects);
           console.log(filteredObjects);
         } catch (error) {
@@ -111,7 +111,7 @@ class Lesson extends Component {
         },
       })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         this.setState({ lesson: res.data });
       })
       .catch(error => {

@@ -7,7 +7,7 @@ import Rating from './Rating.component';
 
 const Glossary = ({ learningObject }) => {
     const glossary = learningObject.content.glossary.vertexAI;
-    console.log(glossary);
+    // console.log(glossary);
     const [view, setView] = useState('table');
 
     const toggleView = () => {

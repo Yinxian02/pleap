@@ -9,7 +9,8 @@ import  { kMeans,
         predictInitialRating,
         predictNewLORating, 
         retrieveUserRatings, 
-        getRatedLearningObjects} from './filteringFunctions';
+        getRatedLearningObjects,
+        getTopNPercentByRating } from './filteringFunctions';
 
 // learningObjects: set of learning objects for one lesson
 async function contentBasedFiltering(learningObjects, userId, learningPreferences, accessToken){
@@ -62,14 +63,15 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
         const ratedLOs = await getRatedLearningObjects(ratings, accessToken);
         const ratingScores = ratings.map((rating) => ({
             id: rating.learningObjectId,
+            learningResourceType: ratedLOs.find(lo => lo._id === rating.learningObjectId).educational.learningResourceType,
             score: getScoreArray(ratedLOs.find(lo => lo._id === rating.learningObjectId).score),
             rating: rating.rating,
         }));
         // console.log('Rated learning objects:', ratingScores);
 
         // // apply k-means clustering to learning objects rated by by learning styles
-        const clusters = kMeans(ratingScores, 2, euclideanDistance);
-        // console.log('Clusters:', clusters);
+        const clusters = kMeans(ratingScores, 5, hammingDistance);
+        console.log('Clusters:', clusters);
 
         let predictedRatings = [];
 
@@ -78,34 +80,41 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
             const newLO = learningObjects[i];
             const newLOScore = getScoreArray(newLO.score);
             const nearestCluster = getNearestCluster(clusters, newLOScore);
-            // console.log('Nearest cluster:', nearestCluster);
+            console.log(newLO.educational.learningResourceType, newLOScore, 'Nearest cluster:', nearestCluster);
         
             // get set of topN learning objects in the nearest cluster
            const topN = 5;
            const sortedLOs = nearestCluster.points.sort((a, b) => pearsonCorrelation(newLOScore, a.score) - pearsonCorrelation(newLOScore, b.score));
-           
+        //    console.log(sortedLOs);
+
            const topNnearestLOs = sortedLOs.slice(0, topN);
            console.log('Top N nearest learning objects:', topNnearestLOs);
            
            // calculate predicted rating for new learning object
             const predictedRating = predictNewLORating(topNnearestLOs, newLOScore);
-            // console.log('Predicted rating:', predictedRating);
+            console.log('Predicted rating:', predictedRating);
             predictedRatings.push({id: newLO._id, rating: predictedRating});
         }
         // 
-        console.log('Predicted ratings:', predictedRatings);
+        // console.log('Predicted ratings:', predictedRatings);
 
-        predictedRatings.sort((a, b) => b.rating - a.rating);
-        console.log('Sorted predicted ratings:', predictedRatings);
+        // predictedRatings.sort((a, b) => b.rating - a.rating);
+        // console.log('Sorted predicted ratings:', predictedRatings);
 
-        const topNPredictedRatings = predictedRatings.slice(0, 10);
-        console.log('Top N predicted ratings:', topNPredictedRatings);
+        // const topNPredictedRatings = predictedRatings.slice(0, 10);
+        // console.log('Top N predicted ratings:', topNPredictedRatings);
+
+        // // get learning objects with predicted ratings using learning object ids
+        // const filteredLearningObjects = learningObjects.filter(lo => {
+        //     return topNPredictedRatings.map(p => p.id).includes(lo._id);
+        // });
+        const topNPredictedRatings = getTopNPercentByRating(predictedRatings);
 
         // get learning objects with predicted ratings using learning object ids
         const filteredLearningObjects = learningObjects.filter(lo => {
             return topNPredictedRatings.map(p => p.id).includes(lo._id);
         });
-        console.log('Filtered learning objects:', filteredLearningObjects);
+        // console.log('Filtered above mean learning objects:', filteredLearningObjects);
         return filteredLearningObjects;
     } 
 }

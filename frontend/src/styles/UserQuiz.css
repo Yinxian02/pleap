@@ -70,8 +70,12 @@
     font-size: 15px;
 }
 
-.user-quiz-container ul {
+.user-quiz-container ol {
     width: 100%;
+}
+
+.user-quiz-container li:hover {
+    background-color: #E9E9E9;
 }
 
 .user-quiz-container li {
@@ -84,8 +88,8 @@
     margin-top: 10px;
     cursor: pointer; 
     box-shadow: none;
-    /* background-color: #FFF1CD;
-    border: 1px #FFB800 solid; */
+    /* background-color: #FFF1CD; */
+    /* border: none;   */
     border-radius: 30px;
 }
 

@@ -61,14 +61,14 @@ function normaliseFinalPreferences(preferences) {
     }
 
     const normalisedPreferences = {
-        active: preferences.activeReflexive,
-        reflexive: 1.0 - preferences.activeReflexive,
-        sensing: preferences.sensingIntuitive,
-        intuitive: 1.0 - preferences.sensingIntuitive,
-        visual: preferences.visualVerbal,
-        verbal: 1.0 - preferences.visualVerbal,
-        sequential: preferences.sequentialGlobal,
-        global: 1.0 - preferences.sequentialGlobal 
+        active: 1.0 - preferences.activeReflexive,
+        reflexive: preferences.activeReflexive,
+        sensing: 1.0 - preferences.sensingIntuitive,
+        intuitive: preferences.sensingIntuitive,
+        visual: 1.0 - preferences.visualVerbal,
+        verbal: preferences.visualVerbal,
+        sequential: 1.0 - preferences.sequentialGlobal,
+        global: preferences.sequentialGlobal 
     };
 
     console.log(normalisedPreferences);
@@ -209,7 +209,7 @@ const ProfileQuiz = () => {
             <span className="user-quiz-progress">{currentQuestionNum + 1} / {fslsmQuiz.questions.length} </span>
             <br />
             <h3>{question}</h3>
-            <ul>
+            <ol>
                 {choices.map((choice, index) => (
                     <li
                         onClick={() => onSelectPreference(choice, index, dimension)}
@@ -219,7 +219,7 @@ const ProfileQuiz = () => {
                         {choice.text}
                     </li>
                 ))}
-            </ul>
+            </ol>
 
         <div className="next-footer">
             <button onClick={onClickPrev} className="quizButton">

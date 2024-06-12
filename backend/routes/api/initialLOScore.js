@@ -90,14 +90,14 @@ function calculateLOScore(learningObject) {
 
     // console.log("learning object score:", LOScore);
     const score = {
-        act: LOScore.f1, 
-        ref: 1 - LOScore.f1, 
-        vis: LOScore.f2,
-        ver: 1 - LOScore.f2,
-        sen: LOScore.f3,
-        int: 1 - LOScore.f3,
-        seq: LOScore.f4,
-        glo: 1 - LOScore.f4,
+        act: 1 - LOScore.f1, 
+        ref: LOScore.f1, 
+        vis: 1 - LOScore.f2,
+        ver: LOScore.f2,
+        sen: 1 - LOScore.f3,
+        int: LOScore.f3,
+        seq: 1 - LOScore.f4,
+        glo: LOScore.f4,
     }
     return score; 
 }
