@@ -101,20 +101,20 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
         let predictedRating = 0;
 
         // console.log(learningObjects[i].educational.learningResourceType);
-        // if (ratingsForLO.length === 0 && allRatingsByUser.length === 0) {
-        //     predictedRating = predictInitialRating(userLS, loScore);
-        // } else if (ratingsForLO.length === 0) {
+        if (ratingsForLO.length === 0 && allRatingsByUser.length === 0) {
+            predictedRating = predictInitialRating(userLS, loScore);
+        } else if (ratingsForLO.length === 0) {
             predictedRating = await calculateContentPrediction(allRatingsByUser, loScore, accessToken);
-        // } else if (allRatingsByUser.length === 0) {
-        //     predictedRating = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
-        //     // console.log('Predicted collaborative rating:', predictedRating);
-        // } else {
-        //     const r1 = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
-        //     // console.log('r1:', r1)
-        //     const r3 = await calculateContentPrediction(allRatingsByUser, loScore, accessToken);
-        //     // console.log('r3:', r3)
-        //     predictedRating = weight * r1 + (1 - weight) * r3; 
-        // }
+        } else if (allRatingsByUser.length === 0) {
+            predictedRating = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
+            // console.log('Predicted collaborative rating:', predictedRating);
+        } else {
+            const r1 = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
+            // console.log('r1:', r1)
+            const r3 = await calculateContentPrediction(allRatingsByUser, loScore, accessToken);
+            // console.log('r3:', r3)
+            predictedRating = weight * r1 + (1 - weight) * r3; 
+        }
 
         console.log(i, 'Predicted rating:', predictedRating);
         predictedRatings.push({
