@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const arrayContainsVector = (array, vector) => {
     for (let i = 0; i < array.length; i++) {
-        console.log('Comparing:', array[i], vector, isEqual(array[i], vector));
+        // console.log('Comparing:', array[i], vector, isEqual(array[i], vector));
         if (isEqual(array[i], vector)) {
             return true;
         }
@@ -135,11 +135,11 @@ const kMeans = (data, k, distanceFunction) => {
     
     // Use k-means++ algorithm to select initial centroids
     let centroids = kMeansPlusPlus(data, k, distanceFunction).map(point => point.score);
-    console.log('Selected data points:', centroids);
+    // console.log('Selected data points:', centroids);
     let prevCentroids = [];
 
     let clusters = centroids.map(centroid => ({ centroid: centroid, points: [] }));
-    console.log('Clusters:', clusters);
+    // console.log('Clusters:', clusters);
 
     const maxIterations = 100;
     let iterations = 0;
@@ -216,11 +216,11 @@ const pearsonCorrelation = (x, y) => {
     }
     
     // console.log('accX', accX, 'accY', accY, 'accXY', accXY);
-    if (accX === 0 || accY === 0) {
-        return 0;
-    };
+    // if (accX === 0 || accY === 0) {
+    //     return 0;
+    // };
 
-    console.log('Pearson correlation:', accXY / Math.sqrt(accX * accY));
+    // console.log('Pearson correlation:', accXY / Math.sqrt(accX * accY));
     return accXY / Math.sqrt(accX * accY);
 }
 
@@ -253,7 +253,7 @@ const getNearestCluster = (clusters, x) => {
 }
 
 const predictInitialRating = (userLS, loScore) => {
-    return 0.5 + pearsonCorrelation(userLS, loScore) * 5;
+    return Math.round(0.5 + pearsonCorrelation(userLS, loScore) * 5);
 }
 
 const predictNewLORating = (topNnearestLOs, newLOScore) => {
@@ -293,7 +293,7 @@ async function retrieveUserRatings(id, accessToken) {
                 },
             }
         );
-        console.log(res.data);
+        // console.log(res.data);
 
         if (!Array.isArray(res.data)|| res.data.length === 0) {
             return [];
@@ -344,7 +344,7 @@ async function retrieveLORatings (id, accessToken) {
                 },
             }
         );
-        console.log(res.data);
+        // console.log(res.data);
 
         if (!Array.isArray(res.data) || res.data.length === 0) {
             return [];
@@ -384,7 +384,7 @@ const getTopNPercentByRating = (ratings) => {
     console.log('Sorted predicted ratings:', ratings);
 
     const totalRating = ratings.reduce((acc, lo) => acc + lo.rating, 0);
-    console.log('Total rating:', totalRating);
+    // console.log('Total rating:', totalRating);
     
     // get median
     let medianRating;

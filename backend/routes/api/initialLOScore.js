@@ -46,11 +46,16 @@ function calculateLOScore(learningObject) {
             LRT.g4 = 0; 
             break;
         case "narrative text":
-        case "lecture":
             LRT.g1 = 1; 
             LRT.g2 = 1; 
             LRT.g3 = 1; 
             LRT.g4 = 0; 
+            break;
+        case "lecture":
+            LRT.g1 = 1; 
+            LRT.g2 = 1; 
+            LRT.g3 = 0; 
+            LRT.g4 = 1; 
             break;
         default:
             console.log("Invalid learning resource type!");

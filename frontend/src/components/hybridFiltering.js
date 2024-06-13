@@ -19,15 +19,18 @@ const calculateContentPrediction = async (ratings, loScore, accessToken) => {
     const ratingScores = ratings.map((rating) => ({
         id: rating.learningObjectId,
         score: getScoreArray(ratedLOs.find(lo => lo._id === rating.learningObjectId).score),
+        // lrt: ratedLOs.find(lo => lo.id === rating.learningObjectId).learningResourceType, 
+        learningResourceType: ratedLOs.find(lo => lo._id === rating.learningObjectId).educational.learningResourceType,
         rating: rating.rating,
     }));
     // console.log('Rated learning objects by user:', ratingScores);
 
     // apply k-means clustering to learning objects rated by by userLS
-    const clustersLO = kMeans(ratingScores, 2, hammingDistance);
+    const clustersLO = kMeans(ratingScores, 4, hammingDistance);
     // console.log('Rated learning objects clusters:', clustersLO);
 
     const nearestClusterLO = getNearestCluster(clustersLO, loScore);
+    // console.log('nearest cluster lo:', nearestClusterLO, 'learning object score', loScore);
     const topN = 3;
     const sortedLOs = nearestClusterLO.points.sort((a, b) => pearsonCorrelation(loScore, a.score) - pearsonCorrelation(loScore, b.score));
     
@@ -70,11 +73,11 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
         id: ls.id,
         score: getPreferencesArray(ls.score)
     }));
-    console.log('Learning styles:', learningStylesArray);
+    // console.log('Learning styles:', learningStylesArray);
 
     // // apply k-means to cluster all students learning styles
     const clustersLS = kMeans(learningStylesArray, 2, euclideanDistance);
-    console.log('Learning styles clusters:', clustersLS);
+    // console.log('Learning styles clusters:', clustersLS);
 
     // select the nearest cluster to userLS
     const nearestClusterLS = getNearestCluster(clustersLS, userLS).points;
@@ -82,7 +85,7 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
 
     // get set of all learning objects rated by user
     const allRatingsByUser = await retrieveUserRatings(userId, accessToken);
-    console.log('All ratings by user:', allRatingsByUser);
+    // console.log('All ratings by user:', allRatingsByUser);
 
     const predictedRatings = [];
 
@@ -97,6 +100,7 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
 
         let predictedRating = 0;
 
+        // console.log(learningObjects[i].educational.learningResourceType);
         if (ratingsForLO.length === 0 && allRatingsByUser.length === 0) {
             predictedRating = predictInitialRating(userLS, loScore);
         } else if (ratingsForLO.length === 0) {
@@ -112,7 +116,7 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
             predictedRating = weight * r1 + (1 - weight) * r3; 
         }
 
-        console.log('Predicted rating:', predictedRating);
+        console.log(i, 'Predicted rating:', predictedRating);
         predictedRatings.push({
             learningObjectId: lo._id,
             rating: predictedRating,
