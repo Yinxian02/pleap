@@ -45,9 +45,9 @@ const LessonFetch = ({lesson}) => {
     if (learningObjects.length > 0) {
       const fetchFilteredLearningObjects = async () => {
         try {
-          const filteredObjects = await contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
+          // const filteredObjects = await contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
           // const filteredObjects = await collaborativeFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
-          // const filteredObjects = await hybridFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken, 0.5);
+          const filteredObjects = await hybridFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken, 0.5);
           setFilteredLearningObjects(filteredObjects);
           console.log(filteredObjects);
         } catch (error) {
