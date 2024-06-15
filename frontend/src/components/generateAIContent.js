@@ -290,8 +290,8 @@ class GenerateAIContent extends Component{
           },
         }
       );
-
-      return `Rewrite the following transcript to make sense, in the format of lecture notes:
+      console.log(res.data);
+      return `Rewrite the following transcript in the format of lecture notes:
           // ${res.data}`
     }
 
@@ -301,15 +301,11 @@ class GenerateAIContent extends Component{
         const link = learningObject.content.video; 
         const videoId = getYoutubeId(link);
 
-        // const openAItranscriptPrompt = await this.generateSpeechToText(title, videoId, 'openAI');
-        // const openAItranscript = await generateTextResponse(openAItranscriptPrompt, this.context.auth.accessToken, 'openAI');
-        const openAItranscript = "";
+        const openAItranscriptPrompt = await this.generateSpeechToText(title, videoId, 'openAI');
+        const openAItranscript = await generateTextResponse(openAItranscriptPrompt, this.context.auth.accessToken, 'openAI');
 
         const vertexAItranscriptPrompt = await this.generateSpeechToText(title, videoId, 'vertexAI');
         const vertexAItranscript = await generateTextResponse(vertexAItranscriptPrompt, this.context.auth.accessToken, 'vertexAI');
-
-        // const transcript = { openAItranscript,  vertexAItranscript};
-        // console.log(transcript); 
 
         await this.addTranscript(learningObject, openAItranscript, vertexAItranscript);
 
@@ -377,10 +373,10 @@ class GenerateAIContent extends Component{
       // console.log(lessonText);
 
       const generationFunctions = [
-        this.createMCQ,
-        this.createQuiz,
-        this.createGlossary,
-        this.createChallenge
+        // this.createMCQ,
+        // this.createQuiz,
+        // this.createGlossary,
+        // this.createChallenge
       ];
 
       const createAndAddToLOList = async (generationFunction, ...args) => {
@@ -402,13 +398,13 @@ class GenerateAIContent extends Component{
         if (learningObject.educational.learningResourceType) {
           switch (learningObject.educational.learningResourceType) {
             case "narrative text":
-              await this.uploadGeneratedAudio(learningObject);
+              // await this.uploadGeneratedAudio(learningObject);
               break;
             case "lecture":
-              creationFunction = this.createTranscript;
+              // creationFunction = this.createTranscript;
               break;
             case "slide":
-              creationFunction = this.createDescription;
+              // creationFunction = this.createDescription;
               break;
             default:
               break; 
@@ -509,12 +505,16 @@ class GenerateAIContent extends Component{
           const lessons = res.data;
           console.log(res.data); 
     
-          for (let i = 0; i < lessons.length; i++) {
-            const ids = await this.uploadGeneratedContent(lessons[i]._learningObjects);
+          // for (let i = 0; i < lessons.length; i++) {
+            // const ids = await this.uploadGeneratedContent(lessons[i]._learningObjects);
+            // if (ids) {
+            //   await this.addLearningObjectReferences(lessons[i]._id, ids);
+            // }
+          // }
+          const ids = await this.uploadGeneratedContent(lessons[0]._learningObjects);
             if (ids) {
-              await this.addLearningObjectReferences(lessons[i]._id, ids);
+              await this.addLearningObjectReferences(lessons[0]._id, ids);
             }
-          }
             
         } catch (error) {
           console.log(error);

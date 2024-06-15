@@ -8,7 +8,7 @@ const client = new textToSpeech.TextToSpeechClient();
 async function generateAudio(text, title) {
     const request = {
         input: { text: text },
-        voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+        voice: { languageCode: 'en-GB', ssmlGender: 'NEUTRAL' },
         audioConfig: { audioEncoding: 'MP3' },
     };
 

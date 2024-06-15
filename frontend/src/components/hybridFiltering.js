@@ -85,6 +85,7 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
 
     // get set of all learning objects rated by user
     const allRatingsByUser = await retrieveUserRatings(userId, accessToken);
+    // const allRatingsByUser = [];
     // console.log('All ratings by user:', allRatingsByUser);
 
     const predictedRatings = [];
@@ -96,6 +97,7 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
 
         // get ratings for the learning object
         const ratingsForLO = await retrieveLORatings(lo._id, accessToken);
+        // const ratingsForLO = []
         // console.log('Ratings for this learning object:', ratingsForLO);
 
         let predictedRating = 0;
@@ -105,14 +107,15 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
             predictedRating = predictInitialRating(userLS, loScore);
         } else if (ratingsForLO.length === 0) {
             predictedRating = await calculateContentPrediction(allRatingsByUser, loScore, accessToken);
+        // 
         } else if (allRatingsByUser.length === 0) {
             predictedRating = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
-            // console.log('Predicted collaborative rating:', predictedRating);
+        //     // console.log('Predicted collaborative rating:', predictedRating);
         } else {
             const r1 = calculateCollaborativePrediction(nearestClusterLS, userLS, ratingsForLO);
-            // console.log('r1:', r1)
+        //     // console.log('r1:', r1)
             const r3 = await calculateContentPrediction(allRatingsByUser, loScore, accessToken);
-            // console.log('r3:', r3)
+        //     // console.log('r3:', r3)
             predictedRating = weight * r1 + (1 - weight) * r3; 
         }
 
