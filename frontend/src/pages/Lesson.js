@@ -3,7 +3,7 @@ import "../styles/Lesson.css";
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
 import { useParams } from 'react-router-dom';
-import { displayLO } from '../components/displayLO';
+import displayLO from '../components/displayLO';
 
 import { contentBasedFiltering } from '../components/contentBasedFiltering';
 import { collaborativeFiltering } from '../components/collaborativeFiltering';

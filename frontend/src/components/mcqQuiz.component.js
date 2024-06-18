@@ -50,7 +50,7 @@ const McqQuiz = ({ learningObject }) => {
         if (showCorrectAnswer) {
             setShowCorrectAnswer(false);
             setAnswerIndex(null);
-            setResult(prev => prev + (answerIndex === correctAnswer ? 1 : 0))
+            setResult(prev => prev + correctAnswer ? 1 : 0);
     
             if (currentQuestionNum !== vertexAIQuestionnaire.length - 1) {
                 setCurrentQuestionNum(prev => prev + 1);
@@ -150,8 +150,10 @@ const McqQuiz = ({ learningObject }) => {
                     
                 </>
             ) : (
-                <div>
-                    Final results: {result} / {openAIQuestionnaire.length}
+                <div className="results-container">
+                    Score: 
+                    <div className="exercise-score">{result}/{vertexAIQuestionnaire.length}</div>
+                    Good job! You may now continue to the next section.
                 </div>
             )}
             <Rating id={learningObject._id}/>

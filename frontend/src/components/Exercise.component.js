@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { MdOutlineKeyboardDoubleArrowLeft, 
         MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
-import { FaClipboardList } from "react-icons/fa"
+import { MdOutlineQuiz } from "react-icons/md";
+// import { FaClipboardList } from "react-icons/fa"
 import { IoSparkles } from "react-icons/io5";
 import { generateTextResponse }  from "./generateText";
 import { useContext } from "react";
@@ -9,6 +10,7 @@ import { parseJSON } from "./parseJSON";
 import AuthContext from "../context/AuthContext";
 import Rating from "./Rating.component";
 import '../styles/Exercise.css';
+import { markDownToHtml } from "./markDownToHTML";
 
 const Exercise = ({ learningObject }) => {
     const exercise = learningObject.content.exercise;
@@ -23,27 +25,30 @@ const Exercise = ({ learningObject }) => {
     const [result, setResult] = useState(0); 
     const [showResult, setShowResult] = useState(false); 
     
-    const [correctAnswer, setCorrectAnswer] = useState('');
+    const [correctAnswer, setCorrectAnswer] = useState(null);
     
     const [feedback, setFeedback] = useState('');
     const [showFeedback, setShowFeedback] = useState(false);
 
-    const currentQuestionOpenAI = openAIExercise[currentQuestionNum];
+    // const currentQuestionOpenAI = openAIExercise[currentQuestionNum];
     const currentQuestionVertexAI = vertexAIExercise[currentQuestionNum];
 
-    const [selectedExercise, setSelectedExercise] = useState(null);
+    // const [selectedExercise, setSelectedExercise] = useState(null);
     
+    const selectedExercise = 'vertexAI';
+
     const markAnswer = async () => {
+
         let question;
         let answer;
 
-        if (selectedExercise === "openAI") {
-            question = currentQuestionOpenAI.question;
-            answer = currentQuestionOpenAI.answer;
-        } else if (selectedExercise === "vertexAI"){
+        // if (selectedExercise === "openAI") {
+        //     question = currentQuestionOpenAI.question;
+        //     answer = currentQuestionOpenAI.answer;
+        // } else if (selectedExercise === "vertexAI"){
             question = currentQuestionVertexAI.question;
             answer = currentQuestionVertexAI.answer;
-        } 
+        // } 
 
         const markPrompt = `You are an intelligent grading assistant. 
         Your task is to evaluate the provided user input based on the given question and the correct answer. 
@@ -66,13 +71,14 @@ const Exercise = ({ learningObject }) => {
         console.log(response);
 
         const parsedResponse = parseJSON(response);
-        setFeedback(parsedResponse.feedback);
+        const feedbackMarkdown = markDownToHtml(parsedResponse.feedback);
+        setFeedback(feedbackMarkdown);
 
         if (parsedResponse.isCorrect) {
-            setCorrectAnswer('correct'); 
+            setCorrectAnswer(true); 
             setResult(prev => prev + 1);
         } else {
-            setCorrectAnswer('incorrect'); 
+            setCorrectAnswer(false); 
         }
         setShowFeedback(true);
     }; 
@@ -88,18 +94,19 @@ const Exercise = ({ learningObject }) => {
             setUserInput(''); 
             setFeedback('');
             setCurrentQuestionNum((prev) => prev - 1); 
-            setCorrectAnswer('none');
+            setCorrectAnswer(null);
         } else {
-            setSelectedExercise(null);
+            // setSelectedExercise(null);
         }
     }
 
     const onClickNext = async () => {
-        if (currentQuestionNum !== exercise.length - 1) {
+        if (currentQuestionNum !== vertexAIExercise.length - 1) {
             setUserInput(''); 
             setFeedback(''); 
+            setShowFeedback(false);
             setCurrentQuestionNum((prev) => prev + 1);
-            setCorrectAnswer('none');
+            setCorrectAnswer(null);
         } else {
             setShowResult(true);
         }
@@ -107,66 +114,77 @@ const Exercise = ({ learningObject }) => {
 
     return <div className="exercise-div">
         <div className="exercise-header">
-            <FaClipboardList className="exercise-icon"/>
+            <MdOutlineQuiz className="exercise-icon"/>
             <h1 className="exercise-title">{learningObject.general.title}</h1>
             <IoSparkles className="ai-icon"/>
         </div>
         {!showResult ? (
         <>
-            <span className="exercise-number-progress">{currentQuestionNum + 1} / {openAIExercise.length} </span>
+            <span className="exercise-number-progress">{currentQuestionNum + 1} / {vertexAIExercise.length} </span>
             <br/>
             <br/>
-            <div className="quiz-container" >
-                {selectedExercise !== 'vertexAI' && (
+            {/* <div className="exercise-container"> */}
+                {/* {selectedExercise !== 'vertexAI' && (
                     <div className="quiz-section" onClick={() => setSelectedExercise('openAI')}>
                         <h2>{currentQuestionOpenAI.question}</h2>
                     </div>
-                )}
-                {selectedExercise !== 'openAI' && (
-                    <div className="quiz-section" onClick={() => setSelectedExercise('vertexAI')}>
-                        <h2>{currentQuestionVertexAI.question}</h2>
-                    </div>
-                )}
-            </div>
+                )} */}
+                {/* {selectedExercise !== 'openAI' && ( */}
+            <div className="exercise-section">
+                <h2>{currentQuestionVertexAI.question}</h2>
+                    
+                {/* )} */}
+            {/* </div> */}
             
-            { selectedExercise !== null && (
-                <div>
-                    <textarea
-                        className="answer-text-area"
-                        placeholder="Enter your answer here"
-                        value={userInput}
-                        onChange={handleInputChange}
-                    /> 
-                    <button onClick={markAnswer}>
-                        Submit
-                    </button>
+            {/* { selectedExercise !== null && ( */}
+                <div className="answer-text-container">
+                <textarea
+                    className={`answer-text-area ${correctAnswer === null ? '' : correctAnswer ? 'correct-text-area' : 'incorrect-text-area'}`}
+                    placeholder="Enter your answer here"
+                    value={userInput}
+                    onChange={handleInputChange}
+                />
                 </div>
-            )}
+            {/* )} */}
 
 
-            <br/><br/>
+            {/* <br/><br/> */}
 
             { showFeedback && (
-                <div className={`${ (correctAnswer === 'none') 
-                                    ? '' : ((correctAnswer === 'correct') ?
+                <div className={`${ (correctAnswer === null) 
+                                    ? '' : ( correctAnswer ?
                                     'correct-quiz-answer' : 'incorrect-quiz-answer')}`}>
                     {feedback}
                 </div>
             )} 
 
-            <div className="footer">
-                <button onClick={onClickPrev} className="quizButton">
-                    <MdOutlineKeyboardDoubleArrowLeft/>
-                </button>
-                <button onClick={onClickNext} className="quizButton" disabled={userInput === null}>
-                    <MdOutlineKeyboardDoubleArrowRight/> 
-                </button>
+            { showFeedback && (
+                <div className="next-footer">
+                    <button onClick={onClickPrev} className="quizButton">
+                        Prev
+                    </button>
+                    <button onClick={onClickNext} className="quizButton">
+                        Next
+                    </button>
+                </div>
+            )}
             </div>
+            
+            { !showFeedback && (
+                <div className="next-footer">
+                    <button onClick={markAnswer}>
+                        Submit
+                    </button>
+                </div>
+            )}
         </>
         ) : (
-        <div>
-            Final results: {result} / {openAIExercise.length}
-        </div>) 
+        <div className="results-container">
+            Score: 
+            <div className="exercise-score">{result}/{vertexAIExercise.length}</div>
+            Good job! You may now continue to the next section.
+        </div>
+        ) 
         }
         <Rating id={learningObject._id}/>
     </div>

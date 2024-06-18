@@ -253,7 +253,7 @@ const getNearestCluster = (clusters, x) => {
 }
 
 const predictInitialRating = (userLS, loScore) => {
-    return Math.floor(0.5 + pearsonCorrelation(userLS, loScore) * 5);
+    return 0.5 + pearsonCorrelation(userLS, loScore) * 5;
 }
 
 const predictNewLORating = (topNnearestLOs, newLOScore) => {

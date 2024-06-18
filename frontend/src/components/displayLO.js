@@ -16,7 +16,7 @@ function isGlossary(learningObject) {
     );
 }; 
 
-export function displayLO(learningObject) {
+const displayLO = (learningObject) => {
     // console.log(learningObject.educational.learningResourceType);
     const LRT = learningObject.educational.learningResourceType; 
     
@@ -49,3 +49,5 @@ export function displayLO(learningObject) {
         return <Embed learningObject={learningObject} />
     }
 }
+
+export default displayLO;

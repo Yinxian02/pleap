@@ -101,7 +101,7 @@
     box-sizing: border-box; 
     display: grid;
     margin: 10px; 
-    transition: opacity 0.5s ease;
+    /* transition: opacity 0.5s ease; */
     padding-left: 30px;
     padding-right: 30px;
 }
