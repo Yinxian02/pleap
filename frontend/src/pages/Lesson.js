@@ -8,6 +8,7 @@ import displayLO from '../components/displayLO';
 import { contentBasedFiltering } from '../components/contentBasedFiltering';
 import { collaborativeFiltering } from '../components/collaborativeFiltering';
 import { hybridFiltering } from '../components/hybridFiltering';
+import { sortLOs } from '../components/sortLOs';
 
 import { MdLightbulbOutline } from "react-icons/md";
 
@@ -50,7 +51,8 @@ const LessonFetch = ({lesson}) => {
           // const filteredObjects = await contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
           // const filteredObjects = await collaborativeFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
           const filteredObjects = await hybridFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken, 0.5);
-          setFilteredLearningObjects(filteredObjects);
+          const sortedObjects = sortLOs(filteredObjects, auth.preferences);
+          setFilteredLearningObjects(sortedObjects);
           console.log(filteredObjects);
         } catch (error) {
           console.error('Error fetching filtered learning objects:', error);

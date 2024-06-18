@@ -6,7 +6,7 @@ import { MdLightbulbOutline } from "react-icons/md";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import '../styles/Challenge.css';
-import { markDownAIToHtml } from "./markDownToHTML";
+import { markDownToHtml } from "./markDownToHTML";
 import { parseJSON } from "./parseJSON";
 import Rating from "./Rating.component";
 
@@ -24,8 +24,8 @@ const Challenge = ({ learningObject }) => {
 
     const [selectedChallenge, setSelectedChallenge] = useState(null);
 
-    const htmlOpenAIChallenge = markDownAIToHtml(openAIChallenge);
-    const htmlVertexAIChallenge = markDownAIToHtml(vertexAIChallenge);
+    const htmlOpenAIChallenge = markDownToHtml(openAIChallenge);
+    const htmlVertexAIChallenge = markDownToHtml(vertexAIChallenge);
     
     const markAnswer = async () => {
         let challenge;
@@ -48,7 +48,7 @@ const Challenge = ({ learningObject }) => {
         console.log(response);
 
         const parsedResponse = parseJSON(response);
-        const feedbackMarkdown = markDownAIToHtml(parsedResponse.feedback);
+        const feedbackMarkdown = markDownToHtml(parsedResponse.feedback);
         setFeedback(feedbackMarkdown);
         setShowFeedback(true);
     }; 

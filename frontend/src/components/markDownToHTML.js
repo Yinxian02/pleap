@@ -11,13 +11,5 @@ const markDownToHtml = (markdown) => {
     return html;
 }
 
-const markDownAIToHtml = (markdown) => {
-    const html = markdown
-        .replace(/(?:\r\n|\r|\n)/g, '<br>')
-        .replace(/(?:\*\*)(.*?)(?:\*\*)/g, '<strong>$1</strong>')
-        .replace(/(?:\*)(.*?)(?:\*)/g, '<em>$1</em>');
-    return `<div class="markdown-ai-content">${html}</div>`;
-}
 
-
-export { markDownToHtml, markDownAIToHtml };
+export { markDownToHtml };
