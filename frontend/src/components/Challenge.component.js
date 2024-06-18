@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { IoSend } from "react-icons/io5";
-import { BsStars } from "react-icons/bs";
+import { FaRegLightbulb } from "react-icons/fa";
+import { IoSparkles } from "react-icons/io5";
 import { generateTextResponse }  from "./generateText";
 
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-
+import '../styles/Challenge.css';
 import { markDownToHtml } from "./markDownToHTML";
+import { parseJSON } from "./parseJSON";
 import Rating from "./Rating.component";
 
 const Challenge = ({ learningObject }) => {
@@ -46,8 +47,9 @@ const Challenge = ({ learningObject }) => {
         const response = await generateTextResponse(markPrompt, auth.accessToken, selectedChallenge);
         console.log(response);
 
-        const htmlFeedback = markDownToHtml(response);
-        setFeedback(htmlFeedback);
+        const parsedResponse = parseJSON(response);
+        const feedbackMarkdown = markDownToHtml(parsedResponse.feedback);
+        setFeedback(feedbackMarkdown);
         setShowFeedback(true);
     }; 
 
@@ -55,43 +57,52 @@ const Challenge = ({ learningObject }) => {
         setUserInput(e.target.value);
     };
 
-    return <div className="exercise-div">
-        <span>
-            <BsStars className="ai-icon"/>
-        </span>
+    return <div className="challenge-div">
+        <div className="challenge-header">
+            <FaRegLightbulb className="challenge-icon"/>
+            <h1 className="challenge-title">{learningObject.general.title}</h1>
+            <IoSparkles className="ai-icon"/>
+        </div>
         <>
-        <div className="quiz-container" >
+        <div className="challenge-container" >
             {selectedChallenge !== 'vertexAI' && (
-                <div className="quiz-section" onClick={() => setSelectedChallenge('openAI')}>
+                <div className="challenge-section" onClick={() => setSelectedChallenge('openAI')}>
                     <div dangerouslySetInnerHTML={{ __html: htmlOpenAIChallenge }} /> 
                 </div>
             )}
             {selectedChallenge !== 'openAI' && (
-                <div className="quiz-section" onClick={() => setSelectedChallenge('vertexAI')}>
+                <div className="challenge-section" onClick={() => setSelectedChallenge('vertexAI')}>
                     <div dangerouslySetInnerHTML={{ __html: htmlVertexAIChallenge }} /> 
                 </div>
             )}
         </div>
 
         { selectedChallenge !== null && (
-                <div>
+                <div className="answer-text-container">
                     <textarea
                         className="answer-text-area"
                         placeholder="Enter your answer here"
                         value={userInput}
                         onChange={handleInputChange}
                     /> 
-                    <button onClick={markAnswer}>
+                    {/* <button onClick={markAnswer}>
                         Submit
-                    </button>
+                    </button> */}
                 </div>
             )}
         
 
-            <br/><br/>
+            {/* <br/><br/> */}
 
-            {showFeedback && (
+            { showFeedback && (
                 <div dangerouslySetInnerHTML={{ __html: feedback }} /> 
+            )}
+            { !showFeedback && (
+                <div className="next-footer">
+                    <button onClick={markAnswer}>
+                        Submit
+                    </button>
+                </div>
             )}
 
         </>

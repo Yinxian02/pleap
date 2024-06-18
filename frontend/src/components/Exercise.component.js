@@ -1,8 +1,5 @@
 import { useState } from "react";
-import { MdOutlineKeyboardDoubleArrowLeft, 
-        MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdOutlineQuiz } from "react-icons/md";
-// import { FaClipboardList } from "react-icons/fa"
 import { IoSparkles } from "react-icons/io5";
 import { generateTextResponse }  from "./generateText";
 import { useContext } from "react";
