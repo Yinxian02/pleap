@@ -203,3 +203,12 @@ textarea {
     color: #e4e5e9;
     font-size: 1rem;
 }
+
+.markdown-ai-content {
+    /* Example styles */
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    /* Add any other desired styles */
+}

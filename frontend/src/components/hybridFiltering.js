@@ -132,7 +132,7 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
     const filteredLearningObjects = learningObjects.filter(lo => {
         return topNPredictedRatings.map(p => p.learningObjectId).includes(lo._id);
     });
-    console.log('Filtered above mean learning objects:', filteredLearningObjects);
+    console.log('Filtered above median learning objects:', filteredLearningObjects);
     return filteredLearningObjects;
 }
 
