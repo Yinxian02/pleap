@@ -306,7 +306,7 @@ class GenerateAIContent extends Component{
 
         await this.addTranscript(learningObject, openAItranscript, vertexAItranscript);
 
-        const transcriptObject = new LearningObject("transcript", "text/plain", "expositive", "narrative text", "low");
+        const transcriptObject = new LearningObject(learningObject.general.title, "text/plain", "expositive", "narrative text", "low");
         
         transcriptObject.setTranscript(openAItranscript, vertexAItranscript);
         transcriptObject.setVideo(link);
@@ -351,7 +351,7 @@ class GenerateAIContent extends Component{
           await this.addDescription(learningObject, openAIDescription, vertexAIDescription);
 
           // create new narrative text learning object with slide 
-          const descriptionObject = new LearningObject("description", "text/plain", "expositive", "narrative text", "low");
+          const descriptionObject = new LearningObject(learningObject.general.title, "text/plain", "expositive", "narrative text", "low");
           
           descriptionObject.setDescription(openAIDescription, vertexAIDescription);
           descriptionObject.setImage(imageUrl);

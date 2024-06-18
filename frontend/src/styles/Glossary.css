@@ -1,16 +1,81 @@
 .glossary-div {
     width: 100%;
     height: 100%;
-    padding-top: 25px;
+    padding-top: 40px;
     padding-bottom: 40px;
     padding-left: 30px;
     padding-right: 29px;
     border-radius: 15px;
     overflow: hidden;
-    border: 2px #000 solid;
+    border: 2px #FFB800 solid;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 10px;
     display: inline-flex;
+    background-color: #FFF1CD;
+}
+
+.glossary-title-container {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.glossary-icon{
+    color: #FFB800;
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+.glossary-title {
+    color: #FFB800;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    word-wrap: break-word;
+}
+
+.glossary-header{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.glossary-toggle {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #FFB800;
+    border-radius: 10px;
+    height: 40px;
+}
+
+.glossary-button {
+    height: 100%;
+    position: relative;
+    font-size: 24px; /* Adjust icon size */
+    padding: 5px 20px; /* Adjust padding */
+    border: 1px solid #FFB800; /* Adjust border style */
+    border-radius: 8px; /* Adjust border radius */
+    background-color: #FFF1CD; /* Default background */
+    color: #FFB800;
+    cursor: pointer;
+    box-shadow: none;
+    margin-top: 0;
+}
+
+.glossary-button:hover {
+    background-color: #FFB800; /* Hover background */
+    color: #FFF1CD; /* Hover text */
+}
+
+.glossary-button.active {
+    background-color: #FFB800; /* Change color when pressed */
+    color: #FFF1CD; /* Change text color when pressed */
+}
+
+.glossary-button + .glossary-button {
+    margin-left: -10px; /* Adjust this value to control overlap */
 }

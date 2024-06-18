@@ -113,7 +113,7 @@ const Exercise = ({ learningObject }) => {
     return <div className="exercise-div">
         <div className="exercise-header">
             <MdOutlineQuiz className="exercise-icon"/>
-            <h1 className="exercise-title">{learningObject.general.title}</h1>
+            <h1 className="exercise-title">SAQ</h1>
             <IoSparkles className="ai-icon"/>
         </div>
 
