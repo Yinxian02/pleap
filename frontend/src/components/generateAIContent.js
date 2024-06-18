@@ -70,10 +70,7 @@ class GenerateAIContent extends Component{
       const quizPrompt = `You are a computer science lecturer at university. 
       Design a end-of-unit reflection quiz, with 5 questions, 
       based on the lesson content, 
-      that test understanding, and provide correct answers \n\n
-
-      Ensure the questions cover the key concepts 
-      and important details from the lesson.
+      that test understanding, and provide correct answer and three distractors \n\n
       
       Ensure the questions cover the key concepts and important details from the lesson, 
       but keep the quiz concise to avoid exceeding token limits.

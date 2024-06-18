@@ -136,14 +136,3 @@
     border: none;
     box-shadow: none;
 }
-
-
-.correct-answer {
-    background-color: #b6dfb6;
-    box-shadow: 0 2px 4px var(--hoverShadowColor);  
-}
-
-.incorrect-answer {
-    background-color: #de9797;
-    box-shadow: 0 2px 4px var(--hoverShadowColor);  
-}

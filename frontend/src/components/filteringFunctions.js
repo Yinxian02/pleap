@@ -397,19 +397,7 @@ const getTopNPercentByRating = (ratings) => {
     }
 
     console.log('Median rating:', medianRating);
-    let aboveMedianRatings = ratings.filter(lo => lo.rating >= medianRating);
-    console.log('Above median filtered:', aboveMedianRatings);
-
-    const meanRating = totalRating / ratings.length;
-    console.log('Mean rating:', meanRating);
-
-    let filteredRatings = ratings.filter(lo => lo.rating >= meanRating);
-    console.log('Filtered ratings higher than mean', filteredRatings); 
-
-    // let top50PercentCount = Math.ceil(filteredRatings.length / 2);
-    // console.log('TOP 50 percent count:',top50PercentCount);
-    // return filteredRatings.slice(0, top50PercentCount);
-    return filteredRatings;
+    return ratings.filter(lo => lo.rating >= medianRating);
 }
 
 export { kMeans, 

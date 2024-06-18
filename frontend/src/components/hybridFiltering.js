@@ -76,7 +76,7 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
     // console.log('Learning styles:', learningStylesArray);
 
     // // apply k-means to cluster all students learning styles
-    const clustersLS = kMeans(learningStylesArray, 4, euclideanDistance);
+    const clustersLS = kMeans(learningStylesArray, 3, euclideanDistance);
     // console.log('Learning styles clusters:', clustersLS);
 
     // select the nearest cluster to userLS

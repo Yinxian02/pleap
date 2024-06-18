@@ -1,9 +1,6 @@
 import { useState } from "react";
 // import "../styles/Quiz.css";
 
-import { MdOutlineKeyboardArrowRight, 
-        MdOutlineKeyboardDoubleArrowLeft, 
-        MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { FaClipboardList } from "react-icons/fa";
 import { IoSparkles } from "react-icons/io5";
 
@@ -27,10 +24,10 @@ const McqQuiz = ({ learningObject }) => {
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
 
-    const [selectedQuiz, setSelectedQuiz] = useState(null);
+    // const [selectedQuiz, setSelectedQuiz] = useState(null);
 
     // const currentQuestion = questionnaire[currentQuestionNum];
-    const currentQuestionOpenAI = openAIQuestionnaire[currentQuestionNum];
+    // const currentQuestionOpenAI = openAIQuestionnaire[currentQuestionNum];
     const currentQuestionVertexAI = vertexAIQuestionnaire[currentQuestionNum];
 
     // const { question, choices, _id } = currentQuestion;
@@ -44,25 +41,27 @@ const McqQuiz = ({ learningObject }) => {
     const onClickPrev = async () => {
         if (currentQuestionNum !== 0) {
             setCurrentQuestionNum((prev) => prev - 1); 
-        } else {
-            setSelectedQuiz(null);
+        // } else {
+        //     setSelectedQuiz(null);
         }
     }
 
     const onClickNext = async () => {
         if (showCorrectAnswer) {
-            setShowCorrectAnswer(false);  
+            setShowCorrectAnswer(false);
             setAnswerIndex(null);
-            setResult(prev => prev + (answer === 1 ? 1 : 0));
-            if (currentQuestionNum !== openAIQuestionnaire.length - 1) {
-                setCurrentQuestionNum((prev) => prev + 1);
+            setResult(prev => prev + (answerIndex === correctAnswer ? 1 : 0))
+    
+            if (currentQuestionNum !== vertexAIQuestionnaire.length - 1) {
+                setCurrentQuestionNum(prev => prev + 1);
             } else {
                 setShowResult(true);
             }
-            return;  
+        } else {
+            setShowCorrectAnswer(true);
         }
-        setShowCorrectAnswer(true);
-    }
+    };
+    
 
     return (
         <div className="mcq-div">
@@ -77,30 +76,38 @@ const McqQuiz = ({ learningObject }) => {
                     <br />
                     <br />
                     <div className="mcq-quiz-container" >
-                        {selectedQuiz !== 'vertexAI' && (
-                            <div className="mcq-quiz-section" onClick={() => setSelectedQuiz('openAI')}>
-                                {/* <h2>OpenAI</h2> */}
-                                <h3>{currentQuestionOpenAI.question}</h3>
-                                <ul>
-                                    {currentQuestionOpenAI.choices.map((choice, index) => (
+                        {/* {selectedQuiz !== 'vertexAI' && ( */}
+                            {/* <div className="mcq-quiz-section" onClick={() => setSelectedQuiz('openAI')}> */}
+                        <div className="mcq-quiz-section">   
+                            <h3>{currentQuestionVertexAI.question}</h3>
+                            <ol>
+                                {currentQuestionVertexAI.choices.map((choice, index) => {
+                                    const optionLabel = String.fromCharCode(97 + index); // Convert index to corresponding letter (0 -> a, 1 -> b, ...)
+                                    return (
                                         <li
-                                            onClick={() => { onSelectChoice(choice, index);}}
+                                            onClick={() => { onSelectChoice(choice, index); }}
                                             key={choice.text}
-                                            className={answerIndex === index ?
-                                                (showCorrectAnswer && correctAnswer !== null ?
-                                                    (correctAnswer ? "correct-answer" : "incorrect-answer")
-                                                    : "selected-answer")
-                                                : "unselected-answer"}
+                                            className={
+                                                answerIndex === index
+                                                    ? showCorrectAnswer && correctAnswer !== null
+                                                        ? correctAnswer
+                                                            ? "correct-mcq-answer"
+                                                            : "incorrect-mcq-answer"
+                                                        : "selected-mcq-answer"
+                                                    : "unselected-mcq-answer"
+                                            }
                                         >
-                                            {choice.text}
+                                            <strong>{optionLabel.toUpperCase()}.</strong> {choice.text}
                                         </li>
-                                    ))}
-                                </ul>
+                                    );
+                                })}
+                            </ol>
+
                             </div>
-                        )}
-                        {selectedQuiz !== 'openAI' && (
+                        {/* )} */}
+                        {/* {selectedQuiz !== 'openAI' && (
                             <div className="mcq-quiz-section" onClick={() => setSelectedQuiz('vertexAI')}>
-                                {/* <h2>VertexAI</h2> */}
+                                 <h2>VertexAI</h2>  
                                 <h3>{currentQuestionVertexAI.question}</h3>
                                 <ul>
                                     {currentQuestionVertexAI.choices.map((choice, index) => (
@@ -118,16 +125,29 @@ const McqQuiz = ({ learningObject }) => {
                                     ))}
                                 </ul>
                             </div>
-                        )}
-                    </div>
-                    <div className="next-footer">
-                        <button onClick={onClickPrev} className="quizButton">
-                            Prev
-                        </button>
-                        <button onClick={showCorrectAnswer ? onClickNext : () => setShowCorrectAnswer(true)} disabled={answerIndex === null}>
-                            Next
-                        </button>
-                    </div>
+                        ) */}
+                    </div> 
+                    
+                    { showCorrectAnswer && (
+                        <div className="next-footer">
+                            <button onClick={onClickPrev} className="quizButton">
+                                Prev
+                            </button>
+                            <button onClick={onClickNext} className="quizButton">
+                                Next
+                            </button>
+                        </div>
+                    )}
+
+                    { !showCorrectAnswer && (
+                        <div className="next-footer">
+                            <button onClick={onClickNext} className="quizButton" disabled={answerIndex === null}>
+                                Submit
+                            </button>
+                        </div>
+                    )}
+
+                    
                 </>
             ) : (
                 <div>

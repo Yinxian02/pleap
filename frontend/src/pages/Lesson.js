@@ -9,6 +9,8 @@ import { contentBasedFiltering } from '../components/contentBasedFiltering';
 import { collaborativeFiltering } from '../components/collaborativeFiltering';
 import { hybridFiltering } from '../components/hybridFiltering';
 
+import { MdLightbulbOutline } from "react-icons/md";
+
 const LessonFetch = ({lesson}) => {
   const { auth } = useContext(AuthContext);
   const [learningObjects, setLearningObjects] = useState([]);
@@ -65,14 +67,19 @@ const LessonFetch = ({lesson}) => {
               <p className="lesson-author">{lesson.author}</p>
               <p className="lesson-description">{lesson.description}</p>
             </div>
+            
+              <div className="ai-disclaimer">
+                < MdLightbulbOutline className="lightbulb"/>
+                <p className='ai-disclaimer-text'>Some content generated on this platform is powered by AI. Always consult a qualified expert for specific guidance.</p>
+              </div>
 
               <div className='learning-objects-divs-container'>
-                {/* {filteredLearningObjects.map((lo, index) => (
+                {filteredLearningObjects.map((lo, index) => (
+                    <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
+                  ))} 
+                {/* {learningObjects.map((lo, index) => (
                     <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
                   ))} */}
-                  {learningObjects.map((lo, index) => (
-                    <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
-                  ))}
               </div>
             </div>
     

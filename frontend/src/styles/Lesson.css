@@ -32,6 +32,36 @@
     margin-bottom: 10px;
 }
 
+.ai-disclaimer {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    /* text-align: center; */
+    width: 80%; /* Adjust as needed */
+    margin: 20px auto; /* Center horizontally by auto margins */
+    border: 1px #c8c7c7 solid;
+    border-radius: 10px;
+    padding: 30px;
+    /* padding-bottom: 20px; */
+    gap: 20px;
+    background-color: #eeeeee;
+}
+
+.lightbulb {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    color: #ffde0a;
+}
+
+.ai-disclaimer-text {
+    /* margin-top: 20px; */
+    color: #3E3E3E;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
 
 .learning-objects-divs-container {
     margin-top: 100px;
