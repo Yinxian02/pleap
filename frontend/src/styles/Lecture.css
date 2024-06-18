@@ -91,11 +91,11 @@
     align-items: center;
 }
 
-.narrative-text {
+.narrative-text-lecture {
     /* width: 885px; */
     color: #3E3E3E;
-    font-size: 20px;
-    font-family: 'Lusitana', serif;
+    font-size: 16px;
+    font-family: 'IBM Plex Mono', monospace;
     font-weight: 400;
     word-wrap: break-word;
 }

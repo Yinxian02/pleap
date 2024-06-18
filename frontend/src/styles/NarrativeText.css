@@ -47,6 +47,15 @@
     word-wrap: break-word;
 }
 
+.narrative-text-ai {
+    /* width: 885px; */
+    color: #3E3E3E;
+    font-size: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
 .audio-header {
     width: 100%;
     display: flex;

@@ -66,7 +66,7 @@ const Challenge = ({ learningObject }) => {
 
         <div className="ai-options">
             < MdLightbulbOutline className="lightbulb"/>
-            <p className='ai-options-text'>Choose the challenge you would like to tackle.</p>
+            <p className='ai-options-text'>Choose the AI-powered challenge you would like to tackle.</p>
         </div>
         <>
         <div className="challenge-container" >
