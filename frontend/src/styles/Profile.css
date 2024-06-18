@@ -1,11 +1,62 @@
+.profile-title {
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+.profile-container {
+    width: 100%;
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    box-shadow: 0 0 0 0;
+}
+
+.email-and-name {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    /* gap: 20px; */
+    justify-content: space-between;
+    /* align-items: center; */
+}
+
+.email-and-name h3 {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+/* .detail {
+    color: #3E3E3E;
+} */
+
+.preferences-container {
+    width: 70%;
+    background-color: #FFF1CD;
+    border: 1px solid #FFD700;
+    padding: 50px;
+    border-radius: 15px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.preferences-title {
+    text-align: center;
+}
+
+
 .bar {
     width: 100%;
+    position: relative;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .percentages {
     display: flex;
     justify-content: space-between;
+    width: 88%;
+    padding-left: 10%;
 }
 
 .percentages span {
@@ -13,7 +64,23 @@
 }
 
 .progress-line-container{
-    display: flex; 
+    display: flex;
+    /* gap: 10px; */
+    align-items: center;
+}
+
+.dimension-left {
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 150px;
+    text-align: right;
+}
+
+.dimension-right {
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 150px;
+    text-align: left;
 }
 
 .progress-line {
@@ -29,18 +96,21 @@
 .red {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    background-color: rgb(225, 144, 144);
+    background-color: #A7B82C;    ;
 }
 
 .green {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    background-color: rgb(172, 216, 106);
+    background-color: #C2DD00;
 }
 
 .button-link {
     text-decoration: none;
-    color: inherit
+    color: inherit;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 

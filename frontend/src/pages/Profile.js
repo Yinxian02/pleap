@@ -54,87 +54,98 @@ function Profile() {
   return (
     <>
       <main>
+        <h2 className="profile-title">Your Profile</h2>
         <div className="profile-container">
-            <h2>Email:</h2>
+
+          <div className="email-and-name">
+            <h3>Email:</h3>
             <span className="detail">{email}</span>
             <br/>
-            <h2>Name:</h2>
+            <h3>Name:</h3>
             <span className="detail">{name}</span>
             <br/>
-            <h2>Learning Preferences:</h2>
-            <br/>
+          </div>
 
+          <div className="preferences-container">
+            <h2 className="preferences-title">Your Learning Preferences:</h2>
+            {/* <br/> */}
             <div className="bar">
-              <span>Active / Reflexive:</span>
               <div className="percentages detail">
                 <span>{(preferences.active * 100).toFixed(0)}%</span>
                 <span>{(preferences.reflexive * 100).toFixed(0)}%</span>
               </div>
               <div className="progress-line-container">
+                <span className="dimension-left">Active</span>
                   <div className="progress-line red"
                         style={{ width: `${preferences.active * 100}%` }}>
                   </div>
                   <div className="progress-line green" 
                         style={{ width: `${preferences.reflexive * 100}%` }}>
                   </div>
+                <span className="dimension-right">Reflexive</span>
               </div>
             </div>
 
             <div class="bar">
-              <span>Sensing / Intuitive:</span>
               <div className="percentages detail">
                 <span>{(preferences.sensing * 100).toFixed(0)}%</span>
                 <span>{(preferences.intuitive * 100).toFixed(0)}%</span>
               </div>
               <div className="progress-line-container">
+                <span className="dimension-left">Sensing</span>
                   <div className="progress-line red" 
                         style={{ width: `${preferences.sensing * 100}%` }}>
                   </div>
                   <div className="progress-line green" 
                         style={{ width: `${preferences.intuitive * 100}%` }}>
                   </div>
+                <span className="dimension-right">Intuitive</span>
               </div>
             </div>
 
             <div class="bar">
-              <span>Visual / Verbal:</span>
               <div className="percentages detail">
                 <span>{(preferences.visual * 100).toFixed(0)}%</span>
                 <span>{(preferences.verbal * 100).toFixed(0)}%</span>
               </div>
               <div className="progress-line-container">
+                <span className="dimension-left">Visual</span>
                   <div className="progress-line red" 
                         style={{ width: `${preferences.visual * 100}%` }}>
                   </div>
                   <div className="progress-line green" 
                         style={{ width: `${preferences.verbal * 100}%` }}>
                   </div>
+                <span className="dimension-right">Verbal</span>
               </div>
             </div>
 
             <div class="bar">
-              <span>Sequential / Global:</span>
               <div className="percentages detail">
                 <span>{(preferences.sequential * 100).toFixed(0)}%</span>
                 <span>{(preferences.global * 100).toFixed(0)}%</span>
               </div>
               <div className="progress-line-container">
+                <span className="dimension-left">Sequential</span>
                   <div className="progress-line red" 
                         style={{ width: `${preferences.sequential * 100}%` }}>
                   </div>
                   <div className="progress-line green" 
                         style={{ width: `${preferences.global * 100}%` }}>
                   </div>
+                <span className="dimension-right">Global</span>
               </div>
             </div>
 
             <span className="button-link">
               <Link to="/profile-quiz">
                 <button>
-                Take learning preferences test
+                Retake Quiz
                 </button> 
               </Link> 
             </span> 
+
+          </div>
         </div>
       </main>
     </>
