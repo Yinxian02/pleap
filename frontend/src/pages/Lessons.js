@@ -1,66 +1,88 @@
-import React, { Component } from 'react';
 import "../styles/Lessons.css";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
+import Modal from '../components/Modal'; 
+import React, { useContext, useState, useEffect } from 'react';;
 
-class Lesson extends Component {
-  static contextType = AuthContext;
+const Lesson = ({ lesson, onClick }) => {
+  const { title, description, thumbnail, _id } = lesson;
 
-  render() {
-    const { title, description, thumbnail, _id } = this.props.lesson;
-
-    return (
-      <Link className="lessons-link-div" to={"/lesson/" + _id}>
-        <div className="lessons-content">
-          <div className="lessons-title-container">
-            <div className="lessons-title">{title.split(' ')[0]}</div>
-            <div className="lessons-subtitle">{title.split(' ').slice(1).join(' ')}</div>
-          </div>
-          <img className="lessons-thumbnail" src={thumbnail} alt="Slide" />
-          <div className="lessons-description">{description}</div>
+  return (
+    <div className="lessons-link-div">
+      <div className="lessons-content" onClick={() => onClick(lesson)}>
+        <div className="lessons-title-container">
+          <div className="lessons-title">{title.split(' ')[0]}</div>
+          <div className="lessons-subtitle">{title.split(' ').slice(1).join(' ')}</div>
         </div>
-      </Link>
-    );
-  }
-}
+        <img className="lessons-thumbnail" src={thumbnail} alt="Slide" />
+        <div className="lessons-description">{description}</div>
+      </div>
+    </div>
+    // <Link className="lessons-link-div" to={"/lesson/" + _id}>
+    // </Link>
+  );
+};
 
-export default class Lessons extends Component {
-  static contextType = AuthContext;
+const Lessons = () => {
+  const { auth } = useContext(AuthContext);
+  const [lessons, setLessons] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedLesson, setSelectedLesson] = useState(null);
 
-  constructor(props) {
-    super(props);
-
-    this.state = { lessons: [] };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     axios
       .get('http://localhost:5001/lessons/', {
         headers: {
-          Authorization: 'Bearer ' + this.context.auth.accessToken,
+          Authorization: 'Bearer ' + auth.accessToken,
         },
       })
-      .then(res => {
-        console.log(res.data)
-        this.setState({ lessons: res.data });
+      .then((res) => {
+        console.log(res.data);
+        setLessons(res.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-  }
+  }, [auth.accessToken]);
 
-  lessonsList() {
-    return this.state.lessons.map(currentlesson => (
-      <Lesson lesson={currentlesson} key={currentlesson._id} />
-    ));
-  }
+  const openModal = (lesson) => {
+    setSelectedLesson(lesson);
+    setIsModalOpen(true);
+  };
 
-  render() {
-    return (
-      <div className="lessons-list">
-        {this.lessonsList()}
-      </div>
-    );
-  }
-}
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedLesson(null);
+  };
+
+  const handleQuestionSubmit = (answer) => {
+    console.log('User answer:', answer); 
+  };
+
+  return (
+    <div className="lessons-list">
+      {lessons.map((currentLesson) => (
+        <Lesson lesson={currentLesson} key={currentLesson._id} onClick={openModal}/>
+      ))}
+      {/* <button onClick={openModal}>Open Modal</button> */}
+      <Modal isOpen={isModalOpen} 
+             onClose={closeModal}
+             lesson={selectedLesson}
+            //  onQuestionSubmit={handleQuestionSubmit} 
+             />
+        {/* {selectedLesson && (
+          <>
+            {/* <button className="modal-close" onClick={closeModal}>X</button>
+            <h2>{selectedLesson.title}</h2>
+            <p>{selectedLesson.description}</p>
+            <img src={selectedLesson.thumbnail} alt="Slide" />  
+            {/* How much do you know about `{selectedLesson.title}'?  
+            onQuestionSubmit={handleQuestionSubmit}
+          </> */}
+      {/* </Modal> */}
+    </div>
+  );
+};
+
+export default Lessons;

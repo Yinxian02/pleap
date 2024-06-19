@@ -1,0 +1,48 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* padding: 20px; */
+  }
+  
+.modal-content {
+    background: white;
+    padding: 50px;
+    border-radius: 8px;
+    position: relative;
+    min-width: 300px;
+    justify-content: center;
+}
+  
+.modal-close {
+    box-shadow: 0 0 0 0;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #CECECE;
+    background: none;
+    box-shadow: 0 0 0 0;
+    border: none;
+}
+
+.difficulty-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
