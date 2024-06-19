@@ -71,7 +71,7 @@ const LessonFetch = ({lesson}) => {
             </div>
             
               <div className="ai-disclaimer">
-                < MdLightbulbOutline className="lightbulb"/>
+                <MdLightbulbOutline className="lightbulb"/>
                 <p className='ai-disclaimer-text'>Some content generated on this platform is powered by AI. Always consult a qualified expert for specific guidance.</p>
               </div>
 
@@ -88,60 +88,37 @@ const LessonFetch = ({lesson}) => {
   }
 
 
-class Lesson extends Component {
-  static contextType = AuthContext;
+const Lesson = () => {
+  const { id, difficulty } = useParams();
+  const { auth } = useContext(AuthContext);
+  const [lesson, setLesson] = useState(null);
 
-  constructor(props) {
-    super(props);
-    this.state = { 
-      lesson: {},
-      preferences: {
-        active: 0,
-        reflexive: 0,
-        sensing: 0,
-        intuitive: 0,
-        visual: 0,
-        verbal: 0,
-        sequential: 0,
-        global: 0,
-      },
-     };
-  }
-
-  componentDidMount() {
-    const { id } = this.props;  
-    // this.fetchUserPreferences(); 
-
+  useEffect(() => {
     axios
       .get(`http://localhost:5001/lessons/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.context.auth.accessToken,
+          Authorization: 'Bearer ' + auth.accessToken,
         },
       })
       .then(res => {
-        // console.log(res.data);
-        this.setState({ lesson: res.data });
+        setLesson(res.data);
       })
       .catch(error => {
         console.log(error);
       });
-  }
+  }, [id, auth.accessToken]);
 
-  lessonDisplay() {
-    if (this.state.lesson !== null){
-      return <LessonFetch lesson={this.state.lesson}/>;
+  const lessonDisplay = () => {
+    if (lesson !== null) {
+      return <LessonFetch lesson={lesson} />;
     }
-  }
+    // You might want to return a loading indicator or handle the case where lesson is still loading
+    return <div>Loading...</div>;
+  };
 
-  render() {
-    return (
-      <div>
-        {this.lessonDisplay()}
-      </div>
-    );
-  }
-}
+  return <div>{lessonDisplay()}</div>;
+};
 
 // Functional wrapper component to use hooks
 const LessonWrapper = (props) => {

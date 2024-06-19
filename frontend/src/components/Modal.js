@@ -32,7 +32,7 @@ const Modal = ({ isOpen, onClose, children, lesson }) => {
           <div>
             <p> How much do you know about `{lesson.title}'</p>
             <Difficulty className="difficulty-bar" onLevelChange={handleLevelChange}/>
-            <Link to={"/lesson/" + lesson._id}>
+            <Link to={"/lesson/" + lesson._id + "/" + difficulty}>
               <button className="difficulty-button" onClick={handleSubmit}>Submit</button>
             </Link>
           </div>

@@ -17,6 +17,8 @@ export class LearningObject {
         
         this.embed = false;
         this.aiGenerated = false;
+
+        this.difficulty = "";
     }
 
     setText(text){
@@ -78,6 +80,10 @@ export class LearningObject {
         this.aiGenerated = true;
     }
 
+    setDifficulty(difficulty){
+        this.difficulty = difficulty;
+    }
+
     getJSON(){
         return {
             general: {
@@ -104,7 +110,7 @@ export class LearningObject {
                 learningResourceType: this.learningResourceType, 
                 interactivityLevel: this.interactivityLevel, 
                 context: "higher education",
-                difficulty: "",
+                difficulty: this.difficulty,
             },
             content: {
                 text: this.text,

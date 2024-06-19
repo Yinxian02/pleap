@@ -44,7 +44,7 @@ function App() {
             <Route path='profile' element={<Profile/>}/>
             <Route path='profile-quiz' element={<ProfileQuiz/>}/>
             <Route path='lessons' element={<Lessons/>}/>
-            <Route path='lesson/:id' element={<LessonWrapper/>}/>
+            <Route path='lesson/:id/:difficulty' element={<LessonWrapper/>}/>
             <Route path='create-lesson' element={<AddLesson/>}/> 
           </Route>
 

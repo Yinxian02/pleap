@@ -12,6 +12,7 @@ function getYoutubeId(url) {
 }
 
 class GenerateAIContent extends Component{
+  
     static contextType = AuthContext;
     
     getAllLessonText(learningObjects) {
@@ -24,83 +25,138 @@ class GenerateAIContent extends Component{
       return allText; 
     }
 
-    async createMCQ(lessonText) {
-      const mcqPrompt = `You are a computer science lecturer at university. 
-      Create a list of 5 one-sentence multiple choice questions 
-      based on the lesson content, 
-      that test student understanding. \n\n
-      
-      Ensure the questions cover the key concepts and important details from the lesson, 
-      but keep the quiz concise to avoid exceeding token limits.
+    getLevelPrompt(difficultyLevel) {
+      const levelPrompts = {
+        "very easy": "assess recall of core concepts through memory of terminology, facts, setting, methods",
+        "easy": "assess comprehension by translation of attained knowledge to similar instances",
+        "medium": "assess application of knowledge to new situations, problem-solving, and analysis",
+        "hard": "assess evaluation of knowledge, judgement, and dissection, through argumentative exercises",
+        "very hard": "assess creation of new knowledge, synthesis of information, and design of new patterns, by producing purposeful outcomes by rearranging patterns"
+      };
+      return levelPrompts[difficultyLevel];
+    } 
 
-      Limit the quiz to a manageable length to ensure the response is 
-      not truncated due to token limits.
+    generateMCQPrompt(lessonText, difficultyLevel) {
+      const levelPrompt = this.getLevelPrompt(difficultyLevel);
+
+      const mcqPrompt = `You are a computer science lecturer at university. 
+            Create a list of 5 one-sentence multiple choice questions 
+            based on the lesson content, 
+            that ${levelPrompt}. \n\n
+            
+            Lesson Content:\n${lessonText}
+            
+            Format the response as a parsable json array for the MCQs as follows: 
+            [ { "question" : "..." , 
+                "choices" : [ { 
+                  "text": "...", 
+                  "value": 1 (if correct) 0 (if wrong)]}, 
+                  ... ] } ... ]`;
+      //  return levels
+      return mcqPrompt;
+    }; 
+
+    async createMCQ(lessonText) {
+      const levels = ["very easy", "easy", "medium", "hard", "very hard"];
+      let learningObjects = [];
+      // const mcqPrompt = `You are a computer science lecturer at university. 
+      // Create a list of 5 one-sentence multiple choice questions 
+      // based on the lesson content, 
+      // that test student understanding. \n\n
       
-      Lesson Content:\n${lessonText}
+      // Lesson Content:\n${lessonText}
       
-      Format the response as a parsable json array for the MCQs as follows: 
-      [ { "question" : "..." , 
-          "choices" : [ { 
-            "text": "...", 
-            "value": 1 (if correct) 0 (if wrong)]}, 
-            ... ] } ... ]`;
+      // Format the response as a parsable json array for the MCQs as follows: 
+      // [ { "question" : "..." , 
+      //     "choices" : [ { 
+      //       "text": "...", 
+      //       "value": 1 (if correct) 0 (if wrong)]}, 
+      //       ... ] } ... ]`;
       
       // console.log(mcqPrompt);
       // let mcqResponse;
-      let openAImcqResponse;
-      let vertexAImcqResponse;
-
-      try {
-        openAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'openAI');
-        console.log(openAImcqResponse);
-        vertexAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'vertexAI');
-        console.log(vertexAImcqResponse);
-      } catch (error) {
-        console.error('Error generating mcq:', error);
-        return undefined;
+      for (let i = 0; i < 5; i++) {
+        const mcqPrompt = this.generateMCQPrompt(lessonText, levels[i]);
+        let openAImcqResponse;
+        let vertexAImcqResponse;
+        try {
+          openAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'openAI');
+          console.log(openAImcqResponse);
+          vertexAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'vertexAI');
+          console.log(vertexAImcqResponse);
+        } catch (error) {
+          console.error('Error generating mcq:', error);
+          continue; 
+        }
+  
+        const mcqObject = new LearningObject("MCQ", "text/plain", "active", "questionnaire", "medium");
+        mcqObject.setQuestionnaire(openAImcqResponse, vertexAImcqResponse);
+        mcqObject.setAIGenerated();
+        mcqObject.setDifficulty(levels[i]);
+        learningObjects.push(mcqObject.getJSON());
       }
+      return learningObjects;
+      // let vertexAImcqResponse;
 
-      const mcqObject = new LearningObject("MCQ", "text/plain", "active", "questionnaire", "medium");
-      mcqObject.setQuestionnaire(openAImcqResponse, vertexAImcqResponse);
-      mcqObject.setAIGenerated();
-      return mcqObject.getJSON();
+      // try {
+      //   openAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'openAI');
+      //   console.log(openAImcqResponse);
+      //   vertexAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'vertexAI');
+      //   console.log(vertexAImcqResponse);
+      // } catch (error) {
+      //   console.error('Error generating mcq:', error);
+      //   return undefined;
+      // }
+
+      // const mcqObject = new LearningObject("MCQ", "text/plain", "active", "questionnaire", "medium");
+      // mcqObject.setQuestionnaire(openAImcqResponse, vertexAImcqResponse);
+      // mcqObject.setAIGenerated();
+      // return mcqObject.getJSON();
     }
 
-    async createQuiz(lessonText) {
+    generateQuizPrompt(lessonText, difficultyLevel) {
+      const levelPrompt = this.getLevelPrompt(difficultyLevel);
+
       const quizPrompt = `You are a computer science lecturer at university. 
-      Design a end-of-unit reflection quiz, with 5 questions, 
-      based on the lesson content, 
-      that test understanding, and provide correct answer and three distractors \n\n
-      
-      Ensure the questions cover the key concepts and important details from the lesson, 
-      but keep the quiz concise to avoid exceeding token limits.
+              Design a end-of-unit reflection quiz, with 5 one-sentence questions, 
+              based on the lesson content, 
+              that ${levelPrompt} \n\n
 
-      Limit the quiz to a manageable length to ensure the response is 
-      not truncated due to token limits.
+              Lesson Content:\n${lessonText}
+              
+              Format the response as a parsable json array 
+              [ { "question" : "..." , "answer" : "..."} , ... ] `;
+      //  return levels
+      return quizPrompt;
+    }; 
 
-      Lesson Content:\n${lessonText}
-      
-      Format the response as a parsable json array 
-       [ { "question" : "..." , "answer" : "..."} , ... ] `;
-      
-      const maxAttempts = 5;
+    async createQuiz(lessonText) {
+      const levels = ["very easy", "easy", "medium", "hard", "very hard"];
+      let learningObjects = [];
 
-      // let quizResponse;
-      let openAIquizResponse;
-      let vertexAIquizResponse;
-
-      try {
-        openAIquizResponse = await generateAndParseResponse(quizPrompt, this.context.auth.accessToken,'openAI', maxAttempts);
-        vertexAIquizResponse = await generateAndParseResponse(quizPrompt, this.context.auth.accessToken, 'vertexAI', maxAttempts);
-      } catch (error) {
-        console.error('Error generating quiz:', error);
-        return undefined;
+      for (let i = 0; i < 5; i++) {
+        const quizPrompt = this.generateQuizPrompt(lessonText, levels[i]);
+        const maxAttempts = 5;
+  
+        // let quizResponse;
+        let openAIquizResponse;
+        let vertexAIquizResponse;
+  
+        try {
+          openAIquizResponse = await generateAndParseResponse(quizPrompt, this.context.auth.accessToken,'openAI', maxAttempts);
+          vertexAIquizResponse = await generateAndParseResponse(quizPrompt, this.context.auth.accessToken, 'vertexAI', maxAttempts);
+        } catch (error) {
+          console.error('Error generating quiz:', error);
+          return undefined;
+        }
+  
+        const quizObject = new LearningObject("reflection quiz", "text/plain", "active", "exercise", "medium");
+        quizObject.setExercise(openAIquizResponse, vertexAIquizResponse);
+        quizObject.setAIGenerated();
+        quizObject.setDifficulty(levels[i]);
+        learningObjects.push(quizObject.getJSON());
       }
-
-      const quizObject = new LearningObject("reflection quiz", "text/plain", "active", "exercise", "medium");
-      quizObject.setExercise(openAIquizResponse, vertexAIquizResponse);
-      quizObject.setAIGenerated();
-      return quizObject.getJSON();
+      return learningObjects;
     }
 
     async createGlossary(lessonText) {
@@ -131,26 +187,41 @@ class GenerateAIContent extends Component{
       return glossaryObject.getJSON();
     }
 
-    async createChallenge(lessonText) {
+    generateChallengePrompt(lessonText, difficultyLevel) {
+      const levelPrompt = this.getLevelPrompt(difficultyLevel);
+
       const challengePrompt = `You are a computer science lecturer at university.
       Create a challenge question for your students based on the lesson content.
 
       The challenge should require students to brainstorm, evaluate, and create a solution related to the lesson content.
+      It should be a problem-solving exercise that ${levelPrompt} \n\n
       Make sure the challenge encourages students to apply their knowledge creatively to a real-world scenario outside of lesson content.
 
-      Lesson Content:\n${lessonText}`;
+      Lesson Content:\n${lessonText}`; 
 
-      const openAIchallengeResponse = await generateTextResponse(challengePrompt, this.context.auth.accessToken, 'openAI');
-      const vertexAIchallengeResponse = await generateTextResponse(challengePrompt, this.context.auth.accessToken, 'vertexAI');
+      return challengePrompt;
+    }
 
-      console.log(openAIchallengeResponse);
-      console.log(vertexAIchallengeResponse);
+    async createChallenge(lessonText) {
+      const levels = ["very easy", "easy", "medium", "hard", "very hard"];
+      let learningObjects = [];
 
-      const challengeObject = new LearningObject("brainstorm", "text/plain", "active", "problem statement", "medium");
-      // challengeObject.setText(challengeGeneratedResponse);
-      challengeObject.setChallenge(openAIchallengeResponse, vertexAIchallengeResponse);
-      challengeObject.setAIGenerated();
-      return challengeObject.getJSON();
+      for (let i = 0; i < 5; i++) {
+        const challengePrompt = this.generateChallengePrompt(lessonText, levels[i]);
+        const openAIchallengeResponse = await generateTextResponse(challengePrompt, this.context.auth.accessToken, 'openAI');
+        const vertexAIchallengeResponse = await generateTextResponse(challengePrompt, this.context.auth.accessToken, 'vertexAI');
+  
+        console.log(openAIchallengeResponse);
+        console.log(vertexAIchallengeResponse);
+  
+        const challengeObject = new LearningObject("brainstorm", "text/plain", "active", "problem statement", "medium");
+        // challengeObject.setText(challengeGeneratedResponse);
+        challengeObject.setChallenge(openAIchallengeResponse, vertexAIchallengeResponse);
+        challengeObject.setAIGenerated();
+        challengeObject.setDifficulty(levels[i]);
+        learningObjects.push(challengeObject.getJSON());
+      }; 
+      return learningObjects;
     }
 
     async createAudio(learningObject){
@@ -381,7 +452,13 @@ class GenerateAIContent extends Component{
         console.log("Created object:", createdObject);
 
         if (createdObject !== undefined) {
-          newLearningObjects.push(createdObject);
+          if (generationFunction.name === "createMCQ" || 
+              generationFunction.name === "createQuiz" || 
+              generationFunction.name === "createChallenge") {
+            createdObject.forEach(obj => newLearningObjects.push(obj));
+          } else {
+            newLearningObjects.push(createdObject);
+          }
         }
       };
 
