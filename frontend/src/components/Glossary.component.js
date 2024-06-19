@@ -57,21 +57,25 @@ const Glossary = ({ learningObject }) => {
                     ))}
                 </div>
             ) : (
-                <FlashcardArray 
-                    cards={glossary.map((item) => ({
-                        frontHTML: item.term,
-                        backHTML: item.definition,
-                    }))} 
-                    frontContentStyle={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    backContentStyle={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}/>
+                <div className='flashcard-container'>
+                    <FlashcardArray 
+                        cards={glossary.map((item) => ({
+                            frontHTML: item.term,
+                            backHTML: item.definition,
+                        }))} 
+                        frontContentStyle={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "1.5rem",
+                          }}
+                        backContentStyle={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            textAlign: "center",
+                        }}/>
+                </div>
             )}
             {/* <div className='toggle-header'> */}
                 {/* <button onClick={toggleView} className="toggle-button">

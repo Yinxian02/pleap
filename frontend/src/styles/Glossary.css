@@ -79,3 +79,12 @@
 .glossary-button + .glossary-button {
     margin-left: -10px; /* Adjust this value to control overlap */
 }
+
+.flashcard-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
