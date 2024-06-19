@@ -1,8 +1,12 @@
+main {
+    flex: 1;
+}
 .lessons-list {
     display: flex;
     justify-content: center;
     gap: 30px;
     padding: 20px;
+    height: 75%;
 }
   
 .lessons-link-div {
@@ -17,7 +21,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 70px 38px 50px;
+    padding: 50px 38px 30px 30px;
     margin: 0 30px;
     transition: transform 0.2s;
     box-shadow: 0 4px 4px var(--hoverShadowColor); 
@@ -75,4 +79,13 @@
     font-family: 'Lusitana', serif;
     font-weight: 400;
     word-wrap: break-word;
+}
+
+.lessons-footer {
+    display: flex;
+    width: 100%;
+    padding-right: 50px;
+    justify-content: flex-end;
+    /* margin: 20px; */
+    position: relative;
 }

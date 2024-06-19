@@ -15,6 +15,7 @@ import Missing from './pages/Missing';
 import ProfileQuiz from './components/profile-quiz.component'
 import ProfileIcon from './components/ProfileIcon'
 import LessonIcon from './components/LessonIcon'
+import UploadLesson from './pages/UploadLesson'
 
 const ROLES = {
   'User': 2001,
@@ -46,6 +47,7 @@ function App() {
             <Route path='lessons' element={<Lessons/>}/>
             <Route path='lesson/:id/:difficulty' element={<LessonWrapper/>}/>
             <Route path='create-lesson' element={<AddLesson/>}/> 
+            <Route path='upload-lesson' element={<UploadLesson/>}/>
           </Route>
 
           <Route path="*" element={<Missing/>} />

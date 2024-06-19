@@ -1,0 +1,51 @@
+.upload-lesson-title {
+    font-size: 35px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.lesson-content {
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 50px;
+}
+
+.lesson-content label {
+    width: 100%;
+    display: block;
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    margin-top: 30px;
+}
+
+.lesson-title-input {
+    width: 60%;
+    padding: 10px;
+    font-size: 15px;
+    border: #d3d3d3 1px solid;
+    border-radius: 5px;
+}
+
+.lesson-description-input{
+    padding: 10px;
+}
+
+.lesson-thumbnail-input {
+    width: 60%;
+    padding: 10px;
+    font-size: 15px;
+    border: #d3d3d3 1px solid;
+    border-radius: 5px;
+}
+
+.lesson-upload-button-container {
+    width: 40%;
+    margin-left: 30%; 
+    justify-content: center;
+    display: flex;
+    margin-top: 50px;
+}

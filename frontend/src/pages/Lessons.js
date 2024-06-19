@@ -61,28 +61,24 @@ const Lessons = () => {
   };
 
   return (
-    <div className="lessons-list">
-      {lessons.map((currentLesson) => (
-        <Lesson lesson={currentLesson} key={currentLesson._id} onClick={openModal}/>
-      ))}
-      {/* <button onClick={openModal}>Open Modal</button> */}
-      <Modal isOpen={isModalOpen} 
-             onClose={closeModal}
-             lesson={selectedLesson}
-            //  onQuestionSubmit={handleQuestionSubmit} 
-             />
-        {/* {selectedLesson && (
-          <>
-            {/* <button className="modal-close" onClick={closeModal}>X</button>
-            <h2>{selectedLesson.title}</h2>
-            <p>{selectedLesson.description}</p>
-            <img src={selectedLesson.thumbnail} alt="Slide" />  
-            {/* How much do you know about `{selectedLesson.title}'?  
-            onQuestionSubmit={handleQuestionSubmit}
-          </> */}
-      {/* </Modal> */}
-    </div>
-  );
+    <>
+      <div className="lessons-list">
+        {lessons.map((currentLesson) => (
+          <Lesson lesson={currentLesson} key={currentLesson._id} onClick={openModal}/>
+        ))}
+        {/* <button onClick={openModal}>Open Modal</button> */}
+        <Modal isOpen={isModalOpen} 
+              onClose={closeModal}
+              lesson={selectedLesson}
+              />
+      </div>
+      <div className="lessons-footer">
+        <Link to={"/upload-lesson"}>
+          <button>+</button>
+        </Link>
+      </div>
+    </>
+    );
 };
 
 export default Lessons;

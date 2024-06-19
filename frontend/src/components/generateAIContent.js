@@ -438,9 +438,9 @@ class GenerateAIContent extends Component{
 
       const generationFunctions = [
         this.createMCQ,
-        // this.createQuiz,
-        // this.createGlossary,
-        // this.createChallenge
+        this.createQuiz,
+        this.createGlossary,
+        this.createChallenge
       ];
 
       const createAndAddToLOList = async (generationFunction, ...args) => {
@@ -468,13 +468,13 @@ class GenerateAIContent extends Component{
         if (learningObject.educational.learningResourceType) {
           switch (learningObject.educational.learningResourceType) {
             case "narrative text":
-              // await this.uploadGeneratedAudio(learningObject);
+              await this.uploadGeneratedAudio(learningObject);
               break;
             case "lecture":
-              // creationFunction = this.createTranscript;
+              creationFunction = this.createTranscript;
               break;
             case "slide":
-              // creationFunction = this.createDescription;
+              creationFunction = this.createDescription;
               break;
             default:
               break; 
@@ -581,9 +581,9 @@ class GenerateAIContent extends Component{
             //   await this.addLearningObjectReferences(lessons[i]._id, ids);
             // }
           // }
-          const ids = await this.uploadGeneratedContent(lessons[0]._learningObjects);
+          const ids = await this.uploadGeneratedContent(lessons[1]._learningObjects);
             if (ids) {
-              await this.addLearningObjectReferences(lessons[0]._id, ids);
+              await this.addLearningObjectReferences(lessons[1]._id, ids);
             }
             
         } catch (error) {

@@ -102,14 +102,14 @@ const AddLesson = () => {
           author="Josiah Wang" 
           description="Really... what exactly is programming?"
           thumbnail="https://storage.googleapis.com/pleap/whatIsProgramming/laptopBlueOneTone.png"
-          learningObjects={whatIsProgrammingLOs} /> 
+          learningObjects={whatIsProgrammingLOs} />  
       
-         <LessonComponent 
+        <LessonComponent 
           title="Design a guessing game" 
           author="Josiah Wang" 
           description="Let's dive straight into designing a game... because life is too short to waste!"
          thumbnail="https://storage.googleapis.com/pleap/designGuessingGame/puzzleBlueTone.png" 
-         learningObjects={designGameLOs} />     */}
+         learningObjects={designGameLOs} />      */}
 
         {/*  <LessonComponent
           title="Improve the guessing game"
