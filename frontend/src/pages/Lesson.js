@@ -5,17 +5,21 @@ import AuthContext from "../context/AuthContext";
 import { useParams } from 'react-router-dom';
 import displayLO from '../components/displayLO';
 
-import { contentBasedFiltering } from '../components/contentBasedFiltering';
-import { collaborativeFiltering } from '../components/collaborativeFiltering';
+// import { contentBasedFiltering } from '../components/contentBasedFiltering';
+// import { collaborativeFiltering } from '../components/collaborativeFiltering';
 import { hybridFiltering } from '../components/hybridFiltering';
 import { sortLOs } from '../components/sortLOs';
 
 import { MdLightbulbOutline } from "react-icons/md";
 
-const LessonFetch = ({lesson}) => {
+const LessonFetch = ({lesson, difficulty}) => {
   const { auth } = useContext(AuthContext);
   const [learningObjects, setLearningObjects] = useState([]);
   const [filteredLearningObjects, setFilteredLearningObjects] = useState([]);
+
+  const filterByDifficulty = (learningObjects) => {
+    return learningObjects.filter(lo => lo.educational.difficulty === difficulty || lo.educational.difficulty === '');
+  }
 
   useEffect(() => {
     const fetchLearningObjects = async (ids) => {
@@ -33,7 +37,9 @@ const LessonFetch = ({lesson}) => {
           }
         );
         console.log((res.data).map(lo => lo._id));
-        setLearningObjects(res.data);
+        const loByDifficulty = filterByDifficulty(res.data);
+        console.log("filtered by difficulty:", loByDifficulty);
+        setLearningObjects(loByDifficulty);
       } catch (error) {
         console.error('Error fetching learning objects:', error);
       }
@@ -91,7 +97,7 @@ const LessonFetch = ({lesson}) => {
 const Lesson = () => {
   const { id, difficulty } = useParams();
   const { auth } = useContext(AuthContext);
-  const [lesson, setLesson] = useState(null);
+  const [lesson, setLesson] = useState(null); 
 
   useEffect(() => {
     axios
@@ -109,9 +115,24 @@ const Lesson = () => {
       });
   }, [id, auth.accessToken]);
 
+  const getDifficulty = (level) => {
+    if (level === '1') {
+      return "very easy";
+    } else if (level === '2') {
+      return "easy";
+    } else if (level === '3') {
+      return "medium";
+    } else if (level === '4') {
+      return "hard";
+    } else if (level === '5') {
+      return "very hard";
+    }
+  }; 
+
   const lessonDisplay = () => {
     if (lesson !== null) {
-      return <LessonFetch lesson={lesson} />;
+      const difficultyLevel = getDifficulty(difficulty);
+      return <LessonFetch lesson={lesson} difficulty={difficultyLevel}/>;
     }
     // You might want to return a loading indicator or handle the case where lesson is still loading
     return <div>Loading...</div>;

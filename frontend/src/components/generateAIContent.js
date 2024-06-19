@@ -36,7 +36,7 @@ class GenerateAIContent extends Component{
       return levelPrompts[difficultyLevel];
     } 
 
-    generateMCQPrompt(lessonText, difficultyLevel) {
+    generateSingleTurnMCQPrompt(lessonText, difficultyLevel) {
       const levelPrompt = this.getLevelPrompt(difficultyLevel);
 
       const mcqPrompt = `You are a computer science lecturer at university. 
@@ -56,33 +56,45 @@ class GenerateAIContent extends Component{
       return mcqPrompt;
     }; 
 
+    async generateMultiStageMCQPrompt(lessonText, difficultyLevel, apiType) {
+      const levelPrompt = this.getLevelPrompt(difficultyLevel);
+      
+      const paraphraseGenerationPrompt = `Paraphrase the given context ${lessonText}`;
+      const paraphraseGeneration = await generateTextResponse(paraphraseGenerationPrompt, this.context.auth.accessToken, apiType);
+      
+      const keywordExtractionPrompt = `Extract the keywords from the given context ${paraphraseGeneration}`; 
+      const keywordExtraction = await generateTextResponse(keywordExtractionPrompt, this.context.auth.accessToken, apiType);
+
+      const mcqPrompt = `You are a computer science lecturer at university. 
+                          Create a list of 5 one-sentence multiple choice questions 
+                          based on the paraphrased content ${paraphraseGeneration}
+                          and correct answers ${keywordExtraction}, 
+                          that ${levelPrompt}. \n\n
+                          
+                          Format the response as a parsable json array for the MCQs as follows: 
+                          [ { "question" : "..." , 
+                              "choices" : [ { 
+                                "text": "...", 
+                                "value": 1 (if correct) 0 (if wrong)]}, 
+                                ... ] } ... ]`;
+      return mcqPrompt;
+    }
+
     async createMCQ(lessonText) {
       const levels = ["very easy", "easy", "medium", "hard", "very hard"];
       let learningObjects = [];
-      // const mcqPrompt = `You are a computer science lecturer at university. 
-      // Create a list of 5 one-sentence multiple choice questions 
-      // based on the lesson content, 
-      // that test student understanding. \n\n
       
-      // Lesson Content:\n${lessonText}
-      
-      // Format the response as a parsable json array for the MCQs as follows: 
-      // [ { "question" : "..." , 
-      //     "choices" : [ { 
-      //       "text": "...", 
-      //       "value": 1 (if correct) 0 (if wrong)]}, 
-      //       ... ] } ... ]`;
-      
-      // console.log(mcqPrompt);
-      // let mcqResponse;
       for (let i = 0; i < 5; i++) {
-        const mcqPrompt = this.generateMCQPrompt(lessonText, levels[i]);
+        // const mcqPrompt = this.generateSingleTurnMCQPrompt(lessonText, levels[i]);
         let openAImcqResponse;
         let vertexAImcqResponse;
         try {
-          openAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'openAI');
+          const openAImcqPrompt = await this.generateMultiStageMCQPrompt(lessonText, levels[i], 'openAI');
+          openAImcqResponse = await generateAndParseResponse(openAImcqPrompt, this.context.auth.accessToken, 'openAI');
           console.log(openAImcqResponse);
-          vertexAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'vertexAI');
+
+          const vertexAImcqPrompt = await this.generateMultiStageMCQPrompt(lessonText, levels[i], 'vertexAI');
+          vertexAImcqResponse = await generateAndParseResponse(vertexAImcqPrompt, this.context.auth.accessToken, 'vertexAI');
           console.log(vertexAImcqResponse);
         } catch (error) {
           console.error('Error generating mcq:', error);
@@ -96,22 +108,6 @@ class GenerateAIContent extends Component{
         learningObjects.push(mcqObject.getJSON());
       }
       return learningObjects;
-      // let vertexAImcqResponse;
-
-      // try {
-      //   openAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'openAI');
-      //   console.log(openAImcqResponse);
-      //   vertexAImcqResponse = await generateAndParseResponse(mcqPrompt, this.context.auth.accessToken, 'vertexAI');
-      //   console.log(vertexAImcqResponse);
-      // } catch (error) {
-      //   console.error('Error generating mcq:', error);
-      //   return undefined;
-      // }
-
-      // const mcqObject = new LearningObject("MCQ", "text/plain", "active", "questionnaire", "medium");
-      // mcqObject.setQuestionnaire(openAImcqResponse, vertexAImcqResponse);
-      // mcqObject.setAIGenerated();
-      // return mcqObject.getJSON();
     }
 
     generateQuizPrompt(lessonText, difficultyLevel) {
@@ -441,7 +437,7 @@ class GenerateAIContent extends Component{
       // console.log(lessonText);
 
       const generationFunctions = [
-        // this.createMCQ,
+        this.createMCQ,
         // this.createQuiz,
         // this.createGlossary,
         // this.createChallenge
