@@ -1,14 +1,16 @@
 // LearningObjectUpload.js
 import React from 'react';
+import '../styles/UploadLesson.css';
 
 const LearningObjectUpload = ({ index, handleChange, handleTypeChange, learningObject }) => {
   return (
-    <div>
+    <div className='lo-upload-div'>
       <label htmlFor={`subtopic${index}`}>Subtopic {index + 1}</label>
       <input 
         type="text" 
         id={`subtopic${index}`} 
         name="subtopic" 
+        className='lo-input'
         value={learningObject.subtopic}
         onChange={(e) => handleChange(e, index)} 
       />
@@ -17,6 +19,7 @@ const LearningObjectUpload = ({ index, handleChange, handleTypeChange, learningO
       <select
         id={`type${index}`}
         name="type"
+        className='lo-input'
         value={learningObject.type}
         onChange={(e) => handleTypeChange(e, index)}
       >
@@ -27,35 +30,38 @@ const LearningObjectUpload = ({ index, handleChange, handleTypeChange, learningO
       </select>
       
       {learningObject.type === 'narrative' && (
-        <div>
+        <div className='lo-upload-container'>
           <label htmlFor={`narrative${index}`}>Narrative Text</label>
           <textarea
             id={`narrative${index}`}
             name="content"
+            className='lo-narrative-textarea'
             value={learningObject.content}
             onChange={(e) => handleChange(e, index)}
           />
         </div>
       )}
       {learningObject.type === 'youtube' && (
-        <div>
+        <div className='lo-upload-container'>
           <label htmlFor={`youtube${index}`}>YouTube URL</label>
           <input
             type="text"
             id={`youtube${index}`}
             name="content"
+            className='lo-input'
             value={learningObject.content}
             onChange={(e) => handleChange(e, index)}
           />
         </div>
       )}
       {learningObject.type === 'slide' && (
-        <div>
+        <div className='lo-upload-container'>
           <label htmlFor={`slide${index}`}>Slide URL</label>
           <input
             type="text"
             id={`slide${index}`}
             name="content"
+            className='lo-input'
             value={learningObject.content}
             onChange={(e) => handleChange(e, index)}
           />

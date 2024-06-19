@@ -3,6 +3,7 @@ import LearningObjectUpload from '../components/LearningObjectUpload';
 import { LearningObject } from '../components/learningObject';
 import GenerateAIContent from '../components/GenerateAIContent';
 import LessonComponent from '../components/LessonComponent';
+import '../styles/UploadLesson.css';
 
 const UploadLesson = () => {
     const [learningObjects, setLearningObjects] = useState([]);
@@ -86,39 +87,39 @@ const UploadLesson = () => {
   
     return (
       <div>
-        <h1>Create Lesson</h1>
-        <div>
+        <h1 className='upload-lesson-title'>Create Lesson</h1>
+        <div className='lesson-content'>
           <label htmlFor="title">Title:</label>
           <input 
             type="text" 
             id="title" 
             name="title" 
+            className='lo-input'
             value={lessonData.title}
             onChange={handleLessonChange} 
             required
           />
-        </div>
-        <div>
           <label htmlFor="description">Description:</label>
           <textarea 
             id="description" 
             name="description" 
+            className='lo-textarea'
             value={lessonData.description}
             onChange={handleLessonChange} 
             required
           />
-        </div>
-        <div>
           <label htmlFor="thumbnail">Thumbnail:</label>
           <input 
             type="text" 
             id="thumbnail" 
             name="thumbnail" 
+            className='lo-input'
             value={lessonData.thumbnail}
             onChange={handleLessonChange}
             required
           />
         </div>
+        
         {learningObjects.map((learningObject, index) => (
           <LearningObjectUpload 
             key={index} 
@@ -132,14 +133,14 @@ const UploadLesson = () => {
 
         { generateContent && <GenerateAIContent/>}
         { !lessonUploaded ? 
-            <>
+            <div className="lesson-upload-button-container">
                 <button type="button" onClick={addLearningObject}>
                     Add Learning Object
                 </button>
                 <button type="button" onClick={handleSubmit}>
                     Create Lesson
                 </button>  
-            </>
+            </div>
             : 
             <button type="button" onClick={handleAIButtonSubmit}>
                Generate AI Content
