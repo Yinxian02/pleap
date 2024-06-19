@@ -47,8 +47,8 @@ const Challenge = ({ learningObject }) => {
         const response = await generateTextResponse(markPrompt, auth.accessToken, selectedChallenge);
         console.log(response);
 
-        const parsedResponse = parseJSON(response);
-        const feedbackMarkdown = markDownToHtml(parsedResponse.feedback);
+        // const parsedResponse = parseJSON(response);
+        const feedbackMarkdown = markDownToHtml(response);
         setFeedback(feedbackMarkdown);
         setShowFeedback(true);
     }; 
@@ -100,7 +100,7 @@ const Challenge = ({ learningObject }) => {
             {/* <br/><br/> */}
 
             { showFeedback && (
-                <div dangerouslySetInnerHTML={{ __html: feedback }} /> 
+                <p className="challenge-feedback" dangerouslySetInnerHTML={{ __html: feedback }} /> 
             )}
             {  selectedChallenge !== null && !showFeedback && (
                 <div className="next-footer">

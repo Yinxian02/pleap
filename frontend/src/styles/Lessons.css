@@ -21,7 +21,7 @@ main {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 50px 38px 30px 30px;
+    padding: 50px 50px 50px 50px;
     margin: 0 30px;
     transition: transform 0.2s;
     box-shadow: 0 4px 4px var(--hoverShadowColor); 
