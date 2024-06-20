@@ -10,7 +10,6 @@ main {
 }
   
 .lessons-link-div {
-    /* max-width: 500px; */
     background: #FFF1CD;
     border: 1px solid #FFB800;
     border-radius: 20px;
@@ -86,6 +85,5 @@ main {
     width: 100%;
     padding-right: 50px;
     justify-content: flex-end;
-    /* margin: 20px; */
     position: relative;
 }

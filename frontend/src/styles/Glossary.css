@@ -55,11 +55,11 @@
 .glossary-button {
     height: 100%;
     position: relative;
-    font-size: 24px; /* Adjust icon size */
-    padding: 5px 20px; /* Adjust padding */
-    border: 1px solid #FFB800; /* Adjust border style */
-    border-radius: 8px; /* Adjust border radius */
-    background-color: #FFF1CD; /* Default background */
+    font-size: 24px; 
+    padding: 5px 20px;  
+    border: 1px solid #FFB800;  
+    border-radius: 8px; 
+    background-color: #FFF1CD;  
     color: #FFB800;
     cursor: pointer;
     box-shadow: none;
@@ -67,17 +67,17 @@
 }
 
 .glossary-button:hover {
-    background-color: #FFB800; /* Hover background */
-    color: #FFF1CD; /* Hover text */
+    background-color: #FFB800;  
+    color: #FFF1CD; 
 }
 
 .glossary-button.active {
-    background-color: #FFB800; /* Change color when pressed */
-    color: #FFF1CD; /* Change text color when pressed */
+    background-color: #FFB800;  
+    color: #FFF1CD;  
 }
 
 .glossary-button + .glossary-button {
-    margin-left: -10px; /* Adjust this value to control overlap */
+    margin-left: -10px;  
 }
 
 .flashcard-container {

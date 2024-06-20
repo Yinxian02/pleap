@@ -51,15 +51,6 @@
     word-wrap: break-word;
 }
 
-/* .quiz-container h3 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 15px;
-}
-
-.quiz-container li {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 15px;
-} */
 .mcq-quiz-container {
     display: flex;
     width: 100%;
@@ -101,7 +92,6 @@
     box-sizing: border-box; 
     display: grid;
     margin: 10px; 
-    /* transition: opacity 0.5s ease; */
     padding-left: 30px;
     padding-right: 30px;
 }
@@ -117,11 +107,6 @@
     background-color: #e6e6e6; 
     padding: 10px;
 }
-
-/* .unselected-mcq-answer { */
-    /* background-color: #FFF1CD;  */
-    /* border: 1px #FFB800 solid;  */
-/* } */
 
 .correct-mcq-answer {
     background-color: #e6f9d8;

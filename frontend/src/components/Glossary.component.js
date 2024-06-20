@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 import '../styles/Glossary.css'; 
+import Rating from './Rating.component';
+
 import { FlashcardArray } from 'react-quizlet-flashcard';
 import { FaTableList } from "react-icons/fa6";
 import { PiCards } from "react-icons/pi";
-import Rating from './Rating.component';
 import { LuRefreshCw } from "react-icons/lu";
 import { MdLightbulbOutline } from "react-icons/md";
 
 const Glossary = ({ learningObject }) => {
     const glossary = learningObject.content.glossary.vertexAI;
-    // console.log(glossary);
-    // const [view, setView] = useState('table');
     const [showTable, setShowTable] = useState(false);
-
-    // const toggleView = () => {
-    //     setView(view === 'table' ? 'flashcards' : 'table');
-    // };
 
     const showTableDefinitions = () => {
         setShowTable(true);
@@ -77,11 +72,6 @@ const Glossary = ({ learningObject }) => {
                         }}/>
                 </div>
             )}
-            {/* <div className='toggle-header'> */}
-                {/* <button onClick={toggleView} className="toggle-button">
-                    {view === 'table' ? <PiCards/> : <FaTableList/>}
-                </button> */}
-            {/* </div> */}
             <Rating id={learningObject._id}/>
         </div>
     );

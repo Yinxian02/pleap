@@ -51,13 +51,13 @@
 }
 
 .slide-button:hover {
-    background-color: #C2DD00; /* Hover background */
-    color: #F9FFCD; /* Hover text */
+    background-color: #C2DD00;  
+    color: #F9FFCD; 
 }
 
 .slide-button.active {
-    background-color: #C2DD00; /* Change color when pressed */
-    color: #F9FFCD; /* Change text color when pressed */
+    background-color: #C2DD00;  
+    color: #F9FFCD;  
 }
 
 
@@ -95,7 +95,6 @@
 }
 
 .narrative-text-slide {
-    /* width: 885px; */
     color: #3E3E3E;
     font-size: 16px;
     font-family: 'IBM Plex Mono', monospace;

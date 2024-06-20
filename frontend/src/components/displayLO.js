@@ -1,5 +1,3 @@
-import { markDownToHtml } from "./markDownToHTML";
-
 import Lecture from "./Lecture.component";
 import Slide from "./Slide.component";
 import McqQuiz from "./McqQuiz.component";
@@ -7,7 +5,6 @@ import Exercise from "./Exercise.component";
 import Challenge from "./Challenge.component";
 import Glossary from "./Glossary.component";
 import NarrativeText from "./NarrativeText.component";
-import Rating from "./Rating.component";
 import Embed from "./Embed.component";
 
 function isGlossary(learningObject) {
@@ -17,7 +14,6 @@ function isGlossary(learningObject) {
 }; 
 
 const displayLO = (learningObject) => {
-    // console.log(learningObject.educational.learningResourceType);
     const LRT = learningObject.educational.learningResourceType; 
     
     if (LRT === "lecture"){

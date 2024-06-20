@@ -1,6 +1,6 @@
 .lesson-header {
     display: grid;
-    justify-content: center; /* Center horizontally */
+    justify-content: center; 
     align-items: center; 
     text-align: center;
 }
@@ -34,17 +34,14 @@
 
 .ai-disclaimer {
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    /* text-align: center; */
-    width: 80%; /* Adjust as needed */
-    margin: 20px auto; /* Center horizontally by auto margins */
+    justify-content: center;
+    align-items: center; 
+    width: 80%;  
+    margin: 20px auto; 
     border: 1px #c8c7c7 solid;
     border-radius: 10px;
     padding: 30px;
-    /* padding-bottom: 20px; */
     gap: 20px;
-    /* background-color: #eeeeee; */
 }
 
 .lightbulb {
@@ -55,10 +52,8 @@
 }
 
 .ai-disclaimer-text {
-    /* margin-top: 20px; */
     color: #3E3E3E;
     font-size: 16px;
-    /* font-family: 'Montserrat', sans-serif; */
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 400;
 }
@@ -68,7 +63,6 @@
     margin-top: 100px;
     width: 80%;
     display: grid;
-    /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
     gap: 20px;
     justify-content: center;
     align-items: center;
@@ -108,7 +102,6 @@ textarea {
     background-color: var(--inputColor);
     border: none;
     width: 100%;
-    /* border-radius: 0px;  */
     padding: 10px 5px;
     cursor: pointer;
     font-size: 16px;
@@ -131,14 +124,14 @@ textarea {
 .glossary-div {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Adjust gap between rows */
+    gap: 10px;  
 }
 
 .glossary-item {
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    border-bottom: 1px solid #ccc; /* Adjust as needed */
+    border-bottom: 1px solid #ccc;  
 }
 
 .glossary-term {
@@ -165,14 +158,12 @@ textarea {
 .slide-footer {
     width: 100%;
     display: flex;
-    /* justify-content: flex-end;  */
 }
 
 .slide-button {
     background-color: var(--buttonColor);
     border: none;
     width: 100%;
-    /* border-radius: 0px;  */
     padding: 10px 5px;
     cursor: pointer;
     font-size: 16px;
@@ -206,10 +197,8 @@ textarea {
 }
 
 .markdown-ai-content {
-    /* Example styles */
     font-family: 'IBM Plex Mono', monospace;
     font-size: 16px;
     line-height: 1.5;
     color: #333;
-    /* Add any other desired styles */
 }

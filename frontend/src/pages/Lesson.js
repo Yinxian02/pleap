@@ -1,12 +1,10 @@
 import React, { Component, useContext, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import "../styles/Lesson.css";
 import axios from 'axios';
 import AuthContext from "../context/AuthContext";
-import { useParams } from 'react-router-dom';
-import displayLO from '../components/displayLO';
 
-// import { contentBasedFiltering } from '../components/contentBasedFiltering';
-// import { collaborativeFiltering } from '../components/collaborativeFiltering';
+import displayLO from '../components/displayLO';
 import { hybridFiltering } from '../components/hybridFiltering';
 import { sortLOs } from '../components/sortLOs';
 
@@ -54,8 +52,6 @@ const LessonFetch = ({lesson, difficulty}) => {
     if (learningObjects.length > 0) {
       const fetchFilteredLearningObjects = async () => {
         try {
-          // const filteredObjects = await contentBasedFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
-          // const filteredObjects = await collaborativeFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken);
           const filteredObjects = await hybridFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken, 0.5);
           const sortedObjects = sortLOs(filteredObjects, auth.preferences);
           setFilteredLearningObjects(sortedObjects);
@@ -85,9 +81,6 @@ const LessonFetch = ({lesson, difficulty}) => {
                 { filteredLearningObjects.map((lo, index) => (
                     <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
                   ))} 
-                {/* {learningObjects.map((lo, index) => (
-                    <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
-                  ))} */}
               </div>
             </div>
     
@@ -134,17 +127,13 @@ const Lesson = () => {
       const difficultyLevel = getDifficulty(difficulty);
       return <LessonFetch lesson={lesson} difficulty={difficultyLevel}/>;
     }
-    // You might want to return a loading indicator or handle the case where lesson is still loading
-    return <div>Loading...</div>;
   };
 
   return <div>{lessonDisplay()}</div>;
 };
 
-// Functional wrapper component to use hooks
 const LessonWrapper = (props) => {
   const { id } = useParams();
-  // console.log(id)
   return <Lesson {...props} id={id} />;
 };
 

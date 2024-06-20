@@ -1,7 +1,6 @@
 .exercise-div {
     width: 100%;
     height: 100%;
-    /* padding-top: 25px; */
     padding-bottom: 40px;
     padding-left: 30px;
     padding-right: 29px;
@@ -66,8 +65,6 @@
 .exercise-section h2 {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 16px;
-    /* padding-left: 30px;
-    padding-right: 30px; */
     margin-bottom: 20px;
 }
 
@@ -77,9 +74,7 @@
 
 .answer-text-area {
     width: 100%;
-    /* height: 100px; */
     padding: 20px;
-    /* font-family: 'IBM Plex Mono', monospace; */
     font-size: 18px;
     border-radius: 10px;
     border: 1px #CECECE solid;
@@ -95,18 +90,14 @@
 
 .correct-quiz-answer {
     color: #C2DD00;
-    /* box-shadow: 0 2px 4px var(--hoverShadowColor);  */
     padding: 20px; 
-    /* border-radius: 5px; */
 }
 
 .incorrect-quiz-answer {
     color: #c25454;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 16px;
-    /* box-shadow: 0 2px 4px var(--hoverShadowColor);  */
     padding: 20px; 
-    /* border-radius: 5px;  */
 }
 
 .results-container {
@@ -123,5 +114,4 @@
     font-size: 96px;
     font-family: 'IBM Plex Mono';
     font-weight: 400;
-    /* word-wrap: break-word; */
 }

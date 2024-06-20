@@ -33,11 +33,11 @@
 .lecture-button {
     height: 100%;
     position: relative;
-    font-size: 24px; /* Adjust icon size */
-    padding: 5px 20px; /* Adjust padding */
-    border: 1px solid #C2DD00; /* Adjust border style */
-    border-radius: 8px; /* Adjust border radius */
-    background-color: #F9FFCD; /* Default background */
+    font-size: 24px;
+    padding: 5px 20px; 
+    border: 1px solid #C2DD00; 
+    border-radius: 8px;
+    background-color: #F9FFCD; 
     color: #C2DD00;
     cursor: pointer;
     box-shadow: none;
@@ -45,17 +45,17 @@
 }
 
 .lecture-button:hover {
-    background-color: #C2DD00; /* Hover background */
-    color: #F9FFCD; /* Hover text */
+    background-color: #C2DD00; 
+    color: #F9FFCD;
 }
 
 .lecture-button.active {
-    background-color: #C2DD00; /* Change color when pressed */
-    color: #F9FFCD; /* Change text color when pressed */
+    background-color: #C2DD00;
+    color: #F9FFCD;
 }
 
 .lecture-button + .lecture-button {
-    margin-left: -10px; /* Adjust this value to control overlap */
+    margin-left: -10px; 
 }
 
 
@@ -92,7 +92,6 @@
 }
 
 .narrative-text-lecture {
-    /* width: 885px; */
     color: #3E3E3E;
     font-size: 16px;
     font-family: 'IBM Plex Mono', monospace;
