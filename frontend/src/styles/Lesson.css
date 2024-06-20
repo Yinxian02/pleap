@@ -202,3 +202,28 @@ textarea {
     line-height: 1.5;
     color: #333;
 }
+
+.learning-objects-divs-grid {
+    padding: 10%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.learning-objects-divs-grid .learning-object-div {
+    height: 300px;  
+    overflow: hidden;
+  }
+
+.learning-object-single-div {
+    padding-left: 10%;
+    padding-right: 10%;
+    height: fit-content;
+}
+
+.back-arrow {
+    font-size: 30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    /* padding-bottom: 50px; */
+}

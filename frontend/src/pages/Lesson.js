@@ -9,11 +9,24 @@ import { hybridFiltering } from '../components/hybridFiltering';
 import { sortLOs } from '../components/sortLOs';
 
 import { MdLightbulbOutline } from "react-icons/md";
+import { IoArrowBack } from "react-icons/io5";
 
 const LessonFetch = ({lesson, difficulty}) => {
   const { auth } = useContext(AuthContext);
+  const loContainer = auth.preferences.global >0.5  ? 'learning-objects-divs-grid' : 'learning-objects-divs-container';
+  
   const [learningObjects, setLearningObjects] = useState([]);
   const [filteredLearningObjects, setFilteredLearningObjects] = useState([]);
+
+  const [selectedLearningObject, setSelectedLearningObject] = useState(null);
+
+  const handleLearningObjectClick = (lo) => {
+    setSelectedLearningObject(lo);
+  };
+
+  const handleBackClick = () => {
+    setSelectedLearningObject(null);
+  };
 
   const filterByDifficulty = (learningObjects) => {
     return learningObjects.filter(lo => lo.educational.difficulty === difficulty || lo.educational.difficulty === '');
@@ -77,11 +90,20 @@ const LessonFetch = ({lesson, difficulty}) => {
                 <p className='ai-disclaimer-text'>Some content generated on this platform is powered by AI. Always consult a qualified expert for specific guidance.</p>
               </div>
 
-              <div className='learning-objects-divs-container'>
-                { filteredLearningObjects.map((lo, index) => (
-                    <p key={lo.id || index} className='learning-object-div'>{displayLO(lo)}</p>
-                  ))} 
-              </div>
+              {selectedLearningObject ? (
+                  <div className='learning-object-single-div'>
+                    <IoArrowBack className="back-arrow" onClick={handleBackClick}/>
+                    <div>{displayLO(selectedLearningObject)}</div>
+                  </div>
+                ) : (
+                  <div className={loContainer}>
+                    {filteredLearningObjects.map((lo, index) => (
+                      <div key={lo.id || index} className='learning-object-div' onClick={() => handleLearningObjectClick(lo)}>
+                        {displayLO(lo)}
+                      </div>
+                    ))}
+                  </div>
+                )}
             </div>
     
   }
