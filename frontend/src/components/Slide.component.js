@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 
+import { markDownToHtml } from "./markDownToHTML";
+import Rating from "./Rating.component";
+import '../styles/Slide.css';
+
 import { MdContentPaste } from "react-icons/md";
 import { FaImage } from "react-icons/fa";
 import { CgTranscript } from "react-icons/cg";
 import { MdLightbulbOutline } from "react-icons/md";
-import { markDownToHtml } from "./markDownToHTML";
-import Rating from "./Rating.component";
-import '../styles/Slide.css';
 
 const Slide = ({ learningObject }) => {
     const audioRef =  useRef(new Audio(learningObject.content.audio));

@@ -34,9 +34,9 @@ const LessonFetch = ({lesson, difficulty}) => {
             },
           }
         );
-        console.log((res.data).map(lo => lo._id));
+        // console.log((res.data).map(lo => lo._id));
         const loByDifficulty = filterByDifficulty(res.data);
-        console.log("filtered by difficulty:", loByDifficulty);
+        // console.log("filtered by difficulty:", loByDifficulty);
         setLearningObjects(loByDifficulty);
       } catch (error) {
         console.error('Error fetching learning objects:', error);
@@ -55,7 +55,7 @@ const LessonFetch = ({lesson, difficulty}) => {
           const filteredObjects = await hybridFiltering(learningObjects, auth.id, auth.preferences, auth.accessToken, 0.5);
           const sortedObjects = sortLOs(filteredObjects, auth.preferences);
           setFilteredLearningObjects(sortedObjects);
-          console.log(filteredObjects);
+          // console.log(filteredObjects);
         } catch (error) {
           console.error('Error fetching filtered learning objects:', error);
         }

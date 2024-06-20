@@ -19,8 +19,6 @@ const Lesson = ({ lesson, onClick }) => {
         <div className="lessons-description">{description}</div>
       </div>
     </div>
-    // <Link className="lessons-link-div" to={"/lesson/" + _id}>
-    // </Link>
   );
 };
 
@@ -56,9 +54,6 @@ const Lessons = () => {
     setSelectedLesson(null);
   };
 
-  const handleQuestionSubmit = (answer) => {
-    console.log('User answer:', answer); 
-  };
 
   return (
     <>
@@ -66,7 +61,6 @@ const Lessons = () => {
         {lessons.map((currentLesson) => (
           <Lesson lesson={currentLesson} key={currentLesson._id} onClick={openModal}/>
         ))}
-        {/* <button onClick={openModal}>Open Modal</button> */}
         <Modal isOpen={isModalOpen} 
               onClose={closeModal}
               lesson={selectedLesson}

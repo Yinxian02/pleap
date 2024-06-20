@@ -4,19 +4,15 @@ import { Link } from 'react-router-dom';
 import '../styles/Modal.css';
 
 const Modal = ({ isOpen, onClose, children, lesson }) => {
-  // const [answer, setAnswer] = useState('');
   const [isQuestionAnswered, setIsQuestionAnswered] = useState(false);
   const [difficulty, setDifficulty] = useState(0);
 
   const handleSubmit = () => {
-    // onQuestionSubmit(answer);
-    // setAnswer()
     setIsQuestionAnswered(true);
     console.log('Learner level:', difficulty);  
   };
 
   if (!isOpen) {
-    // setIsQuestionAnswered(false);
     return null;
   }
 

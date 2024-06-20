@@ -14,7 +14,7 @@ import  { kMeans,
 
 // learningObjects: set of learning objects for one lesson
 async function contentBasedFiltering(learningObjects, userId, learningPreferences, accessToken){
-    console.log('Learning objects: ', learningObjects);
+    // console.log('Learning objects: ', learningObjects);
             
     // get nearest cluster to user LS, by comparing euclidean distance to each centroid
     const userLS = getPreferencesArray(learningPreferences);
@@ -22,11 +22,11 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
 
     // get set of all learning objects rated by LS
     const ratings = await retrieveUserRatings(userId, accessToken);
-    console.log('Ratings:', ratings);
+    // console.log('Ratings:', ratings);
     
     // If ratings array is empty, 
     if (ratings.length === 0) {
-        console.log('No ratings found');
+        // console.log('No ratings found');
         
         const loScores = learningObjects.map((lo) => ({
             id: lo._id,
@@ -36,7 +36,7 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
 
         // Apply K-means to cluster all learning objects scores
         const clusters = kMeans(loScores, 4, hammingDistance);
-        console.log('Clusters:', clusters);
+        // console.log('Clusters:', clusters);
 
         const nearestClusterLOs = getNearestCluster(clusters, userLS).points;
         // console.log('Nearest cluster LOs:', nearestClusterLOs);
@@ -57,7 +57,7 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
         const filteredLearningObjects = learningObjects.filter(lo => {
             return topNPredictedRatings.map(p => p.learningObjectId).includes(lo._id);
         });
-        console.log('Filtered learning objects:', filteredLearningObjects);
+        // console.log('Filtered learning objects:', filteredLearningObjects);
         return filteredLearningObjects;
     } else {
         const ratedLOs = await getRatedLearningObjects(ratings, accessToken);
@@ -71,7 +71,7 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
 
         // // apply k-means clustering to learning objects rated by by learning styles
         const clusters = kMeans(ratingScores, 4, hammingDistance);
-        console.log('Clusters:', clusters);
+        // console.log('Clusters:', clusters);
 
         let predictedRatings = [];
 
@@ -88,11 +88,11 @@ async function contentBasedFiltering(learningObjects, userId, learningPreference
         //    console.log(sortedLOs);
 
            const topNnearestLOs = sortedLOs.slice(0, topN);
-           console.log('Top N nearest learning objects:', topNnearestLOs);
+        //    console.log('Top N nearest learning objects:', topNnearestLOs);
            
            // calculate predicted rating for new learning object
             const predictedRating = predictNewLORating(topNnearestLOs, newLOScore);
-            console.log('Predicted rating:', predictedRating);
+            // console.log('Predicted rating:', predictedRating);
             predictedRatings.push({id: newLO._id, rating: predictedRating});
         }
         // 

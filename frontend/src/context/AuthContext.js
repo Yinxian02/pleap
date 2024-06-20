@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
         email: '',
         password: '',
         id: '',
-        roles: [], // An array of roles
+        roles: [], 
         accessToken: '',
         preferences: []
       });

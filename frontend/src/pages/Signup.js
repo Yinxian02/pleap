@@ -1,10 +1,11 @@
 import { useRef, useState, useEffect } from "react";
-import { TiTick } from "react-icons/ti"; 
-import { RxCross2 } from "react-icons/rx";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from '../api/axios';
 import '../styles/SignUp.css'
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+
+import { TiTick } from "react-icons/ti"; 
+import { RxCross2 } from "react-icons/rx";
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -74,7 +75,7 @@ const Signup = () => {
             return;
         }
         try {
-            console.log(JSON.stringify({ email, name, password }))
+            // console.log(JSON.stringify({ email, name, password }))
             const response = await axios.post(REGISTER_URL,
                 JSON.stringify({ email, name, password }),
                 {
@@ -83,7 +84,7 @@ const Signup = () => {
                     withCredentials: true,
                 }
             );
-            console.log(response);
+            // console.log(response);
             // console.log(JSON.stringify(response?.data));
             setSuccess(true)
             setEmail('');
@@ -122,7 +123,6 @@ const Signup = () => {
                     <label htmlFor="email">
                         Email:
                         <TiTick className={validEmail ? "valid" : "hide"} />
-                        {/* <RxCross2 className={validEmail || !email ? "hide" : "invalid"} /> */}
                     </label>
                     <input
                         type="text"

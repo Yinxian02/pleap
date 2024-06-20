@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { FaRegLightbulb } from "react-icons/fa";
-import { IoSparkles } from "react-icons/io5";
 import { generateTextResponse }  from "./generateText";
-import { MdLightbulbOutline } from "react-icons/md";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import '../styles/Challenge.css';
 import { markDownToHtml } from "./markDownToHTML";
-import { parseJSON } from "./parseJSON";
 import Rating from "./Rating.component";
+import '../styles/Challenge.css';
+
+import { FaRegLightbulb } from "react-icons/fa";
+import { MdLightbulbOutline } from "react-icons/md";
+import { IoSparkles } from "react-icons/io5";
 
 const Challenge = ({ learningObject }) => {
     const challenge = learningObject.content.challenge;
@@ -45,7 +45,7 @@ const Challenge = ({ learningObject }) => {
         // console.log(markPrompt);
 
         const response = await generateTextResponse(markPrompt, auth.accessToken, selectedChallenge);
-        console.log(response);
+        // console.log(response);
 
         // const parsedResponse = parseJSON(response);
         const feedbackMarkdown = markDownToHtml(response);
@@ -90,14 +90,8 @@ const Challenge = ({ learningObject }) => {
                         value={userInput}
                         onChange={handleInputChange}
                     /> 
-                    {/* <button onClick={markAnswer}>
-                        Submit
-                    </button> */}
                 </div>
             )}
-        
-
-            {/* <br/><br/> */}
 
             { showFeedback && (
                 <p className="challenge-feedback" dangerouslySetInnerHTML={{ __html: feedback }} /> 

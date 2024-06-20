@@ -68,7 +68,6 @@ function Profile() {
 
           <div className="preferences-container">
             <h2 className="preferences-title">Your Learning Preferences:</h2>
-            {/* <br/> */}
             <div className="bar">
               <div className="percentages detail">
                 <span>{(preferences.active * 100).toFixed(0)}%</span>

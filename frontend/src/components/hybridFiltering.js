@@ -119,7 +119,7 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
             predictedRating = weight * r1 + (1 - weight) * r3; 
         }
 
-        console.log(i, 'Predicted rating:', predictedRating);
+        // console.log(i, 'Predicted rating:', predictedRating);
         predictedRatings.push({
             learningObjectId: lo._id,
             rating: predictedRating,
@@ -132,7 +132,7 @@ async function hybridFiltering(learningObjects, userId, learningPreferences, acc
     const filteredLearningObjects = learningObjects.filter(lo => {
         return topNPredictedRatings.map(p => p.learningObjectId).includes(lo._id);
     });
-    console.log('Filtered above median learning objects:', filteredLearningObjects);
+    // console.log('Filtered above median learning objects:', filteredLearningObjects);
     return filteredLearningObjects;
 }
 

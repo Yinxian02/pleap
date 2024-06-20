@@ -15,7 +15,7 @@ const generateTextResponse = async (textPrompt, accessToken, apiType) => {
                 },
             }
         );
-        console.log(response);
+        // console.log(response);
         return response.data;
     } catch (error) {
         console.error('Error:', error);

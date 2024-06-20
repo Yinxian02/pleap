@@ -214,11 +214,6 @@ const pearsonCorrelation = (x, y) => {
         accX += (x[i] - xMean) ** 2;
         accY += (y[i] - yMean) ** 2;
     }
-    
-    // console.log('accX', accX, 'accY', accY, 'accXY', accXY);
-    // if (accX === 0 || accY === 0) {
-    //     return 0;
-    // };
 
     // console.log('Pearson correlation:', accXY / Math.sqrt(accX * accY));
     return accXY / Math.sqrt(accX * accY);
@@ -381,7 +376,7 @@ async function getAllLearningStyles(accessToken) {
 
 const getTopNPercentByRating = (ratings) => {
     ratings.sort((a, b) => b.rating - a.rating);
-    console.log('Sorted predicted ratings:', ratings);
+    // console.log('Sorted predicted ratings:', ratings);
 
     const totalRating = ratings.reduce((acc, lo) => acc + lo.rating, 0);
     // console.log('Total rating:', totalRating);
@@ -396,7 +391,7 @@ const getTopNPercentByRating = (ratings) => {
         medianRating = ratings[Math.floor(len / 2)].rating;
     }
 
-    console.log('Median rating:', medianRating);
+    // console.log('Median rating:', medianRating);
     return ratings.filter(lo => lo.rating >= medianRating);
 }
 

@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { MdOutlineQuiz } from "react-icons/md";
-import { MdLightbulbOutline } from "react-icons/md";
-import { IoSparkles } from "react-icons/io5";
 import { generateTextResponse }  from "./generateText";
 import { useContext } from "react";
 import { parseJSON } from "./parseJSON";
 import AuthContext from "../context/AuthContext";
 import Rating from "./Rating.component";
-import '../styles/Exercise.css';
 import { markDownToHtml } from "./markDownToHTML";
+import '../styles/Exercise.css';
+
+import { MdOutlineQuiz } from "react-icons/md";
+import { MdLightbulbOutline } from "react-icons/md";
+import { IoSparkles } from "react-icons/io5";
 
 const Exercise = ({ learningObject }) => {
     const exercise = learningObject.content.exercise;
@@ -63,10 +64,10 @@ const Exercise = ({ learningObject }) => {
           "feedback": "..."
         }
         `; 
-        console.log(markPrompt);
+        // console.log(markPrompt);
 
         const response = await generateTextResponse(markPrompt, auth.accessToken, selectedExercise);
-        console.log(response);
+        // console.log(response);
 
         const parsedResponse = parseJSON(response);
         const feedbackMarkdown = markDownToHtml(parsedResponse.feedback);
@@ -149,9 +150,6 @@ const Exercise = ({ learningObject }) => {
                 />
                 </div>
             {/* )} */}
-
-
-            {/* <br/><br/> */}
 
             { showFeedback && (
                 <div className={`${ (correctAnswer === null) 

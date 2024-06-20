@@ -1,8 +1,6 @@
 import React from 'react'
 import './styles/App.css'
-import Navbar from './components/Navbar'
 import Login from './pages/Login'
-/* for testing only */
 import Signup from './pages/Signup'
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
@@ -29,7 +27,6 @@ function App() {
     <>
       <Router>
         <div className='top-navigation-bar'>
-          {/* <Navbar/> */}
           <LessonIcon className='lessons-icon'/>
           <ProfileIcon className='profile-icon'/>
         </div>
