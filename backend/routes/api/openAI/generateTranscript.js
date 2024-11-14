@@ -9,7 +9,7 @@ const fs = require('fs');
 const { OpenAI } = require('openai');
 
 const openai = new OpenAI({
-    organization: 'org-HHJ1aCFmDOBTck24wRkgtrxi',
+    organization: '',
     apiKey: process.env.OPENAI_API_KEY,
   });
 
