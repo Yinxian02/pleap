@@ -1,4 +1,4 @@
-# AI-enabled PLeaP - A Personalised Learning Platform
+# AI-enabled Personalised Learning Platform (PLeaP)
 
 Project detailed here: https://github.com/Yinxian02/pleap/blob/master/AI-enabled%20Personalised%20Learning%20Platform.pdf
 
